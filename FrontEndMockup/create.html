@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create - buildLabs</title>
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header" fragment="header">
+        <a href="/"><img src="img/cover.png"></a>
+        <button id="hamburger"><img src="img/hamburger.png"></button>
+    </div>
+    <div id="main">
+        <div id="tab-btns">
+            <button id="parts-tab-btn" class="tab-btn">
+                Parts
+                <a id="new-part-btn" href=""><img src="img/add-icon.svg"></a>
+            </button>
+            <button id="labs-tab-btn" class="tab-btn">
+                Labs
+                <a id="new-lab-btn" href=""><img src="img/add-icon.svg"></a>
+            </button>
+        </div>
+        <div id="tab-container" class="create-pane">
+            <div id="parts-container">
+                <ul id="parts-list"></ul>
+            </div>
+            <div id="labs-container">
+                <ul id="labs-list"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

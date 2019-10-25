@@ -1,0 +1,52 @@
+body {
+  font: Roboto; }
+  body .neutral-pane {
+    background-image: linear-gradient(to bottom right, #1fb8d7, #1992aa); }
+  body .learn-pane {
+    background-image: linear-gradient(to bottom right, #20dca8, #1aaf86); }
+  body .create-pane {
+    background-image: linear-gradient(to bottom right, #e08de5, #d563dc); }
+
+body {
+  margin: 0; }
+  body #header {
+    position: relative;
+    background-color: #1fb8d7;
+    height: 5vh;
+    width: 100%; }
+    body #header a {
+      display: contents; }
+      body #header a img {
+        position: absolute;
+        left: 10px;
+        height: 100%; }
+    body #header button {
+      display: contents;
+      cursor: pointer; }
+      body #header button img {
+        position: absolute;
+        height: 100%;
+        right: 10px; }
+
+body #login {
+  border-radius: 25px; }
+  body #login form {
+    margin: 10px;
+    display: grid;
+    grid-template-areas: '.        login           .' 'email    email           .' '.        email-input     email-input' 'password password        .' '.        password-input  password-input' 'submit   forgot-password register'; }
+    body #login form h2 {
+      grid-area: login; }
+    body #login form .email-label {
+      grid-area: email; }
+    body #login form .email-input {
+      grid-area: email-input; }
+    body #login form .password-label {
+      grid-area: password; }
+    body #login form .password-input {
+      grid-area: password-input; }
+    body #login form .submit {
+      grid-area: submit; }
+    body #login form #forgot-password {
+      grid-area: forgot-password; }
+    body #login form #show-register {
+      grid-area: register; }

@@ -1,0 +1,20 @@
+$neutral-blue: #1fb8d7;
+$learn-green: #20dca8;
+$create-pink: #e08de5;
+$darker: 10%;
+
+body{
+    font: Roboto;
+    
+    .neutral-pane {
+        background-image: linear-gradient(to bottom right, $neutral-blue, darken($neutral-blue, $darker));
+    }
+
+    .learn-pane{
+        background-image: linear-gradient(to bottom right, $learn-green, darken($learn-green, $darker));
+    }
+
+    .create-pane{
+        background-image: linear-gradient(to bottom right, $create-pink, darken($create-pink, $darker));
+    }
+}

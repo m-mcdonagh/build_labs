@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login - buildLabs</title>
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header">
+        <a href="/"><img src="img/cover.png"></a>
+        <button id="hamburger"><img src="img/hamburger.png"></button>
+    </div>
+    <div id="main">
+        <div id="login" class="neutral-pane">
+            <form class="grid" action="/login" method="POST" name="loginForm">
+                <h1>Login</h1>
+                <label class="email-label" for="email"><b>Email</b></label>
+                <input class="email-input" 
+                    class="text-field"
+                    type="email" 
+                    name="email" 
+                    placeholder="Enter email" 
+                    required>
+
+                <label class="password-label" for="password"><b>Password</b></label>
+                <input class="password-input" 
+                    class="text-field" 
+                    type="password" 
+                    name="password" 
+                    placeholder="Enter Password" 
+                    required>
+
+                <input class="submit neutral-btn" value="Submit" type="submit">
+                <a id="forgot-password" class="neutral-btn" href="#">Forgot Password?</a>
+                <button id="show-register" class="neutral-btn" type="button">Register New Account</button>
+            </form>
+        </div>
+        <div id="register" class="neutral-pane">
+            <form class="grid" action="/register" method="POST" name="registerForm">
+                <h1>Register</h1>
+                <label class="email-label" for="email"><b>Email</b></label>
+                <input class="email-input" 
+                        class="text-field"
+                        type="email" 
+                        name="email" 
+                        placeholder="Enter email" 
+                        required>
+    
+                <label class="password-label" for="password"><b>Password</b></label>
+                <input class="password-input" 
+                        class="text-field" 
+                        type="password" 
+                        name="password" 
+                        placeholder="Enter Password" 
+                        required>
+                <input class="password-confirm"
+                        class="text-field"
+                        type="password"
+                        name="password-confirm"
+                        placeholder="Confirm Password"
+                        required>
+    
+                <input class="submit neutral-btn" value="Submit" type="submit">
+                <button id="hide-register" class="neutral-btn" type="button">Cancel</button>
+            </form>
+        </div>
+        <div id="reset-password" class="neutral-pane">
+            <form action="/resetpassword" method="POST" name="resetPassword">
+                <h1>Reset Password</h1>
+                <label class="email-label" for="email"><b>Email</b></label>
+                <input class="email-input" 
+                        class="text-field"
+                        type="email" 
+                        name="email" 
+                        placeholder="Enter email" 
+                        required>
+                <input class="submit neutral-btn" value="Submit" type="submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

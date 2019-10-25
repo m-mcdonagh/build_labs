@@ -1,0 +1,42 @@
+body {
+    #login {
+        border-radius: 25px;
+
+        form {
+            margin: 10px;
+            display: grid;
+            grid-template-areas: 
+                '.        login           .'
+                'email    email           .'
+                '.        email-input     email-input'
+                'password password        .'
+                '.        password-input  password-input'
+                'submit   forgot-password register';
+
+            h2 {
+                grid-area: login;
+            }
+            .email-label {
+                grid-area: email;
+            }
+            .email-input {
+                grid-area: email-input;
+            }
+            .password-label {
+                grid-area: password;
+            }
+            .password-input {
+                grid-area: password-input;
+            }
+            .submit {
+                grid-area: submit;
+            }
+            #forgot-password {
+                grid-area: forgot-password;
+            }
+            #show-register {
+                grid-area: register;
+            }
+        }
+    }
+}

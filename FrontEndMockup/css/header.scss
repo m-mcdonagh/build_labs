@@ -1,0 +1,30 @@
+body {
+    margin: 0;
+
+    #header {
+        position: relative;
+        background-color: $neutral-blue;
+        height: 5vh;
+        width: 100%;
+        a{
+            display: contents;
+            
+            img {
+                position: absolute;
+                left: 10px;
+                height: 100%;
+            }
+        }
+
+        button {
+            display: contents;
+            cursor: pointer;
+
+            img {
+                position: absolute;
+                height: 100%;
+                right: 10px;
+            }
+        }
+    }
+}
