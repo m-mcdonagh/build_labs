@@ -1,17 +1,51 @@
 body {
-  font: Roboto; }
+  font-family: "Roboto", sans-serif; }
+  body .main {
+    width: 100vw;
+    height: 95vh; }
+  body .neutral-header {
+    background-color: #1fb8d7; }
+  body .learn-header {
+    background-color: #20dca8; }
+  body .create-header {
+    background-color: #c58de5; }
   body .neutral-pane {
-    background-image: linear-gradient(to bottom right, #1fb8d7, #1992aa); }
+    background-image: linear-gradient(to bottom right, #1fb8d7, #1992aa);
+    box-shadow: 3px 3px 5px #45c9e4; }
   body .learn-pane {
-    background-image: linear-gradient(to bottom right, #20dca8, #1aaf86); }
+    background-image: linear-gradient(to bottom right, #20dca8, #1aaf86);
+    box-shadow: 3px 3px 5px #4ae5ba; }
   body .create-pane {
-    background-image: linear-gradient(to bottom right, #e08de5, #d563dc); }
+    background-image: linear-gradient(to bottom right, #c58de5 25%, #5e67e0);
+    box-shadow: 3px 3px 5px #dab7ee; }
+  body .side-bar {
+    color: white;
+    height: 100%;
+    width: 25%; }
+  body .create-side-bar {
+    background-color: #b063dc;
+    background-image: linear-gradient(#b063dc, #c58de5); }
+  body button {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    font-family: "Roboto", sans-serif;
+    font-size: 2rem; }
+  body .neutral-btn {
+    background-image: linear-gradient(to right, #5bd0e7, white); }
+  body .learn-btn {
+    background-image: linear-gradient(to right, #61e8c3, white); }
+  body .create-btn {
+    background-image: linear-gradient(to right, #e5cbf3, white); }
+  body input {
+    font-family: "Roboto", sans-serif; }
+  body textarea {
+    font-family: "Roboto", sans-serif; }
 
 body {
   margin: 0; }
   body #header {
     position: relative;
-    background-color: #1fb8d7;
     height: 5vh;
     width: 100%; }
     body #header a {
@@ -27,6 +61,54 @@ body {
         position: absolute;
         height: 100%;
         right: 10px; }
+
+body #lab-builder-main {
+  display: flex;
+  flex-direction: row; }
+  body #lab-builder-main #workspace {
+    position: relative;
+    width: 75vw; }
+    body #lab-builder-main #workspace #new-step-btn {
+      display: contents; }
+      body #lab-builder-main #workspace #new-step-btn img {
+        position: absolute;
+        left: 85%;
+        top: 40%;
+        width: 25%;
+        transform: translate(-50%, -50%);
+        cursor: pointer; }
+  body #lab-builder-main #controls {
+    display: flex;
+    margin: 1%;
+    position: absolute;
+    bottom: 0;
+    width: 73%;
+    align-content: center;
+    justify-content: right; }
+    body #lab-builder-main #controls #step-details {
+      display: flex;
+      padding: 10px;
+      width: 80%;
+      flex-direction: column;
+      border-radius: 25px; }
+      body #lab-builder-main #controls #step-details #step-name {
+        width: 33%; }
+      body #lab-builder-main #controls #step-details #step-instruction {
+        border-radius: 10px;
+        padding: 5px;
+        resize: none;
+        border: none; }
+    body #lab-builder-main #controls #control-btns {
+      display: flex;
+      flex-direction: column;
+      width: 20%; }
+      body #lab-builder-main #controls #control-btns .lab-overview-btn {
+        display: none; }
+  body #lab-builder-main #steps-side-bar {
+    display: flex; }
+    body #lab-builder-main #steps-side-bar h1 {
+      width: 100%;
+      text-align: center; }
 
 body #login {
   border-radius: 25px; }

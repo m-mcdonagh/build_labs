@@ -1,20 +1,81 @@
 $neutral-blue: #1fb8d7;
 $learn-green: #20dca8;
-$create-pink: #e08de5;
+$create-blue: #5e67e0;
+$create-purple: #c58de5;
+$text-color: white;
+$button-color: white;
 $darker: 10%;
+$button-lighter: 15%;
 
 body{
-    font: Roboto;
+    font-family: "Roboto", sans-serif;
     
+    .main {
+        width: 100vw;
+        height: 95vh;
+    }
+
+    .neutral-header {
+        background-color: $neutral-blue;
+    }
+
+    .learn-header {
+        background-color: $learn-green
+    }
+
+    .create-header {
+        background-color: $create-purple;
+    }
+
     .neutral-pane {
         background-image: linear-gradient(to bottom right, $neutral-blue, darken($neutral-blue, $darker));
-    }
+        box-shadow: 3px 3px 5px lighten($neutral-blue, 10%);    }
 
-    .learn-pane{
+    .learn-pane {
         background-image: linear-gradient(to bottom right, $learn-green, darken($learn-green, $darker));
+        box-shadow: 3px 3px 5px lighten($learn-green, 10%);    }
+
+    .create-pane {
+        background-image: linear-gradient(to bottom right, $create-purple 25%, $create-blue);
+        box-shadow: 3px 3px 5px lighten($create-purple, 10%);
     }
 
-    .create-pane{
-        background-image: linear-gradient(to bottom right, $create-pink, darken($create-pink, $darker));
+    .side-bar {
+        color: $text-color;
+        height: 100%;
+        width: 25%;
+    }
+
+    .create-side-bar {
+        background-color: darken($create-purple, $darker);
+        background-image: linear-gradient(darken($create-purple, $darker), $create-purple);
+    }
+
+    button {
+        margin: 5px;
+        padding: 5px;
+        border-radius: 10px;
+        font-family: "Roboto", sans-serif;
+        font-size: 2rem;
+    }
+
+    .neutral-btn {
+        background-image: linear-gradient(to right, lighten($neutral-blue, $button-lighter), $button-color);
+    }
+
+    .learn-btn {
+        background-image: linear-gradient(to right, lighten($learn-green, $button-lighter), $button-color);
+    }
+
+    .create-btn {
+        background-image: linear-gradient(to right, lighten($create-purple, $button-lighter), $button-color);
+    }
+
+    input {
+        font-family: "Roboto", sans-serif;
+    }
+
+    textarea {
+        font-family: "Roboto", sans-serif;
     }
 }

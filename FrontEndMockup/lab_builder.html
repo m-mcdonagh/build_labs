@@ -14,25 +14,29 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="header" fragment="header">
+    <div id="header" class="create-header">
         <a href="/"><img src="img/cover.png"></a>
         <button id="hamburger"><img src="img/hamburger.png"></button>
     </div>
-    <div id="main">
-        <div id="build-so-far"></div>
-        <button id="new-step-btn"><img src="img/add-icon.svg"></button>
-        <div id="step-details" class="create-pane">
-            <input id="step-name" type="text" placeholder="Step Name">
-            <input id="step-instruction" type="text" placeholder="Instruction">
+    <div class="main" id="lab-builder-main">
+        <div id="workspace">
+            <div id="build-so-far"></div>
+            <button id="new-step-btn"><img src="img/add-icon.svg"></button>
         </div>
-        <div id="control-buttons">
-            <button class="create-btn control" id="save">SAVE</button>
-            <button class="create-btn control" id="exit">EXIT</button>
-            <button class="create-btn control" id="done">DONE</button>
-            <button class="create-btn control" id="cancel">CANCEL</button>
+        <div id="controls">
+            <div id="step-details" class="create-pane">
+                <input id="step-name" type="text" placeholder="Step Name">
+                <textarea id="step-instruction" type="text" placeholder="Instruction" rows="4"></textarea>
+            </div>
+            <div id="control-btns">
+                <button class="create-btn lab-overview-btn" id="save">SAVE</button>
+                <button class="create-btn lab-overview-btn" id="exit">EXIT</button>
+                <button class="create-btn new-step-btn" id="done">DONE</button>
+                <button class="create-btn new-step-btn" id="cancel">CANCEL</button>
+            </div>
         </div>
-        <div id="steps-side-bar" class="side-bar right-bar">
-            <h2>STEPS</h2>
+        <div id="steps-side-bar" class="side-bar create-side-bar right-bar">
+            <h1>STEPS</h1>
             <ol id="step-list"></ol>
         </div>
     </div>

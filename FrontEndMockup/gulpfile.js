@@ -15,6 +15,4 @@ gulp.task('sass:watch', function() {
     gulp.watch('./css/*.scss', ['sass']);
 });
 
-gulp.task('uglyfy')
-
 gulp.task('default', ['sass', 'sass:watch']);
