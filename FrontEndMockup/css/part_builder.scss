@@ -1,0 +1,21 @@
+body{
+    #part-builder-main {
+        display: flex;
+        
+        #settings-side-bar {
+            position: relative;
+
+            #control-btns {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+
+                button {
+                    width: 45%;
+                    margin-left: 2.5%;
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}

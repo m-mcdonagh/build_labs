@@ -14,15 +14,16 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="header" fragment="header">
+    <div id="header" class="learn-header">
         <a href="/"><img src="img/cover.png"></a>
         <button id="hamburger"><img src="img/hamburger.png"></button>
     </div>
-    <div class="main">
-        <div id="settings-side-bar" class="side-bar left-bar"></div>
-        <div id="control-buttons">
-            <button class="create-btn control" id="save">SAVE</button>
-            <button class="create-btn control" id="exit">EXIT</button>
+    <div class="main" id="part-builder-main">
+        <div id="settings-side-bar" class="side-bar learn-side-bar left-bar">
+            <div id="control-btns">
+                <button class="learn-btn" id="save">SAVE</button>
+                <button class="learn-btn" id="exit">EXIT</button>
+            </div>
         </div>
         <div id="part-workspace"></div>
     </div>

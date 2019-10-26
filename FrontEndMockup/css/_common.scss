@@ -5,7 +5,6 @@ $create-purple: #c58de5;
 $text-color: white;
 $button-color: white;
 $darker: 10%;
-$button-lighter: 15%;
 
 body{
     font-family: "Roboto", sans-serif;
@@ -45,7 +44,14 @@ body{
         height: 100%;
         width: 25%;
     }
-
+    .neutral-side-bar {
+        background-color: darken($neutral-blue, $darker);
+        background-image: linear-gradient(darken($neutral-blue, $darker), $neutral-blue);
+    }
+    .learn-side-bar {
+        background-color: darken($learn-green, $darker);
+        background-image: linear-gradient(darken($learn-green, $darker), $learn-green);
+    }
     .create-side-bar {
         background-color: darken($create-purple, $darker);
         background-image: linear-gradient(darken($create-purple, $darker), $create-purple);
@@ -60,15 +66,15 @@ body{
     }
 
     .neutral-btn {
-        background-image: linear-gradient(to right, lighten($neutral-blue, $button-lighter), $button-color);
+        background-image: linear-gradient(to right, lighten($neutral-blue, 15%), $button-color);
     }
 
     .learn-btn {
-        background-image: linear-gradient(to right, lighten($learn-green, $button-lighter), $button-color);
+        background-image: linear-gradient(to right, lighten($learn-green, 30%), $button-color);
     }
 
     .create-btn {
-        background-image: linear-gradient(to right, lighten($create-purple, $button-lighter), $button-color);
+        background-image: linear-gradient(to right, lighten($create-purple, 15%), $button-color);
     }
 
     input {

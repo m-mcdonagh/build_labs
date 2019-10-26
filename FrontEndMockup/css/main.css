@@ -22,6 +22,12 @@ body {
     color: white;
     height: 100%;
     width: 25%; }
+  body .neutral-side-bar {
+    background-color: #1992aa;
+    background-image: linear-gradient(#1992aa, #1fb8d7); }
+  body .learn-side-bar {
+    background-color: #1aaf86;
+    background-image: linear-gradient(#1aaf86, #20dca8); }
   body .create-side-bar {
     background-color: #b063dc;
     background-image: linear-gradient(#b063dc, #c58de5); }
@@ -34,7 +40,7 @@ body {
   body .neutral-btn {
     background-image: linear-gradient(to right, #5bd0e7, white); }
   body .learn-btn {
-    background-image: linear-gradient(to right, #61e8c3, white); }
+    background-image: linear-gradient(to right, #a3f2dc, white); }
   body .create-btn {
     background-image: linear-gradient(to right, #e5cbf3, white); }
   body input {
@@ -132,3 +138,16 @@ body #login {
       grid-area: forgot-password; }
     body #login form #show-register {
       grid-area: register; }
+
+body #part-builder-main {
+  display: flex; }
+  body #part-builder-main #settings-side-bar {
+    position: relative; }
+    body #part-builder-main #settings-side-bar #control-btns {
+      position: absolute;
+      bottom: 0;
+      width: 100%; }
+      body #part-builder-main #settings-side-bar #control-btns button {
+        width: 45%;
+        margin-left: 2.5%;
+        margin-right: 0; }
