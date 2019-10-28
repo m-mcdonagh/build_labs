@@ -8,6 +8,7 @@ $darker: 10%;
 
 body{
     font-family: "Roboto", sans-serif;
+    color: $text-color;
     
     .main {
         width: 100vw;
@@ -60,7 +61,16 @@ body{
     button {
         margin: 5px;
         padding: 5px;
-        border-radius: 10px;
+        border-width: 1px;
+        border-radius: 20px;
+        font-family: "Roboto", sans-serif;
+        font-size: 2rem;
+    }
+    .button {
+        margin: 5px;
+        padding: 5px;
+        border-width: 1px;
+        border-radius: 20px;
         font-family: "Roboto", sans-serif;
         font-size: 2rem;
     }

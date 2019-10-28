@@ -1,5 +1,6 @@
 body {
-  font-family: "Roboto", sans-serif; }
+  font-family: "Roboto", sans-serif;
+  color: white; }
   body .main {
     width: 100vw;
     height: 95vh; }
@@ -34,7 +35,15 @@ body {
   body button {
     margin: 5px;
     padding: 5px;
-    border-radius: 10px;
+    border-width: 1px;
+    border-radius: 20px;
+    font-family: "Roboto", sans-serif;
+    font-size: 2rem; }
+  body .button {
+    margin: 5px;
+    padding: 5px;
+    border-width: 1px;
+    border-radius: 20px;
     font-family: "Roboto", sans-serif;
     font-size: 2rem; }
   body .neutral-btn {
@@ -116,28 +125,50 @@ body #lab-builder-main {
       width: 100%;
       text-align: center; }
 
-body #login {
-  border-radius: 25px; }
-  body #login form {
-    margin: 10px;
+body #login-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 95vh; }
+  body #login-main button {
+    font-size: 1rem; }
+  body #login-main .button {
+    font-size: 1rem; }
+  body #login-main .container {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    max-width: 100vw;
+    width: 400px; }
+  body #login-main form {
     display: grid;
-    grid-template-areas: '.        login           .' 'email    email           .' '.        email-input     email-input' 'password password        .' '.        password-input  password-input' 'submit   forgot-password register'; }
-    body #login form h2 {
-      grid-area: login; }
-    body #login form .email-label {
+    grid-template-columns: 8% 23% 23% 23% 23%;
+    grid-template-areas: 'h1       h1                h1               h1               h1' 'email    email             .                .                .' '.        email-input       email-input      email-input      email-input' 'password password          .                .                .' '.        password-input    password-input   password-input   password-input' '.        password-confirm  password-confirm password-confirm password-confirm' 'buttons  buttons           buttons          buttons          buttons'; }
+    body #login-main form h1 {
+      grid-area: h1;
+      width: 100%;
+      text-align: center; }
+    body #login-main form .email-label {
       grid-area: email; }
-    body #login form .email-input {
+    body #login-main form .email-input {
       grid-area: email-input; }
-    body #login form .password-label {
-      grid-area: password; }
-    body #login form .password-input {
+    body #login-main form .password-label {
+      grid-area: password;
+      margin-top: 10px; }
+    body #login-main form .password-input {
       grid-area: password-input; }
-    body #login form .submit {
-      grid-area: submit; }
-    body #login form #forgot-password {
-      grid-area: forgot-password; }
-    body #login form #show-register {
-      grid-area: register; }
+    body #login-main form .password-confirm {
+      grid-area: password-confirm; }
+    body #login-main form .buttons {
+      grid-area: buttons;
+      display: flex;
+      align-content: flex-end;
+      justify-content: center;
+      margin-top: 10px;
+      width: 100%; }
+    body #login-main form label {
+      font-size: 1.25rem; }
 
 body #part-builder-main {
   display: flex; }

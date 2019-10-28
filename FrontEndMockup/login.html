@@ -14,75 +14,74 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="header">
+    <div id="header" class="neutral-header">
         <a href="/"><img src="img/cover.png"></a>
         <button id="hamburger"><img src="img/hamburger.png"></button>
     </div>
-    <div class="main">
-        <div id="login" class="neutral-pane">
-            <form class="grid" action="/login" method="POST" name="loginForm">
+    <div id="login-main">
+        <div id="login" class="neutral-pane container">
+            <form id="login-form" action="/login" method="POST" name="loginForm">
                 <h1>Login</h1>
                 <label class="email-label" for="email"><b>Email</b></label>
-                <input class="email-input" 
-                    class="text-field"
+                <input class="email-input text-field"
                     type="email" 
                     name="email" 
                     placeholder="Enter email" 
                     required>
 
                 <label class="password-label" for="password"><b>Password</b></label>
-                <input class="password-input" 
-                    class="text-field" 
+                <input class="password-input text-field" 
                     type="password" 
                     name="password" 
                     placeholder="Enter Password" 
                     required>
-
-                <input class="submit neutral-btn" value="Submit" type="submit">
-                <a id="forgot-password" class="neutral-btn" href="#">Forgot Password?</a>
-                <button id="show-register" class="neutral-btn" type="button">Register New Account</button>
+                <div class="buttons">
+                    <button id="forgot-password" class="neutral-btn" type="button">Forgot Password?</button>
+                    <button id="show-register" class="neutral-btn" type="button">Register New Account</button>
+                    <input class="submit neutral-btn button" value="Submit" type="submit">
+                </div>
             </form>
         </div>
-        <div id="register" class="neutral-pane">
-            <form class="grid" action="/register" method="POST" name="registerForm">
+        <div id="register" class="neutral-pane container">
+            <form action="/register" method="POST" name="registerForm">
                 <h1>Register</h1>
                 <label class="email-label" for="email"><b>Email</b></label>
-                <input class="email-input" 
-                        class="text-field"
+                <input class="email-input text-field"
                         type="email" 
                         name="email" 
                         placeholder="Enter email" 
                         required>
     
                 <label class="password-label" for="password"><b>Password</b></label>
-                <input class="password-input" 
-                        class="text-field" 
+                <input class="password-input text-field" 
                         type="password" 
                         name="password" 
                         placeholder="Enter Password" 
                         required>
-                <input class="password-confirm"
-                        class="text-field"
+                <input class="password-confirm text-field"
                         type="password"
                         name="password-confirm"
                         placeholder="Confirm Password"
                         required>
-    
-                <input class="submit neutral-btn" value="Submit" type="submit">
-                <button id="hide-register" class="neutral-btn" type="button">Cancel</button>
+                <div class="buttons">
+                    <input class="submit neutral-btn button" value="Submit" type="submit">
+                    <button id="hide-register" class="neutral-btn" type="button">Cancel</button>
+                </div>
             </form>
         </div>
-        <div id="reset-password" class="neutral-pane">
+        <div id="reset-password" class="neutral-pane container">
             <form action="/resetpassword" method="POST" name="resetPassword">
                 <h1>Reset Password</h1>
                 <label class="email-label" for="email"><b>Email</b></label>
-                <input class="email-input" 
-                        class="text-field"
+                <input class="email-input text-field"
                         type="email" 
                         name="email" 
                         placeholder="Enter email" 
                         required>
-                <input class="submit neutral-btn" value="Submit" type="submit">
+                <div class="buttons">
+                    <input class="submit neutral-btn button" value="Submit" type="submit">
+                    <button id="hide-register" class="neutral-btn" type="button">Cancel</button>
+                </div>
             </form>
         </div>
     </div>

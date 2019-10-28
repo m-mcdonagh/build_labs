@@ -1,20 +1,43 @@
 body {
-    #login {
-        border-radius: 25px;
+    #login-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 95vh;
+        
+
+        button {
+            font-size: 1rem;
+        }
+        .button {
+            font-size: 1rem;
+        }
+
+        .container {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 25px;
+            max-width: 100vw;
+            width: 400px;
+        }
 
         form {
-            margin: 10px;
             display: grid;
+            grid-template-columns: 8% 23% 23% 23% 23%;
             grid-template-areas: 
-                '.        login           .'
-                'email    email           .'
-                '.        email-input     email-input'
-                'password password        .'
-                '.        password-input  password-input'
-                'submit   forgot-password register';
+                'h1       h1                h1               h1               h1'
+                'email    email             .                .                .'
+                '.        email-input       email-input      email-input      email-input'
+                'password password          .                .                .'
+                '.        password-input    password-input   password-input   password-input'
+                '.        password-confirm  password-confirm password-confirm password-confirm'
+                'buttons  buttons           buttons          buttons          buttons';
 
-            h2 {
-                grid-area: login;
+            h1 {
+                grid-area: h1;
+                width: 100%;
+                text-align: center;
             }
             .email-label {
                 grid-area: email;
@@ -24,18 +47,25 @@ body {
             }
             .password-label {
                 grid-area: password;
+                margin-top: 10px;
             }
             .password-input {
                 grid-area: password-input;
             }
-            .submit {
-                grid-area: submit;
+            .password-confirm {
+                grid-area: password-confirm;
             }
-            #forgot-password {
-                grid-area: forgot-password;
+            .buttons {
+                grid-area: buttons;
+                display: flex;
+                align-content: flex-end;
+                justify-content: center;
+                margin-top: 10px;
+                width: 100%;
             }
-            #show-register {
-                grid-area: register;
+
+            label {
+                font-size: 1.25rem;
             }
         }
     }
