@@ -8,19 +8,27 @@
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="bg"></div>
-    <button id="hamburger"><img src="img/hamburger-alt.png"></button>
-    <button id="fake-hamburger"><img src="img/hamburger.png"></button>
-    <img src="img/cover.png">
-    <div id="dash-buttons">
-        <button class="learn-btn" id="learn">LEARN</button>
-        <button class="create-btn" id="create">CREATE</button>
+    <div id="index-main" class="main">
+        <div id="front">
+            <button id="white-ham" class="hamburger"><img src="img/hamburger.png"></button>
+            <button id="blue-ham" class="hamburger"><img src="img/hamburger-alt.png"></button>
+            <div id="cover">
+                <img id="cover-img" src="img/cover.png">
+            </div>
+            <div id="buttons">
+                <button id="learn-link-btn" class="clip-btn learn-btn" data-relocation="/learn.html">LEARN</button>
+                <button id="create-link-btn" class="clip-btn create-btn" data-relocation="/create.html">CREATE</button>
+            </div>
+        </div>
+        <input id="clip-toggler" type="checkbox">
+        <div id="bg"></div>
     </div>
 </body>
 </html>
