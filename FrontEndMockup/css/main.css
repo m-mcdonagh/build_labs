@@ -2,6 +2,7 @@ body {
   font-family: "Roboto", sans-serif;
   color: white; }
   body .main {
+    background-image: linear-gradient(#FFFFFF, #CFCFCF);
     width: 100vw;
     height: 95vh; }
   body .neutral-header {
@@ -12,13 +13,13 @@ body {
     background-color: #c58de5; }
   body .neutral-pane {
     background-image: linear-gradient(to bottom right, #1fb8d7, #1992aa);
-    box-shadow: 3px 3px 5px #45c9e4; }
+    box-shadow: 3px 3px 15px #45c9e4; }
   body .learn-pane {
     background-image: linear-gradient(to bottom right, #20dca8, #1aaf86);
-    box-shadow: 3px 3px 5px #4ae5ba; }
+    box-shadow: 3px 3px 15px #4ae5ba; }
   body .create-pane {
     background-image: linear-gradient(to bottom right, #c58de5 25%, #5e67e0);
-    box-shadow: 3px 3px 5px #dab7ee; }
+    box-shadow: 3px 3px 15px #dab7ee; }
   body .side-bar {
     color: white;
     height: 100%;
@@ -129,8 +130,7 @@ body #login-main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 95vh; }
+  justify-content: center; }
   body #login-main button {
     font-size: 1rem; }
   body #login-main .button {

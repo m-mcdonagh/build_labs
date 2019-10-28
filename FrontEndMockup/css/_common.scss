@@ -11,6 +11,7 @@ body{
     color: $text-color;
     
     .main {
+        background-image: linear-gradient(#FFFFFF, #CFCFCF);
         width: 100vw;
         height: 95vh;
     }
@@ -29,15 +30,15 @@ body{
 
     .neutral-pane {
         background-image: linear-gradient(to bottom right, $neutral-blue, darken($neutral-blue, $darker));
-        box-shadow: 3px 3px 5px lighten($neutral-blue, 10%);    }
+        box-shadow: 3px 3px 15px lighten($neutral-blue, 10%);    }
 
     .learn-pane {
         background-image: linear-gradient(to bottom right, $learn-green, darken($learn-green, $darker));
-        box-shadow: 3px 3px 5px lighten($learn-green, 10%);    }
+        box-shadow: 3px 3px 15px lighten($learn-green, 10%);    }
 
     .create-pane {
         background-image: linear-gradient(to bottom right, $create-purple 25%, $create-blue);
-        box-shadow: 3px 3px 5px lighten($create-purple, 10%);
+        box-shadow: 3px 3px 15px lighten($create-purple, 10%);
     }
 
     .side-bar {

@@ -7,6 +7,7 @@
     <title>Login - buildLabs</title>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/login.js"></script>
     <script src="js/main.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
@@ -18,7 +19,7 @@
         <a href="/"><img src="img/cover.png"></a>
         <button id="hamburger"><img src="img/hamburger.png"></button>
     </div>
-    <div id="login-main">
+    <div class="main" id="login-main">
         <div id="login" class="neutral-pane container">
             <form id="login-form" action="/login" method="POST" name="loginForm">
                 <h1>Login</h1>
@@ -36,7 +37,7 @@
                     placeholder="Enter Password" 
                     required>
                 <div class="buttons">
-                    <button id="forgot-password" class="neutral-btn" type="button">Forgot Password?</button>
+                    <button id="show-reset-password" class="neutral-btn" type="button">Forgot Password?</button>
                     <button id="show-register" class="neutral-btn" type="button">Register New Account</button>
                     <input class="submit neutral-btn button" value="Submit" type="submit">
                 </div>
@@ -80,7 +81,7 @@
                         required>
                 <div class="buttons">
                     <input class="submit neutral-btn button" value="Submit" type="submit">
-                    <button id="hide-register" class="neutral-btn" type="button">Cancel</button>
+                    <button id="hide-reset-password" class="neutral-btn" type="button">Cancel</button>
                 </div>
             </form>
         </div>
