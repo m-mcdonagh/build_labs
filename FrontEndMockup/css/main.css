@@ -183,6 +183,60 @@ body #lab-builder-main {
       width: 100%;
       text-align: center; }
 
+body #learn-main {
+  justify-content: center;
+  align-items: center; }
+  body #learn-main #assigned-labs-container {
+    display: grid;
+    grid-template-areas: 'lab           owner         .' 'content-table content-table content-table';
+    grid-template-columns: 45% 45% 10%;
+    grid-template-rows: 70px auto;
+    height: 80vh;
+    width: 90vw;
+    padding: 0 0 20px;
+    border-radius: 50px; }
+    body #learn-main #assigned-labs-container h1 {
+      width: 100%;
+      text-align: center; }
+    body #learn-main #assigned-labs-container #lab-header {
+      grid-area: lab; }
+    body #learn-main #assigned-labs-container #owner-header {
+      grid-area: owner; }
+    body #learn-main #assigned-labs-container #content {
+      grid-area: content-table;
+      display: flex;
+      overflow: scroll;
+      position: relative;
+      max-width: 95%; }
+      @media screen and (min-width: 775px) {
+        body #learn-main #assigned-labs-container #content {
+          max-width: 100%; } }
+      body #learn-main #assigned-labs-container #content div {
+        display: flex;
+        position: absolute;
+        flex-direction: column;
+        align-items: flex-end;
+        min-height: 100%;
+        background-color: white;
+        color: black;
+        line-height: 125%;
+        padding: 5px; }
+        @media screen and (min-width: 775px) {
+          body #learn-main #assigned-labs-container #content div {
+            font-size: 2rem; } }
+      body #learn-main #assigned-labs-container #content #lab-col {
+        width: 42%;
+        margin-left: 3%; }
+      body #learn-main #assigned-labs-container #content #owner-col {
+        width: 42%;
+        margin-left: 48%; }
+      body #learn-main #assigned-labs-container #content #check-col {
+        width: 5%;
+        margin-left: 93%;
+        align-items: center; }
+        body #learn-main #assigned-labs-container #content #check-col img {
+          position: absolute; }
+
 body #login-main {
   flex-direction: column;
   align-items: center;
