@@ -23,11 +23,16 @@
                 <img id="cover-img" src="img/cover.png">
             </div>
             <div id="buttons">
-                <button id="learn-link-btn" class="clip-btn learn-btn" data-relocation="/learn.html">LEARN</button>
-                <button id="create-link-btn" class="clip-btn create-btn" data-relocation="/create.html">CREATE</button>
+                <button id="learn-link-btn" class="clip-btn learn-btn" data-url="/learn.html" data-toggler="#learn-toggler">
+                    LEARN
+                </button>
+                <button id="create-link-btn" class="clip-btn create-btn" data-url="/create.html" data-toggler="#create-toggler">
+                    CREATE
+                </button>
             </div>
         </div>
-        <input id="clip-toggler" type="checkbox">
+        <input id="learn-toggler" class="clip-toggler" type="checkbox">
+        <input id="create-toggler" class="clip-toggler" type="checkbox">
         <div id="bg"></div>
     </div>
 </body>

@@ -95,13 +95,17 @@ body #index-main {
     width: 100vw;
     margin: 0;
     clip-path: polygon(0 0, 80% 0, 78.5% 5%, 50% 100%, 0 100%);
-    transition: clip-path .75s;
-    background-color: #1fb8d7; }
-  body #index-main #clip-toggler:checked ~ #bg {
+    background-color: #1fb8d7;
+    transition: clip-path .75s, background-color .75s; }
+  body #index-main .clip-toggler:checked ~ #bg {
     clip-path: polygon(0 0, 100% 0, 100% 5%, 100% 5%, 0 5%); }
-  body #index-main #clip-toggler {
+  body #index-main #learn-toggler:checked ~ #bg {
+    background-color: #20dca8; }
+  body #index-main #create-toggler:checked ~ #bg {
+    background-color: #c58de5; }
+  body #index-main .clip-toggler {
     position: fixed;
-    left: -100; }
+    left: -100px; }
   body #index-main #front {
     position: relative;
     display: flex;

@@ -12,15 +12,21 @@ body {
             width: 100vw;
             margin: 0;
             clip-path: polygon(0 0, 80% 0, 78.5% 5%, 50% 100%, 0 100%);
-            transition: clip-path .75s;
             background-color: $neutral-blue;
+            transition: clip-path .75s, background-color .75s;
         }
-        #clip-toggler:checked ~ #bg {
+        .clip-toggler:checked ~ #bg {
             clip-path: polygon(0 0, 100% 0, 100% 5%, 100% 5%, 0 5%);
         }
-        #clip-toggler {
+        #learn-toggler:checked ~ #bg {
+            background-color: $learn-green;
+        }
+        #create-toggler:checked ~ #bg {
+            background-color: $create-purple;
+        }
+        .clip-toggler {
             position: fixed;
-            left: -100;
+            left: -100px;
         }
 
         #front {
