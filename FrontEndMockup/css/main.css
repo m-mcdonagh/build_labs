@@ -54,9 +54,11 @@ body {
   body .create-btn {
     background-image: linear-gradient(to right, #e5cbf3, white); }
   body input {
-    font-family: "Roboto", sans-serif; }
+    font-family: "Roboto", sans-serif;
+    border-radius: 10px; }
   body textarea {
-    font-family: "Roboto", sans-serif; }
+    font-family: "Roboto", sans-serif;
+    border-radius: 10px; }
 
 body {
   margin: 0; }
@@ -88,7 +90,7 @@ body #index-main {
     height: 100vh;
     width: 100vw;
     margin: 0;
-    clip-path: polygon(0 0, 80% 0, 80% 0, 50% 100%, 0 100%);
+    clip-path: polygon(0 0, 80% 0, 78.5% 5%, 50% 100%, 0 100%);
     transition: clip-path .75s;
     background-color: #1fb8d7; }
   body #index-main #clip-toggler:checked ~ #bg {
@@ -158,7 +160,6 @@ body #lab-builder-main {
       body #lab-builder-main #controls #step-details #step-name {
         width: 33%; }
       body #lab-builder-main #controls #step-details #step-instruction {
-        border-radius: 10px;
         padding: 5px;
         resize: none;
         border: none; }
