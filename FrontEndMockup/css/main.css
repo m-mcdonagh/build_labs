@@ -2,9 +2,11 @@ body {
   font-family: "Roboto", sans-serif;
   color: white; }
   body .main {
+    display: flex;
     background-image: linear-gradient(#FFFFFF, #CFCFCF);
     width: 100vw;
-    height: 95vh; }
+    height: 95vh;
+    margin-top: 5vh; }
   body .neutral-header {
     background-color: #1fb8d7; }
   body .learn-header {
@@ -63,9 +65,10 @@ body {
 body {
   margin: 0; }
   body #header {
-    position: relative;
+    position: fixed;
     height: 5vh;
-    width: 100%; }
+    width: 100%;
+    top: 0; }
     body #header a {
       display: contents; }
       body #header a img {
@@ -82,7 +85,8 @@ body {
 
 body #index-main {
   position: relative;
-  margin-top: 5vh; }
+  margin-top: 5vh;
+  justify-content: center; }
   body #index-main #bg {
     position: fixed;
     left: 0;
@@ -176,7 +180,6 @@ body #lab-builder-main {
       text-align: center; }
 
 body #login-main {
-  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; }
@@ -219,15 +222,13 @@ body #login-main {
     body #login-main form label {
       font-size: 1.25rem; }
 
-body #part-builder-main {
-  display: flex; }
-  body #part-builder-main #settings-side-bar {
-    position: relative; }
-    body #part-builder-main #settings-side-bar #control-btns {
-      position: absolute;
-      bottom: 0;
-      width: 100%; }
-      body #part-builder-main #settings-side-bar #control-btns button {
-        width: 45%;
-        margin-left: 2.5%;
-        margin-right: 0; }
+body #part-builder-main #settings-side-bar {
+  position: relative; }
+  body #part-builder-main #settings-side-bar #control-btns {
+    position: absolute;
+    bottom: 0;
+    width: 100%; }
+    body #part-builder-main #settings-side-bar #control-btns button {
+      width: 45%;
+      margin-left: 2.5%;
+      margin-right: 0; }

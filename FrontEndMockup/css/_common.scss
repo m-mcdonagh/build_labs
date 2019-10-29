@@ -11,9 +11,11 @@ body{
     color: $text-color;
     
     .main {
+        display: flex;
         background-image: linear-gradient(#FFFFFF, #CFCFCF);
         width: 100vw;
         height: 95vh;
+        margin-top: 5vh;
     }
 
     .neutral-header {
