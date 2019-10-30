@@ -50,6 +50,7 @@ body{
         color: $text-color;
         height: 100%;
         width: 25%;
+        overflow: scroll;
     }
     .neutral-side-bar {
         background-color: darken($neutral-blue, $darker);
@@ -86,13 +87,22 @@ body{
     .neutral-btn {
         background-image: linear-gradient(to right, lighten($neutral-blue, 15%), $button-color);
     }
+    .neutral-btn:hover {
+        background-image: linear-gradient(to right, $neutral-blue, darken($button-color, 15%));
+    }
 
     .learn-btn {
         background-image: linear-gradient(to right, lighten($learn-green, 30%), $button-color);
     }
+    .learn-btn:hover {
+        background-image: linear-gradient(to right, lighten($learn-green, 15%), darken($button-color, 15%));
+    }
 
     .create-btn {
         background-image: linear-gradient(to right, lighten($create-purple, 15%), $button-color);
+    }
+    .create-btn:hover {
+        background-image: linear-gradient(to right, $create-purple, darken($button-color, 15%));
     }
 
     input {

@@ -25,7 +25,8 @@ body {
   body .side-bar {
     color: white;
     height: 100%;
-    width: 25%; }
+    width: 25%;
+    overflow: scroll; }
   body .neutral-side-bar {
     background-color: #1992aa;
     background-image: linear-gradient(#1992aa, #1fb8d7); }
@@ -53,10 +54,16 @@ body {
     cursor: pointer; }
   body .neutral-btn {
     background-image: linear-gradient(to right, #5bd0e7, white); }
+  body .neutral-btn:hover {
+    background-image: linear-gradient(to right, #1fb8d7, #d9d9d9); }
   body .learn-btn {
     background-image: linear-gradient(to right, #a3f2dc, white); }
+  body .learn-btn:hover {
+    background-image: linear-gradient(to right, #61e8c3, #d9d9d9); }
   body .create-btn {
     background-image: linear-gradient(to right, #e5cbf3, white); }
+  body .create-btn:hover {
+    background-image: linear-gradient(to right, #c58de5, #d9d9d9); }
   body input {
     font-family: "Roboto", sans-serif;
     border-radius: 10px; }
@@ -360,13 +367,110 @@ body #login-main {
     body #login-main form label {
       font-size: 1.25rem; }
 
+body #part-builder-main #settings-side-bar h1 {
+  font-size: .75em; }
+
+body #part-builder-main #settings-side-bar h2 {
+  font-size: 1em; }
+
 body #part-builder-main #settings-side-bar {
-  position: relative; }
-  body #part-builder-main #settings-side-bar #control-btns {
+  position: relative;
+  display: grid;
+  grid-template-areas: 'name-label       name-label       .          .' '.                name-input       name-input .' 'dimensions-label dimensions-label .          .' '.                x-label          x-label    .' '.                .                x          .' '.                y-label          y-label    .' '.                .                y          .' 'add-btns         add-btns         add-btns   add-btns';
+  grid-template-columns: 10% 10% 75% 5%;
+  grid-template-rows: 40px 30px 40px 30px 30px 30px 30px auto;
+  align-items: center;
+  overflow: visible; }
+  @media screen and (min-width: 550px) {
+    body #part-builder-main #settings-side-bar {
+      grid-template-areas: 'name-label       name-label       .          .' '.                name-input       name-input .' 'dimensions-label dimensions-label .          .' '.                x-label          x          .' '.                y-label          y          .' 'add-btns         add-btns         add-btns   add-btns';
+      grid-template-columns: 10% 40% 40% 10%;
+      grid-template-rows: 40px 30px 40px 30px 30px auto; }
+      body #part-builder-main #settings-side-bar h1 {
+        font-size: 1.25em; } }
+  @media screen and (min-width: 900px) {
+    body #part-builder-main #settings-side-bar {
+      grid-template-rows: 70px 50px 70px 50px 50px auto; }
+      body #part-builder-main #settings-side-bar input {
+        font-size: 1.25em; }
+      body #part-builder-main #settings-side-bar h1 {
+        font-size: 2em; }
+      body #part-builder-main #settings-side-bar h2 {
+        font-size: 1.5em; } }
+  @media screen and (min-width: 1600px) {
+    body #part-builder-main #settings-side-bar {
+      grid-template-areas: 'name-label       name-label       .          .          .          .' '.                name-input       name-input name-input name-input .' 'dimensions-label dimensions-label .          .          .          .' '.                x-label          x          y-label    y          .' 'add-btns         add-btns         add-btns   add-btns   add-btns   add-btns';
+      grid-template-columns: 10% 20% 20% 25% 20% 5%;
+      grid-template-rows: 70px 50px 70px 50px auto; } }
+  body #part-builder-main #settings-side-bar #name-lable {
+    grid-area: name-label; }
+  body #part-builder-main #settings-side-bar #name {
+    grid-area: name-input; }
+  body #part-builder-main #settings-side-bar #dimensions-label {
+    grid-area: dimensions-label; }
+  body #part-builder-main #settings-side-bar #dimensions-x-label {
+    grid-area: x-label; }
+  body #part-builder-main #settings-side-bar #dimensions-y-label {
+    grid-area: y-label; }
+  body #part-builder-main #settings-side-bar #dimensions-x {
+    grid-area: x; }
+  body #part-builder-main #settings-side-bar #dimensions-y {
+    grid-area: y; }
+  body #part-builder-main #settings-side-bar #add-btns {
+    grid-area: add-btns;
+    display: flex;
     position: absolute;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: flex-start;
+    width: 100%;
+    padding-bottom: 110px; }
+    @media screen and (min-width: 800px) {
+      body #part-builder-main #settings-side-bar #add-btns {
+        padding-bottom: 65px; } }
+    body #part-builder-main #settings-side-bar #add-btns .btn-wrapper {
+      position: relative;
+      width: 30%; }
+      body #part-builder-main #settings-side-bar #add-btns .btn-wrapper button {
+        display: contents; }
+        body #part-builder-main #settings-side-bar #add-btns .btn-wrapper button img {
+          width: 100%; }
+        body #part-builder-main #settings-side-bar #add-btns .btn-wrapper button span {
+          visibility: hidden;
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          transform: translate(-50%, 100%);
+          font-size: 1rem;
+          color: white;
+          width: 100%; }
+        body #part-builder-main #settings-side-bar #add-btns .btn-wrapper button img:hover ~ span {
+          visibility: visible; }
+  body #part-builder-main #settings-side-bar h1 {
+    margin-left: 5px; }
+  body #part-builder-main #settings-side-bar h2 {
+    width: 100%;
+    text-align: start; }
+    @media screen and (min-width: 550px) {
+      body #part-builder-main #settings-side-bar h2 {
+        text-align: end; } }
+  body #part-builder-main #settings-side-bar .dimensions {
+    width: 100%;
+    margin: 1px; }
+  body #part-builder-main #settings-side-bar #control-btns {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
     bottom: 0;
-    width: 100%; }
+    width: 25%; }
     body #part-builder-main #settings-side-bar #control-btns button {
-      width: 45%;
+      width: 95%;
       margin-left: 2.5%;
-      margin-right: 0; }
+      margin-right: 0;
+      font-size: 1.5rem; }
+    @media screen and (min-width: 800px) {
+      body #part-builder-main #settings-side-bar #control-btns {
+        flex-direction: row; }
+        body #part-builder-main #settings-side-bar #control-btns button {
+          width: 45%;
+          font-size: 2rem; } }

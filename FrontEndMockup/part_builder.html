@@ -8,21 +8,49 @@
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/part_builder.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="header" class="learn-header">
+    <div id="header" class="create-header">
         <a href="/"><img src="img/cover.png"></a>
         <button class="hamburger"><img src="img/hamburger.png"></button>
     </div>
     <div class="main" id="part-builder-main">
-        <div id="settings-side-bar" class="side-bar learn-side-bar left-bar">
+        <div id="settings-side-bar" class="side-bar create-side-bar left-bar">
+            <h1 id="name-label">Name:</h1>
+            <input id="name" type="text" placeholder="Part Name">
+            <h1 id="dimensions-label">Dimensions:</h1>
+            <h2 id="dimensions-x-label">Width:</h2>
+            <h2 id="dimensions-y-label">Height:</h2>
+            <input id="dimensions-x" class="dimensions" type="number" placeholder="x">
+            <input id="dimensions-y" class="dimensions" type="number" placeholder="y">
+            <div id="add-btns">
+                <div class="btn-wrapper">
+                    <button id="add-img">
+                        <img src="img/add-image.svg">
+                        <span>Add Image</span>
+                    </button>
+                </div>
+                <div class="btn-wrapper">
+                    <button id="add-slot">
+                        <img src="img/add-slot.svg">
+                        <span>Add Slot</span>
+                    </button>
+                    </div>
+                <div class="btn-wrapper">
+                    <button id="add-connector">
+                        <img src="img/connector.svg">
+                        <span>Add Connector</span>
+                    </button>
+                </div>
+            </div>
             <div id="control-btns">
-                <button class="learn-btn" id="save">SAVE</button>
-                <button class="learn-btn" id="exit">EXIT</button>
+                <button class="create-btn" id="save">SAVE</button>
+                <button class="create-btn" id="exit">EXIT</button>
             </div>
         </div>
         <div id="part-workspace"></div>
