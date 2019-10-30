@@ -8,6 +8,7 @@
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/lab_builder.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
@@ -20,24 +21,54 @@
     </div>
     <div class="main" id="lab-builder-main">
         <div id="workspace">
-            <div id="build-so-far"></div>
+            <div id="build-so-far"><img src="img/motherboard.png"></div>
             <button id="new-step-btn"><img src="img/add-icon.svg"></button>
         </div>
-        <div id="controls">
-            <div id="step-details" class="create-pane">
-                <input id="step-name" type="text" placeholder="Step Name">
-                <textarea id="step-instruction" type="text" placeholder="Instruction" rows="4"></textarea>
-            </div>
-            <div id="control-btns">
-                <button class="create-btn lab-overview-btn" id="save">SAVE</button>
-                <button class="create-btn lab-overview-btn" id="exit">EXIT</button>
-                <button class="create-btn new-step-btn" id="done">DONE</button>
-                <button class="create-btn new-step-btn" id="cancel">CANCEL</button>
-            </div>
-        </div>
         <div id="steps-side-bar" class="side-bar create-side-bar right-bar">
-            <h1>STEPS</h1>
             <ol id="step-list"></ol>
+            <h1>STEPS</h1>
+        </div>
+        <div id="controls">
+                <div id="step-details" class="create-pane">
+                    <input id="step-name" type="text" placeholder="Step Name">
+                    <textarea id="step-instruction" type="text" placeholder="Instruction" rows="4"></textarea>
+                    <button id="minimize" class="create-btn"> &lt;</button>
+                </div>
+                <div id="control-btns">
+                    <button class="create-btn lab-overview-btn" id="save">SAVE</button>
+                    <button class="create-btn lab-overview-btn" id="exit">EXIT</button>
+                    <button class="create-btn step-btns" id="done">DONE</button>
+                    <button class="create-btn step-btns" id="cancel">CANCEL</button>
+                </div>
+            </div>
+        <div id="part-selector" class="create-pane">
+            <div id="scroll">
+                <div id="parts-content" class="content">
+                    <div id="parts">
+                        <span>part0</span>
+                        <span>part1</span>
+                        <span>part2</span>
+                        <span>part3</span>
+                        <span>part4</span>
+                        <span>part5</span>
+                        <span>part6</span>
+                        <span>part7</span>
+                        <span>part8</span>
+                        <span>part9</span>
+                        <span>part10</span>
+                        <span>part11</span>
+                        <span>part12</span>
+                        <span>part13</span>
+                        <span>part14</span>
+                        <span>part15</span>
+                        <span>part16</span>
+                        <span>part17</span>
+                        <span>part18</span>
+                        <span>part19</span>
+                    </div>
+                </div>
+            </div>
+            <button id="part-cancel" class="create-btn">CANCEL</button>
         </div>
     </div>
 </body>

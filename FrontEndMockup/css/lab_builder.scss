@@ -1,19 +1,30 @@
 body {
     #lab-builder-main {
-        display: flex;
         flex-direction: row;
 
         #workspace {
             position: relative;
             width: 75vw;
+            height: 100%;
 
+            #build-so-far {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                width: 75%;
+                
+                img {
+                    max-height: 80vh;
+                }
+            }
             #new-step-btn {
                 display: contents;
                 
                 img {
                     position: absolute;
                     left: 85%;
-                    top: 40%;
+                    top: 50%;
                     width: 25%;
                     transform: translate(-50%, -50%);
                     cursor: pointer;
@@ -32,39 +43,104 @@ body {
             
             #step-details {
                 display: flex;
-                padding: 10px;
-                width: 80%;
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                margin: 1vh 1vw;
+                padding: 1vh 1vw;
+                width: 800px;
+                max-width: 70vw;
                 flex-direction: column;
                 border-radius: 25px;
 
                 #step-name {
                     width: 33%;
+                    font-size: 1.5rem;
                 }
                 #step-instruction {
+                    margin-top: 5px;
                     padding: 5px;
                     resize: none;
                     border: none;
+                    font-size: 1.25rem;
+                }
+                #minimize {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    height: min-content;
+                    border-radius: 100%;
+                    font-size: 1rem;
                 }
             }
             #control-btns {
+                position: fixed;
+                bottom: 0;
+                right: 0;
                 display: flex;
                 flex-direction: column;
-                width: 20%;
+                width: 25%;
 
-                .lab-overview-btn {
-                    display: none;
+                button{
+                    width: 95%;
+                    margin-left: 2.5%;
+                    margin-right: 0;
+                    font-size: 1.5rem
                 }
-                .new-step-btn {
-                    
+                @media screen and (min-width: 800px){
+                    flex-direction: row;
+                    button {
+                        width: 45%;
+                        font-size: 2rem;
+                    }
                 }
             }
         }
         #steps-side-bar {
             display: flex;
+            flex-direction: column;
             
             h1 {
-                width: 100%;
+                right: 12.5%;
+                transform: translate(50%,0);
+                position: fixed;
                 text-align: center;
+                width: 25%;
+                background-color: darken($create-purple, $darker);
+                margin-top: 0;
+            }
+            #step-list {
+                position: relative;
+                font-size: 1.5rem;
+                margin-top: 0;
+                margin-left: 10px;
+                word-wrap: break-word;
+                top: 50px;
+                padding-bottom: 65px;
+            }
+        }
+        #part-selector {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90vw;
+            width: 1000px;
+            height: 80vh;
+            border-radius: 50px;
+
+            #scroll {
+                margin-top: 50px;
+                height: 85%;
+
+                #parts-content span {
+                    width: min-content;
+                    cursor: pointer;
+                }
             }
         }
     }

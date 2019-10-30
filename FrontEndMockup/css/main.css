@@ -70,6 +70,27 @@ body {
   body textarea {
     font-family: "Roboto", sans-serif;
     border-radius: 10px; }
+  body #scroll {
+    width: 100%;
+    height: 90%;
+    overflow: scroll;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; }
+    body #scroll .content {
+      width: 90%;
+      min-height: 100%;
+      background-color: #FFFFFFC0;
+      color: black;
+      line-height: 150%; }
+      @media screen and (min-width: 775px) {
+        body #scroll .content {
+          font-size: 1.5rem; } }
+      body #scroll .content div {
+        margin: 20px;
+        display: flex;
+        flex-direction: column; }
 
 body #create-main {
   justify-content: center;
@@ -99,29 +120,8 @@ body #create-main {
       margin: 0;
       max-height: 70vh;
       background-image: linear-gradient(to bottom, #c58de5 25%, #5e67e0); }
-      body #create-main #grid-container #tab-container #scroll {
-        width: 100%;
-        height: 90%;
-        overflow: scroll;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start; }
-        body #create-main #grid-container #tab-container #scroll .content {
-          width: 90%;
-          min-height: 100%;
-          background-color: #FFFFFFC0;
-          color: black;
-          line-height: 150%; }
-          @media screen and (min-width: 775px) {
-            body #create-main #grid-container #tab-container #scroll .content {
-              font-size: 1.5rem; } }
-          body #create-main #grid-container #tab-container #scroll .content div {
-            margin: 20px;
-            display: flex;
-            flex-direction: column; }
-        body #create-main #grid-container #tab-container #scroll #labs-content {
-          display: none; }
+      body #create-main #grid-container #tab-container #labs-content {
+        display: none; }
     body #create-main #grid-container .tab-btn {
       position: relative;
       border-bottom-left-radius: 0;
@@ -224,17 +224,25 @@ body #index-main {
         margin-left: 0; }
 
 body #lab-builder-main {
-  display: flex;
   flex-direction: row; }
   body #lab-builder-main #workspace {
     position: relative;
-    width: 75vw; }
+    width: 75vw;
+    height: 100%; }
+    body #lab-builder-main #workspace #build-so-far {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 75%; }
+      body #lab-builder-main #workspace #build-so-far img {
+        max-height: 80vh; }
     body #lab-builder-main #workspace #new-step-btn {
       display: contents; }
       body #lab-builder-main #workspace #new-step-btn img {
         position: absolute;
         left: 85%;
-        top: 40%;
+        top: 50%;
         width: 25%;
         transform: translate(-50%, -50%);
         cursor: pointer; }
@@ -248,27 +256,87 @@ body #lab-builder-main {
     justify-content: right; }
     body #lab-builder-main #controls #step-details {
       display: flex;
-      padding: 10px;
-      width: 80%;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      margin: 1vh 1vw;
+      padding: 1vh 1vw;
+      width: 800px;
+      max-width: 70vw;
       flex-direction: column;
       border-radius: 25px; }
       body #lab-builder-main #controls #step-details #step-name {
-        width: 33%; }
+        width: 33%;
+        font-size: 1.5rem; }
       body #lab-builder-main #controls #step-details #step-instruction {
+        margin-top: 5px;
         padding: 5px;
         resize: none;
-        border: none; }
+        border: none;
+        font-size: 1.25rem; }
+      body #lab-builder-main #controls #step-details #minimize {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: min-content;
+        border-radius: 100%;
+        font-size: 1rem; }
     body #lab-builder-main #controls #control-btns {
+      position: fixed;
+      bottom: 0;
+      right: 0;
       display: flex;
       flex-direction: column;
-      width: 20%; }
-      body #lab-builder-main #controls #control-btns .lab-overview-btn {
-        display: none; }
+      width: 25%; }
+      body #lab-builder-main #controls #control-btns button {
+        width: 95%;
+        margin-left: 2.5%;
+        margin-right: 0;
+        font-size: 1.5rem; }
+      @media screen and (min-width: 800px) {
+        body #lab-builder-main #controls #control-btns {
+          flex-direction: row; }
+          body #lab-builder-main #controls #control-btns button {
+            width: 45%;
+            font-size: 2rem; } }
   body #lab-builder-main #steps-side-bar {
-    display: flex; }
+    display: flex;
+    flex-direction: column; }
     body #lab-builder-main #steps-side-bar h1 {
-      width: 100%;
-      text-align: center; }
+      right: 12.5%;
+      transform: translate(50%, 0);
+      position: fixed;
+      text-align: center;
+      width: 25%;
+      background-color: #b063dc;
+      margin-top: 0; }
+    body #lab-builder-main #steps-side-bar #step-list {
+      position: relative;
+      font-size: 1.5rem;
+      margin-top: 0;
+      margin-left: 10px;
+      word-wrap: break-word;
+      top: 50px;
+      padding-bottom: 65px; }
+  body #lab-builder-main #part-selector {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90vw;
+    width: 1000px;
+    height: 80vh;
+    border-radius: 50px; }
+    body #lab-builder-main #part-selector #scroll {
+      margin-top: 50px;
+      height: 85%; }
+      body #lab-builder-main #part-selector #scroll #parts-content span {
+        width: min-content;
+        cursor: pointer; }
 
 body #learn-main {
   justify-content: center;
