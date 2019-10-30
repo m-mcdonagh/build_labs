@@ -17,7 +17,7 @@ body {
     background-image: linear-gradient(to bottom right, #1fb8d7, #1992aa);
     box-shadow: 3px 3px 15px #45c9e4; }
   body .learn-pane {
-    background-image: linear-gradient(to bottom right, #20dca8, #1aaf86);
+    background-image: linear-gradient(to bottom right, #20dca8, #20ccdc);
     box-shadow: 3px 3px 15px #4ae5ba; }
   body .create-pane {
     background-image: linear-gradient(to bottom right, #c58de5 25%, #5e67e0);
@@ -41,14 +41,16 @@ body {
     border-width: 1px;
     border-radius: 20px;
     font-family: "Roboto", sans-serif;
-    font-size: 2rem; }
+    font-size: 2rem;
+    cursor: pointer; }
   body .button {
     margin: 5px;
     padding: 5px;
     border-width: 1px;
     border-radius: 20px;
     font-family: "Roboto", sans-serif;
-    font-size: 2rem; }
+    font-size: 2rem;
+    cursor: pointer; }
   body .neutral-btn {
     background-image: linear-gradient(to right, #5bd0e7, white); }
   body .learn-btn {
@@ -61,6 +63,85 @@ body {
   body textarea {
     font-family: "Roboto", sans-serif;
     border-radius: 10px; }
+
+body #create-main {
+  justify-content: center;
+  align-items: center; }
+  body #create-main #grid-container {
+    display: grid;
+    grid-template-areas: '.         parts     .         labs      .' 'container container container container container';
+    grid-template-rows: 40px 70vh;
+    grid-template-columns: 1vw auto 5vw auto 1vw;
+    max-width: 90vw;
+    width: 1000px; }
+    @media screen and (min-height: 500px) and (min-width: 550px) {
+      body #create-main #grid-container {
+        grid-template-rows: 75px 70vh; } }
+    body #create-main #grid-container #parts-tab-btn {
+      grid-area: parts; }
+    body #create-main #grid-container #labs-tab-btn {
+      grid-area: labs; }
+    body #create-main #grid-container #tab-container {
+      grid-area: container;
+      display: flex;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+      border-bottom-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      margin: 0;
+      max-height: 70vh;
+      background-image: linear-gradient(to bottom, #c58de5 25%, #5e67e0); }
+      body #create-main #grid-container #tab-container #scroll {
+        width: 100%;
+        height: 90%;
+        overflow: scroll;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; }
+        body #create-main #grid-container #tab-container #scroll .content {
+          width: 90%;
+          min-height: 100%;
+          background-color: #FFFFFFC0;
+          color: black;
+          line-height: 150%; }
+          @media screen and (min-width: 775px) {
+            body #create-main #grid-container #tab-container #scroll .content {
+              font-size: 1.5rem; } }
+          body #create-main #grid-container #tab-container #scroll .content div {
+            margin: 20px;
+            display: flex;
+            flex-direction: column; }
+        body #create-main #grid-container #tab-container #scroll #labs-content {
+          display: none; }
+    body #create-main #grid-container .tab-btn {
+      position: relative;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border: none;
+      margin: 0;
+      color: white;
+      font-size: 1rem;
+      padding: 0; }
+      @media screen and (min-height: 500px) and (min-width: 550px) {
+        body #create-main #grid-container .tab-btn {
+          font-size: 2rem;
+          padding: 5px; } }
+      body #create-main #grid-container .tab-btn a {
+        display: contents; }
+        body #create-main #grid-container .tab-btn a img {
+          position: absolute;
+          right: 10px;
+          top: 10%;
+          height: 80%; }
+    body #create-main #grid-container .selected-tab {
+      background-color: #c58de5;
+      font-weight: bold; }
+    body #create-main #grid-container .unselected-tab {
+      background-color: #8a7299;
+      height: 80%;
+      align-self: flex-end; }
 
 body {
   margin: 0; }
@@ -76,8 +157,7 @@ body {
         left: 10px;
         height: 100%; }
     body #header button {
-      display: contents;
-      cursor: pointer; }
+      display: contents; }
       body #header button img {
         position: absolute;
         height: 100%;
@@ -202,39 +282,39 @@ body #learn-main {
       grid-area: lab; }
     body #learn-main #assigned-labs-container #owner-header {
       grid-area: owner; }
-    body #learn-main #assigned-labs-container #content {
+    body #learn-main #assigned-labs-container #scroll {
       grid-area: content-table;
       display: flex;
       overflow: scroll;
       position: relative;
       max-width: 95%; }
       @media screen and (min-width: 775px) {
-        body #learn-main #assigned-labs-container #content {
+        body #learn-main #assigned-labs-container #scroll {
           max-width: 100%; } }
-      body #learn-main #assigned-labs-container #content div {
+      body #learn-main #assigned-labs-container #scroll div {
         display: flex;
-        position: absolute;
         flex-direction: column;
+        position: absolute;
         align-items: flex-end;
         min-height: 100%;
-        background-color: white;
+        background-color: #FFFFFFC0;
         color: black;
         line-height: 125%;
         padding: 5px; }
         @media screen and (min-width: 775px) {
-          body #learn-main #assigned-labs-container #content div {
+          body #learn-main #assigned-labs-container #scroll div {
             font-size: 2rem; } }
-      body #learn-main #assigned-labs-container #content #lab-col {
+      body #learn-main #assigned-labs-container #scroll #lab-col {
         width: 42%;
         margin-left: 3%; }
-      body #learn-main #assigned-labs-container #content #owner-col {
+      body #learn-main #assigned-labs-container #scroll #owner-col {
         width: 42%;
         margin-left: 48%; }
-      body #learn-main #assigned-labs-container #content #check-col {
+      body #learn-main #assigned-labs-container #scroll #check-col {
         width: 5%;
         margin-left: 93%;
         align-items: center; }
-        body #learn-main #assigned-labs-container #content #check-col img {
+        body #learn-main #assigned-labs-container #scroll #check-col img {
           position: absolute; }
 
 body #login-main {
