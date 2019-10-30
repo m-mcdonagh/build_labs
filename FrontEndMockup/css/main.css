@@ -359,10 +359,9 @@ body #learn-main {
       grid-area: owner; }
     body #learn-main #assigned-labs-container #scroll {
       grid-area: content-table;
-      display: flex;
-      overflow: scroll;
-      position: relative;
-      max-width: 95%; }
+      max-width: 95%;
+      height: 100%;
+      justify-content: flex-start; }
       @media screen and (min-width: 775px) {
         body #learn-main #assigned-labs-container #scroll {
           max-width: 100%; } }
