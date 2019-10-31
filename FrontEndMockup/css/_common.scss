@@ -51,6 +51,17 @@ body{
         height: 100%;
         width: 25%;
         overflow: scroll;
+        display: flex;
+        flex-direction: column;
+            
+        h1 {
+            right: 12.5%;
+            transform: translate(50%,0);
+            position: fixed;
+            text-align: center;
+            width: 25%;
+            margin-top: 0;
+        }
     }
     .neutral-side-bar {
         background-color: darken($neutral-blue, $darker);

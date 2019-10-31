@@ -97,17 +97,8 @@ body {
             }
         }
         #steps-side-bar {
-            display: flex;
-            flex-direction: column;
-            
-            h1 {
-                right: 12.5%;
-                transform: translate(50%,0);
-                position: fixed;
-                text-align: center;
-                width: 25%;
+            h1{
                 background-color: darken($create-purple, $darker);
-                margin-top: 0;
             }
             #step-list {
                 position: relative;

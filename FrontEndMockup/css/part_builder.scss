@@ -1,10 +1,10 @@
 body{
     #part-builder-main {
         #settings-side-bar {
-            h1 {
+            h2 {
                 font-size: .75em
             }
-            h2 {
+            h3 {
                 font-size: 1em;
             }
         }
@@ -24,15 +24,15 @@ body{
             grid-template-rows: 40px 30px 40px 30px 30px 30px 30px auto;
             @media screen and (min-width: 550px){
                 grid-template-areas: 
-                        'name-label       name-label       .          .'
-                        '.                name-input       name-input .'
-                        'dimensions-label dimensions-label .          .'
-                        '.                x-label          x          .'
-                        '.                y-label          y          .'
-                        'add-btns         add-btns         add-btns   add-btns';
+                    'name-label       name-label       .          .'
+                    '.                name-input       name-input .'
+                    'dimensions-label dimensions-label .          .'
+                    '.                x-label          x          .'
+                    '.                y-label          y          .'
+                    'add-btns         add-btns         add-btns   add-btns';
                 grid-template-columns: 10% 40% 40% 10%;
                 grid-template-rows: 40px 30px 40px 30px 30px auto;
-                h1 {
+                h2 {
                     font-size: 1.25em
                 }
             }
@@ -42,10 +42,10 @@ body{
                 input {
                     font-size: 1.25em;
                 }
-                h1 {
+                h2 {
                     font-size: 2em
                 }
-                h2 {
+                h3 {
                     font-size: 1.5em;
                 }
             }
@@ -114,10 +114,10 @@ body{
                 //     right: 2%;
                 // }
             }
-            h1 {
+            h2 {
                 margin-left: 5px;
             }
-            h2 {
+            h3 {
                 width: 100%;
                 text-align: start;
                 @media screen and (min-width: 550px){

@@ -26,7 +26,16 @@ body {
     color: white;
     height: 100%;
     width: 25%;
-    overflow: scroll; }
+    overflow: scroll;
+    display: flex;
+    flex-direction: column; }
+    body .side-bar h1 {
+      right: 12.5%;
+      transform: translate(50%, 0);
+      position: fixed;
+      text-align: center;
+      width: 25%;
+      margin-top: 0; }
   body .neutral-side-bar {
     background-color: #1992aa;
     background-image: linear-gradient(#1992aa, #1fb8d7); }
@@ -299,25 +308,16 @@ body #lab-builder-main {
           body #lab-builder-main #controls #control-btns button {
             width: 45%;
             font-size: 2rem; } }
-  body #lab-builder-main #steps-side-bar {
-    display: flex;
-    flex-direction: column; }
-    body #lab-builder-main #steps-side-bar h1 {
-      right: 12.5%;
-      transform: translate(50%, 0);
-      position: fixed;
-      text-align: center;
-      width: 25%;
-      background-color: #b063dc;
-      margin-top: 0; }
-    body #lab-builder-main #steps-side-bar #step-list {
-      position: relative;
-      font-size: 1.5rem;
-      margin-top: 0;
-      margin-left: 10px;
-      word-wrap: break-word;
-      top: 50px;
-      padding-bottom: 65px; }
+  body #lab-builder-main #steps-side-bar h1 {
+    background-color: #b063dc; }
+  body #lab-builder-main #steps-side-bar #step-list {
+    position: relative;
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-left: 10px;
+    word-wrap: break-word;
+    top: 50px;
+    padding-bottom: 65px; }
   body #lab-builder-main #part-selector {
     display: flex;
     flex-direction: column;
@@ -434,10 +434,10 @@ body #login-main {
     body #login-main form label {
       font-size: 1.25rem; }
 
-body #part-builder-main #settings-side-bar h1 {
+body #part-builder-main #settings-side-bar h2 {
   font-size: .75em; }
 
-body #part-builder-main #settings-side-bar h2 {
+body #part-builder-main #settings-side-bar h3 {
   font-size: 1em; }
 
 body #part-builder-main #settings-side-bar {
@@ -453,16 +453,16 @@ body #part-builder-main #settings-side-bar {
       grid-template-areas: 'name-label       name-label       .          .' '.                name-input       name-input .' 'dimensions-label dimensions-label .          .' '.                x-label          x          .' '.                y-label          y          .' 'add-btns         add-btns         add-btns   add-btns';
       grid-template-columns: 10% 40% 40% 10%;
       grid-template-rows: 40px 30px 40px 30px 30px auto; }
-      body #part-builder-main #settings-side-bar h1 {
+      body #part-builder-main #settings-side-bar h2 {
         font-size: 1.25em; } }
   @media screen and (min-width: 900px) {
     body #part-builder-main #settings-side-bar {
       grid-template-rows: 70px 50px 70px 50px 50px auto; }
       body #part-builder-main #settings-side-bar input {
         font-size: 1.25em; }
-      body #part-builder-main #settings-side-bar h1 {
-        font-size: 2em; }
       body #part-builder-main #settings-side-bar h2 {
+        font-size: 2em; }
+      body #part-builder-main #settings-side-bar h3 {
         font-size: 1.5em; } }
   @media screen and (min-width: 1600px) {
     body #part-builder-main #settings-side-bar {
@@ -513,13 +513,13 @@ body #part-builder-main #settings-side-bar {
           width: 100%; }
         body #part-builder-main #settings-side-bar #add-btns .btn-wrapper button img:hover ~ span {
           visibility: visible; }
-  body #part-builder-main #settings-side-bar h1 {
-    margin-left: 5px; }
   body #part-builder-main #settings-side-bar h2 {
+    margin-left: 5px; }
+  body #part-builder-main #settings-side-bar h3 {
     width: 100%;
     text-align: start; }
     @media screen and (min-width: 550px) {
-      body #part-builder-main #settings-side-bar h2 {
+      body #part-builder-main #settings-side-bar h3 {
         text-align: end; } }
   body #part-builder-main #settings-side-bar .dimensions {
     width: 100%;
