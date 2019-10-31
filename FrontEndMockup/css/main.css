@@ -30,7 +30,6 @@ body {
     display: flex;
     flex-direction: column; }
     body .side-bar h1 {
-      right: 12.5%;
       transform: translate(50%, 0);
       position: fixed;
       text-align: center;
@@ -232,6 +231,38 @@ body #index-main {
         width: 45%;
         margin-left: 0; }
 
+body #lab-main #parts-side-bar {
+  align-items: center; }
+  body #lab-main #parts-side-bar h1 {
+    left: -12.5%;
+    background-color: #1aaf86; }
+  body #lab-main #parts-side-bar ul {
+    position: relative;
+    top: 50px;
+    list-style-type: none;
+    padding: 0;
+    padding-bottom: 65px;
+    width: 95%; }
+    body #lab-main #parts-side-bar ul li {
+      display: contents; }
+      body #lab-main #parts-side-bar ul li img {
+        width: 100%; }
+
+body #lab-main #controls {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  width: 25%; }
+  body #lab-main #controls button {
+    width: 95%; }
+  @media screen and (min-width: 800px) {
+    body #lab-main #controls {
+      flex-direction: row; }
+      body #lab-main #controls button {
+        width: 45%;
+        font-size: 2rem; } }
+
 body #lab-builder-main {
   flex-direction: row; }
   body #lab-builder-main #workspace {
@@ -309,6 +340,7 @@ body #lab-builder-main {
             width: 45%;
             font-size: 2rem; } }
   body #lab-builder-main #steps-side-bar h1 {
+    right: 12.5%;
     background-color: #b063dc; }
   body #lab-builder-main #steps-side-bar #step-list {
     position: relative;

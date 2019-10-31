@@ -35,12 +35,12 @@ body{
 
     .neutral-pane {
         background-image: linear-gradient(to bottom right, $neutral-blue, darken($neutral-blue, $darker));
-        box-shadow: 3px 3px 15px lighten($neutral-blue, 10%);    }
-
+        box-shadow: 3px 3px 15px lighten($neutral-blue, 10%);    
+    }
     .learn-pane {
         background-image: linear-gradient(to bottom right, $learn-green, $learn-blue);
-        box-shadow: 3px 3px 15px lighten($learn-green, 10%);    }
-
+        box-shadow: 3px 3px 15px lighten($learn-green, 10%);    
+    }
     .create-pane {
         background-image: linear-gradient(to bottom right, $create-purple 25%, $create-blue);
         box-shadow: 3px 3px 15px lighten($create-purple, 10%);
@@ -55,7 +55,6 @@ body{
         flex-direction: column;
             
         h1 {
-            right: 12.5%;
             transform: translate(50%,0);
             position: fixed;
             text-align: center;

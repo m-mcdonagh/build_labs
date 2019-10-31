@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lab - buildLabs</title>
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/lab.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header" class="learn-header">
+        <a href="/"><img src="img/cover.png"></a>
+        <button class="hamburger"><img src="img/hamburger.png"></button>
+    </div>
+    <div class="main" id="lab-main">
+        <div id="parts-side-bar" class="side-bar learn-side-bar">
+            <ul id="parts">
+                <li><img src="img/motherboard.png" draggable="true"></li>
+                <li><img src="img/cpu.png" draggable="true"></li>
+            </ul>
+            <h1>PARTS</h1>
+        </div>
+        <div id="workspace">
+            <div id="build-so-far"></div>
+        </div>
+        <div id="controls">
+            <button class="learn-btn lab-overview-btn" id="save">SAVE</button>
+            <button class="learn-btn lab-overview-btn" id="exit">EXIT</button>
+        </div>
+    </div>
+</body>
+</html>
