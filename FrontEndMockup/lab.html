@@ -15,10 +15,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="header" class="learn-header">
-        <a href="/"><img src="img/cover.png"></a>
-        <button class="hamburger"><img src="img/hamburger.png"></button>
-    </div>
     <div class="main" id="lab-main">
         <div id="parts-side-bar" class="side-bar learn-side-bar">
             <ul id="parts">
@@ -33,6 +29,15 @@
         <div id="controls">
             <button class="learn-btn lab-overview-btn" id="save">SAVE</button>
             <button class="learn-btn lab-overview-btn" id="exit">EXIT</button>
+        </div>
+    </div>
+    <div id="header" class="learn-header">
+        <a id="cover" href="/"><img src="img/cover.png"></a>
+        <div id="hover-zone">
+            <button class="hamburger"><img src="img/hamburger.png"></button>
+            <div id="dropdown-menu" class="neutral-pane">
+                <a href="/login.html"><img src="img/log-off.svg"></a>
+            </div>
         </div>
     </div>
 </body>

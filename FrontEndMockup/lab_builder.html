@@ -15,10 +15,6 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="header" class="create-header">
-        <a href="/"><img src="img/cover.png"></a>
-        <button class="hamburger"><img src="img/hamburger.png"></button>
-    </div>
     <div class="main" id="lab-builder-main">
         <div id="workspace">
             <div id="build-so-far"><img src="img/motherboard.png"></div>
@@ -69,6 +65,15 @@
                 </div>
             </div>
             <button id="part-cancel" class="create-btn">CANCEL</button>
+        </div>
+    </div>
+    <div id="header" class="create-header">
+        <a id="cover" href="/"><img src="img/cover.png"></a>
+        <div id="hover-zone">
+            <button class="hamburger"><img src="img/hamburger.png"></button>
+            <div id="dropdown-menu" class="neutral-pane">
+                <a href="/login.html"><img src="img/log-off.svg"></a>
+            </div>
         </div>
     </div>
 </body>

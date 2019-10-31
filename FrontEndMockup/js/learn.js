@@ -1,6 +1,10 @@
 $(function(){
     placechecks();
     window.onresize = placechecks;
+
+    $('#lab-col span').on('click', function(){
+        window.location = '/lab.html';
+    })
 });
 
 function placechecks() {
@@ -11,6 +15,6 @@ function placechecks() {
             height: height,  
             left: left,
             top: $($(elem).attr('data-lab')).position().top - height/4.5
-        })
+        });
     });
 }

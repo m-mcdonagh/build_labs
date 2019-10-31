@@ -37,17 +37,6 @@ body {
             justify-content: center;
             align-items: center;
             z-index: 1;
-            
-            .hamburger {
-                display: contents;
-
-                img{
-                    position: fixed;
-                    top: 0;
-                    right: 10px;
-                    height: 5vh;
-                }
-            }
 
             #cover img {
                 max-height: 75vh;

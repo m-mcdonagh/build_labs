@@ -92,6 +92,11 @@ body{
         font-family: "Roboto", sans-serif;
         font-size: 2rem;
         cursor: pointer;
+        border-style: outset;
+        text-decoration: none;
+    }
+    .button:active {
+        border-style: inset;
     }
 
     .neutral-btn {

@@ -7,7 +7,7 @@ body {
         width: 100%;
         top: 0;
         
-        a{
+        #cover {
             display: contents;
             
             img {
@@ -16,13 +16,37 @@ body {
                 height: 100%;
             }
         }
-        button {
+    }
+    #hover-zone {
+        display: content;
+
+        .hamburger {
             display: contents;
 
-            img {
-                position: absolute;
-                height: 100%;
+            img{
+                position: fixed;
+                top: 0;
                 right: 10px;
+                height: 5vh;
+            }
+        }
+        #dropdown-menu {
+            display: none;
+            position: fixed;
+            top: 5vh;
+            right: 1vw;
+            width: min-content;
+            padding: 20px;
+            border-radius: 10px;
+            border-top-right-radius: 0;
+            z-index: 100;
+            
+            a{
+                display: content;
+                
+                img {
+                    height: 50px;
+                }
             }
         }
     }

@@ -48,6 +48,9 @@ body {
                 #lab-col {
                     width: 42%;
                     margin-left: 3%;
+                    span {
+                        cursor: pointer;
+                    }
                 }
                 #owner-col {
                     width: 42%;
