@@ -17,14 +17,14 @@ gulp.task('materialize:js', function(){
 });
 
 gulp.task('sass', function() {
-    return gulp.src('./css/*.scss')
+    return gulp.src('./scss/*.scss')
         .pipe(concat('main.scss'))
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('css'));
 });
 
 gulp.task('sass:watch', function() {
-    gulp.watch('./css/*.scss', ['sass']);
+    gulp.watch('./scss/*.scss', ['sass']);
 });
 
 gulp.task('default', ['sass', 'sass:watch']);
