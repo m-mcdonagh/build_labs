@@ -215,11 +215,11 @@ $switch-radius: 15px !default;
 // ==========================================================================
 
 // Media Query Ranges
-$small-screen-up: 601px !default;
-$medium-screen-up: 993px !default;
+$small-screen-up: 683px;
+$medium-screen-up: 1115px;
 $large-screen-up: 1201px !default;
-$small-screen: 600px !default;
-$medium-screen: 992px !default;
+$small-screen: 682px;
+$medium-screen: 1114px;
 $large-screen: 1200px !default;
 
 $medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
@@ -242,9 +242,9 @@ $element-bottom-margin: ($gutter-width*2)/3 !default;
 // 13. Navigation Bar
 // ==========================================================================
 
-$navbar-height: 64px !default;
+$navbar-height: 5vh;
 $navbar-line-height: $navbar-height !default;
-$navbar-height-mobile: 56px !default;
+$navbar-height-mobile: 5vh;
 $navbar-line-height-mobile: $navbar-height-mobile !default;
 $navbar-font-size: 1rem !default;
 $navbar-font-color: #fff !default;

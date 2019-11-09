@@ -6,90 +6,103 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - buildLabs</title>
     
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/login.js"></script>
     <script src="js/main.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
-<body>
+    <nav class="light-blue">
+        <div class="nav-wrapper">
+            <a id="cover" class="left" href="/"><img class="brand-logo" src="img/cover.png"></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="main" id="login-main">
-        <div id="login" class="neutral-pane container">
-            <form id="login-form" action="/login" method="POST" name="loginForm">
-                <h1>Login</h1>
-                <label class="email-label" for="email"><b>Email</b></label>
-                <input class="email-input text-field"
-                    type="email" 
-                    name="email" 
-                    placeholder="Enter email" 
-                    required>
-
-                <label class="password-label" for="password"><b>Password</b></label>
-                <input class="password-input text-field" 
-                    type="password" 
-                    name="password" 
-                    placeholder="Enter Password" 
-                    required>
-                <div class="buttons">
-                    <button id="show-reset-password" class="neutral-btn" type="button">Forgot Password?</button>
-                    <button id="show-register" class="neutral-btn" type="button">Register New Account</button>
-                    <input class="submit neutral-btn button" value="Submit" type="submit">
+        <div id="login" class="container light-blue darken-1">
+            <form id="login-form" action="/login" method="POST" name="loginForm" class="section">
+                <h1 class="center">Login</h1>
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-m1">
+                        <input id="email" type="email" required>
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s12 m10 offset-m1 ">
+                        <input id="password" type="password" required>
+                        <label for="password">Password</label>
+                    </div>
+                    <button class="submit btn cyan col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit">
+                        <i class="material-icons right">send</i>
+                        Submit
+                    </button>
+                </div>
+            </form>
+            <div class="divider row"></div>
+            <div class="section">
+                <div class="row">
+                    <button id="show-register" class="btn cyan col s12 m4 l3 offset-l3 offset-m2" type="button">
+                        <i class="material-icons left">account_circle</i>
+                        Register Account
+                    </button>
+                    <button id="show-reset-password" class="btn cyan col s12 m4 l3" type="button">
+                        Forgot Password?
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="register" class="container light-blue darken-1">
+            <form action="/register" method="POST" name="registerForm" class="section">
+                <h1 class="center">Register</h1>
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-m1">
+                        <input id="email" type="email">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col s12 m10 offset-m1">
+                        <input id="password" type="password" required>
+                        <label class="password-label" for="password">Password</label>
+                    </div>
+                    <div class="input-field col s12 m10 offset-m1">
+                        <input id="password-confirm" type="password" required>
+                        <label class="password-label" for="password-confirm">Confirm Password</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="hide-register" class="btn cyan col s1 m3 l2 offset-s1 offset-m2 offset-l3" type="button">
+                        <i class="material-icons left">arrow_back</i>Cancel
+                    </button>
+                    <button class="btn cyan col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="submit">
+                        <i class="material-icons right">send</i>Submit
+                    </button>
                 </div>
             </form>
         </div>
-        <div id="register" class="neutral-pane container">
-            <form action="/register" method="POST" name="registerForm">
-                <h1>Register</h1>
-                <label class="email-label" for="email"><b>Email</b></label>
-                <input class="email-input text-field"
-                        type="email" 
-                        name="email" 
-                        placeholder="Enter email" 
-                        required>
-    
-                <label class="password-label" for="password"><b>Password</b></label>
-                <input class="password-input text-field" 
-                        type="password" 
-                        name="password" 
-                        placeholder="Enter Password" 
-                        required>
-                <input class="password-confirm text-field"
-                        type="password"
-                        name="password-confirm"
-                        placeholder="Confirm Password"
-                        required>
-                <div class="buttons">
-                    <input class="submit neutral-btn button" value="Submit" type="submit">
-                    <button id="hide-register" class="neutral-btn" type="button">Cancel</button>
+        <div id="reset-password" class="container light-blue darken-1">
+            <form action="/resetpassword" method="POST" name="resetPassword" class=>
+                <h1 class="center">Reset Password</h1>
+                <div class="row">
+                    <div class="input-field col s12 m10 offset-m1">
+                        <input id="email" type="email" required>
+                        <label for="email">Email</label>
+                    </div>
                 </div>
-            </form>
-        </div>
-        <div id="reset-password" class="neutral-pane container">
-            <form action="/resetpassword" method="POST" name="resetPassword">
-                <h1>Reset Password</h1>
-                <label class="email-label" for="email"><b>Email</b></label>
-                <input class="email-input text-field"
-                        type="email" 
-                        name="email" 
-                        placeholder="Enter email" 
-                        required>
-                <div class="buttons">
-                    <input class="submit neutral-btn button" value="Submit" type="submit">
-                    <button id="hide-reset-password" class="neutral-btn" type="button">Cancel</button>
+                <div class="row">
+                    <button id="hide-reset-password" class="btn cyan col s1 m3 l2 offset-s1 offset-m2 offset-l3" type="button">
+                        <i class="material-icons left">arrow_back</i>Cancel
+                    </button>
+                    <button class="btn cyan col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="submit">
+                        <i class="material-icons right">send</i>Submit
+                    </button>
                 </div>
             </form>
         </div>
     </div>
-    <div id="header" class="neutral-header">
-            <a id="cover" href="/"><img src="img/cover.png"></a>
-            <div id="hover-zone">
-                <button class="hamburger"><img src="img/hamburger.png"></button>
-                <div id="dropdown-menu" class="neutral-pane">
-                    <a href="/login.html"><img src="img/log-off.svg"></a>
-                </div>
-            </div>
-        </div>
 </body>
 </html>

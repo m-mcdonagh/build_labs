@@ -69,22 +69,6 @@ nav {
       transform: translateX(-50%);
     }
 
-    @media #{$medium-and-down} {
-      left: 50%;
-      transform: translateX(-50%);
-
-      &.left, &.right {
-        padding: 0;
-        transform: none;
-      }
-
-      &.left { left: 0.5rem; }
-      &.right {
-        right: 0.5rem;
-        left: auto;
-      }
-    }
-
     &.right {
       right: 0.5rem;
       padding: 0;

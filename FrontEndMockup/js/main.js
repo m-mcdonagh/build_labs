@@ -10,5 +10,5 @@ $(function() {
     });
     $('#hover-zone').mouseover(function() {
         clearTimeout(timeout);
-    })
+    });
 })
