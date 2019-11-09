@@ -1,8 +1,20 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var sourcemaps = require('gulp-sourcemaps');
-var cleanCSS = require('gulp-clean-css');
-var concat = require('gulp-concat');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const concat = require('gulp-concat');
+const browserfy = require('gulp-browserify');
+
+gulp.task('materialize:css', function(){
+    return gulp.src('./scss/materialize/materialize.scss')
+        .pipe(concat('materialize.scss'))
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('css'));
+});
+
+gulp.task('materialize:js', function(){
+    return gulp.src('.js/materialize/*.js')
+        .pipe(concat('materialize.js'))
+        .pipe(gulp.dest('./js/bin'))
+});
 
 gulp.task('sass', function() {
     return gulp.src('./css/*.scss')
