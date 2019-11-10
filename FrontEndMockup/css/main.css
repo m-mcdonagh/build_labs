@@ -344,6 +344,8 @@ body #part-builder-main #settings-side-bar {
   body #part-builder-main #settings-side-bar .icon-btn {
     display: contents; }
     body #part-builder-main #settings-side-bar .icon-btn img:hover {
+      opacity: .9; }
+    body #part-builder-main #settings-side-bar .icon-btn img:active {
       opacity: .75; }
   body #part-builder-main #settings-side-bar #control-btns {
     position: absolute;

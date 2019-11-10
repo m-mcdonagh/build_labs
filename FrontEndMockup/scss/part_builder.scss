@@ -9,6 +9,9 @@ body{
                 display: contents;
 
                 img:hover {
+                    opacity: .9;
+                }
+                img:active {
                     opacity: .75;
                 }
             }
