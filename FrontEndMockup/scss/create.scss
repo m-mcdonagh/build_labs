@@ -3,70 +3,45 @@ body {
         justify-content: center;
         align-items: center;
 
-        #grid-container {
-            display: grid;
-            grid-template-areas: 
-                '.         parts     .         labs      .'
-                'container container container container container';
-            grid-template-rows: 40px 70vh;
-            @media screen and (min-height: 500px) and (min-width: 550px){
-                grid-template-rows: 75px 70vh;
-            }
-            grid-template-columns: 1vw auto 5vw auto 1vw;
-            max-width: 90vw;
-            width: 1000px;
-            
-            #parts-tab-btn {grid-area: parts;}
-            #labs-tab-btn {grid-area: labs;}
-            #tab-container {
-                grid-area: container;
-                display: flex;
-                position: relative;
-                justify-content: center;
-                align-items: center;
-                border-bottom-left-radius: 50px;
-                border-bottom-right-radius: 50px;
-                margin: 0;
-                max-height: 70vh;
-                background-image: linear-gradient(to bottom, $create-purple 25%, $create-blue);
+        .container {
+            position: relative;
+            height: 95%;
 
-               #labs-content {
-                    display: none;
-                }
-            }
-            .tab-btn {
-                position: relative;
-                border-bottom-left-radius: 0;
-                border-bottom-right-radius: 0;
-                border: none;
-                margin: 0;
-                color: $text-color;
-                font-size: 1rem;
-                padding: 0;
-                @media screen and (min-height: 500px) and (min-width: 550px){
-                    font-size: 2rem;
-                    padding: 5px;
-                }
+            .tabs{
+                width: 100%;
+                overflow: hidden;
 
-                a {
-                    display: contents;
-                    
-                    img {
-                        position: absolute;
-                        right: 10px;
-                        top: 10%;
-                        height: 80%;
+                .tab {
+                    min-width: 50%;
+
+                    span {
+                        font-size: 2em;
                     }
                 }
             }
-            .selected-tab {
-                background-color: $create-purple;
-                font-weight: bold;
+            .content-wrapper {
+                margin-top: 1px;
+
+                .content {
+                    overflow-x: hidden;
+                    overflow-y: scroll;
+                    display: flex;
+                    flex-direction: column;
+                    min-height: 100%;
+                    margin: 0;
+                    padding: 0;
+                    color: #313639;
+                    
+                    span {
+                        margin: 0 0 0 10px;
+                    }
+                }
             }
-            .unselected-tab {
-                background-color: $create-purple-dull;
-                height: 80%;
-                align-self: flex-end;
+
+            .fixed-action-btn {
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
             }
         }
     }

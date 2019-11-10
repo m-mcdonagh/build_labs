@@ -38,85 +38,37 @@ body {
   body textarea {
     font-family: "Roboto", sans-serif;
     border-radius: 10px; }
-  body #scroll {
-    width: 100%;
-    height: 90%;
-    overflow: scroll;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; }
-    body #scroll .content {
-      width: 90%;
-      min-height: 100%;
-      background-color: #FFFFFFC0;
-      color: black;
-      line-height: 150%; }
-      @media screen and (min-width: 775px) {
-        body #scroll .content {
-          font-size: 1.5rem; } }
-      body #scroll .content div {
-        margin: 20px;
-        display: flex;
-        flex-direction: column; }
 
 body #create-main {
   justify-content: center;
   align-items: center; }
-  body #create-main #grid-container {
-    display: grid;
-    grid-template-areas: '.         parts     .         labs      .' 'container container container container container';
-    grid-template-rows: 40px 70vh;
-    grid-template-columns: 1vw auto 5vw auto 1vw;
-    max-width: 90vw;
-    width: 1000px; }
-    @media screen and (min-height: 500px) and (min-width: 550px) {
-      body #create-main #grid-container {
-        grid-template-rows: 75px 70vh; } }
-    body #create-main #grid-container #parts-tab-btn {
-      grid-area: parts; }
-    body #create-main #grid-container #labs-tab-btn {
-      grid-area: labs; }
-    body #create-main #grid-container #tab-container {
-      grid-area: container;
-      display: flex;
-      position: relative;
-      justify-content: center;
-      align-items: center;
-      border-bottom-left-radius: 50px;
-      border-bottom-right-radius: 50px;
-      margin: 0;
-      max-height: 70vh;
-      background-image: linear-gradient(to bottom, #c58de5 25%, #5e67e0); }
-      body #create-main #grid-container #tab-container #labs-content {
-        display: none; }
-    body #create-main #grid-container .tab-btn {
-      position: relative;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border: none;
-      margin: 0;
-      color: white;
-      font-size: 1rem;
-      padding: 0; }
-      @media screen and (min-height: 500px) and (min-width: 550px) {
-        body #create-main #grid-container .tab-btn {
-          font-size: 2rem;
-          padding: 5px; } }
-      body #create-main #grid-container .tab-btn a {
-        display: contents; }
-        body #create-main #grid-container .tab-btn a img {
-          position: absolute;
-          right: 10px;
-          top: 10%;
-          height: 80%; }
-    body #create-main #grid-container .selected-tab {
-      background-color: #c58de5;
-      font-weight: bold; }
-    body #create-main #grid-container .unselected-tab {
-      background-color: #8a7299;
-      height: 80%;
-      align-self: flex-end; }
+  body #create-main .container {
+    position: relative;
+    height: 95%; }
+    body #create-main .container .tabs {
+      width: 100%;
+      overflow: hidden; }
+      body #create-main .container .tabs .tab {
+        min-width: 50%; }
+        body #create-main .container .tabs .tab span {
+          font-size: 2em; }
+    body #create-main .container .content-wrapper {
+      margin-top: 1px; }
+      body #create-main .container .content-wrapper .content {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        color: #313639; }
+        body #create-main .container .content-wrapper .content span {
+          margin: 0 0 0 10px; }
+    body #create-main .container .fixed-action-btn {
+      position: absolute;
+      right: 10px;
+      bottom: 10px; }
 
 nav {
   position: fixed;
