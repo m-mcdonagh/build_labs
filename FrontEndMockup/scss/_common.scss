@@ -18,36 +18,9 @@ body{
         background-image: linear-gradient(#FFFFFF, #CFCFCF);
         width: 100vw;
         height: 95vh;
+        margin: 0;
+        padding: 0;
         margin-top: 5vh;
-    }
-
-    .side-bar {
-        color: $text-color;
-        height: 100%;
-        width: 25%;
-        overflow: scroll;
-        display: flex;
-        flex-direction: column;
-            
-        h1 {
-            transform: translate(50%,0);
-            position: fixed;
-            text-align: center;
-            width: 25%;
-            margin-top: 0;
-        }
-    }
-    .neutral-side-bar {
-        background-color: darken($neutral-blue, $darker);
-        background-image: linear-gradient(darken($neutral-blue, $darker), $neutral-blue);
-    }
-    .learn-side-bar {
-        background-color: darken($learn-green, $darker);
-        background-image: linear-gradient(darken($learn-green, $darker), $learn-green);
-    }
-    .create-side-bar {
-        background-color: darken($create-purple, $darker);
-        background-image: linear-gradient(darken($create-purple, $darker), $create-purple);
     }
     
     .btn {

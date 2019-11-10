@@ -7,57 +7,58 @@
     <title>Part Builder - buildLabs</title>
     
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/part_builder.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main" id="part-builder-main">
-        <div id="settings-side-bar" class="side-bar create-side-bar">
-            <h2 id="name-label">Name:</h2>
-            <input id="name" type="text" placeholder="Part Name">
-            <h2 id="dimensions-label">Dimensions:</h2>
-            <h3 id="dimensions-x-label">Width:</h3>
-            <h3 id="dimensions-y-label">Height:</h3>
-            <input id="dimensions-x" class="dimensions" type="number" placeholder="x">
-            <input id="dimensions-y" class="dimensions" type="number" placeholder="y">
-            <div id="add-btns">
-                <div class="btn-wrapper">
-                    <button id="add-img">
-                        <img src="img/add-image.svg">
-                        <span>Add Image</span>
-                    </button>
+    <nav class="indigo lighten-1">
+        <div class="nav-wrapper">
+            <a id="cover" class="left" href="/"><img class="brand-logo" src="img/cover.png"></a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main row" id="part-builder-main">
+        <div id="settings-side-bar" class="section left indigo col s3 hide-on-small-only">
+            <div class="row">
+                <h2 class="col s10 offset-s1 flow-text">Part Name:</h2>
+                <div class="input-field col s12">
+                    <input id="part-name" type="text" placeholder="Part Name">
                 </div>
-                <div class="btn-wrapper">
-                    <button id="add-slot">
-                        <img src="img/add-slot.svg">
-                        <span>Add Slot</span>
-                    </button>
-                    </div>
-                <div class="btn-wrapper">
-                    <button id="add-connector">
-                        <img src="img/connector.svg">
-                        <span>Add Connector</span>
-                    </button>
+                <h2 class="col s10 offset-s1 flow-text">Dimensions:</h2>
+                <div class="input-field col s6">
+                    <input id="width" type="number">
+                    <label for="width">Width</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="height" type="number">
+                    <label for="height">Height</label>
                 </div>
             </div>
-            <div id="control-btns">
-                <button class="create-btn" id="save">SAVE</button>
-                <button class="create-btn" id="exit">EXIT</button>
+            <div class="row">
+                <button id="add-img" class="icon-btn">
+                    <img src="img/add-image.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Image">
+                </button>
+                <button id="add-slot" class="icon-btn">
+                    <img src="img/add-slot.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Slot">
+                </button>
+                <button id="add-connector" class="icon-btn">
+                    <img src="img/connector.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Connector">
+                </button>
+            </div>
+            <div id="control-btns" class="row">
+                <button class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
+                <a href="/create.html" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</a>
             </div>
         </div>
-        <div id="part-workspace"></div>
-    </div>
-    <div id="header" class="create-header">
-        <a id="cover" href="/"><img src="img/cover.png"></a>
-        <div id="hover-zone">
-            <button class="hamburger"><img src="img/hamburger.png"></button>
-            <div id="dropdown-menu" class="neutral-pane">
-                <a href="/login.html"><img src="img/log-off.svg"></a>
-            </div>
-        </div>
+        <div id="part-workspace" class="col s9"></div>
     </div>
 </body>
 </html>
