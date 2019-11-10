@@ -343,6 +343,8 @@ body #part-builder-main #settings-side-bar {
   overflow-y: scroll; }
   body #part-builder-main #settings-side-bar .icon-btn {
     display: contents; }
+    body #part-builder-main #settings-side-bar .icon-btn img {
+      cursor: pointer; }
     body #part-builder-main #settings-side-bar .icon-btn img:hover {
       opacity: .9; }
     body #part-builder-main #settings-side-bar .icon-btn img:active {

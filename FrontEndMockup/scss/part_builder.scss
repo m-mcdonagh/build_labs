@@ -7,7 +7,10 @@ body{
             
             .icon-btn {
                 display: contents;
-
+                
+                img {
+                    cursor: pointer;
+                }
                 img:hover {
                     opacity: .9;
                 }
