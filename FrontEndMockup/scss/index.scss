@@ -4,6 +4,22 @@ body {
         margin-top: 5vh;
         justify-content: center;
 
+        #logout{   
+            display: contents;
+
+            i{
+                position: fixed;
+                right: 10px;
+                top: 10px;
+                color: #03a9f4;
+                transition: color .75s;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+        .clip-toggler:checked ~ #logout i {
+            color: white;
+        }
         #bg {
             position: fixed;
             left: 0;
@@ -12,17 +28,17 @@ body {
             width: 100vw;
             margin: 0;
             clip-path: polygon(0 0, 80% 0, 78.5% 5%, 50% 100%, 0 100%);
-            background-color: $neutral-blue;
+            background-color: #03a9f4;
             transition: clip-path .75s, background-color .75s;
         }
         .clip-toggler:checked ~ #bg {
             clip-path: polygon(0 0, 100% 0, 100% 5%, 100% 5%, 0 5%);
         }
         #learn-toggler:checked ~ #bg {
-            background-color: $learn-green;
+            background-color: #00bcd4;
         }
         #create-toggler:checked ~ #bg {
-            background-color: $create-purple;
+            background-color: #5c6bc0;
         }
         .clip-toggler {
             position: fixed;

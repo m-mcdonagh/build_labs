@@ -7,10 +7,13 @@
     <title>buildLabs</title>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/index.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -21,10 +24,10 @@
                 <img id="cover-img" src="img/cover.png">
             </div>
             <div id="buttons">
-                <button id="learn-link-btn" class="clip-btn learn-btn" data-url="/learn.html" data-toggler="#learn-toggler">
+                <button id="learn-link-btn" class="clip-btn btn cyan lighten-2 waves-effect" data-url="/learn.html" data-toggler="#learn-toggler">
                     LEARN
                 </button>
-                <button id="create-link-btn" class="clip-btn create-btn" data-url="/create.html" data-toggler="#create-toggler">
+                <button id="create-link-btn" class="clip-btn btn indigo lighten-3 waves-effect" data-url="/create.html" data-toggler="#create-toggler">
                     CREATE
                 </button>
             </div>
@@ -32,13 +35,9 @@
         <input id="learn-toggler" class="clip-toggler" type="checkbox">
         <input id="create-toggler" class="clip-toggler" type="checkbox">
         <div id="bg"></div>
-        <div id="hover-zone">
-            <button id="white-ham" class="hamburger"><img src="img/hamburger.png"></button>
-            <button id="blue-ham" class="hamburger"><img src="img/hamburger-alt.png"></button>
-            <div id="dropdown-menu" class="neutral-pane">
-                <a href="/login.html"><img src="img/log-off.svg"></a>
-            </div>
-        </div>
+        <a id="logout" href="/login.html">
+            <i class="material-icons">power_settings_new</i>
+        </a>
     </div>
 </body>
 </html>
