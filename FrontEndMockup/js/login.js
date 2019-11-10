@@ -1,23 +1,23 @@
 $(function() {
     
     $('#show-register').on('click', function() {
-        $('#login').hide();
-        $('#register').show();
+        $('#login').slideUp();
+        $('#register').slideDown();
     });
 
     $('#show-reset-password').on('click', function() {
-        $('#login').hide();
-        $('#reset-password').show();
+        $('#login').slideUp();
+        $('#reset-password').slideDown();
     });
 
     $('#hide-register').on('click', function() {
-        $('#register').hide();
-        $('#login').show();
+        $('#register').slideUp();
+        $('#login').slideDown();
     });
 
     $('#hide-reset-password').on('click', function() {
-        $('#reset-password').hide();
-        $('#login').show();
+        $('#reset-password').slideUp();
+        $('#login').slideDown();
     });
 
     $('#register').hide();

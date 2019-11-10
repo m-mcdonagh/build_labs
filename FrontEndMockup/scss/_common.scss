@@ -21,31 +21,6 @@ body{
         margin-top: 5vh;
     }
 
-    .neutral-header {
-        background-color: $neutral-blue;
-    }
-
-    .learn-header {
-        background-color: $learn-green
-    }
-
-    .create-header {
-        background-color: $create-purple;
-    }
-
-    .neutral-pane {
-        background-image: linear-gradient(to bottom right, $neutral-blue, darken($neutral-blue, $darker));
-        box-shadow: 3px 3px 15px lighten($neutral-blue, 10%);    
-    }
-    .learn-pane {
-        background-image: linear-gradient(to bottom right, $learn-green, $learn-blue);
-        box-shadow: 3px 3px 15px lighten($learn-green, 10%);    
-    }
-    .create-pane {
-        background-image: linear-gradient(to bottom right, $create-purple 25%, $create-blue);
-        box-shadow: 3px 3px 15px lighten($create-purple, 10%);
-    }
-
     .side-bar {
         color: $text-color;
         height: 100%;
@@ -74,50 +49,10 @@ body{
         background-color: darken($create-purple, $darker);
         background-image: linear-gradient(darken($create-purple, $darker), $create-purple);
     }
-
-    button {
-        margin: 5px;
-        padding: 5px;
-        border-width: 1px;
-        border-radius: 20px;
-        font-family: "Roboto", sans-serif;
-        font-size: 2rem;
-        cursor: pointer;
-    }
-    .button {
-        margin: 5px;
-        padding: 5px;
-        border-width: 1px;
-        border-radius: 20px;
-        font-family: "Roboto", sans-serif;
-        font-size: 2rem;
-        cursor: pointer;
-        border-style: outset;
-        text-decoration: none;
-    }
-    .button:active {
-        border-style: inset;
-    }
-
-    .neutral-btn {
-        background-image: linear-gradient(to right, lighten($neutral-blue, 15%), $button-color);
-    }
-    .neutral-btn:hover {
-        background-image: linear-gradient(to right, $neutral-blue, darken($button-color, 15%));
-    }
-
-    .learn-btn {
-        background-image: linear-gradient(to right, lighten($learn-green, 30%), $button-color);
-    }
-    .learn-btn:hover {
-        background-image: linear-gradient(to right, lighten($learn-green, 15%), darken($button-color, 15%));
-    }
-
-    .create-btn {
-        background-image: linear-gradient(to right, lighten($create-purple, 15%), $button-color);
-    }
-    .create-btn:hover {
-        background-image: linear-gradient(to right, $create-purple, darken($button-color, 15%));
+    
+    .btn {
+        color: #313639;
+        margin: 0 1px;
     }
 
     input {
