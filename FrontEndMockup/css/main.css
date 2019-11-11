@@ -1,6 +1,7 @@
 body {
   font-family: "Roboto", sans-serif;
-  color: white; }
+  color: white;
+  overflow: hidden; }
   body .main {
     display: flex;
     background-image: linear-gradient(#FFFFFF, #CFCFCF);
@@ -21,7 +22,8 @@ body {
   body #scroll {
     width: 100%;
     height: 90%;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     position: relative;
     display: flex;
     justify-content: center;
@@ -144,34 +146,44 @@ body #index-main {
         margin-left: 0; }
 
 body #lab-main #parts-side-bar {
-  align-items: center; }
-  body #lab-main #parts-side-bar h1 {
-    left: -12.5%;
-    background-color: #1aaf86; }
-  body #lab-main #parts-side-bar ul {
-    position: relative;
-    top: 50px;
-    list-style-type: none;
-    padding: 0;
-    padding-bottom: 65px;
-    width: 95%; }
-    body #lab-main #parts-side-bar ul li {
-      display: contents; }
-      body #lab-main #parts-side-bar ul li img {
-        width: 100%; }
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0;
+  padding-bottom: 50px; }
+  body #lab-main #parts-side-bar #parts {
+    margin: 0;
+    width: 100%;
+    box-shadow: none; }
+    body #lab-main #parts-side-bar #parts li .collapsible-header {
+      color: #313639;
+      padding: 0;
+      padding-right: 1rem;
+      border-left: solid 1px #313639;
+      border-right: solid 1px #313639; }
+      body #lab-main #parts-side-bar #parts li .collapsible-header h5 {
+        width: 100%;
+        text-align: right; }
+    body #lab-main #parts-side-bar #parts li .collapsible-body img {
+      margin-left: 12.5%;
+      width: 75%; }
+  body #lab-main #parts-side-bar #padding {
+    height: 50px; }
 
 body #lab-main #controls {
   display: flex;
   flex-direction: column;
   position: fixed;
-  bottom: 0;
-  width: 25%; }
-  body #lab-main #controls button {
+  left: 10px;
+  bottom: 10px;
+  width: 25%;
+  z-index: 1; }
+  body #lab-main #controls .btn {
     width: 95%; }
   @media screen and (min-width: 800px) {
     body #lab-main #controls {
       flex-direction: row; }
-      body #lab-main #controls button {
+      body #lab-main #controls .btn {
         width: 45%;
         font-size: 2rem; } }
 
@@ -233,7 +245,8 @@ body #lab-builder-main #steps-side-bar {
   position: relative;
   margin: 0;
   padding: 0;
-  overflow: hidden; }
+  overflow-x: hidden;
+  overflow-y: scroll; }
   body #lab-builder-main #steps-side-bar h1 {
     position: absolute;
     top: 0;
@@ -276,7 +289,8 @@ body #learn-main {
   body #learn-main #assigned-labs-container {
     padding-left: 10px;
     height: 90%;
-    overflow: scroll; }
+    overflow-x: hidden;
+    overflow-y: scroll; }
     body #learn-main #assigned-labs-container .card {
       position: relative;
       color: #313639;

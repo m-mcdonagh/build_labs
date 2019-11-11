@@ -7,36 +7,54 @@
     <title>Lab - buildLabs</title>
     
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>  
     <script src="js/main.js"></script>
     <script src="js/lab.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main" id="lab-main">
-        <div id="parts-side-bar" class="side-bar learn-side-bar">
-            <ul id="parts">
-                <li><img src="img/motherboard.png" draggable="true"></li>
-                <li><img src="img/cpu.png" draggable="true"></li>
+    <nav class="cyan">
+        <div class="nav-wrapper">
+            <a id="cover" class="left" href="/"><img class="brand-logo" src="img/cover.png"></a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="/logout"><i class="material-icons">power_settings_new</i></a></li>
             </ul>
-            <h1>PARTS</h1>
         </div>
-        <div id="workspace">
+    </nav>
+    <div class="main row" id="lab-main">
+        <div id="parts-side-bar" class="cyan darken-1 col s3">
+            <h4 class="center">PARTS</h4>
+            <ul id="parts" class="collapsible">
+                <li>
+                    <div class="collapsible-header cyan lighten-4 waves-effect waves-light">
+                        <h5 class="category">Category1</h5>
+                    </div>
+                    <div class="collapsible-body">
+                        <img src="img/motherboard.png" class="tooltipped" data-position="right" data-tooltip="Motherboard">
+                        <img src="img/cpu.png" class="tooltipped" data-position="right" data-tooltip="CPU">
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header cyan lighten-4 waves-effect waves-light">
+                        <h5 class="category">Category2</h5>
+                    </div>
+                    <div class="collapsible-body">
+                        <img src="img/cpu.png" class="tooltipped" data-position="right" data-tooltip="CPU">
+                    </div>
+                </li>
+            </ul>
+            <div id="padding"></div>
+        </div>
+        <div id="workspace" class="col s9">
             <div id="build-so-far"></div>
         </div>
         <div id="controls">
-            <button class="learn-btn lab-overview-btn" id="save">SAVE</button>
-            <button class="learn-btn lab-overview-btn" id="exit">EXIT</button>
-        </div>
-    </div>
-    <div id="header" class="learn-header">
-        <a id="cover" href="/"><img src="img/cover.png"></a>
-        <div id="hover-zone">
-            <button class="hamburger"><img src="img/hamburger.png"></button>
-            <div id="dropdown-menu" class="neutral-pane">
-                <a href="/login.html"><img src="img/log-off.svg"></a>
-            </div>
+            <button class="btn cyan lighten-3 waves-effect" id="save">SAVE</button>
+            <a href="/learn.html" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
         </div>
     </div>
 </body>
