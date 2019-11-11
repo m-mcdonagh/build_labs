@@ -5,7 +5,8 @@ body {
         #assigned-labs-container {
             padding-left: 10px;
             height: 90%;
-            overflow: scroll;
+            overflow-x: hidden;
+            overflow-y: scroll;
 
             .card {
                 position: relative;
