@@ -31,7 +31,7 @@ body {
     body #scroll .content {
       width: 95%;
       min-height: 100%;
-      background-color: #FFFFFFC0;
+      background-color: #FFFFFFF0;
       color: black;
       line-height: 150%; }
       @media screen and (min-width: 775px) {
@@ -65,7 +65,8 @@ body #create-main {
         min-height: 100%;
         margin: 0;
         padding: 0;
-        color: #313639; }
+        color: #313639;
+        background-color: #FFFFFFF0; }
         body #create-main .container .content-wrapper .content span {
           margin: 0 0 0 10px; }
     body #create-main .container .fixed-action-btn {
@@ -304,7 +305,7 @@ body #learn-main {
         position: absolute;
         align-items: flex-end;
         min-height: 100%;
-        background-color: #FFFFFFC0;
+        background-color: #FFFFFFF0;
         color: black;
         line-height: 125%;
         padding: 5px; }
