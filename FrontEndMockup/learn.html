@@ -7,119 +7,79 @@
     <title>Learn - buildLabs</title>
     
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="js/main.js"></script>
     <script src="js/learn.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="cyan">
+        <div class="nav-wrapper">
+            <a id="cover" class="left" href="/"><img class="brand-logo" src="img/cover.png"></a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+            </ul>
+        </div>  
+    </nav>
     <div class="main" id="learn-main">
-        <div id="assigned-labs-container" class="learn-pane">
-            <h1 id="lab-header">Labs</h1>
-            <h1 id="owner-header">Owner</h1>
-            <div id="scroll">
-                <div id="lab-col">
-                    <span id="0">test</span>
-                    <span id="1">test</span>
-                    <span id="2">test</span>
-                    <span id="3">test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span id="26">test</span>
+        <div id="assigned-labs-container" class="container section row cyan darken-1">
+            <div class="not-started card cyan lighten-4 col s11 m11 l5">
+                <div class="card-content">
+                    <span class="card-title">
+                        <i class="material-icons left">assignment</i>Lab Name
+                    </span>
+                    <p><b>Owner:</b> owner name</p>
                 </div>
-                <div id="owner-col">
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
-                    <span>test</span>
+                <div class="card-action">
+                    <a href="/lab.html" class="start">Start</a>
                 </div>
-                <div id="check-col">
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <span>&#9744</span>
-                    <img class="check" data-lab="#1" src="img/check.png">
-                    <img class="check" data-lab="#3" src="img/check.png">
-                    <img class="check" data-lab="#26" src="img/check.png">
+                <span class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744</span>
+            </div>
+            <div class="partially-completed card cyan lighten-4 col s11 m11 l5">
+                <div class="card-content">
+                    <span class="card-title">
+                        <i class="material-icons left">assignment</i>Lab Name
+                    </span>
+                    <p><b>Owner:</b> owner name</p>
                 </div>
+                <div class="card-action">
+                    <a href="/lab.html" class="start">Restart</a>
+                    <a href="/lab.html" class="continue right">Continue</a>
+                </div>
+                <span class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744</span>
+            </div>
+            <div class="completed card cyan lighten-4 col s11 m11 l5">
+                <div class="card-content">
+                    <span class="card-title">
+                        <i class="material-icons left">assignment</i>Lab Name
+                    </span>
+                    <p><b>Owner:</b> owner name</p>
+                </div>
+                <div class="card-action">
+                    <a href="/lab.html" class="start">Restart</a>
+                </div>
+                <span class="check-box">&#9744</span>
+                <img class="check tooltipped" data-position="left" data-tooltip="COMPLETE" src="img/check.png">
+            </div>
+            <div class="completed card cyan lighten-4 col s11 m11 l5">
+                <div class="card-content">
+                    <span class="card-title">
+                        <i class="material-icons left">assignment</i>Lab Name
+                    </span>
+                    <p><b>Owner:</b> owner name</p>
+                </div>
+                <div class="card-action">
+                    <a href="/lab.html" class="start">Restart</a>
+                    <a href="/lab.html" class="continue right">Continue</a>
+                </div>
+                <span class="check-box">&#9744</span>
+                <img class="check tooltipped" data-position="left" data-tooltip="COMPLETE" src="img/check.png">
             </div>
         </div>
     </div>
-    <div id="header" class="learn-header">
-            <a id="cover" href="/"><img src="img/cover.png"></a>
-            <div id="hover-zone">
-                <button class="hamburger"><img src="img/hamburger.png"></button>
-                <div id="dropdown-menu" class="neutral-pane">
-                    <a href="/login.html"><img src="img/log-off.svg"></a>
-                </div>
-            </div>
-        </div>
 </body>
 </html>

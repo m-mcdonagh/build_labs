@@ -3,67 +3,42 @@ body {
         justify-content: center;
         align-items: center;
         #assigned-labs-container {
-            display: grid;
-            grid-template-areas: 
-                'lab           owner         .'
-                'content-table content-table content-table';
-            grid-template-columns: 45% 45% 10%;
-            grid-template-rows: 70px auto ;
-            height: 80vh;
-            width: 90vw;
-            padding: 0 0 20px;
-            border-radius: 50px;
-            
-            h1{
-                width: 100%;
-                text-align: center;
-            }
-            #lab-header {grid-area: lab}
-            #owner-header {grid-area: owner}
-            #scroll {
-                grid-area: content-table;
-                max-width: 95%;
-                height: 100%;
-                justify-content: flex-start;
-                @media screen and (min-width: 775px){
-                    max-width: 100%;
+            padding-left: 10px;
+            height: 90%;
+            overflow: scroll;
+
+            .card {
+                position: relative;
+                color: #313639;
+                margin-left: 2%;
+                @media screen  and (min-width: 1000px){
+                    margin-left: 5%;
                 }
-                
-                div {
-                    display: flex;
-                    flex-direction: column;
+
+
+                i.material-icons {
+                    cursor: default;
+                }
+                .card-action {
+                    a {
+                        color: #f57c00;
+                    }
+                    a:hover{
+                        color: #ffa726;
+                    }
+                }
+                .check-box {
                     position: absolute;
-                    align-items: flex-end;
-                    min-height: 100%;
-                    background-color: $content-bg;
-                    color: black;
-                    line-height: 125%;
-                    padding: 5px;
-
-                    @media screen and (min-width: 775px){
-                        font-size: 2rem;
-                    }
+                    right: 8px;
+                    top: 0;
+                    font-size: 2rem;
+                    cursor: default;
                 }
-
-                #lab-col {
-                    width: 42%;
-                    margin-left: 3%;
-                    span {
-                        cursor: pointer;
-                    }
-                }
-                #owner-col {
-                    width: 42%;
-                    margin-left: 48%;
-                }
-                #check-col {
-                    width: 5%;
-                    margin-left: 93%;
-                    align-items: center;
-
-                    img {
-                        position: absolute;
-                    }
+                .check {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 30px;
                 }
             }
         }
