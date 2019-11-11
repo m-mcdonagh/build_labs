@@ -18,16 +18,16 @@ public class ViewController {
     public String register() {
         return "register";
     }
-    @RequestMapping("/play")
+    @RequestMapping("/create")
     public String play() {
-        return "play";
+        return "create";
     }
-    @RequestMapping("/game")
+    @RequestMapping("/part_builder")
     public String games() {
-        return "game";
+        return "part_builder";
     }
-    @RequestMapping("/games")
+    @RequestMapping("/lab_builder")
     public String previousGames() {
-        return "games";
+        return "lab_builder";
     }
 }
