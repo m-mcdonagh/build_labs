@@ -1,4 +1,6 @@
 $(function() {
+    $('.modal').modal();
+    
     $('#step-details').hide();
     $('.step-btns').hide();
     $('#part-selector').hide();
@@ -11,7 +13,6 @@ $(function() {
     $('#new-step-btn').on('click', function() {
         $('#new-step-btn').hide();
         $('.lab-overview-btn').prop('disabled', true);
-        $('#part-selector').show();
     });
     
     
@@ -30,7 +31,6 @@ $(function() {
         $('#step-list').append($('<li>').text(name));
     });
     $('#cancel').on('click', function() {
-        $('#build-so-far img').hide();
         $('#step-name').val('');
         $('#step-instruction').val('');
     });
@@ -41,13 +41,13 @@ $(function() {
         $('.lab-overview-btn').hide();
         $('.step-btns').show();
         $('#step-details').show();
-        $('#part-selector').hide();
+        $('#part-selector').modal('close');
         $('#build-so-far img').show();
     });
     $('#part-cancel').on('click', function() {
         $('#new-step-btn').show();
         $('.lab-overview-btn').prop('disabled', false);
-        $('#part-selector').hide();
+        $('#part-selector').modal('close');
     });   
     
     
@@ -55,24 +55,28 @@ $(function() {
     var height;
     $('#minimize').on('click', function(){
         if (toggle){
-            $('#step-name').show();
-            $('#step-instruction').show();
+            $('#step-details .row').show()
             $('#step-details').animate({
                 width: '800px',
-                height: height
-            })
+                height: height + 'px',
+            });
+            $('#step-details').css({
+                'overflow-y': 'visible'
+            });
             toggle=false;
         }
         else {
-            height = $('#step-details').height();
+            height = $('#step-details').height() + 19;
             $('#step-details').animate({
-                width: $(this).width(),
-                height: $(this).height()
+                width: $(this).width() + 'px',
+                height: $(this).height() + 'px',
             }, function(){
-                $('#step-name').hide();
-                $('#step-instruction').hide();
+                $('#step-details .row').hide();
+            });
+            $('#step-details').css({
+                'overflow-y': 'scroll'
             });
             toggle=true;
         }
-    })
+    });
 });

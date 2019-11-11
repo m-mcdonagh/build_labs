@@ -1,10 +1,7 @@
 body {
     #lab-builder-main {
-        flex-direction: row;
-
         #workspace {
             position: relative;
-            width: 75vw;
             height: 100%;
 
             #build-so-far {
@@ -29,6 +26,9 @@ body {
                     transform: translate(-50%, -50%);
                     cursor: pointer;
                 }
+                img:hover{
+                    opacity: .75;
+                }
             }
         }
 
@@ -42,7 +42,6 @@ body {
             justify-content: right;
             
             #step-details {
-                display: flex;
                 position: fixed;
                 left: 0;
                 bottom: 0;
@@ -50,56 +49,42 @@ body {
                 padding: 1vh 1vw;
                 width: 800px;
                 max-width: 70vw;
-                flex-direction: column;
-                border-radius: 25px;
+                max-height: 25%;
+                
+                .row{
+                    overflow-x: visible;
+                    overflow-y: scroll;
+                    max-height: 100%;
+                }
 
-                #step-name {
-                    width: 33%;
-                    font-size: 1.5rem;
-                }
-                #step-instruction {
-                    margin-top: 5px;
-                    padding: 5px;
-                    resize: none;
-                    border: none;
-                    font-size: 1.25rem;
-                }
                 #minimize {
                     position: absolute;
                     top: 0;
                     right: 0;
-                    height: min-content;
-                    border-radius: 100%;
-                    font-size: 1rem;
                 }
             }
             #control-btns {
                 position: fixed;
                 bottom: 0;
                 right: 0;
-                display: flex;
-                flex-direction: column;
                 width: 25%;
-
-                button{
-                    width: 95%;
-                    margin-left: 2.5%;
-                    margin-right: 0;
-                    font-size: 1.5rem
-                }
-                @media screen and (min-width: 800px){
-                    flex-direction: row;
-                    button {
-                        width: 45%;
-                        font-size: 2rem;
-                    }
-                }
             }
         }
+
+
         #steps-side-bar {
+            position: relative;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+
             h1{
-                right: 12.5%;
-                background-color: darken($create-purple, $darker);
+                position: absolute;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding-top: 20px;
+                text-align: center;
             }
             #step-list {
                 position: relative;
@@ -107,31 +92,35 @@ body {
                 margin-top: 0;
                 margin-left: 10px;
                 word-wrap: break-word;
-                top: 50px;
+                top: 87px;
                 padding-bottom: 65px;
             }
         }
+
+
         #part-selector {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             max-width: 90vw;
             width: 1000px;
-            height: 80vh;
-            border-radius: 50px;
+            height: 90vh;
+            overflow: hidden;
 
             #scroll {
-                margin-top: 50px;
-                height: 85%;
+                margin: 0;
+                margin-top: 2.5%;
+                height: 90%;
 
-                #parts-content span {
-                    width: min-content;
-                    cursor: pointer;
+                #parts-content {
+                    margin: 0;
+
+                    span {
+                        width: min-content;
+                        cursor: pointer;
+                    }
                 }
             }
         }
