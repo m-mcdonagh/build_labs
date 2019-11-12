@@ -11,7 +11,7 @@ public class Part {
     @Id
     private String _id;
     private String name;
-    private Binary img;
+    private Binary img; // TODO replace this with actual file handle implementation
     private List<Double> dimensions;
     private List<List<Double>> slotPoints;
     private List<Double> connectorPoint;

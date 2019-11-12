@@ -17,7 +17,7 @@ public class PartController {
 
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
-    public void ListParts(@RequestParam String id) {
+    public void listParts(@RequestParam String id) {
         return;
     }
     @RequestMapping(value ="/part", method = RequestMethod.GET)
