@@ -1,8 +1,12 @@
 package cerulean.project.models;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+@Document
 public class Step {
+
     private Integer index; //Index into lab arraylist
     private Step parent; // What part is this step attached to
     private Integer parentSlot; // List Index in slotPoints in Part
@@ -10,6 +14,7 @@ public class Step {
     private Part newPart; // Part that this step uses
     private Integer rotation; // Is the part rotated
     private String instructions; // The instructions for this step
+
     public Step(Integer index, Step parent, Integer parentSlot, List children, Part newPart, Integer rotation, String instructions){
         this.index = index;
         this.parent = parent;

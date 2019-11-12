@@ -1,13 +1,19 @@
 package cerulean.project.models;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.*;
 
+@Document
 public class Lab {
 
-
+    @Id
+    private String _id;
 
     private String name;
+
     private String labCreator_Id;
-    private String _id;
+
     private List<Part> partsList;
     private List<String> assignedTo_Ids;
     private List<Step> steps;

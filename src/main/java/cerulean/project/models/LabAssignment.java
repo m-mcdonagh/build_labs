@@ -1,5 +1,8 @@
 package cerulean.project.models;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class LabAssignment {
     private String labId;
     private String assigner_id;

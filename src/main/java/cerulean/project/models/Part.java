@@ -1,8 +1,14 @@
 package cerulean.project.models;
 import org.bson.types.Binary;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.List;
 
+@Document
 public class Part {
+
+    @Id
     private String _id;
     private String name;
     private Binary img;
