@@ -9,6 +9,9 @@ import java.util.List;
 public interface LabAssignmentRepository extends MongoRepository<LabAssignment, String> {
     // findById(String) is implicit -- no need to declare
 
+    @Query("{'lab_id': ?0}")
+    List<LabAssignment> findAllByLabId(String labId);
+
     // The below function might not even be required since the database is denormalized
     @Query("{'user_id':?0}")
     List<LabAssignment> findAllAssignedToUser(String userId);

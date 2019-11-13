@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,13 @@ public class LabService {
     private LabRepository labRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
+
+    public List<Lab> getLabsCreatedByUser(String username) throws UsernameNotFoundException {
+        List<Lab> results = new ArrayList<>();
+        List<String> labIds = accountService.getAccount(username).getCreatedLabs_ids();
+        labRepository.findAllById(labIds).forEach(results::add);
+        return results;
+    }
 
 }
