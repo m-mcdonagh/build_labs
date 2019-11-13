@@ -27,57 +27,65 @@
     </nav>
     <div class="main" id="learn-main">
         <div id="assigned-labs-container" class="container section row cyan darken-1">
-            <div class="not-started card cyan lighten-4 col s11 m11 l5">
-                <div class="card-content">
-                    <span class="card-title">
-                        <i class="material-icons left">assignment</i>Lab Name
-                    </span>
-                    <p><b>Owner:</b> owner name</p>
+            <!-- 4 categories of cards -->
+                <!-- Not started, and never finished -->
+                <div class="card cyan lighten-4 col s11 m11 l5">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <i class="material-icons left">assignment</i>Lab Name
+                        </span>
+                        <p><b>Owner:</b> owner name</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/lab.html" class="start">Start</a>
+                    </div>
+                    <span class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744</span>
                 </div>
-                <div class="card-action">
-                    <a href="/lab.html" class="start">Start</a>
+
+                <!-- In progress, but never finished -->
+                <div class="card cyan lighten-4 col s11 m11 l5">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <i class="material-icons left">assignment</i>Lab Name
+                        </span>
+                        <p><b>Owner:</b> owner name</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/lab.html" class="start">Restart</a>
+                        <a href="/lab.html" class="continue right">Continue</a>
+                    </div>
+                    <span class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744</span>
                 </div>
-                <span class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744</span>
-            </div>
-            <div class="partially-completed card cyan lighten-4 col s11 m11 l5">
-                <div class="card-content">
-                    <span class="card-title">
-                        <i class="material-icons left">assignment</i>Lab Name
-                    </span>
-                    <p><b>Owner:</b> owner name</p>
+
+                <!-- Completed, and not in progress  -->
+                <div class="card cyan lighten-4 col s11 m11 l5">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <i class="material-icons left">assignment</i>Lab Name
+                        </span>
+                        <p><b>Owner:</b> owner name</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/lab.html" class="start">Restart</a>
+                    </div>
+                    <span class="check-box">&#9744</span>
+                    <img class="check tooltipped" data-position="left" data-tooltip="COMPLETE" src="img/check.png">
                 </div>
-                <div class="card-action">
-                    <a href="/lab.html" class="start">Restart</a>
-                    <a href="/lab.html" class="continue right">Continue</a>
-                </div>
-                <span class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744</span>
-            </div>
-            <div class="completed card cyan lighten-4 col s11 m11 l5">
-                <div class="card-content">
-                    <span class="card-title">
-                        <i class="material-icons left">assignment</i>Lab Name
-                    </span>
-                    <p><b>Owner:</b> owner name</p>
-                </div>
-                <div class="card-action">
-                    <a href="/lab.html" class="start">Restart</a>
-                </div>
-                <span class="check-box">&#9744</span>
-                <img class="check tooltipped" data-position="left" data-tooltip="COMPLETE" src="img/check.png">
-            </div>
-            <div class="completed card cyan lighten-4 col s11 m11 l5">
-                <div class="card-content">
-                    <span class="card-title">
-                        <i class="material-icons left">assignment</i>Lab Name
-                    </span>
-                    <p><b>Owner:</b> owner name</p>
-                </div>
-                <div class="card-action">
-                    <a href="/lab.html" class="start">Restart</a>
-                    <a href="/lab.html" class="continue right">Continue</a>
-                </div>
-                <span class="check-box">&#9744</span>
-                <img class="check tooltipped" data-position="left" data-tooltip="COMPLETE" src="img/check.png">
+
+                <!-- Completed before, but in progress again -->
+                <div class="card cyan lighten-4 col s11 m11 l5">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <i class="material-icons left">assignment</i>Lab Name
+                        </span>
+                        <p><b>Owner:</b> owner name</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="/lab.html" class="start">Restart</a>
+                        <a href="/lab.html" class="continue right">Continue</a>
+                    </div>
+                    <span class="check-box">&#9744</span>
+                    <img class="check tooltipped" data-position="left" data-tooltip="COMPLETE" src="img/check.png">
             </div>
         </div>
     </div>
