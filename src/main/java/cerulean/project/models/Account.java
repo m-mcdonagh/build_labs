@@ -26,8 +26,9 @@ public class Account implements UserDetails {
     @Indexed(unique = true)
     private String email;
 
-    private List<String> assignedLabs_ids;
     private List<String> createdLabs_ids;
+
+    private List<String> assignedLabs_ids;
     private List<String> createdParts_ids;
 
     private List<GrantedAuthority> authorities;
