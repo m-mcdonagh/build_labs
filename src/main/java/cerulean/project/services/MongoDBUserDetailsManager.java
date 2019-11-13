@@ -36,10 +36,7 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
         if (!userExists(username)) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new User(
-                account.getUsername(),
-                account.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority(UserRoles.ROLE_USER)));
+        return account;
 
     }
 
@@ -57,7 +54,7 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
         if (userExists(user.getUsername())) {
             throw new RuntimeException("Username already exists");
         }
-        Account newAccount = new Account(user.getUsername(), user.getPassword());
+        Account newAccount = (Account) user; // Throws ClassCastException if user is not Account
         accountRepository.save(newAccount);
     }
 
