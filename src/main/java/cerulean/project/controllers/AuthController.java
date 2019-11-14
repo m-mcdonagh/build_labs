@@ -42,8 +42,9 @@ public class AuthController {
                 .password(password).authorities(new SimpleGrantedAuthority(UserRoles.ROLE_USER)).build();
         userDetailsManager.createUser(newUser);
          **/
-
+        System.out.println(username+password+email);
         Account newAccount = new Account(username, passwordEncoder.encode(password), email);
+
         userDetailsManager.createUser(newAccount);
         try {
             httpResponse.sendRedirect("/login");
