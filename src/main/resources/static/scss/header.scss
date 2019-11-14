@@ -1,0 +1,17 @@
+nav {
+    position: fixed;
+    height: 5vh;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    
+    #cover {
+        display: contents;
+        
+        img {
+            position: absolute;
+            left: 10px;
+            height: 100%;
+        }
+    }
+}
