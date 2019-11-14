@@ -30,7 +30,7 @@ public class StepControllerService {
         if (!isStepValid(step, labAssignment)) {
             throw new RuntimeException("That step is not valid");
         }
-        labAssignment.setCurrentStep( labAssignment.getCurrentStep() + 1 );
+        labAssignment.setCurrentStep( step.getIndex() );
         labAssignmentService.updateLabAssignment(labAssignment);
         return labAssignment.getCurrentStep();
     }
