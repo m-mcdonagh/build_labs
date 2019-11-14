@@ -21,9 +21,34 @@ function resizePart() {
     })
 }
 
+function addSlot(x, y) {
+    let newSlot = $('<div></div>').addClass('slot').addClass('tooltipped').css({
+        left: x,
+        top: y,
+    }).attr('data-position', 'bottom').attr('data-tooltip', 'Slot');
+    $('#slots').append(newSlot);
+    newSlot.tooltip();
+    
+}
+
 $(function() {
     $('.tooltipped').tooltip();
     $('.modal').modal();
+
+    $('#add-slot').on('click', function() {
+        let $this = $(this);
+        $this.prop('disabled', true);
+        let $main = $('#part-builder-main');
+        $main.css({cursor: 'crosshair'});
+        setTimeout(function(){
+            $main.on('click', function(e){
+                $this.prop('disabled', false);
+                $main.css({cursor: 'auto'});
+                $main.off('click');
+                addSlot(e.clientX, e.clientY);
+            });
+        }, 1);
+    });
 
     $('.dimension').on('input', function() {
         let $this = $(this);
