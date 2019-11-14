@@ -26,9 +26,15 @@ public class Lab {
         this.assignedTo_Ids = assignedTo_Ids;
         this.steps = steps;
     }
+
+    public String get_id() {
+        return _id;
+    }
+
     public String getName() {
         return name;
     }
+
     public List<Part> getPartsList() {
         return partsList;
     }
