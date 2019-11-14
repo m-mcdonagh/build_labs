@@ -5,6 +5,9 @@ body{
             overflow-x: hidden;
             overflow-y: scroll;
             
+            #part {
+                display: contents;
+            }
             .icon-btn {
                 display: contents;
                 
@@ -25,5 +28,13 @@ body{
                 bottom: 1px;
             }
         }
+    }
+    #workspace {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .btn {
+        color: white;
     }
 }

@@ -343,6 +343,8 @@ body #part-builder-main #settings-side-bar {
   position: relative;
   overflow-x: hidden;
   overflow-y: scroll; }
+  body #part-builder-main #settings-side-bar #part {
+    display: contents; }
   body #part-builder-main #settings-side-bar .icon-btn {
     display: contents; }
     body #part-builder-main #settings-side-bar .icon-btn img {
@@ -356,3 +358,11 @@ body #part-builder-main #settings-side-bar {
     width: 100%;
     left: 20px;
     bottom: 1px; }
+
+body #workspace {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+body .btn {
+  color: white; }
