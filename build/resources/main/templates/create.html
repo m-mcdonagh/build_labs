@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create - buildLabs</title>
+    
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/create.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/materialize.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="indigo lighten-1">
+        <div class="nav-wrapper">
+            <a id="cover" class="left" href="/"><img class="brand-logo" src="img/cover.png"></a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+            </ul>
+        </div>  
+    </nav>
+    <div class="main" id="create-main">
+        <div class="container indigo row">
+            <ul class="tabs">
+                <li class="tab">
+                    <a href="#parts">
+                        <i class="material-icons">build</i>
+                        <span>Parts</span>
+                    </a>
+                </li>
+                <li class="tab">
+                    <a href="#labs">
+                        <i class="material-icons">assignment</i>
+                        <span>Labs</span>
+                    </a>
+                </li>
+            </ul>
+            <div id="parts" class="col s12 content-wrapper">
+                <div class="content flow-text scroll">
+                    <span>part0</span>
+                    <span>part1</span>
+                    <span>part2</span>
+                    <span>part3</span>
+                    <span>part4</span>
+                    <span>part5</span>
+                    <span>part6</span>
+                    <span>part7</span>
+                    <span>part8</span>
+                    <span>part9</span>
+                    <span>part10</span>
+                    <span>part11</span>
+                    <span>part12</span>
+                    <span>part13</span>
+                    <span>part14</span>
+                    <span>part15</span>
+                    <span>part16</span>
+                    <span>part17</span>
+                    <span>part18</span>
+                    <span>part19</span>
+                    <span>part20</span>
+                    <span>part21</span>
+                    <span>part22</span>
+                    <span>part23</span>
+                    <span>part24</span>
+                    <span>part25</span>
+                    <span>part26</span>
+                </div>
+            </div>
+            <div id="labs" class="col s12 content-wrapper">
+                <div class="content flow-text">
+                    <span>lab0</span>
+                    <span>lab1</span>
+                    <span>lab2</span>
+                    <span>lab3</span>
+                    <span>lab4</span>
+                    <span>lab5</span>
+                    <span>lab6</span>
+                    <span>lab7</span>
+                    <span>lab8</span>
+                    <span>lab9</span>
+                </div>
+            </div>
+            <div class="fixed-action-btn">
+                <a class="btn-floating btn-large waves-effect waves-light pulse indigo accent-4">
+                    <i class="material-icons">add</i>
+                </a>
+                <ul>
+                    <li>
+                        <a href="/lab_builder.html" class="btn-floating waves-effect indigo accent-1 tooltipped" data-position="left" data-tooltip="Create New Lab">
+                            <i class="material-icons">assignment</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/part_builder.html" class="btn-floating waves-effect indigo accent-1 tooltipped" data-position="left" data-tooltip="Create New Part">
+                            <i class="material-icons">build</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

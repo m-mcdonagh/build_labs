@@ -33,18 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(mongoDBUserDetailsManager);
     }
 
-    // TODO: replace this with actual DI
-    private UserDetailsService jank() {
-        UserDetails user =
-                User.builder()
-                        .passwordEncoder(passwordEncoder()::encode)
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

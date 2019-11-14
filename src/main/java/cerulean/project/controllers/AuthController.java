@@ -1,5 +1,6 @@
 package cerulean.project.controllers;
 
+import cerulean.project.models.Account;
 import cerulean.project.services.UserRoles;
 import cerulean.project.services.MongoDBUserDetailsManager;
 
@@ -33,12 +34,17 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register(@RequestParam String username, @RequestParam String password,
+    public void register(@RequestParam String username, @RequestParam String password, @RequestParam String email,
             HttpServletResponse httpResponse) {
+
+        /**
         UserDetails newUser = User.builder().passwordEncoder(passwordEncoder::encode).username(username)
                 .password(password).authorities(new SimpleGrantedAuthority(UserRoles.ROLE_USER)).build();
         userDetailsManager.createUser(newUser);
+         **/
 
+        Account newAccount = new Account(username, passwordEncoder.encode(password), email);
+        userDetailsManager.createUser(newAccount);
         try {
             httpResponse.sendRedirect("/login");
         } catch (IOException e) {
@@ -48,9 +54,10 @@ public class AuthController {
 
     @GetMapping(value="/sessiontest")
     public String sessionTest() {
-        UserDetails principalUser = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Account principalUser = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principalUser.getUsername();
-        return String.format("Hello, %s", username);
+        String email = principalUser.getEmail();
+        return String.format("Hello, %s, your email is %s\n", username, email);
     }
 
 }

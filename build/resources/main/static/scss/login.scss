@@ -1,0 +1,39 @@
+body {
+    #login-main {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        .input-field input + label {
+            color: #CCC;
+        }
+        .input-field input:focus {
+            border-bottom: 1px solid #CCC;
+            box-shadow: 0 1px 0 0 #CCC;
+        }
+        .input-field input.valid {
+            border-bottom: 1px solid #CCC;
+            box-shadow: 0 1px 0 0 #CCC;
+        }
+        .input-field input.invalid {
+            border-bottom: 1px solid #CCC;
+            box-shadow: 0 1px 0 0 #CCC;
+        }
+        .input-field .prefix.active {
+            color: #CCC;
+        }
+
+        .btn {
+            overflow: hidden;
+        }
+
+        #hide-register {
+            @media screen and (max-width: 400px){
+                padding: 0;
+            }
+        }
+
+        .container {
+        }
+    }
+}
