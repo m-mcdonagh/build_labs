@@ -25,13 +25,26 @@ function resizePart() {
 
 var counter = 0;
 function addSlot(x, y) {
-    let newSlot = $('<div></div>').attr('id', 'slot'+counter).addClass('slot').addClass('teal').addClass('accent-4').addClass('tooltipped').css({
+    let newSlotWrapper = $('#slot-template').clone();
+    let id = 'slot'+counter;
+    newSlotWrapper.attr('id', id);
+    $('#slots').append(newSlotWrapper);
+
+    let domId = '#'+id;
+    let slot = $(domId + ' .slot, ' + domId + ' ul, ' + domId + ' .padding');
+    slot.css({
         left: x,
-        top: y,
-    }).attr('data-position', 'right').attr('data-tooltip', 'Slot');
-    $('#slots').append(newSlot);
-    newSlot.tooltip();
-    part.slots['slot'+counter] = {
+        top: y
+    });
+
+    $(domId + ' .delete').on('click', function(){
+        $(domId).remove();
+        delete part.slots[id];
+    });
+
+    newSlotWrapper.floatingActionButton();
+    $('.tooltipped').tooltip();
+    part.slots[id] = {
         x: x,
         y: y
     };
@@ -59,6 +72,7 @@ $(function() {
 
     $('.tooltipped').tooltip();
     $('.modal').modal();
+    $('.fixed-action-btn').floatingActionButton();
 
     $('#add-slot').on('click', function() {
         let $this = $(this);
