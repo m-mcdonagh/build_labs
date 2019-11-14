@@ -60,21 +60,15 @@ public class LabAssignmentService {
     }
 
     public void assignLab(@NotNull Account assigner, @NotNull Account assignee, @NotNull Lab lab) {
-        LabAssignment assignment = new LabAssignment(lab.get_id(), assigner.get_id(), assignee.get_id(),false);
+        LabAssignment assignment = new LabAssignment(
+                lab.get_id(), assigner.get_id(), assignee.get_id(),false, lab.getSteps().size() );
         LabAssignment savedAssignment = labAssignmentRepository.save(assignment);
-        assignee.getAssignedLabs_ids().add(
-                Objects.requireNonNull(savedAssignment.get_id())
-        );
+        assignee.getAssignedLabs_ids().add( Objects.requireNonNull(savedAssignment.get_id()) );
         accountRepository.save(assignee);
-
     }
 
     public void updateLabAssignment(@NotNull LabAssignment assignment) {
         labAssignmentRepository.save(assignment);
-    }
-
-    public Lab getLabInAssignment(@NotNull LabAssignment assignment) {
-        return labRepository.findById(assignment.getLabId()).orElse(null);
     }
 
 }

@@ -14,12 +14,16 @@ public class LabAssignment {
     private String assigner_id;
     private String user_id;
     private Boolean complete;
+    private Integer currentStep;
+    private Integer totalSteps;
 
-    public LabAssignment(String labId,String assigner_id,String user_id,Boolean complete) {
+    public LabAssignment(String labId, String assigner_id, String user_id, Boolean complete, Integer totalSteps) {
         this.labId = labId;
         this.assigner_id = assigner_id;
         this.user_id = user_id;
         this.complete = complete;
+        this.currentStep = 0;
+        this.totalSteps = totalSteps;
     }
 
     public String get_id() {
@@ -42,4 +46,16 @@ public class LabAssignment {
         return complete;
     }
 
+    public Integer getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(Integer currentStep) {
+        if (currentStep >= totalSteps) {
+            complete = true;
+            this.currentStep = totalSteps - 1;
+        } else {
+            this.currentStep = currentStep;
+        }
+    }
 }
