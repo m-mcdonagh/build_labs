@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class LabAssignmentService {
@@ -24,6 +25,21 @@ public class LabAssignmentService {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    public LabAssignment getLabAssignment(String id) {
+        Optional<LabAssignment> assignment = labAssignmentRepository.findById(id);
+        return assignment.orElse(null);
+    }
+
+    public LabAssignment findLabAssignmentForAccount(String username, String labId) throws UsernameNotFoundException {
+        // In memory search
+        List<LabAssignment> assignmentsForAccount = getLabsAssignedToAccount(username);
+        LabAssignment result = assignmentsForAccount.stream()
+                .filter(assignment -> assignment.getLabId().equals(labId))
+                .findFirst()
+                .orElse(null);
+        return result;
+    }
 
     public List<LabAssignment> getLabsAssignedToAccount(String username) throws UsernameNotFoundException {
         List<LabAssignment> results = new ArrayList<>();
