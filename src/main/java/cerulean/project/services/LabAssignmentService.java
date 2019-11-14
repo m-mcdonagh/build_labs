@@ -30,11 +30,11 @@ public class LabAssignmentService {
         return labAssignmentRepository.findById(id).orElse(null);
     }
 
-    public LabAssignment findLabAssignmentForAccount(String username, String labId) throws UsernameNotFoundException {
-        // In memory search
+    public LabAssignment findIncompleteLabAssignmentForAccount(String username, String labId) throws UsernameNotFoundException {
         List<LabAssignment> assignmentsForAccount = getLabsAssignedToAccount(username);
         LabAssignment result = assignmentsForAccount.stream()
                 .filter(assignment -> assignment.getLabId().equals(labId))
+                .filter(assignment -> !assignment.getComplete())
                 .findFirst()
                 .orElse(null);
         return result;
@@ -57,8 +57,6 @@ public class LabAssignmentService {
 
     public void assignLab(@NotNull Account assigner, @NotNull Account assignee, @NotNull Lab lab) {
         LabAssignment assignment = new LabAssignment(lab.get_id(), assigner.get_id(), assignee.get_id(),false);
-
-
         LabAssignment savedAssignment = labAssignmentRepository.save(assignment);
         assignee.getAssignedLabs_ids().add(
                 Objects.requireNonNull(savedAssignment.get_id())
@@ -70,5 +68,6 @@ public class LabAssignmentService {
     public void updateLabAssignment(@NotNull LabAssignment assignment) {
         labAssignmentRepository.save(assignment);
     }
+
 
 }
