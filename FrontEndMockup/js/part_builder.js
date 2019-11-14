@@ -42,7 +42,9 @@ function addSlot(x, y) {
         delete part.slots[id];
     });
 
-    newSlotWrapper.floatingActionButton();
+    M.FloatingActionButton.init(newSlotWrapper.get(0), {
+        hoverEnabled: false
+    });
     $('.tooltipped').tooltip();
     part.slots[id] = {
         x: x,
@@ -72,7 +74,9 @@ $(function() {
 
     $('.tooltipped').tooltip();
     $('.modal').modal();
-    $('.fixed-action-btn').floatingActionButton();
+    M.FloatingActionButton.init($('.fixed-action-btn').get(0), {
+        hoverEnabled: false
+    });
 
     $('#add-slot').on('click', function() {
         let $this = $(this);
