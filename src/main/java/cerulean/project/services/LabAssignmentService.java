@@ -35,20 +35,23 @@ public class LabAssignmentService {
     }
 
     public LabAssignment findIncompleteLabAssignmentForAccount(String username, String labId) throws UsernameNotFoundException {
-        List<LabAssignment> assignmentsForAccount = getLabsAssignedToAccount(username);
-        LabAssignment result = assignmentsForAccount.stream()
-                .filter(assignment -> assignment.getLabId().equals(labId))
-                .filter(assignment -> !assignment.getComplete())
-                .findFirst()
-                .orElse(null);
-        return result;
+        Account account = accountService.getAccount(username);
+        return findIncompleteLabAssignmentForAccount(account, labId);
     }
 
     public List<LabAssignment> getLabsAssignedToAccount(String username) throws UsernameNotFoundException {
-        List<LabAssignment> results = new ArrayList<>();
-        List<String> assignmentIds = accountService.getAccount(username).getAssignedLabs_ids();
-        labAssignmentRepository.findAllById(assignmentIds).forEach(results::add);
-        return results;
+        Account account = accountService.getAccount(username);
+        return getLabsAssignedToAccount(account);
+    }
+
+    public void assignLab(String assigner_username, String assignee_username, String labId) {
+        // Check if lab is not already assigned.
+        Account assigner = accountService.getAccount(assigner_username);
+        Account assignee = accountService.getAccount(assignee_username);
+        Lab labToAssign = labRepository.findById(labId).orElse(null);
+        if (labToAssign != null) {
+            assignLab(assigner, assignee, labToAssign);
+        }
     }
 
     public List<String> getAccountIdsAssignedToLab(String labId) {
@@ -59,7 +62,13 @@ public class LabAssignmentService {
         return userIds;
     }
 
-    public void assignLab(@NotNull Account assigner, @NotNull Account assignee, @NotNull Lab lab) {
+    private void assignLab(@NotNull Account assigner, @NotNull Account assignee, @NotNull Lab lab) {
+        // Check if lab is not already assigned.
+        LabAssignment currentAssignment = findIncompleteLabAssignmentForAccount(assignee, lab.get_id());
+        if (currentAssignment != null) {
+            throw new RuntimeException("Lab has already been assigned");
+        }
+
         LabAssignment assignment = new LabAssignment(
                 lab.get_id(), assigner.get_id(), assignee.get_id(),false, lab.getSteps().size() );
         LabAssignment savedAssignment = labAssignmentRepository.save(assignment);
@@ -71,4 +80,21 @@ public class LabAssignmentService {
         labAssignmentRepository.save(assignment);
     }
 
+
+    private List<LabAssignment> getLabsAssignedToAccount(Account account){
+        List<LabAssignment> results = new ArrayList<>();
+        List<String> assignmentIds = account.getAssignedLabs_ids();
+        labAssignmentRepository.findAllById(assignmentIds).forEach(results::add);
+        return results;
+    }
+
+    private LabAssignment findIncompleteLabAssignmentForAccount(Account account, String labId) throws UsernameNotFoundException {
+        List<LabAssignment> assignmentsForAccount = getLabsAssignedToAccount(account);
+        LabAssignment result = assignmentsForAccount.stream()
+                .filter(assignment -> assignment.getLabId().equals(labId))
+                .filter(assignment -> !assignment.getComplete())
+                .findFirst()
+                .orElse(null);
+        return result;
+    }
 }
