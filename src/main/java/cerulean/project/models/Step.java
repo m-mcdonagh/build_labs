@@ -24,6 +24,22 @@ public class Step {
         this.rotation = rotation;
         this.instructions = instructions;
     }
+    @Override
+    public boolean equals(Object obj){
+
+        Step step = (Step) obj;
+        if(this.index != step.getIndex())
+            return false;
+        if(this.parent != step.getParent())
+            return false;
+        if(this.rotation != step.getRotation())
+            return false;
+        if(this.newPart != step.getNewPart())
+            return false;
+        if(this.parentSlot != step.getParentSlot())
+            return false;
+        return true;
+    }
     public Integer getIndex() {
         return index;
     }
