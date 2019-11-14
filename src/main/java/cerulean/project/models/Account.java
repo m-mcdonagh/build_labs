@@ -33,6 +33,10 @@ public class Account implements UserDetails {
 
     private List<GrantedAuthority> authorities;
 
+    public Account() {
+
+    }
+
     public Account(String username, String password, String email) {
         this(ObjectId.get().toString(), username, password, email, new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
