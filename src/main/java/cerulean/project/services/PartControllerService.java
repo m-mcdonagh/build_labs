@@ -21,10 +21,14 @@ public class PartControllerService {
     private PartRepository partRepository;
 
     public void addNewPart(Account creator, Part newPart) {
-
-        creator.getCreatedParts_ids().add(newPart.get_id());
-        accountRepository.save(creator);
-        partRepository.save(newPart);
+        if (partRepository.existsById(newPart.get_id())) {
+            // If part is already in the DB don't do anything
+            throw new RuntimeException("Part with that ID already exists");
+        } else {
+            creator.getCreatedParts_ids().add(newPart.get_id());
+            accountRepository.save(creator);
+            partRepository.save(newPart);
+        }
     }
 
     public List<Part> getPartsCreatedByUser(Account user) {

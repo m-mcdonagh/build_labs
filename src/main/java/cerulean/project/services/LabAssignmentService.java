@@ -2,6 +2,7 @@ package cerulean.project.services;
 
 import cerulean.project.database.AccountRepository;
 import cerulean.project.database.LabAssignmentRepository;
+import cerulean.project.database.LabRepository;
 import cerulean.project.models.Account;
 import cerulean.project.models.Lab;
 import cerulean.project.models.LabAssignment;
@@ -22,6 +23,9 @@ public class LabAssignmentService {
 
     @Autowired
     private LabAssignmentRepository labAssignmentRepository;
+
+    @Autowired
+    private LabRepository labRepository;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -69,5 +73,8 @@ public class LabAssignmentService {
         labAssignmentRepository.save(assignment);
     }
 
+    public Lab getLabInAssignment(@NotNull LabAssignment assignment) {
+        return labRepository.findById(assignment.getLabId()).orElse(null);
+    }
 
 }
