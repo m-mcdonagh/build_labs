@@ -1,6 +1,8 @@
 var part = {
     width: 12,
-    height: 12
+    height: 12,
+    slots: {},
+    connector: null
 };
 
 function resizePart() {
@@ -15,23 +17,46 @@ function resizePart() {
         height = maxpx;
         width = (part.width / part.height) * maxpx;
     }
-    $('#part img').css({
+    $('#part, #part img').css({
         width: width + 'px',
         height: height + 'px'
     })
 }
 
+var counter = 0;
 function addSlot(x, y) {
-    let newSlot = $('<div></div>').addClass('slot').addClass('tooltipped').css({
+    let newSlot = $('<div></div>').attr('id', 'slot'+counter).addClass('slot').addClass('teal').addClass('accent-4').addClass('tooltipped').css({
         left: x,
         top: y,
-    }).attr('data-position', 'bottom').attr('data-tooltip', 'Slot');
+    }).attr('data-position', 'right').attr('data-tooltip', 'Slot');
     $('#slots').append(newSlot);
     newSlot.tooltip();
-    
+    part.slots['slot'+counter] = {
+        x: x,
+        y: y
+    };
+    counter++;
+}
+
+function addConnector(x, y){
+    if (part.connector){
+        $('#connector').remove();
+    }
+    let connector = $('<div></div>').attr('id', 'connector').addClass('teal').addClass('darken-5').addClass('tooltipped').css({
+        left: x,
+        top: y
+    }).attr('data-position', 'bottom').attr('data-tooltip', 'Connector');
+    $('#part').append(connector);
+    connector.tooltip();
+    part.connector = {
+        x: x,
+        y: y
+    }
 }
 
 $(function() {
+    window.onresize = resizePart;
+
     $('.tooltipped').tooltip();
     $('.modal').modal();
 
@@ -41,11 +66,36 @@ $(function() {
         let $main = $('#part-builder-main');
         $main.css({cursor: 'crosshair'});
         setTimeout(function(){
-            $main.on('click', function(e){
-                $this.prop('disabled', false);
-                $main.css({cursor: 'auto'});
-                $main.off('click');
-                addSlot(e.clientX, e.clientY);
+            $('#part').on('click', function(e){
+                addSlot(e.offsetX, e.offsetY);
+            });
+            $($main).on('click', function() {
+                setTimeout(function(){
+                    $this.prop('disabled', false);
+                    $main.css({cursor: 'auto'});
+                    $main.off('click');
+                    $('#part').off('click');
+                },1);
+            });
+        }, 1);
+    });
+
+    $('#add-connector').on('click', function() {
+        let $this = $(this);
+        $this.prop('disabled', true);
+        let $main = $('#part-builder-main');
+        $main.css({cursor: 'crosshair'});
+        setTimeout(function(){
+            $('#part').on('click', function(e){
+                addConnector(e.offsetX, e.offsetY);
+            });
+            $($main).on('click', function() {
+                setTimeout(function(){
+                    $this.prop('disabled', false);
+                    $main.css({cursor: 'auto'});
+                    $main.off('click');
+                    $('#part').off('click');
+                },1);
             });
         }, 1);
     });
