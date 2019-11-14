@@ -28,4 +28,7 @@ public class LabService {
         return results;
     }
 
+    public Lab getLab(String labId) {
+        return labRepository.findById(labId).orElse(null);
+    }
 }

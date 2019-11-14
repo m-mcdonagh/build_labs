@@ -27,8 +27,7 @@ public class LabAssignmentService {
     private AccountRepository accountRepository;
 
     public LabAssignment getLabAssignment(String id) {
-        Optional<LabAssignment> assignment = labAssignmentRepository.findById(id);
-        return assignment.orElse(null);
+        return labAssignmentRepository.findById(id).orElse(null);
     }
 
     public LabAssignment findLabAssignmentForAccount(String username, String labId) throws UsernameNotFoundException {
