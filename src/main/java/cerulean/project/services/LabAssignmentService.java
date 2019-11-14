@@ -8,6 +8,7 @@ import cerulean.project.models.Lab;
 import cerulean.project.models.LabAssignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Component
 public class LabAssignmentService {
 
     @Autowired
