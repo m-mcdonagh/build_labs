@@ -36,6 +36,8 @@ public class MongoDBUserDetailsManager implements UserDetailsManager {
         if (!userExists(username)) {
             throw new UsernameNotFoundException("User not found");
         }
+        System.out.println("====Username====");
+        System.out.println(account.getUsername());
         return account;
 
     }
