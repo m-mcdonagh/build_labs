@@ -16,39 +16,27 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/Login.vue') /* webpackChunkName: "login" */ 
   },
   {
-    path: '/register',
-    name: 'register',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/lab',
+    name: 'lab',
+    component: () => import('../views/Lab.vue')
   },
   {
     path: '/create',
     name: 'create',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/Create.vue')
   },
   {
-    path: '/partBuilder',
-    name: 'partBuilder',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/partbuilder',
+    name: 'partbuilder',
+    component: () => import('../views/PartBuilder.vue')
   },
   {
-    path: '/labBuilder',
-    name: 'labBuilder',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/labbuilder',
+    name: 'labbuilder',
+    component: () => import('../views/LabBuilder.vue')
   }
 ]
 
