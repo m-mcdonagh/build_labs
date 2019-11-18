@@ -55,4 +55,12 @@ public class Step {
     public String getInstructions() {
         return instructions;
     }
+
+    public boolean stepMatches(Step other) {
+        return     this.rotation.equals(other.rotation)
+                && this.index.equals(other.index)
+                && this.parentSlot.equals(other.parentSlot)
+                && this.parent.index.equals(other.parent.index)
+                && this.newPart.get_id().equals(other.newPart.get_id());
+    }
 }

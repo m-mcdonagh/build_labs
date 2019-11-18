@@ -26,4 +26,8 @@ public class AccountService {
             throw new UsernameNotFoundException("User not found");
         return acc;
     }
+
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
 }

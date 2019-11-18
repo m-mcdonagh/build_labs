@@ -1,0 +1,47 @@
+body {
+    #learn-main{
+        justify-content: center;
+        align-items: center;
+        #assigned-labs-container {
+            padding-left: 10px;
+            height: 90%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+
+            .card {
+                position: relative;
+                color: #313639;
+                margin-left: 2%;
+                @media screen  and (min-width: 1000px){
+                    margin-left: 5%;
+                }
+
+
+                i.material-icons {
+                    cursor: default;
+                }
+                .card-action {
+                    a {
+                        color: #f57c00;
+                    }
+                    a:hover{
+                        color: #ffa726;
+                    }
+                }
+                .check-box {
+                    position: absolute;
+                    right: 8px;
+                    top: 0;
+                    font-size: 2rem;
+                    cursor: default;
+                }
+                .check {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    width: 30px;
+                }
+            }
+        }
+    }
+}

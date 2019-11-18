@@ -4,10 +4,12 @@ import cerulean.project.database.AccountRepository;
 import cerulean.project.database.LabRepository;
 import cerulean.project.models.Account;
 import cerulean.project.models.Lab;
+import cerulean.project.models.LabAssignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,5 +32,9 @@ public class LabService {
 
     public Lab getLab(String labId) {
         return labRepository.findById(labId).orElse(null);
+    }
+
+    public Lab getLabInAssignment(@NotNull LabAssignment assignment) {
+        return labRepository.findById(assignment.getLabId()).orElse(null);
     }
 }
