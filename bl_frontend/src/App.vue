@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="indigo lighten-1">
+    <nav :class="navclass">
         <div class="nav-wrapper">
             <a id="cover" class="left" href="/"><img class="brand-logo" src="./assets/img/cover.png"></a>
             <ul id="nav-mobile" class="right">
@@ -12,10 +12,19 @@
   </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      navclass: 'light-blue'
+    }
+  }
+}
+</script>
+
 <style>
   @import './assets/css/materialize.css';
 </style>
-
 <style lang="scss">
 * {
   margin: 0;
