@@ -37,12 +37,17 @@ public class AuthController {
     public void register(@RequestParam String username, @RequestParam String password, @RequestParam String email,
             HttpServletResponse httpResponse) {
 
-        /**
+        /*
         UserDetails newUser = User.builder().passwordEncoder(passwordEncoder::encode).username(username)
                 .password(password).authorities(new SimpleGrantedAuthority(UserRoles.ROLE_USER)).build();
         userDetailsManager.createUser(newUser);
+<<<<<<< HEAD
          **/
         System.out.println(username+password+email);
+=======
+         */
+
+>>>>>>> bryi-dev
         Account newAccount = new Account(username, passwordEncoder.encode(password), email);
 
         userDetailsManager.createUser(newAccount);
