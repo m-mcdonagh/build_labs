@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="11.0.3" project-jdk-type="JavaSDK" />
 =======
   <component name="ProjectRootManager" version="2" project-jdk-name="11.0.4" project-jdk-type="JavaSDK" />
@@ -10,4 +11,7 @@
 =======
   <component name="ProjectRootManager" version="2" project-jdk-name="11.0.4" project-jdk-type="JavaSDK" />
 >>>>>>> origin/master
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="1.8.0_221" project-jdk-type="JavaSDK" />
+>>>>>>> origin/khurram-dev
 </project>
