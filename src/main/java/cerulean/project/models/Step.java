@@ -30,7 +30,7 @@ public class Step {
         Step step = (Step) obj;
         if(this.index != step.getIndex())
             return false;
-        if(this.parent != step.getParent())
+        if(this.parentIndex != step.getParentIndex())
             return false;
         if(this.rotation != step.getRotation())
             return false;
@@ -76,7 +76,7 @@ public class Step {
         return     this.rotation.equals(other.rotation)
                 && this.index.equals(other.index)
                 && this.parentSlot.equals(other.parentSlot)
-                && this.parent.index.equals(other.parent.index)
+                && this.parentIndex.equals(other.parentIndex)
                 && this.newPart.get_id().equals(other.newPart.get_id());
     }
 }
