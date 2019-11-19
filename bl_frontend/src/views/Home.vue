@@ -24,7 +24,6 @@
 
 <script>
 $(function(){
-  $('nav').remove();
   $('.clip-btn').on('click', function() {
     $($(this).attr('data-toggler')).attr('checked', true);
     
@@ -48,18 +47,16 @@ $(function(){
     }, 750);
   });
 });
+
 export default {
-  name: 'home',
-  data() {
-    return {
-      navclass: ''
-    }
+  created() {
+    this.$store.commit('changeNav', 'hidden-nav');
   }
 }
 </script>
 
-<style scoped lang="scss">
-nav {
+<style lang="scss">
+.hidden-nav {
   display: none;
 }
 #index-main{

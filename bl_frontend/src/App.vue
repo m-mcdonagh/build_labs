@@ -14,9 +14,9 @@
 
 <script>
 export default {
-  data() {
-    return {
-      navclass: 'light-blue'
+  computed: {
+    navclass() {
+      return this.$store.state.navclass;
     }
   }
 }
