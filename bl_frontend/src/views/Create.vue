@@ -1,37 +1,122 @@
 <template lang="html">
-
-  <section class="create">
-    <h1>create Component</h1>
-  </section>
-
+<div class="main" id="create-main">
+  <div class="container indigo row">
+    <ul class="tabs">
+      <li class="tab">
+        <a href="#parts">
+          <i class="material-icons">build</i>
+          <span>Parts</span>
+        </a>
+      </li>
+      <li class="tab">
+        <a href="#labs">
+          <i class="material-icons">assignment</i>
+          <span>Labs</span>
+        </a>
+      </li>
+    </ul>
+    <div id="parts" class="col s12 content-wrapper">
+      <div class="content flow-text scroll">
+        <!--v-for parts (in span tags)-->
+      </div>
+    </div>
+    <div id="labs" class="col s12 content-wrapper">
+      <div class="content flow-text">
+        <!--v-for labs (in span tags)-->
+      </div>
+    </div>
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large waves-effect waves-light pulse indigo accent-4">
+        <i class="material-icons">add</i>
+      </a>
+      <ul>
+        <li>
+          <a href="/labbuilder" class="btn-floating waves-effect indigo accent-1 tooltipped" data-position="left" data-tooltip="Create New Lab">
+            <i class="material-icons">assignment</i>
+          </a>
+        </li>
+        <li>
+          <a href="/partbuilder" class="btn-floating waves-effect indigo accent-1 tooltipped" data-position="left" data-tooltip="Create New Part">
+            <i class="material-icons">build</i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 </template>
 
 <script lang="js">
+export default  {
+  name: 'create',
+  created() {
+    this.$store.commit('changeNav', 'indigo lighten-1');
+  },
+  mounted () {
+    $('.tabs').tabs();
+    $('.fixed-action-btn').floatingActionButton();
+    $('.tooltipped').tooltip();
 
-  export default  {
-    name: 'create',
-    props: [],
-    mounted () {
-
-    },
-    data () {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
-    computed: {
-
+    this.sizeContent();
+    window.onresize = this.sizeContent;
+  },
+  methods: {
+    sizeContent() {
+      let height = $('.container').height() - 58
+      $('.content').css({
+        height: height
+      });
     }
+  } 
 }
-
-
 </script>
 
 <style scoped lang="scss">
-  .create {
+#create-main {
+  justify-content: center;
+  align-items: center;
 
+  .container {
+    position: relative;
+    height: 95%;
+
+    .tabs{
+      width: 100%;
+      overflow: hidden;
+
+      .tab {
+        min-width: 50%;
+
+        span {
+          font-size: 2em;
+        }
+      }
+    }
+    .content-wrapper {
+      margin-top: 1px;
+
+      .content {
+        overflow-x: hidden;
+        overflow-y: scroll;
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        color: #313639;
+        background-color: #FFFFFFF0;
+        
+        span {
+          margin: 0 0 0 10px;
+        }
+      }
+    }
+
+    .fixed-action-btn {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+    }
   }
+}
 </style>
