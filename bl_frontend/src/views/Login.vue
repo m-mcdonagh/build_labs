@@ -87,34 +87,69 @@
 </template>
 
 <script>
-$(function() {
-  $('#show-register').on('click', function() {
-    $('#login').slideUp();
-    $('#register').slideDown();
-  });
-
-  $('#show-reset-password').on('click', function() {
-    $('#login').slideUp();
-    $('#reset-password').slideDown();
-  });
-
-  $('#hide-register').on('click', function() {
-    $('#register').slideUp();
-    $('#login').slideDown();
-  });
-
-  $('#hide-reset-password').on('click', function() {
-    $('#reset-password').slideUp();
-    $('#login').slideDown();
-  });
-
-  $('#register').hide();
-  $('#reset-password').hide();
-});
 export default  {
   name: 'login',
+  mounted (){
+    $('#show-register').on('click', function() {
+      $('#login').slideUp();
+      $('#register').slideDown();
+    });
+
+    let test = $('#show-reset-password');
+    test.on('click', function() {
+      $('#login').slideUp();
+      $('#reset-password').slideDown();
+    });
+
+    $('#hide-register').on('click', function() {
+      $('#register').slideUp();
+      $('#login').slideDown();
+    });
+
+    $('#hide-reset-password').on('click', function() {
+      $('#reset-password').slideUp();
+      $('#login').slideDown();
+    });
+
+    $('#register').hide();
+    $('#reset-password').hide();
+  }
 }
 </script>
 
 <style scoped lang="scss">
+#login-main {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  .input-field input + label {
+    color: #CCC;
+  }
+  .input-field input:focus {
+    border-bottom: 1px solid #CCC;
+    box-shadow: 0 1px 0 0 #CCC;
+  }
+  .input-field input.valid {
+    border-bottom: 1px solid #CCC;
+    box-shadow: 0 1px 0 0 #CCC;
+  }
+  .input-field input.invalid {
+    border-bottom: 1px solid #CCC;
+    box-shadow: 0 1px 0 0 #CCC;
+  }
+  .input-field .prefix.active {
+    color: #CCC;
+  }
+
+  .btn {
+    overflow: hidden;
+  }
+
+  #hide-register {
+    @media screen and (max-width: 400px){
+      padding: 0;
+    }
+  }
+}
 </style>

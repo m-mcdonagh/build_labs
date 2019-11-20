@@ -26,11 +26,6 @@ export default {
   @import './assets/css/materialize.css';
 </style>
 <style lang="scss">
-* {
-  margin: 0;
-  padding: 0;
-}
-
 #app{
     font-family: "Roboto", sans-serif;
     color: white;
@@ -66,7 +61,7 @@ export default {
     
     .btn {
         color: #313639;
-        margin: 0 1px;
+        margin-right: 1px;
     }
 
     input {
