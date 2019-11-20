@@ -27,7 +27,6 @@ export default  {
   },
   methods: {
     sizeContent(){
-        console.log($('#labs-container').height(), $('#lab-header').height())
         $('#labs').height($('#labs-container').height() - $('#lab-header').height());
     }
   }
