@@ -6,13 +6,13 @@
         <img src="../assets/img/add-icon.svg">
       </button>
     </div>
-    
-    
+
+
     <div id="steps-side-bar" class="indigo col s3">
       <h1 class="indigo flow-text">STEPS</h1>
       <ol id="step-list"></ol>
     </div>
-    
+
 
     <div id="controls">
       <div id="step-details" class="transparent">
@@ -37,8 +37,8 @@
         <button class="step-btns btn-large indigo lighten-3 waves-effect col s12 m6" id="cancel">CANCEL</button>
       </div>
     </div>
-    
-    
+
+
     <div id="part-selector" class="modal indigo">
       <div id="scroll" class="row">
         <div id="parts-content" class="content col s12">
@@ -77,14 +77,14 @@ export default  {
       align-items: center;
       height: 100%;
       width: 75%;
-      
+
       img {
         max-height: 80vh;
       }
     }
     #new-step-btn {
       display: contents;
-      
+
       img {
         position: absolute;
         left: 85%;
@@ -107,7 +107,7 @@ export default  {
     width: 73%;
     align-content: center;
     justify-content: right;
-    
+
     #step-details {
       position: fixed;
       left: 0;
@@ -117,7 +117,7 @@ export default  {
       width: 800px;
       max-width: 70vw;
       max-height: 25%;
-      
+
       .row{
         overflow-x: visible;
         overflow-y: scroll;

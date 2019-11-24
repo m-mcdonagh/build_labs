@@ -37,4 +37,5 @@ public class LabService {
     public Lab getLabInAssignment(@NotNull LabAssignment assignment) {
         return labRepository.findById(assignment.getLabId()).orElse(null);
     }
+
 }

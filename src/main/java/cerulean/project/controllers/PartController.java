@@ -1,14 +1,16 @@
 package cerulean.project.controllers;
 
+import cerulean.project.models.Account;
+import cerulean.project.models.Part;
+import cerulean.project.services.AccountService;
+import cerulean.project.services.PartControllerService;
+import com.google.gson.Gson;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
-@Controller
+@RestController
 @RequestMapping(value ="/parts")
 public class PartController {
 
@@ -20,18 +22,25 @@ public class PartController {
 //			*see part schema*
 //    }
 
+    private PartControllerService partService;
+    private AccountService accountService;
+
+    private Gson gson = new Gson();
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
     public void listParts(@RequestParam String id, HttpServletResponse httpResponse) {
-        return;
+
     }
     @RequestMapping(value ="/part", method = RequestMethod.GET)
     public void getPart(@RequestParam String id) {
-        ;
+        String username = "temp";
+        return gson.toJson(partService.getPart(id));
     }
     @RequestMapping(value ="/part", method = RequestMethod.POST)
-    public void addPart(@RequestBody String id) {
-        ;
+    public void addPart(@RequestBody String partJson) {
+        String username = "temp";
+        Part part = gson.fromJson(partJson, Part.class);
+        partService.addNewPart(username , part);
     }
 
 }

@@ -42,7 +42,7 @@ export default  {
         padding: 0;
         margin-bottom: 0;
         height: 90%;
-        
+
         #lab-header {
             width: 100%;
             margin: 0;

@@ -1,4 +1,4 @@
-package cerulean.hw1;
+package cerulean.project;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
