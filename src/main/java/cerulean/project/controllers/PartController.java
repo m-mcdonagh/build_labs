@@ -28,13 +28,16 @@ public class PartController {
     private Gson gson = new Gson();
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
-    public void listParts(@RequestParam String id, HttpServletResponse httpResponse) {
-
+    public String listParts(@RequestParam String id, HttpServletResponse httpResponse) {
+        String username = "temp";
+        Account account = accountService.getAccount(username);
+        return gson.toJson(partService.getPartsCreatedByUser(account));
     }
     @RequestMapping(value ="/part", method = RequestMethod.GET)
-    public void getPart(@RequestParam String id) {
+    public String getPart(@RequestParam String id) {
         String username = "temp";
-        return gson.toJson(partService.getPart(id));
+        Part part = partService.getPart(id);
+        return gson.toJson(part);
     }
     @RequestMapping(value ="/part", method = RequestMethod.POST)
     public void addPart(@RequestBody String partJson) {

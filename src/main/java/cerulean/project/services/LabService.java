@@ -38,4 +38,6 @@ public class LabService {
         return labRepository.findById(assignment.getLabId()).orElse(null);
     }
 
+    public void addNewLab(String username, Lab lab) {
+    }
 }
