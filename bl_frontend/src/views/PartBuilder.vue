@@ -21,14 +21,20 @@
           <img src="../assets/img/add-image.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Image">
         </a>
         <button id="add-slot" class="icon-btn" v-on:click="toggleSlotAdd">
-          <img src="../assets/img/add-slot.svg" 
-               class="col s4 tooltipped" 
-               data-position="bottom" 
-               data-tooltip="Add Slot"
-               v-bind:style = "slotAdd ? {opacity: '.67'} : {}">
+          <img 
+            src="../assets/img/add-slot.svg" 
+            class="col s4 tooltipped" 
+            data-position="bottom" 
+            data-tooltip="Add Slot"
+            v-bind:style="slotAdd ? {opacity: '.67'} : {}">
         </button>
-        <button id="add-connector" class="icon-btn">
-          <img src="../assets/img/connector.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Connector">
+        <button id="add-connector" class="icon-btn" v-on:click="toggleConnectorAdd">
+          <img 
+            src="../assets/img/connector.svg" 
+            class="col s4 tooltipped" 
+            data-position="bottom" 
+            data-tooltip="Add Connector"
+            v-bind:style="connectorAdd ? {opacity: '.67'} : {}">
         </button>
       </div>
       <div id="control-btns" class="row">
@@ -39,7 +45,7 @@
     
     <div id="workspace" class="col s12 m9">
       <div id="part">
-        <img v-bind:src="part.img" v-on:click="addSlot" v-bind:style="{width: displaywidth, height: displayheight}">
+        <img v-bind:src="part.img" v-on:click="addComponent" v-bind:style="{width: displaywidth, height: displayheight}">
         <div id="slots">
           <slot-component
             v-for="(slot, index) in part.slots"
@@ -48,6 +54,12 @@
             v-bind:y="slot.y"
             v-on:remove="part.slots.splice(index, 1)">
           </slot-component>
+          <connector-component 
+            v-if="part.connector"
+            v-bind:x="part.connector.x"
+            v-bind:y="part.connector.y"
+            v-on:remove="part.connector = null">
+          </connector-component>
         </div>
       </div>
     </div>
@@ -71,12 +83,15 @@
 </template>
 
 <script lang="js">
+import Vue from 'vue'
 import slot from '../components/PartBuilder/Slot.vue';
+import connector from '../components/PartBuilder/Connector.vue';
 
 export default  {
   name: 'partbuilder',
   components: {
     'slot-component' : slot,
+    'connector-component' : connector
   },
   created() {
     this.$store.commit('changeNav', 'indigo lighten-1');
@@ -84,13 +99,15 @@ export default  {
   data(){
     return {
       part: {
-        slots: [],
         height: 12,
         width: 12,
-        img: null
+        img: null,
+        slots: [],
+        connector: null
       },
       nextSlotId: 0,
       slotAdd: false,
+      connectorAdd: false,
       displaywidth: 0,
       displayheight: 0
     }
@@ -103,17 +120,30 @@ export default  {
     window.onresize = this.resizePart;
   },
   methods: {
+    toggleConnectorAdd() {
+      this.part.connector = null;
+      this.connectorAdd = !this.connectorAdd;
+      this.slotAdd = false;
+    },
     toggleSlotAdd(){
       this.slotAdd = !this.slotAdd;
+      this.connectorAdd = false;
     },
-    addSlot(e) {
-      if (this.slotAdd){
+    addComponent(e) {
+      if (this.slotAdd) {
         this.slotAdd = false;
         this.part.slots.push({
           id: this.nextSlotId++,
           x: e.offsetX,
           y: e.offsetY
         });
+      }
+      else if (this.connectorAdd) {
+        this.connectorAdd = false;
+        this.part.connector = {
+          x: e.offsetX,
+          y: e.offsetY
+        };
       }
     },
     resizePart() {
