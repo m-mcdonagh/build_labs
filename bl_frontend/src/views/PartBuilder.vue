@@ -20,7 +20,7 @@
         <a href="#img-file-modal" id="add-img" class="icon-btn modal-trigger">
           <img src="../assets/img/add-image.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Image">
         </a>
-        <button id="add-slot" class="icon-btn">
+        <button id="add-slot" class="icon-btn" v-on:click="toggleSlotAdd">
           <img src="../assets/img/add-slot.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Slot">
         </button>
         <button id="add-connector" class="icon-btn">
@@ -35,7 +35,7 @@
     
     <div id="workspace" class="col s12 m9">
       <div id="part">
-        <img>
+        <img v-on:click="addSlot">
         <div id="slots">
           <slot-component
             v-for="(slot, index) in slots"
@@ -80,7 +80,8 @@ export default  {
   data(){
     return {
       slots: [], //test values: {id: 0, x:0, y:0}, {id: 1, x:20, y:20}
-      nextSlotId: 0
+      nextSlotId: 0,
+      slotAdd: false
     }
   },
   mounted () {
@@ -89,12 +90,17 @@ export default  {
     M.updateTextFields();
   },
   methods: {
-    addSlot(x, y) {
-      this.slots.push({
-        id: this.nextSlotId++,
-        x: x,
-        y: y
-      });
+    toggleSlotAdd(){
+      this.slotAdd = !this.slotAdd;
+    },
+    addSlot(e) {
+      if (this.slotAdd){
+        this.slots.push({
+          id: this.nextSlotId++,
+          x: e.offsetX,
+          y: e.offsetY
+        });
+      }
     }
   }
 }
