@@ -1,8 +1,8 @@
 <template>
     <div v-bind:id="'slot' + id" class="fixed-action-btn slot-wrapper">
-        <div class="padding" v-bind:style="{left: x, top: y}"></div>
-        <a class="slot btn-floating teal accent-4 tooltipped" data-position="right" data-tooltip="Slot" v-bind:style="{left: x, top: y}"></a>
-        <ul v-bind:style="{left: x, top: y}">
+        <div class="padding" v-bind:style="offset"></div>
+        <a class="slot btn-floating teal accent-4 tooltipped" data-position="right" data-tooltip="Slot" v-bind:style="offset"></a>
+        <ul v-bind:style="offset">
             <li>
                 <button class="delete btn-floating waves-effect red" v-on:click="$emit('remove')">
                     <i class="material-icons">delete_forever</i>
@@ -20,6 +20,14 @@ export default {
         'x',
         'y'
     ],
+    data() {
+        return {
+            offset: {
+                left: this.x + 'px',
+                top: this.y + 'px'
+            }
+        }
+    },
     mounted(){
         $(this.$el).find('.tooltipped').tooltip();
         M.FloatingActionButton.init($(this.$el).get(0), {
