@@ -1,5 +1,6 @@
 package cerulean.project.controllers;
 import cerulean.project.models.Lab;
+import cerulean.project.models.Part;
 import cerulean.project.services.LabService;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
@@ -32,5 +33,11 @@ public class LabController {
         String username = "temp";
         Lab lab = gson.fromJson(labJson, Lab.class);
         labService.addNewLab(username , lab);
+    }
+
+    @RequestMapping(value ="/lab/{labId}", method = RequestMethod.GET)
+    public String getPartsInLab(@PathVariable String labId) {
+        Lab lab = labService.getLab(labId);
+        return gson.toJson(lab.getPartsList());
     }
 }
