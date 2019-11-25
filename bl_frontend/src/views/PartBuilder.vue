@@ -8,11 +8,11 @@
         </div>
         <h2 class="col s10 offset-s1 flow-text">Dimensions:</h2>
         <div class="input-field col s6">
-          <input id="width" class="dimension" type="number" value="12">
+          <input id="width" class="dimension" type="number" v-model="part.width" active>
           <label for="width">Width</label>
         </div>
         <div class="input-field col s6">
-          <input id="height" class="dimension" type="number" value="12">
+          <input id="height" class="dimension" type="number" v-model="part.height" active>
           <label for="height">Height</label>
         </div>
       </div>
@@ -163,6 +163,24 @@ export default  {
     },
     uploadImg(e) {
       this.part.img = URL.createObjectURL(e.target.files[0]);  
+    }
+  },
+  watch: {
+    'part.width': function(newWidth, oldWidth) {
+      if (newWidth) {
+        if (newWidth <= 0){
+          this.part.width = oldWidth;
+        }
+        this.resizePart();
+      }
+    },
+    'part.height': function(newHeight, oldHeight) {
+      if (newHeight) {
+        if (newHeight <= 0){
+          this.part.height = oldHeight;
+        }
+        this.resizePart();
+      }
     }
   }
 }
