@@ -21,7 +21,11 @@
           <img src="../assets/img/add-image.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Image">
         </a>
         <button id="add-slot" class="icon-btn" v-on:click="toggleSlotAdd">
-          <img src="../assets/img/add-slot.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Slot">
+          <img src="../assets/img/add-slot.svg" 
+               class="col s4 tooltipped" 
+               data-position="bottom" 
+               data-tooltip="Add Slot"
+               v-bind:style = "slotAdd ? {opacity: '.67'} : {}">
         </button>
         <button id="add-connector" class="icon-btn">
           <img src="../assets/img/connector.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Connector">
@@ -39,7 +43,7 @@
         <div id="slots">
           <slot-component
             v-for="(slot, index) in part.slots"
-            v-bind:id="slot.id"
+            v-bind:key="slot.id"
             v-bind:x="slot.x"
             v-bind:y="slot.y"
             v-on:remove="part.slots.splice(index, 1)">
@@ -149,9 +153,6 @@ export default  {
       }
       img:hover {
         opacity: .9;
-      }
-      img:active {
-        opacity: .75;
       }
     }
     #control-btns {

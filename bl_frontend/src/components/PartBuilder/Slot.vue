@@ -1,6 +1,5 @@
 <template>
-    <div v-bind:id="'slot' + id" class="fixed-action-btn slot-wrapper">
-        <div class="padding" v-bind:style="offset"></div>
+    <div class="fixed-action-btn slot-wrapper">
         <a class="slot btn-floating teal accent-4 tooltipped" data-position="right" data-tooltip="Slot" v-bind:style="offset"></a>
         <ul v-bind:style="offset">
             <li>
@@ -16,7 +15,6 @@
 export default {
     name: 'slot-component',
     props: [
-        'id',
         'x',
         'y'
     ],
@@ -41,12 +39,6 @@ export default {
 .slot-wrapper {
     display: contents;
 
-    .padding {
-        position: absolute;
-        height: 40px;
-        width: 30px;
-        transform: translate(-50%, -75%);
-    }
     .slot {
         position: absolute;
         width: 30px;
