@@ -35,14 +35,14 @@
     
     <div id="workspace" class="col s12 m9">
       <div id="part">
-        <img v-on:click="addSlot">
+        <img v-bind:src="part.img" v-on:click="addSlot" v-bind:style="{width: displaywidth, height: displayheight}">
         <div id="slots">
           <slot-component
-            v-for="(slot, index) in slots"
+            v-for="(slot, index) in part.slots"
             v-bind:id="slot.id"
             v-bind:x="slot.x"
             v-bind:y="slot.y"
-            v-on:remove="slots.splice(index, 1)">
+            v-on:remove="part.slots.splice(index, 1)">
           </slot-component>
         </div>
       </div>
@@ -54,7 +54,7 @@
         <div class="file-field input-field col s10 offset-s1">
           <div class="btn indigo lighten-3 waves-effect">
             <span>Browse</span>
-            <input type="file" id="img-file">
+            <input type="file" id="img-file" v-on:input="uploadImg">
           </div>
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" placeholder="Upload file" accept="image/*">
@@ -79,15 +79,23 @@ export default  {
   },
   data(){
     return {
-      slots: [], //test values: {id: 0, x:0, y:0}, {id: 1, x:20, y:20}
+      part: {
+        slots: [], //test values: {id: 0, x:0, y:0}, {id: 1, x:20, y:20}
+        height: 12,
+        width: 12,
+        img: null
+      },
       nextSlotId: 0,
-      slotAdd: false
+      slotAdd: false,
+      displaywidth: 0,
+      displayheight: 0
     }
   },
   mounted () {
     $('.tooltipped').tooltip();
     $('.modal').modal();
     M.updateTextFields();
+    this.resizePart();
   },
   methods: {
     toggleSlotAdd(){
@@ -95,12 +103,31 @@ export default  {
     },
     addSlot(e) {
       if (this.slotAdd){
-        this.slots.push({
+        this.slotAdd = false;
+        this.part.slots.push({
           id: this.nextSlotId++,
           x: e.offsetX,
           y: e.offsetY
         });
       }
+    },
+    resizePart() {
+      let aspectRatio = this.part.width / this.part.height;
+      let maxWidth = $('#workspace').width() * .95;
+      let maxHeight = $('#workspace').height() * .95;
+      let width = maxHeight * aspectRatio;
+      
+      if (width <= maxWidth) {
+        this.displaywidth = width + 'px';
+        this.displayheight = height + 'px';
+      }
+      else {
+        this.displaywidth = maxWidth + 'px';
+        this.displayheight = (maxWidth / aspectRatio) + 'px';
+      }
+    },
+    uploadImg(e) {
+      this.part.img = URL.createObjectURL(e.target.files[0]);  
     }
   }
 }
