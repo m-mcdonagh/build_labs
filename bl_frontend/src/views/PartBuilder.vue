@@ -45,7 +45,11 @@
     
     <div id="workspace" class="col s12 m9">
       <div id="part">
-        <img v-bind:src="part.img" v-on:click="addComponent" v-bind:style="{width: displaywidth, height: displayheight}">
+        <img 
+          v-bind:src="part.img" 
+          v-on:click="addComponent"
+          v-on:keydown="keypress"
+          v-bind:style="{width: displaywidth, height: displayheight}">
         <div id="slots">
           <slot-component
             v-for="(slot, index) in part.slots"
@@ -118,6 +122,7 @@ export default  {
     M.updateTextFields();
     this.resizePart();
     window.onresize = this.resizePart;
+    window.addEventListener('keydown', this.keypress);
   },
   methods: {
     toggleConnectorAdd() {
@@ -144,6 +149,20 @@ export default  {
           x: e.offsetX,
           y: e.offsetY
         };
+      }
+    },
+    keypress(e){
+      switch (e.key) {
+        case 's':
+          this.slotAdd = !this.slotAdd;
+          this.connectorAdd = false;
+          break;
+        case 'a':
+          this.part.connector = null;
+          this.connectorAdd = !this.connectorAdd;
+          this.slotAdd = false;
+          $('.material-tooltip').css({opacity: '0'});
+          break;
       }
     },
     resizePart() {
