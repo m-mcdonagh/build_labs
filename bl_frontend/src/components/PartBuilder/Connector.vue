@@ -1,6 +1,6 @@
 <template>
-    <div class="fixed-action-btn slot-wrapper">
-        <a class="slot btn-floating teal accent-4 tooltipped" data-position="right" data-tooltip="Slot" v-bind:style="offset"></a>
+    <div class="fixed-action-btn" id="connector-wrapper">
+        <a id="connector" class="btn-floating teal darken-5 tooltipped" data-position="right" data-tooltip="Connector" v-bind:style="offset"></a>
         <ul v-bind:style="offset">
             <li>
                 <button class="delete btn-floating waves-effect red" v-on:click="$emit('remove')">
@@ -21,8 +21,8 @@ export default {
     data() {
         return {
             offset: {
-                left: this.x + '%',
-                top: this.y + '%'
+                left: this.x + 'px',
+                top: this.y + 'px'
             }
         }
     },
@@ -35,22 +35,23 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.slot-wrapper {
+<style scoped lang='scss'>
+#connector-wrapper {
     display: contents;
 
-    .slot {
+    #connector{
         position: absolute;
-        width: 30px;
-        height: 30px;
         transform: translate(-50%, -50%);
-        border: 4px solid white;
+        border: 6px solid white;
+        height: 50px;
+        width: 50px;
+        border-radius: 100%;
     }
     ul {
         position: absolute;
         width: 40px;
         height: 40px;
-        transform: translate(-50%, -150%);
+        transform: translate(-50%, -175%);
         z-index: 1;
 
         * {
