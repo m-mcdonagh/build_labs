@@ -37,7 +37,13 @@
       <div id="part">
         <img>
         <div id="slots">
-          <!-- v-for slots -->
+          <slot-component
+            v-for="(slot, index) in slots"
+            v-bind:id="slot.id"
+            v-bind:x="slot.x"
+            v-bind:y="slot.y"
+            v-on:remove="slots.splice(index, 1)">
+          </slot-component>
         </div>
       </div>
     </div>
@@ -61,16 +67,36 @@
 </template>
 
 <script lang="js">
+import slot from '../components/PartBuilder/Slot.vue';
+
 export default  {
   name: 'partbuilder',
+  components: {
+    'slot-component' : slot,
+  },
   created() {
     this.$store.commit('changeNav', 'indigo lighten-1');
+  },
+  data(){
+    return {
+      slots: [], //test values: {id: 0, x:0, y:0}, {id: 1, x:20, y:20}
+      nextSlotId: 0
+    }
   },
   mounted () {
     $('.tooltipped').tooltip();
     $('.modal').modal();
     M.updateTextFields();
   },
+  methods: {
+    addSlot(x, y) {
+      this.slots.push({
+        id: this.nextSlotId++,
+        x: x,
+        y: y
+      });
+    }
+  }
 }
 </script>
 
