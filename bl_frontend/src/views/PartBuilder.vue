@@ -80,7 +80,7 @@ export default  {
   data(){
     return {
       part: {
-        slots: [], //test values: {id: 0, x:0, y:0}, {id: 1, x:20, y:20}
+        slots: [],
         height: 12,
         width: 12,
         img: null
@@ -96,6 +96,7 @@ export default  {
     $('.modal').modal();
     M.updateTextFields();
     this.resizePart();
+    window.onresize = this.resizePart;
   },
   methods: {
     toggleSlotAdd(){
@@ -119,7 +120,7 @@ export default  {
       
       if (width <= maxWidth) {
         this.displaywidth = width + 'px';
-        this.displayheight = height + 'px';
+        this.displayheight = maxHeight + 'px';
       }
       else {
         this.displaywidth = maxWidth + 'px';
