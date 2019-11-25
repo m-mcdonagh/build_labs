@@ -21,8 +21,8 @@ export default {
     data() {
         return {
             offset: {
-                left: this.x + 'px',
-                top: this.y + 'px'
+                left: this.x + '%',
+                top: this.y + '%'
             }
         }
     },

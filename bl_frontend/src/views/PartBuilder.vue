@@ -139,15 +139,15 @@ export default  {
         this.slotAdd = false;
         this.part.slots.push({
           id: this.nextSlotId++,
-          x: e.offsetX,
-          y: e.offsetY
+          x: (e.offsetX / parseFloat(this.displaywidth)) * 100,
+          y: (e.offsetY / parseFloat(this.displayheight)) * 100
         });
       }
       else if (this.connectorAdd) {
         this.connectorAdd = false;
         this.part.connector = {
-          x: e.offsetX,
-          y: e.offsetY
+          x: (e.offsetX / parseFloat(this.displaywidth)) * 100,
+          y: (e.offsetY / parseFloat(this.displayheight)) * 100
         };
       }
     },
