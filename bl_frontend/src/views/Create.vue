@@ -17,7 +17,16 @@
     </ul>
     <div id="parts" class="col s12 content-wrapper">
       <div class="content flow-text scroll">
-        <!--v-for parts (in span tags)-->
+        <part-list 
+             v-for="(part, index) in parts"
+             v-bind:key="part.id"
+             v-bind:id="part.id"
+             v-bind:name="part.name"
+             v-bind:ispublished="part.ispublished"
+             v-on:copy="console.log(part, 'copied')"
+             v-on:publish="console.log(part, 'published')"
+             v-on:remove="console.log(part, 'removed')">
+        </part-list>
       </div>
     </div>
     <div id="labs" class="col s12 content-wrapper">
@@ -47,10 +56,24 @@
 </template>
 
 <script lang="js">
+import partlist from '../components/Create/PartList.vue'
+import lablist from '../components/Create/LabList.vue'
+
 export default  {
   name: 'create',
+  components:{
+    'part-list': partlist,
+    'lab-list': lablist
+  },
   created() {
     this.$store.commit('changeNav', 'indigo lighten-1');
+  },
+  data() {
+    return {
+      // TODO: set up axios for this.parts and this.labs
+      parts: [{id:0, name:'Poop', ispublished:false}, {id:1, name:'pee', ispublished:true}],
+      labs: []
+    }
   },
   mounted () {
     $('.tabs').tabs();
