@@ -2,13 +2,13 @@ package cerulean.project.controllers;
 
 
 import cerulean.project.models.Account;
+import cerulean.project.models.Lab;
+import cerulean.project.models.Step;
 import cerulean.project.services.AccountService;
+import cerulean.project.services.LabService;
 import cerulean.project.services.StepControllerService;
 import com.google.gson.Gson;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 public class StepController {
     private StepControllerService stepService;
     private AccountService accountService;
+    private LabService labService;
+
     private Gson gson = new Gson();
 
 
@@ -29,6 +31,18 @@ public class StepController {
 
 
     }
+
+
+
+    @RequestMapping(value ="/step/{labId}/{index}", method = RequestMethod.GET)
+    public String getStepInLab(@RequestParam String labId, String index) {
+
+        Lab lab = labService.getLab(labId);
+        Step currentStep = lab.getSteps().get(Integer.parseInt(index));
+        return gson.toJson(currentStep);
+
+    }
+
 
 
 }

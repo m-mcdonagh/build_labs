@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping(value ="/parts")
@@ -44,6 +45,12 @@ public class PartController {
         String username = "temp";
         Part part = gson.fromJson(partJson, Part.class);
         partService.addNewPart(username , part);
+    }
+
+    @RequestMapping(value ="/part", method = RequestMethod.GET)
+    public String listAllParts() {
+        List<Part> part_list = partService.getAllParts();
+        return gson.toJson(part_list);
     }
 
 }
