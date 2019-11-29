@@ -1,21 +1,36 @@
 <template>
     <div class="part valign-wrapper">
-        <span>{{ name }}</span>
-        <a v-if="!ispublished" v-bind:href="link" class="btn-small waves-effect indigo accent-2">
-            <i class="material-icons left">edit</i>Edit
+        <a class="dropdown-trigger btn-floating btn-small waves-effect waves-light" v-bind:data-target="'dropdown' + id">
+            <i class="material-icons">keyboard_arrow_down</i>
         </a>
-        <button v-if="!ispublished" class="btn-small waves-effect indigo accent-2" v-on:click="remove">
-            <i class="material-icons left">delete_forever</i>Delete
-        </button>
-        <button v-if="!ispublished" class="btn-small waves-effect indigo accent-2" v-on:click="publish">
-            <i class="material-icons left">publish</i>Publish
-        </button>
-        <button v-if="ispublished" class="btn-small waves-effect indigo accent-2">
-            <i class="material-icons left">info</i>Info
-        </button>
-        <button class="btn-small waves-effect indigo accent-2" v-on:click="copy">
-            <i class="material-icons left">content_copy</i>Copy
-        </button>
+        <ul v-bind:id="'dropdown' + id" class='dropdown-content'>
+            <li v-if="!ispublished">
+                <a v-bind:href="link">
+                    <i class="material-icons left">edit</i>Edit
+                </a>
+            </li>
+            <li v-if="!ispublished">
+                <a v-on:click="remove">
+                    <i class="material-icons left">delete_forever</i>Delete
+                </a>
+            </li>
+            <li v-if="!ispublished">
+                <a v-on:click="publish">
+                    <i class="material-icons left">publish</i>Publish
+                </a>
+            </li>
+            <li v-if="ispublished">
+                <a>
+                    <i class="material-icons">info</i>Info
+                </a>
+            </li>
+            <li>
+                <a v-on:click="copy">
+                    <i class="material-icons">content_copy</i>Copy
+                </a>
+            </li>
+        </ul>
+        <span>{{ name }}</span>
     </div>
 </template>
 
@@ -27,6 +42,9 @@ export default {
         return {
             link: '/partbuilder?id=' + this.id
         }
+    },
+    mounted(){
+        M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth: false, coverTrigger: false});
     },
     methods: {
         copy() {
@@ -51,10 +69,7 @@ export default {
     flex-direction: row;
 
     span {
-        margin: 5px 20px;
-    }
-    .btn-small {
-        margin: 0 1px;
+        margin: 5px;
     }
 }
 </style>

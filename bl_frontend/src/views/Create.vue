@@ -71,7 +71,7 @@ export default  {
   data() {
     return {
       // TODO: set up axios for this.parts and this.labs
-      parts: [],
+      parts: [{id:0, name:'test not published', ispublished:false}, {id:1, name:'test published', ispublished:true}],
       labs: []
     }
   },
