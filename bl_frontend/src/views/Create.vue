@@ -31,7 +31,16 @@
     </div>
     <div id="labs" class="col s12 content-wrapper">
       <div class="content flow-text">
-        <!--v-for labs (in span tags)-->
+        <lab-list 
+             v-for="(lab, index) in labs"
+             v-bind:key="lab.id"
+             v-bind:id="lab.id"
+             v-bind:name="lab.name"
+             v-bind:ispublished="lab.ispublished"
+             v-on:copy="console.log(lab, 'copied')"
+             v-on:publish="console.log(lab, 'published')"
+             v-on:remove="console.log(lab, 'removed')">
+        </lab-list>
       </div>
     </div>
     <div class="fixed-action-btn">
@@ -72,7 +81,7 @@ export default  {
     return {
       // TODO: set up axios for this.parts and this.labs
       parts: [{id:0, name:'test not published', ispublished:false}, {id:1, name:'test published', ispublished:true}],
-      labs: []
+      labs: [{id:0, name:'lab not published', ispublished:false}, {id:1, name:'lab published', ispublished:true}]
     }
   },
   mounted () {

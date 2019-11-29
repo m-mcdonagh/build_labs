@@ -1,9 +1,11 @@
 <template>
     <div class="part valign-wrapper">
-        <a class="dropdown-trigger btn-floating btn-small waves-effect waves-light" v-bind:data-target="'dropdown' + id">
+        <a class="dropdown-trigger btn-floating btn-small waves-effect waves-light" 
+           v-bind:data-target="'part-dropdown-' + id"
+           v-bind:class="ispublished?'teal darken-1':'teal lighten-2'">
             <i class="material-icons">keyboard_arrow_down</i>
         </a>
-        <ul v-bind:id="'dropdown' + id" class='dropdown-content'>
+        <ul v-bind:id="'part-dropdown-' + id" class='dropdown-content'>
             <li v-if="!ispublished">
                 <a v-bind:href="link">
                     <i class="material-icons left">edit</i>Edit
