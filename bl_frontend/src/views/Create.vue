@@ -16,7 +16,7 @@
       </li>
     </ul>
     <div id="parts" class="col s12 content-wrapper">
-      <div class="content flow-text scroll">
+      <ul class="content flow-text collection">
         <part-list 
              v-for="(part, index) in parts"
              v-bind:key="part.id"
@@ -27,10 +27,10 @@
              v-on:publish="console.log(part, 'published')"
              v-on:remove="console.log(part, 'removed')">
         </part-list>
-      </div>
+      </ul>
     </div>
     <div id="labs" class="col s12 content-wrapper">
-      <div class="content flow-text">
+      <ul class="content flow-text collection">
         <lab-list 
              v-for="(lab, index) in labs"
              v-bind:key="lab.id"
@@ -41,7 +41,7 @@
              v-on:publish="console.log(lab, 'published')"
              v-on:remove="console.log(lab, 'removed')">
         </lab-list>
-      </div>
+      </ul>
     </div>
     <div class="fixed-action-btn">
       <a class="btn-floating btn-large waves-effect waves-light pulse indigo accent-4">

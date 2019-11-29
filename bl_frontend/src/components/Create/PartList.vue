@@ -1,5 +1,5 @@
 <template>
-    <div class="part valign-wrapper">
+    <li class="part collection-item" v-bind:class="ispublished?'blue-grey lighten-5':''">
         <a class="dropdown-trigger btn-floating btn-small waves-effect waves-light" 
            v-bind:data-target="'part-dropdown-' + id"
            v-bind:class="ispublished?'teal darken-1':'teal lighten-2'">
@@ -33,7 +33,7 @@
             </li>
         </ul>
         <span>{{ name }}</span>
-    </div>
+    </li>
 </template>
 
 <script>
