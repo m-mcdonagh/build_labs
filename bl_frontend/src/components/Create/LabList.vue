@@ -21,9 +21,14 @@
                     <i class="material-icons left">publish</i>Publish
                 </a>
             </li>
-            <li v-if="ispublished" class="modal-trigger" v-bind:href="'#lab-modal-' + id">
-                <a>
+            <li v-if="ispublished">
+                <a class="modal-trigger" v-bind:href="'#lab-info-modal-' + id">
                     <i class="material-icons">info</i>Info
+                </a>
+            </li>
+            <li v-if="ispublished">
+                <a class="modal-trigger" v-bind:href="'#lab-assign-modal-' + id">
+                    <i class="material-icons left">assignment_ind</i>Assign
                 </a>
             </li>
             <li>
@@ -33,7 +38,7 @@
             </li>
         </ul>
         <span>{{ name }}</span>
-        <div v-if="ispublished" v-bind:id="'lab-modal-' + id" class="modal">
+        <div v-if="ispublished" v-bind:id="'lab-info-modal-' + id" class="modal">
             <div class="modal-content indigo lighten-4">
                 <h4><i class="material-icons">assignment</i>{{ name }}</h4>
                 <div class="collection">
@@ -58,6 +63,24 @@
                 <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
             </div>
         </div>
+        <div v-if="ispublished" v-bind:id="'lab-assign-modal-' + id" class="modal">
+            <div class="modal-content indigo lighten-4">
+                <h4><i class="material-icons">assignment_ind</i>{{ name }}</h4>
+                <!-- TODO Send to backend -->
+                <form class="row">
+                    <div class="email-input input-field inline col s11">
+                        <input id="email" name="email" type="email" required>
+                        <label for="email">Send to</label>
+                    </div>
+                    <button class="email-submit col s1" type="submit">
+                        <div><i class="material-icons">send</i></div>
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer indigo lighten-3">
+                <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
+            </div>
+        </div>
     </li>
 </template>
 
@@ -77,8 +100,8 @@ export default {
     },
     mounted(){
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth: false, coverTrigger: false});
-        M.Modal.init($(this.$el).find('.modal').get(0), {});
-        M.Tooltip.init($(this.$el).find('.tooltipped').get(0), {position: 'left'});
+        $(this.$el).find('.modal').modal();
+        $(this.$el).find('.tooltipped').tooltip();
     },
     methods: {
         copy() {
@@ -120,6 +143,38 @@ export default {
             height: 80%;
             top: 0;
             right: 5px;
+        }
+    }
+    .row {
+        display: flex;
+        justify-content: center;
+    }
+    .email-input{
+        margin-left:0;
+    }
+    .email-submit {
+        display: contents;
+
+        i {
+            transform: translate(0, 125%);
+            cursor: pointer;
+            color: #009688;
+        }
+        i:hover {
+            color: #4db6ac;
+        }
+
+        @media screen and (max-width: 400px) {
+            i {
+                font-size: .75em;
+                transform: translate(0, 250%);
+            }
+        }
+        @media screen and (max-width: 230px) {
+            i {
+                font-size: .5em;
+                transform: translate(0, 400%);
+            }
         }
     }
 }
