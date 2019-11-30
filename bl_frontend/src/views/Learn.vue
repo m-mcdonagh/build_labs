@@ -9,17 +9,41 @@
                 <div class="col s10 offset-s1 divider"></div>
             </div>
             <div id="labs" class="row">
-                <!-- v-for cards gotten via axios/ajax -->
+                <lab-card
+                    v-for="lab in labs"
+                    v-bind:key="lab.id"
+                    v-bind:id="lab.id"
+                    v-bind:name="lab.name"
+                    v-bind:owner="lab.owner"
+                    v-bind:complete="lab.complete"
+                    v-bind:inprogress="lab.inprogress">
+                </lab-card>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import labcard from '../components/Learn/LabCard.vue'
+
 export default  {
   name: 'learn',
+  components:{
+      'lab-card': labcard
+  },
   created() {
     this.$store.commit('changeNav', 'cyan');
+  },
+  data(){
+      return {
+          // TODO: set up axios for this.labs
+          labs: [
+              {id:0, name: 'Not complete; not in progress', owner:'You', complete: false, inprogress: false}, 
+              {id:1, name: 'Complete; not in progress', owner:'Me', complete: true, inprogress: false}, 
+              {id:2, name: 'Not complete; in progress', owner:'and', complete: false, inprogress: true}, 
+              {id:3, name: 'Complete; in progress', owner:'Dupree', complete: true, inprogress: true}
+            ]
+      }
   },
   mounted() {
     this.sizeContent();
@@ -62,8 +86,10 @@ export default  {
         #labs {
             overflow-x: hidden;
             overflow-y: scroll;
-            margin: 0;
             max-height: 100%;
+            width: 90%;
+            margin-left: 5%;
+            padding-left: 1%;
         }
     }
 }

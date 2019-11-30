@@ -32,7 +32,7 @@
     <div id="labs" class="col s12 content-wrapper">
       <ul class="content flow-text collection">
         <lab-list 
-             v-for="(lab, index) in labs"
+             v-for="lab in labs"
              v-bind:key="lab.id"
              v-bind:id="lab.id"
              v-bind:name="lab.name"
