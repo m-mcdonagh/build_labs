@@ -12,12 +12,12 @@
                 </a>
             </li>
             <li v-if="!ispublished">
-                <a v-on:click="remove">
+                <a v-on:click="$emit('remove')">
                     <i class="material-icons left">delete_forever</i>Delete
                 </a>
             </li>
             <li v-if="!ispublished">
-                <a v-on:click="publish">
+                <a v-on:click="$emit('publish')">
                     <i class="material-icons left">publish</i>Publish
                 </a>
             </li>
@@ -32,13 +32,13 @@
                 </a>
             </li>
             <li>
-                <a v-on:click="copy">
+                <a v-on:click="$emit('copy')">
                     <i class="material-icons">content_copy</i>Copy
                 </a>
             </li>
         </ul>
         <span>{{ name }}</span>
-        <div v-if="ispublished" v-bind:id="'lab-info-modal-' + id" class="modal">
+        <div v-bind:id="'lab-info-modal-' + id" class="modal">
             <div class="modal-content indigo lighten-4">
                 <h4><i class="material-icons">assignment</i>{{ name }}</h4>
                 <div class="collection">
@@ -63,7 +63,7 @@
                 <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
             </div>
         </div>
-        <div v-if="ispublished" v-bind:id="'lab-assign-modal-' + id" class="modal">
+        <div v-bind:id="'lab-assign-modal-' + id" class="modal">
             <div class="modal-content indigo lighten-4">
                 <h4><i class="material-icons">assignment_ind</i>{{ name }}</h4>
                 <!-- TODO Send to backend -->
@@ -102,20 +102,6 @@ export default {
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth: false, coverTrigger: false});
         $(this.$el).find('.modal').modal();
         $(this.$el).find('.tooltipped').tooltip();
-    },
-    methods: {
-        copy() {
-            //TODO axios
-            $emit('copy'); // The create page's lab array needs to be updated (should be moved to axios.then)
-        },
-        publish() {
-            //TODO axios
-            $emit('publish'); // Properties can only be changed by parent (should be moved to axios.then)
-        },
-        remove() {
-            //TODO axios
-            $emit('remove'); // The create page needs to know when items are deleted/removed (should be moved to axios.then)
-        },
     }
 }
 </script>

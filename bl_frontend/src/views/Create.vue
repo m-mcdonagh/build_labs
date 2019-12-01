@@ -23,9 +23,9 @@
              v-bind:id="part.id"
              v-bind:name="part.name"
              v-bind:ispublished="part.ispublished"
-             v-on:copy="console.log(part, 'copied')"
-             v-on:publish="console.log(part, 'published')"
-             v-on:remove="console.log(part, 'removed')">
+             v-on:copy="copypart(part)"
+             v-on:publish="publishpart(part)"
+             v-on:remove="removepart(part)">
         </part-list>
       </ul>
     </div>
@@ -37,9 +37,9 @@
              v-bind:id="lab.id"
              v-bind:name="lab.name"
              v-bind:ispublished="lab.ispublished"
-             v-on:copy="console.log(lab, 'copied')"
-             v-on:publish="console.log(lab, 'published')"
-             v-on:remove="console.log(lab, 'removed')">
+             v-on:copy="copylab(lab)"
+             v-on:publish="publishlab(lab)"
+             v-on:remove="removelab(lab)">
         </lab-list>
       </ul>
     </div>
@@ -98,6 +98,48 @@ export default  {
       $('.content').css({
         height: height
       });
+    },
+    copypart(part) {
+      console.log('copy part', part.id);
+      // TODO: axios 
+          // REQ->server with part.id
+          // server->RES with new cloned ubpublished part JSON
+          // then() appends this to this.parts 
+    },
+    copylab(lab){
+      console.log('copy lab', lab.id);
+      // TODO: axios
+          // REQ->server with lab.id
+          // server->RES with new cloned, ubpublished lab JSON
+          // then appends this to this.labs
+    },
+    publishpart(part){
+      console.log('publish part', part.id);
+      // TODO axios
+          // REQ->server with part.id
+          // server->RES with OK or ERR
+      part.ispublished = true; // move to axios.then
+    },
+    publishlab(lab){
+      console.log('publish part', lab.id);
+      // TODO axios
+          // REQ->server with lab.id
+          // server->RES with OK or ERR
+      lab.ispublished = true; // move to axios.then
+    },
+    removepart(part){
+      console.log('remove part', part.id);
+      // TODO axios
+          // REQ->server with part.id
+          // server->RES with OK or ERR
+      this.part.splice(this.parts.indexOf(part), 1); // move to axios.then
+    },
+    removelab(lab){
+      console.log('remove lab', lab.id);
+      //TODO axios
+          // REQ->server with lab.id
+          // server->RES with OK or ERR
+      this.labs.splice(this.labs.indexOf(lab), 1); //move to axios.then
     }
   } 
 }

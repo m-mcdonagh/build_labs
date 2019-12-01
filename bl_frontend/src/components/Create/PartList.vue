@@ -7,17 +7,17 @@
         </a>
         <ul v-bind:id="'part-dropdown-' + id" class='dropdown-content'>
             <li v-if="!ispublished">
-                <a v-bind:href="link">
+                <a v-bind:href="'/partbuilder?id=' + id">
                     <i class="material-icons left">edit</i>Edit
                 </a>
             </li>
             <li v-if="!ispublished">
-                <a v-on:click="remove">
+                <a v-on:click="$emit('remove')">
                     <i class="material-icons left">delete_forever</i>Delete
                 </a>
             </li>
             <li v-if="!ispublished">
-                <a v-on:click="publish">
+                <a v-on:click="$emit('publish')">
                     <i class="material-icons left">publish</i>Publish
                 </a>
             </li>
@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li>
-                <a v-on:click="copy">
+                <a v-on:click="$emit('copy')">
                     <i class="material-icons">content_copy</i>Copy
                 </a>
             </li>
@@ -40,27 +40,8 @@
 export default {
     name: 'Part',
     props: ['name', 'ispublished', 'id'],
-    data() {
-        return {
-            link: '/partbuilder?id=' + this.id
-        }
-    },
     mounted(){
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth: false, coverTrigger: false});
-    },
-    methods: {
-        copy() {
-            //TODO axios
-            $emit('copy'); // The create page's lab array needs to be updated (should be moved to axios.then)
-        },
-        publish() {
-            //TODO axios
-            $emit('publish'); // Properties can only be changed by parent (should be moved to axios.then)
-        },
-        remove() {
-            //TODO axios
-            $emit('remove'); // The create page needs to know when items are deleted/removed (should be moved to axios.then)
-        },
     }
 }
 </script>
