@@ -12,7 +12,11 @@
       <h1 class="indigo flow-text">STEPS</h1>
       <ol id="step-list"></ol>
     </div>
-
+    
+    <div id="save-exit-btns" class="row">
+      <button class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
+      <button class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</button>
+    </div>
 
     <div id="controls">
       <div id="step-details" class="transparent">
@@ -26,15 +30,17 @@
             <label for="step-instruction">Instruction</label>
           </div>
         </div>
-        <button id="minimize" class="btn-floating indigo lighten-3 waves-effect">
+        <button id="minimize" class="btn-floating indigo lighten-3 waves-effect" v-on:click="minimize">
           <i class="material-icons">arrow_left</i>
         </button>
-      </div>
-      <div id="control-btns" class="row">
-        <button class="lab-overview-btn btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
-        <button class="lab-overview-btn btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</button>
-        <button class="step-btns btn-large indigo lighten-3 waves-effect col s12 m6" id="done">DONE</button>
-        <button class="step-btns btn-large indigo lighten-3 waves-effect col s12 m6" id="cancel">CANCEL</button>
+        <div id="control-btns">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="done">
+            <i class="material-icons">check</i>
+          </button>
+          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel">
+            <i class="material-icons">close</i>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -58,10 +64,45 @@ export default  {
   created() {
     this.$store.commit('changeNav', 'indigo lighten-1');
   },
-  mounted () {
-    console.log($('.modal'));
+  data() {
+    return {
+      toggleMinimize: false,
+      minimizeHeight: null
+    }
+  },
+  mounted() {
     $('.modal').modal();
   },
+  methods: {
+    minimize(e) {
+      if (this.toggleMinimize){
+        $('#control-btns').show();
+        $('#step-details .row').show()
+        $('#step-details').animate({
+          width: '800px',
+          height: this.minimizeHeight + 'px',
+        });
+        $('#step-details').css({
+          'overflow-y': 'visible'
+        });
+        this.toggleMinimize=false;
+      }
+      else {
+        $('#control-btns').hide();
+        this.minimizeHeight = $('#step-details').height() + 19;
+        $('#step-details').animate({
+          width: $(e.target).width() + 'px',
+          height: $(e.target).height() + 'px',
+        }, function(){
+          $('#step-details .row').hide();
+        });
+        $('#step-details').css({
+          'overflow-y': 'scroll'
+        });
+        this.toggleMinimize=true;
+      }
+    }
+  }
 }
 </script>
 
@@ -99,6 +140,14 @@ export default  {
     }
   }
 
+  #save-exit-btns {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+    margin: 0;
+  }
+
   #controls {
     display: flex;
     margin: 1%;
@@ -123,18 +172,18 @@ export default  {
         overflow-y: scroll;
         max-height: 100%;
       }
-
       #minimize {
         position: absolute;
         top: 0;
         right: 0;
       }
-    }
-    #control-btns {
-        position: fixed;
-        bottom: 0;
+      #control-btns {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        bottom: 25px;  
         right: 0;
-        width: 25%;
+      }
     }
   }
 
