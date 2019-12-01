@@ -21,11 +21,12 @@
                     <i class="material-icons left">publish</i>Publish
                 </a>
             </li>
-            <li v-if="ispublished">
+            <!-- SOMEDAY MAYBE: display a published part (since it can only be viewed in lab builder) -->
+            <!-- <li v-if="ispublished">
                 <a>
                     <i class="material-icons">info</i>Info
                 </a>
-            </li>
+            </li> -->
             <li>
                 <a v-on:click="$emit('copy')">
                     <i class="material-icons">content_copy</i>Copy
