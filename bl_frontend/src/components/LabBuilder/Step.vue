@@ -1,6 +1,6 @@
 <template>
     <div class="step collection-item">
-        {{ name }}
+        {{ index + 1 }}: {{ name }}
         <div class="right">
             <a class="dropdown-trigger btn-floating btn-small waves-effect waves-light" 
             v-bind:data-target="'step-dropdown-' + id">
@@ -35,7 +35,7 @@
 export default {
     name: 'Step',
     props: [
-        'id', 'name', 'instruction'
+        'id', 'index', 'name', 'instruction'
     ],
     mounted() {
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth:false});

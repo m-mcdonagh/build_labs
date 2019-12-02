@@ -12,9 +12,10 @@
       <h1 class="indigo flow-text">STEPS</h1>
       <div id="step-list" class="collection">
         <step-component
-          v-for="step in steps"
+          v-for="(step, index ) in steps"
           v-bind:key="step.id"
           v-bind:id="step.id"
+          v-bind:index="index"
           v-bind:name="step.name"
           v-bind:instruction="step.instruction">
         </step-component>
@@ -42,7 +43,7 @@
           <i class="material-icons">arrow_left</i>
         </button>
         <div id="control-btns">
-          <button class="btn-floating indigo lighten-3 waves-effect" id="done">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="done" v-on:click="addstep">
             <i class="material-icons">check</i>
           </button>
           <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false">
@@ -84,12 +85,8 @@ export default  {
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
-      steps: [
-        {id:0, name:'test0', instruction:'instruction uno'}, 
-        {id:1, name:'test1', instruction:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
-        {id:2, name:'test2', instruction:'iNsTrUcTiOn 3'},
-        {id:3, name:'test3', instruction:'i\nn\ns\nt\nr\nu\nc\nt\ni\no\nn'}
-      ],
+      stepCounter: 0,
+      steps: [],
       // TODO axios this.parts
       listofparts: [
         {id:0, name:'part0'},
@@ -108,6 +105,15 @@ export default  {
   methods: {
     addpart(id) {
       // TODO axios for the full part component and add to #build-so-far
+    },
+    addstep() {
+      // TODO check if part was connected
+      this.steps.push({
+        id: this.stepCounter++,
+        name: $('#step-name').val(),
+        instruction: $('#step-instruction').val()
+      });
+      this.newStepToggle = false;
     },
     minimize(e) {
       if (this.minimizeToggle){
@@ -240,6 +246,7 @@ export default  {
     }
     #step-list {
       position: relative;
+      min-height: 75%;
       margin-top: 0;
       margin-left: 10px;
       word-wrap: break-word;
