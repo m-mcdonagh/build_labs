@@ -14,6 +14,15 @@ import java.util.List;
 import java.util.UUID;
 
 
+//          /assignments/share/{lab_id, username}	POST		Share lab w/ user
+//        /accounts						            GET		Get Users
+//        /accounts/account/{username}			    GET		Get Usergi
+//        /accounts/account/register				POST		Register
+//        /accounts/account/login				    POST		Login
+//        /accounts/account/logout				    POST		Logout
+//        /accounts/						        GET
+//
+
 //@RestController
 //@RequestMapping("/home")
 //public class AccountController {

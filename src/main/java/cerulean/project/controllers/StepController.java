@@ -1,15 +1,9 @@
 package cerulean.project.controllers;
 
 
-import cerulean.project.models.Account;
-import cerulean.project.services.AccountService;
 import cerulean.project.services.StepControllerService;
 import com.google.gson.Gson;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 //    /steps/step/{lab_Id}/{index}		GET		    Get Instruction
@@ -20,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value ="/steps")
 public class StepController {
     private StepControllerService stepService;
-    private AccountService accountService;
     private Gson gson = new Gson();
 
 
-    @RequestMapping(value ="/", method = RequestMethod.GET)
-    public void listParts(@RequestParam String lab_id, @RequestParam String index, HttpServletResponse httpResponse) {
 
 
+    @RequestMapping(value ="/validate", method = RequestMethod.POST)
+    public String performStep(@RequestBody String labAssignment_id, @RequestBody String step, HttpServletResponse httpResponse) {
+        return "performing step";
     }
 
 
