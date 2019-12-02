@@ -56,7 +56,9 @@
     <div id="part-selector" class="modal modal-fixed-footer">
       <div class="modal-content indigo lighten-3">
         <ul class="collection">
-          <li v-for="part in parts" class="collection-item" v-on:click="">{{ part.name }}</li>
+          <li v-for="part in listofparts" class="collection-item">
+            <a class="modal-close btn-flat" v-on:click="addpart(part.id)">{{ part.name }}</a>
+          </li>
         </ul>
       </div>
       <div class="modal-footer indigo lighten-4">
@@ -88,20 +90,25 @@ export default  {
         {id:2, name:'test2', instruction:'iNsTrUcTiOn 3'},
         {id:3, name:'test3', instruction:'i\nn\ns\nt\nr\nu\nc\nt\ni\no\nn'}
       ],
-      parts: [
-        {name:'part0'},
-        {name:'part1'},
-        {name:'part2'},
-        {name:'part3'},
-        {name:'part4'},
-        {name:'part5'},
-      ]
+      // TODO axios this.parts
+      listofparts: [
+        {id:0, name:'part0'},
+        {id:1, name:'part1'},
+        {id:2, name:'part2'},
+        {id:3, name:'part3'},
+        {id:4, name:'part4'},
+        {id:5, name:'part5'}
+      ],
+      buildparts: [],
     }
   },
   mounted() {
     $('.modal').modal();
   },
   methods: {
+    addpart(id) {
+      // TODO axios for the full part component and add to #build-so-far
+    },
     minimize(e) {
       if (this.minimizeToggle){
         $('#control-btns').show();
@@ -253,7 +260,13 @@ export default  {
     color: black;
 
     .collection-item {
-      cursor: pointer;
+      padding: 0;
+
+      a { 
+        width: 100%;
+        height: 100%;
+        text-transform: none;
+      }
     }
   }
 }
