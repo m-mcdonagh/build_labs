@@ -17,10 +17,13 @@ public class StepController {
     private Gson gson = new Gson();
 
 
-
+    @RequestMapping(value ="/", method = RequestMethod.POST)
+    public String test(HttpServletResponse httpResponse) {
+        return "performing step2";
+    }
 
     @RequestMapping(value ="/validate", method = RequestMethod.POST)
-    public String performStep(@RequestBody String labAssignment_id, @RequestBody String step, HttpServletResponse httpResponse) {
+    public String performStep(HttpServletResponse httpResponse) {
         return "performing step";
     }
 
