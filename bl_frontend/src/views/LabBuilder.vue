@@ -10,7 +10,15 @@
 
     <div id="steps-side-bar" class="indigo col s3">
       <h1 class="indigo flow-text">STEPS</h1>
-      <ol id="step-list"></ol>
+      <div id="step-list" class="collection">
+        <step-component
+          v-for="step in steps"
+          v-bind:key="step.id"
+          v-bind:id="step.id"
+          v-bind:name="step.name"
+          v-bind:instruction="step.instruction">
+        </step-component>
+      </div>
     </div>
     
     <div id="save-exit-btns" class="row">
@@ -59,8 +67,13 @@
 </template>
 
 <script>
+import stepComponent from '../components/LabBuilder/Step.vue';
+
 export default  {
   name: 'lab-builder',
+  components: {
+    'step-component': stepComponent
+  },
   created() {
     this.$store.commit('changeNav', 'indigo lighten-1');
   },
@@ -69,6 +82,12 @@ export default  {
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
+      steps: [
+        {id:0, name:'test0', instruction:'instruction uno'}, 
+        {id:1, name:'test1', instruction:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
+        {id:2, name:'test2', instruction:'iNsTrUcTiOn 3'},
+        {id:3, name:'test3', instruction:'i\nn\ns\nt\nr\nu\nc\nt\ni\no\nn'}
+      ]
     }
   },
   mounted() {
@@ -206,12 +225,13 @@ export default  {
     }
     #step-list {
       position: relative;
-      font-size: 1.5rem;
       margin-top: 0;
       margin-left: 10px;
       word-wrap: break-word;
       top: 87px;
       padding-bottom: 65px;
+      border: none;
+      background-color: #00000000;
     }
   }
 
