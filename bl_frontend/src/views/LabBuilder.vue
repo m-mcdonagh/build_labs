@@ -53,15 +53,15 @@
     </div>
 
 
-    <div id="part-selector" class="modal indigo">
-      <div id="scroll" class="row">
-        <div id="parts-content" class="content col s12">
-          <div id="parts">
-            <!-- v-for parts -->
-          </div>
-        </div>
+    <div id="part-selector" class="modal modal-fixed-footer">
+      <div class="modal-content indigo lighten-3">
+        <ul class="collection">
+          <li v-for="part in parts" class="collection-item" v-on:click="">{{ part.name }}</li>
+        </ul>
       </div>
-      <button id="part-cancel" class="modal-close btn indigo lighten-3 waves-effect col s4 offset-s4">CANCEL</button>
+      <div class="modal-footer indigo lighten-4">
+        <a id="part-cancel" class="modal-close btn-flat" v-on:click="newStepToggle=false">CANCEL</a>
+      </div>
     </div>
   </div>
 </template>
@@ -87,6 +87,14 @@ export default  {
         {id:1, name:'test1', instruction:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'},
         {id:2, name:'test2', instruction:'iNsTrUcTiOn 3'},
         {id:3, name:'test3', instruction:'i\nn\ns\nt\nr\nu\nc\nt\ni\no\nn'}
+      ],
+      parts: [
+        {name:'part0'},
+        {name:'part1'},
+        {name:'part2'},
+        {name:'part3'},
+        {name:'part4'},
+        {name:'part5'},
       ]
     }
   },
@@ -240,27 +248,12 @@ export default  {
     position: absolute;
     max-width: 90vw;
     width: 1000px;
-    height: 90vh;
     overflow: hidden;
     margin-top: 5vh;
-    padding: 10px;
+    color: black;
 
-    #scroll {
-      margin: 0;
-      margin-top: 2.5%;
-      height: 90%;
-
-      #parts-content {
-        margin: 0;
-
-        span {
-            width: min-content;
-            cursor: pointer;
-        }
-      }
-    }
-    #part-cancel {
-      margin-top: 5px;
+    .collection-item {
+      cursor: pointer;
     }
   }
 }
