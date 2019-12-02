@@ -2,7 +2,7 @@
   <div class="main row" id="lab-builder-main">
     <div id="workspace" class="col s9">
       <div id="build-so-far"></div>
-      <button id="new-step-btn" data-target="part-selector" class="modal-trigger">
+      <button v-if="!newStepToggle" id="new-step-btn" data-target="part-selector" class="modal-trigger" v-on:click="newStepToggle=true">
         <img src="../assets/img/add-icon.svg">
       </button>
     </div>
@@ -18,7 +18,7 @@
       <button class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</button>
     </div>
 
-    <div id="controls">
+    <div v-if="newStepToggle" id="controls">
       <div id="step-details" class="transparent">
         <div class='row indigo'>
           <div class="input-field col s6">
@@ -37,7 +37,7 @@
           <button class="btn-floating indigo lighten-3 waves-effect" id="done">
             <i class="material-icons">check</i>
           </button>
-          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false">
             <i class="material-icons">close</i>
           </button>
         </div>
@@ -58,7 +58,7 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
 export default  {
   name: 'lab-builder',
   created() {
@@ -66,8 +66,9 @@ export default  {
   },
   data() {
     return {
-      toggleMinimize: false,
-      minimizeHeight: null
+      minimizeToggle: false,
+      minimizeHeight: null,
+      newStepToggle: false,
     }
   },
   mounted() {
@@ -75,7 +76,7 @@ export default  {
   },
   methods: {
     minimize(e) {
-      if (this.toggleMinimize){
+      if (this.minimizeToggle){
         $('#control-btns').show();
         $('#step-details .row').show()
         $('#step-details').animate({
@@ -85,7 +86,7 @@ export default  {
         $('#step-details').css({
           'overflow-y': 'visible'
         });
-        this.toggleMinimize=false;
+        this.minimizeToggle=false;
       }
       else {
         $('#control-btns').hide();
@@ -99,7 +100,7 @@ export default  {
         $('#step-details').css({
           'overflow-y': 'scroll'
         });
-        this.toggleMinimize=true;
+        this.minimizeToggle=true;
       }
     }
   }
