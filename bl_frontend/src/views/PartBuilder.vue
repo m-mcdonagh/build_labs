@@ -102,6 +102,7 @@ export default  {
   },
   data(){
     return {
+      // TODO: set up axios for this.part
       part: {
         height: 12,
         width: 12,

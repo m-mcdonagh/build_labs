@@ -16,14 +16,32 @@
       </li>
     </ul>
     <div id="parts" class="col s12 content-wrapper">
-      <div class="content flow-text scroll">
-        <!--v-for parts (in span tags)-->
-      </div>
+      <ul class="content flow-text collection">
+        <part-list 
+             v-for="(part, index) in parts"
+             v-bind:key="part.id"
+             v-bind:id="part.id"
+             v-bind:name="part.name"
+             v-bind:ispublished="part.ispublished"
+             v-on:copy="copypart(part)"
+             v-on:publish="publishpart(part)"
+             v-on:remove="removepart(part)">
+        </part-list>
+      </ul>
     </div>
     <div id="labs" class="col s12 content-wrapper">
-      <div class="content flow-text">
-        <!--v-for labs (in span tags)-->
-      </div>
+      <ul class="content flow-text collection">
+        <lab-list 
+             v-for="lab in labs"
+             v-bind:key="lab.id"
+             v-bind:id="lab.id"
+             v-bind:name="lab.name"
+             v-bind:ispublished="lab.ispublished"
+             v-on:copy="copylab(lab)"
+             v-on:publish="publishlab(lab)"
+             v-on:remove="removelab(lab)">
+        </lab-list>
+      </ul>
     </div>
     <div class="fixed-action-btn">
       <a class="btn-floating btn-large waves-effect waves-light pulse indigo accent-4">
@@ -47,10 +65,24 @@
 </template>
 
 <script lang="js">
+import partlist from '../components/Create/PartList.vue'
+import lablist from '../components/Create/LabList.vue'
+
 export default  {
   name: 'create',
+  components:{
+    'part-list': partlist,
+    'lab-list': lablist
+  },
   created() {
     this.$store.commit('changeNav', 'indigo lighten-1');
+  },
+  data() {
+    return {
+      // TODO: set up axios for this.parts and this.labs
+      parts: [{id:0, name:'part not published', ispublished:false}, {id:1, name:'part published', ispublished:true}],
+      labs: [{id:0, name:'lab not published', ispublished:false}, {id:1, name:'lab published', ispublished:true}]
+    }
   },
   mounted () {
     $('.tabs').tabs();
@@ -66,6 +98,48 @@ export default  {
       $('.content').css({
         height: height
       });
+    },
+    copypart(part) {
+      console.log('copy part', part.id);
+      // TODO: axios 
+          // REQ->server with part.id
+          // server->RES with new cloned ubpublished part JSON
+          // then() appends this to this.parts 
+    },
+    copylab(lab){
+      console.log('copy lab', lab.id);
+      // TODO: axios
+          // REQ->server with lab.id
+          // server->RES with new cloned, ubpublished lab JSON
+          // then appends this to this.labs
+    },
+    publishpart(part){
+      console.log('publish part', part.id);
+      // TODO axios
+          // REQ->server with part.id
+          // server->RES with OK or ERR
+      part.ispublished = true; // move to axios.then
+    },
+    publishlab(lab){
+      console.log('publish part', lab.id);
+      // TODO axios
+          // REQ->server with lab.id
+          // server->RES with OK or ERR
+      lab.ispublished = true; // move to axios.then
+    },
+    removepart(part){
+      console.log('remove part', part.id);
+      // TODO axios
+          // REQ->server with part.id
+          // server->RES with OK or ERR
+      this.part.splice(this.parts.indexOf(part), 1); // move to axios.then
+    },
+    removelab(lab){
+      console.log('remove lab', lab.id);
+      //TODO axios
+          // REQ->server with lab.id
+          // server->RES with OK or ERR
+      this.labs.splice(this.labs.indexOf(lab), 1); //move to axios.then
     }
   } 
 }
