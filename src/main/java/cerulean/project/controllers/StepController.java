@@ -18,10 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 public class StepController {
     private StepControllerService stepService = new StepControllerService();
     private LabAssignmentService labAssignmentService = new LabAssignmentService();
-
     private Gson gson = new Gson();
-
-
+    
     @RequestMapping(value ="/validate", method = RequestMethod.POST)
     public Boolean performStep(@RequestBody String stepJson, @RequestParam String labAssignmentId, HttpServletResponse httpResponse) {
         Step step = gson.fromJson(stepJson, Step.class);

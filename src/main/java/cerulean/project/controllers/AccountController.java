@@ -1,4 +1,5 @@
 package cerulean.project.controllers;
+import cerulean.project.models.Account;
 import cerulean.project.services.AccountService;
 import cerulean.project.services.MongoDBUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,43 +28,49 @@ import java.util.UUID;
 @RequestMapping("/accounts")
 public class AccountController {
     @Autowired
-    private AccountService account;
+    private AccountService accountService = new AccountService();
 
-    // /assignments/share/{lab_id, username}	POST		Share lab w/ user
-    @RequestMapping(value ="/share", method = RequestMethod.POST)
-    public void shareLab() {
-
-    }
-
-    // /accounts						            GET		Get Users
-    @RequestMapping(value ="/", method = RequestMethod.GET)
-    public void getAccounts() {
-
-    }
-
-    // /accounts/account/{username}			    GET		Get Usergi
     @RequestMapping(value ="/account", method = RequestMethod.GET)
-    public void getUserInfo() {
-
+    public String getAccount(@RequestParam String username) {
+        return new Gson().toJson(accountService.getAccount(username));
     }
 
-    // /accounts/account/register				POST		Register
-    @RequestMapping(value ="/account/register", method = RequestMethod.POST)
-    public void register() {
 
-    }
-
-    //        /accounts/account/login				    POST		Login
-    @RequestMapping(value ="/account/login", method = RequestMethod.POST)
-    public void login() {
-
-    }
-
-    //        /accounts/account/logout				    POST		Logout
-    @RequestMapping(value ="/account/logout", method = RequestMethod.POST)
-    public void logout() {
-
-    }
+//    // /assignments/share/{lab_id, username}	POST		Share lab w/ user
+//    @RequestMapping(value ="/share", method = RequestMethod.POST)
+//    public void shareLab() {
+//
+//    }
+//
+//    // /accounts						            GET		Get Users
+//    @RequestMapping(value ="/", method = RequestMethod.GET)
+//    public void getAccounts() {
+//
+//    }
+//
+//    // /accounts/account/{username}			    GET		Get Usergi
+//    @RequestMapping(value ="/account", method = RequestMethod.GET)
+//    public void getUserInfo() {
+//
+//    }
+//
+//    // /accounts/account/register				POST		Register
+//    @RequestMapping(value ="/account/register", method = RequestMethod.POST)
+//    public void register() {
+//
+//    }
+//
+//    //        /accounts/account/login				    POST		Login
+//    @RequestMapping(value ="/account/login", method = RequestMethod.POST)
+//    public void login() {
+//
+//    }
+//
+//    //        /accounts/account/logout				    POST		Logout
+//    @RequestMapping(value ="/account/logout", method = RequestMethod.POST)
+//    public void logout() {
+//
+//    }
 
 
 

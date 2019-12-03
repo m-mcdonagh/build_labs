@@ -33,7 +33,7 @@ public class PartController {
     public String listParts(@RequestParam String id, HttpServletResponse httpResponse) {
         String username = "temp";
         Account account = accountService.getAccount(username);
-       return gson.toJson(partService.getPartsCreatedByUser(account));
+        return gson.toJson(partService.getPartsCreatedByUser(account));
     }
     @RequestMapping(value ="/part", method = RequestMethod.GET)
     public String getPart(@RequestParam String id) {
