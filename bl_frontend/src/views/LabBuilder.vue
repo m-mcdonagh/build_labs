@@ -86,7 +86,7 @@ export default  {
       minimizeHeight: null,
       newStepToggle: false,
       stepCounter: 0,
-      steps: [],
+      steps: [], // Steps need IDs, despite not having any in the mongo database. Needed for v-for
       // TODO axios this.parts
       listofparts: [
         {id:0, name:'part0'},
@@ -95,6 +95,7 @@ export default  {
         {id:3, name:'part3'},
         {id:4, name:'part4'},
         {id:5, name:'part5'}
+        // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
       ],
       buildparts: [],
     }

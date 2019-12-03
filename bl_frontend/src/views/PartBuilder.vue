@@ -107,10 +107,10 @@ export default  {
         height: 12,
         width: 12,
         img: null,
-        slots: [],
+        slots: [], // Slots need unique IDs, despite not having any in the mongo database. Needed for v-for
         connector: null
       },
-      nextSlotId: 0,
+      nextSlotId: 0, // Used to generate Slot IDs
       slotAdd: false,
       connectorAdd: false,
       displaywidth: 0,

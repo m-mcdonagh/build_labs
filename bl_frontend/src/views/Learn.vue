@@ -27,24 +27,25 @@
 import labcard from '../components/Learn/LabCard.vue'
 
 export default  {
-  name: 'learn',
-  components:{
-      'lab-card': labcard
-  },
-  created() {
-    this.$store.commit('changeNav', 'cyan');
-  },
-  data(){
-      return {
-          // TODO: set up axios for this.labs
-          labs: [
-              {id:0, name: 'Not complete; not in progress', owner:'You', complete: false, inprogress: false}, 
-              {id:1, name: 'Complete; not in progress', owner:'Me', complete: true, inprogress: false}, 
-              {id:2, name: 'Not complete; in progress', owner:'and', complete: false, inprogress: true}, 
-              {id:3, name: 'Complete; in progress', owner:'Dupree', complete: true, inprogress: true}
+    name: 'learn',
+    components:{
+        'lab-card': labcard
+    },
+    created() {
+        this.$store.commit('changeNav', 'cyan');
+    },
+    data(){
+        return {
+            // TODO: set up axios for this.labs
+            labs: [
+                {id:0, name: 'Not complete; not in progress', owner:'You', complete: false, inprogress: false}, 
+                {id:1, name: 'Complete; not in progress', owner:'Me', complete: true, inprogress: false}, 
+                {id:2, name: 'Not complete; in progress', owner:'and', complete: false, inprogress: true}, 
+                {id:3, name: 'Complete; in progress', owner:'Dupree', complete: true, inprogress: true}
             ]
-      }
-  },
+            // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
+        }
+    },
   mounted() {
     this.sizeContent();
     window.resize = this.sizeContent;

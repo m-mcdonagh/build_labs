@@ -82,6 +82,7 @@ export default  {
       // TODO: set up axios for this.parts and this.labs
       parts: [{id:0, name:'part not published', ispublished:false}, {id:1, name:'part published', ispublished:true}],
       labs: [{id:0, name:'lab not published', ispublished:false}, {id:1, name:'lab published', ispublished:true}]
+      // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
     }
   },
   mounted () {
