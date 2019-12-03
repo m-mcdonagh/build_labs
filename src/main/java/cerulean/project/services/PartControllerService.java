@@ -22,12 +22,12 @@ public class PartControllerService {
         return partRepository.findById(partId).orElse(null);
     }
 
-    public void addNewPart(String creatorUsername, Part newPart) {
+    public String addNewPart(String creatorUsername, Part newPart) {
         Account creator = accountService.getAccount(creatorUsername);
-        addNewPart(creator, newPart);
+        return addNewPart(creator, newPart);
     }
 
-    private void addNewPart(Account creator, Part newPart) {
+    private String addNewPart(Account creator, Part newPart) {
         if (partRepository.existsById(newPart.get_id())) {
             // If part is already in the DB don't do anything
             throw new RuntimeException("Part with that ID already exists");
@@ -36,6 +36,7 @@ public class PartControllerService {
             accountService.save(creator);
             partRepository.save(newPart);
         }
+        return newPart.get_id().toString();
     }
 
     public List<Part> getPartsCreatedByUser(Account user) {

@@ -1,6 +1,9 @@
 package cerulean.project.controllers;
 
 
+import cerulean.project.models.LabAssignment;
+import cerulean.project.models.Step;
+import cerulean.project.services.LabAssignmentService;
 import cerulean.project.services.StepControllerService;
 import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(value ="/steps")
 public class StepController {
-    private StepControllerService stepService;
+    private StepControllerService stepService = new StepControllerService();
+    private LabAssignmentService labAssignmentService = new LabAssignmentService();
+
     private Gson gson = new Gson();
 
 
-    @RequestMapping(value ="/", method = RequestMethod.POST)
-    public String test(HttpServletResponse httpResponse) {
-        return "performing step2";
-    }
-
     @RequestMapping(value ="/validate", method = RequestMethod.POST)
-    public String performStep(HttpServletResponse httpResponse) {
-        return "performing step";
+    public Boolean performStep(@RequestBody String stepJson, @RequestParam String labAssignmentId, HttpServletResponse httpResponse) {
+        Step step = gson.fromJson(stepJson, Step.class);
+        LabAssignment labAssignment = labAssignmentService.getLabAssignment(labAssignmentId);
+        return stepService.isStepValid(step, labAssignment);
     }
-
 
 }

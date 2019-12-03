@@ -46,7 +46,10 @@ public class PartController {
     public String addPart(@RequestBody String partJson, @RequestParam String username) {
 
         Part part = gson.fromJson(partJson, Part.class);
-        partService.addNewPart(username , part);
+        //TODO: When do we set the id of the part
+//        return partService.addNewPart(username , part);
+        return "temp";
+
     }
 
 }
