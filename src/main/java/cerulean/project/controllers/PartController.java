@@ -9,7 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-
+import com.google.gson.Gson;
+import java.security.MessageDigest;
 @RestController
 @RequestMapping(value ="/parts")
 public class PartController {
@@ -22,8 +23,9 @@ public class PartController {
 //			*see part schema*
 //    }
 
+
     private PartControllerService partService;
-    private AccountService accountService;
+    private AccountService accountService = new AccountService();
 
     private Gson gson = new Gson();
 
@@ -31,7 +33,7 @@ public class PartController {
     public String listParts(@RequestParam String id, HttpServletResponse httpResponse) {
         String username = "temp";
         Account account = accountService.getAccount(username);
-        return gson.toJson(partService.getPartsCreatedByUser(account));
+       return gson.toJson(partService.getPartsCreatedByUser(account));
     }
     @RequestMapping(value ="/part", method = RequestMethod.GET)
     public String getPart(@RequestParam String id) {
@@ -39,11 +41,14 @@ public class PartController {
         Part part = partService.getPart(id);
         return gson.toJson(part);
     }
+
     @RequestMapping(value ="/part", method = RequestMethod.POST)
-    public void addPart(@RequestBody String partJson) {
-        String username = "temp";
+    public String addPart(@RequestBody String partJson, @RequestParam String username) {
+
         Part part = gson.fromJson(partJson, Part.class);
         partService.addNewPart(username , part);
     }
 
 }
+
+
