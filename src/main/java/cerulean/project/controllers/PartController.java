@@ -52,6 +52,11 @@ public class PartController {
 
     }
 
+    @RequestMapping(value ="/allparts", method = RequestMethod.GET)
+    public String getAllParts() {
+        return gson.toJson(partService.getAllParts());
+    }
+
 }
 
 
