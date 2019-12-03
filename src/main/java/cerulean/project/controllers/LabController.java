@@ -33,4 +33,10 @@ public class LabController {
         Lab lab = gson.fromJson(labJson, Lab.class);
         labService.addNewLab(username , lab);
     }
+
+    @RequestMapping(value ="/lab/{labId}", method = RequestMethod.GET)
+    public String getPartsInLab(@PathVariable String labId) {
+        Lab lab = labService.getLab(labId);
+        return gson.toJson(lab.getPartsList());
+    }
 }

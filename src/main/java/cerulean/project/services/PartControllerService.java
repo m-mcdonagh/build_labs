@@ -45,4 +45,10 @@ public class PartControllerService {
         return result;
     }
 
+    public List<Part> getAllParts(){
+        List<Part> result = new ArrayList<>();
+        partRepository.findAll().forEach(result::add);
+        return result;
+    }
+
 }

@@ -34,4 +34,19 @@ public class StepControllerService {
         labAssignmentService.updateLabAssignment(labAssignment);
         return labAssignment.getCurrentStep();
     }
+
+    public void addNewStep(String labId, Step step){
+        Lab lab = labService.getLab(labId);
+        addNewStep(lab,step);
+    }
+
+    private void addNewStep(Lab lab, Step step){
+        if(lab != null){
+            lab.getSteps().add(step);
+            //TODO: Save new step to database
+        }
+        else{
+            throw new RuntimeException("lab not found");
+        }
+    }
 }
