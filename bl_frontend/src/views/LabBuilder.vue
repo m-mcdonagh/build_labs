@@ -10,7 +10,8 @@
           v-bind:dimensions="part.dimensions"
           v-bind:slotPoints="part.slotPoints"
           v-bind:connectorPoint="part.connectorPoint"
-          v-bind:connectedAt="part.connectedAt">
+          v-bind:connectedAt="part.connectedAt"
+          v-on:slotclick="addpart">
         </part-component>
       </div>
       <button v-if="!newStepToggle" id="new-step-btn" data-target="part-selector" class="modal-trigger" v-on:click="newStepToggle=true">
@@ -69,7 +70,7 @@
       <div class="modal-content indigo lighten-3">
         <ul class="collection">
           <li v-for="part in listofparts" class="collection-item">
-            <a class="modal-close btn-flat" v-on:click="addpart(part.id)">{{ part.name }}</a>
+            <a class="modal-close btn-flat" v-on:click="selectpart(part.id)">{{ part.name }}</a>
           </li>
         </ul>
       </div>
@@ -110,6 +111,7 @@ export default  {
         {id:5, name:'part5'}
         // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
       ],
+      selectedPart: null,
       buildparts: [],
     }
   },
@@ -117,8 +119,12 @@ export default  {
     $('.modal').modal();
   },
   methods: {
-    addpart(id) {
-      // TODO axios for the full part component and add to #build-so-far
+    selectpart(id) {
+      this.selectedPart = this.listofparts.find(part => part.id == id)
+    },
+    addpart(part, slot) {
+      // TODO
+      // Add selectedPart to buildparts and remove slot from part
     },
     addstep() {
       // TODO check if part was connected

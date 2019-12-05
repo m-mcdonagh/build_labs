@@ -6,13 +6,18 @@
         top: connectedAt.top - connectorPoint.top,
     }">
         <img v-bind:src="img_src">
-        <div class="slot teal accent-4" v-for="(i, slot) in slots" v-bind:key="i" v-bind:style="{left: slot.x, top: slot.y}"></div>
+        <div class="slot teal accent-4" 
+             v-for="(i, slot) in slots"
+             v-bind:key="i"
+             v-bind:style="{left: slot.x, top: slot.y}"
+             v-on:click="$emit('slotclick', part, slot)"
+        ></div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Part',
+    name: 'part',
     props: [
         'name', 'img_src', 'dimensions', 'slotPoints', 'connectorPoint', 'connectedAt'
     ],
