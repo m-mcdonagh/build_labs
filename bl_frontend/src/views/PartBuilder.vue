@@ -46,7 +46,7 @@
     <div id="workspace" class="col s12 m9">
       <div id="part">
         <img 
-          v-bind:src="part.img" 
+          v-bind:src="part.img_src" 
           v-on:click="addComponent"
           v-on:keydown="keypress"
           v-bind:style="{width: displaywidth, height: displayheight}">
@@ -106,7 +106,8 @@ export default  {
       part: {
         height: 12,
         width: 12,
-        img: null,
+        img_src: null, // used by dom img component, set when user uploads a file. Needed whether from file on frontend or file hosted at some route on backend
+        img_file: null, // actual uploaded file. Needs to be sent to backend only when changed. Doesn't need to come back to frontend
         slots: [], // Slots need unique IDs, despite not having any in the mongo database. Needed for v-for
         connector: null
       },
@@ -182,7 +183,8 @@ export default  {
       }
     },
     uploadImg(e) {
-      this.part.img = URL.createObjectURL(e.target.files[0]);  
+      this.part.img_file = e.target.files[0];
+      this.part.img_src = URL.createObjectURL(e.target.files[0]);  
     }
   },
   watch: {
