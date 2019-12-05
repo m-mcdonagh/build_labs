@@ -19,7 +19,7 @@
 export default {
     name: 'part',
     props: [
-        'name', 'img_src', 'dimensions', 'slotPoints', 'connectorPoint', 'connectedAt'
+        'name', 'img_src', 'dimensions', 'slotPoints', 'connectorPoint', 'connectedAt', 'part'
     ],
 }
 </script>

@@ -11,6 +11,7 @@
           v-bind:slotPoints="part.slotPoints"
           v-bind:connectorPoint="part.connectorPoint"
           v-bind:connectedAt="part.connectedAt"
+          v-bind:part="part"
           v-on:slotclick="addpart">
         </part-component>
       </div>
@@ -24,7 +25,7 @@
       <h1 class="indigo flow-text">STEPS</h1>
       <div id="step-list" class="collection">
         <step-component
-          v-for="(step, index ) in steps"
+          v-for="(step, index) in steps"
           v-bind:key="step.id"
           v-bind:id="step.id"
           v-bind:index="index"
@@ -70,7 +71,7 @@
       <div class="modal-content indigo lighten-3">
         <ul class="collection">
           <li v-for="part in listofparts" class="collection-item">
-            <a class="modal-close btn-flat" v-on:click="selectpart(part.id)">{{ part.name }}</a>
+            <a class="modal-close btn-flat" v-on:click="selectpart(part)">{{ part.name }}</a>
           </li>
         </ul>
       </div>
@@ -101,14 +102,25 @@ export default  {
       newStepToggle: false,
       stepCounter: 0,
       steps: [], // Steps need IDs, despite not having any in the mongo database. Needed for v-for
-      // TODO axios this.parts
+      buildWidth: 0,
+      buildHeight: 0,
+      // TODO axios this.listofparts
       listofparts: [
-        {id:0, name:'part0'},
-        {id:1, name:'part1'},
-        {id:2, name:'part2'},
-        {id:3, name:'part3'},
-        {id:4, name:'part4'},
-        {id:5, name:'part5'}
+        {
+          id:0, 
+          name:'Motherboard', 
+          img_src:'../assets/img/motherboard.png',
+          dimensions: {width: 12, height: 12},
+          slotPoints: [{x:55, y:35}],
+          connectorPoint: null
+        },
+        {
+          id:1, 
+          name:'../assets/img/cpu.png',
+          dimensions: {width: 1, height: 12},
+          slotPoints: [],
+          connectorPoint: {x: 50, y:50}
+        },
         // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
       ],
       selectedPart: null,
@@ -119,12 +131,16 @@ export default  {
     $('.modal').modal();
   },
   methods: {
-    selectpart(id) {
-      this.selectedPart = this.listofparts.find(part => part.id == id)
+    selectpart(part) {
+      this.selectedPart = part;
     },
-    addpart(part, slot) {
-      // TODO
-      // Add selectedPart to buildparts and remove slot from part
+    addpart(parentPart, slot) {
+      if (this.selectedPart == null) {
+        return;
+      }
+      this.selectedPart.connectedAt = {left: slot.x, top: slot.y}
+      this.buildparts.push(this.selectedPart);
+      this.selectedPart = null
     },
     addstep() {
       // TODO check if part was connected
