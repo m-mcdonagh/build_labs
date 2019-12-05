@@ -1,7 +1,18 @@
 <template lang="html">
   <div class="main row" id="lab-builder-main">
     <div id="workspace" class="col s9">
-      <div id="build-so-far"></div>
+      <div id="build-so-far">
+        <part-component
+          v-for="part in buildparts"
+          v-bind:key="part.id"
+          v-bind:name="part.name"
+          v-bind:img_src="part.img_src"
+          v-bind:dimensions="part.dimensions"
+          v-bind:slotPoints="part.slotPoints"
+          v-bind:connectorPoint="part.connectorPoint"
+          v-bind:connectedAt="part.connectedAt">
+        </part-component>
+      </div>
       <button v-if="!newStepToggle" id="new-step-btn" data-target="part-selector" class="modal-trigger" v-on:click="newStepToggle=true">
         <img src="../assets/img/add-icon.svg">
       </button>
@@ -70,11 +81,13 @@
 </template>
 
 <script>
+import partComponent from '../components/LabBuilder/Part.vue';
 import stepComponent from '../components/LabBuilder/Step.vue';
 
 export default  {
   name: 'lab-builder',
   components: {
+    'part-component': partComponent,
     'step-component': stepComponent
   },
   created() {
