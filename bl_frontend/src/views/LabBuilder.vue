@@ -2,6 +2,7 @@
   <div class="main row" id="lab-builder-main">
     <div id="workspace" class="col s9">
       <div id="build-so-far">
+        <div v-if="buildparts.length == 0 && newStepToggle" id="mega-slot" class="blue-grey" v-on:click="addfirstpart"></div>
         <part-component
           v-for="part in buildparts"
           v-bind:key="part.id"
@@ -15,8 +16,12 @@
           v-on:slotclick="addpart">
         </part-component>
       </div>
-      <button v-if="!newStepToggle" id="new-step-btn" data-target="part-selector" class="modal-trigger" v-on:click="newStepToggle=true">
-        <img src="../assets/img/add-icon.svg">
+      <button class="step-btn modal-trigger" data-target="part-selector" v-on:click="newStepToggle=true">
+        <img v-bind:src="selectedPart && !selectedPart.connectedAt ? selectedPart.img_src : addicon"
+             v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
+      </button>
+      <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="selectedPart.connectedAt = null; buildparts.pop()">
+        <img src="../assets/img/detach.svg">
       </button>
     </div>
 
@@ -59,7 +64,7 @@
           <button class="btn-floating indigo lighten-3 waves-effect" id="done" v-on:click="addstep">
             <i class="material-icons">check</i>
           </button>
-          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false; selectedPart=null">
             <i class="material-icons">close</i>
           </button>
         </div>
@@ -76,7 +81,7 @@
         </ul>
       </div>
       <div class="modal-footer indigo lighten-4">
-        <a id="part-cancel" class="modal-close btn-flat" v-on:click="newStepToggle=false">CANCEL</a>
+        <a id="part-cancel" class="modal-close btn-flat" v-on:click="modalcancel">CANCEL</a>
       </div>
     </div>
   </div>
@@ -109,14 +114,16 @@ export default  {
         {
           id:0, 
           name:'Motherboard', 
-          img_src:'../assets/img/motherboard.png',
+          img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
           dimensions: {width: 12, height: 12},
           slotPoints: [{x:55, y:35}],
-          connectorPoint: null
+          connectorPoint: null,
+          connectedAt: {x: 5, y: 5}
         },
         {
           id:1, 
-          name:'../assets/img/cpu.png',
+          name: 'CPU',
+          img_src: require('../assets/img/cpu.png'),
           dimensions: {width: 1, height: 12},
           slotPoints: [],
           connectorPoint: {x: 50, y:50}
@@ -125,6 +132,7 @@ export default  {
       ],
       selectedPart: null,
       buildparts: [],
+      addicon: require('../assets/img/add-icon.svg')
     }
   },
   mounted() {
@@ -133,6 +141,9 @@ export default  {
   methods: {
     selectpart(part) {
       this.selectedPart = part;
+    },
+    addfirstpart() {
+      
     },
     addpart(parentPart, slot) {
       if (this.selectedPart == null) {
@@ -150,6 +161,7 @@ export default  {
         instruction: $('#step-instruction').val()
       });
       this.newStepToggle = false;
+      this.selectedPart = null;
     },
     minimize(e) {
       if (this.minimizeToggle){
@@ -178,6 +190,9 @@ export default  {
         });
         this.minimizeToggle=true;
       }
+    },
+    modalcancel() {
+      if (!this.selectedPart) this.newStepToggle = false;
     }
   }
 }
@@ -196,19 +211,29 @@ export default  {
       height: 100%;
       width: 75%;
 
+      #mega-slot {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        opacity: .25;
+      }
+      #mega-slot:hover {
+        opacity: .3;
+      }
+
       img {
         max-height: 80vh;
       }
     }
-    #new-step-btn {
+    .step-btn {
       display: contents;
 
       img {
         position: absolute;
-        left: 85%;
+        left: 74.5%;
         top: 50%;
         width: 25%;
-        transform: translate(-50%, -50%);
+        transform: translate(0, -50%);
         cursor: pointer;
       }
       img:hover{
