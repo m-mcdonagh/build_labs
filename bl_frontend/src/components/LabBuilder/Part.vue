@@ -2,14 +2,15 @@
     <div class="part" v-bind:style="{
         width: (dimensions.width / buildWidth) * 100 + '%', 
         height: (dimensions.height / buildHeight) * 100 + '%',
-        left: connectedAt.left - (connectorPoint ? connectorPoint.left : dimensions.width * .5),
-        top: connectedAt.top - (connectorPoint ? connectorPoint.top : dimensions.height * .5),
+        left: connectedAt.left * 100 + '%',
+        top: connectedAt.top * 100 + '%',
+        transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : ''
     }">
         <img v-bind:src="img_src">
         <div class="slot teal accent-4" 
              v-for="(slot, i) in slotPoints"
              v-bind:key="i"
-             v-bind:style="{left: slot.x, top: slot.y}"
+             v-bind:style="{left: (slot.x * 100) + '%', top: (slot.y * 100) + '%'}"
              v-on:click="$emit('slotclick', part, slot)"
         ></div>
     </div>
@@ -29,6 +30,9 @@ export default {
         'buildWidth', 
         'buildHeight',
     ],
+    created() {
+        console.log(this);
+    }
 }
 </script>
 
@@ -42,6 +46,7 @@ export default {
     }
 
     .slot {
+        position: absolute;
         width: 30px;
         height: 30px;
         border: 4px solid white;

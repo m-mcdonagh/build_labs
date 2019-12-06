@@ -20,8 +20,7 @@
         </part-component>
       </div>
       <button id="new-step-btn" class="step-btn modal-trigger" data-target="part-selector" v-on:click="newstep">
-        <img v-bind:src="firststep ? swapicon : 
-                (selectedPart && !selectedPart.connectedAt ? selectedPart.img_src : addicon)"
+        <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
       </button>
       <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="selectedPart.connectedAt = null; buildparts.pop()">
@@ -124,17 +123,16 @@ export default  {
           name:'Motherboard', 
           img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
           dimensions: {width: 12, height: 12},
-          slotPoints: [{x:55, y:35}],
+          slotPoints: [{x:.55, y:.35}],
           connectorPoint: null,
-          connectedAt: {x: 5, y: 5}
         },
         {
           id:1, 
           name: 'CPU',
           img_src: require('../assets/img/cpu.png'),
-          dimensions: {width: 1, height: 1},
+          dimensions: {width: 2, height: 2},
           slotPoints: [],
-          connectorPoint: {x: 50, y:50}
+          connectorPoint: {x: .5, y:.5}
         },
         // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
       ],
@@ -150,7 +148,7 @@ export default  {
   },
   methods: {
     selectpart(part) {
-      this.selectedPart = part;
+      this.selectedPart = this.clonepart(part);
     },
     newstep(){
       this.newStepToggle=true; 
@@ -158,14 +156,15 @@ export default  {
         this.buildparts.pop();
     },
     addfirstpart(part) {
-      console.log('FIRST PART')
       this.firststep = true;
       this.buildWidth = part.dimensions.width;
       this.buildHeight = part.dimensions.height;
       this.resizebuild();
       window.onresize = this.resizebuild;
-      part.connectedAt = {left: '50', top: '50'};
-      this.buildparts.push(part);
+      let newPart = this.clonepart(part);
+      newPart.connectorPoint = null;
+      newPart.connectedAt = {left: 0, top: 0};
+      this.buildparts.push(newPart);
     },
     addpart(parentPart, slot) {
       if (this.selectedPart == null) {
@@ -230,9 +229,23 @@ export default  {
         this.displayHeight = (maxWidth / aspectRatio) + 'px';
       }
     },
-  },
-  watch: {
-    buildparts: function(o, n) {console.log(this.buildparts)}
+    clonepart(part) {
+      let slotPoints = []
+      for (let i=0; i<part.slotPoints.length; i++){
+        slotPoints.push({
+          x: part.slotPoints[i].x,
+          y: part.slotPoints[i].y
+        });
+      }
+      return {
+        id: part.id, 
+        name: part.name, 
+        img_src: part.img_src, 
+        dimensions: {width: part.dimensions.width, height: part.dimensions.height},
+        slotPoints: slotPoints,
+        connectorPoint: part.connectorPoint ? {x: part.connectorPoint.x, y: part.connectorPoint.y} : null,
+      }
+    }
   }
 }
 </script>
