@@ -12,10 +12,16 @@ public class AxiosController {
 
     private Gson gson = new Gson();
 
-    @RequestMapping(value ="/", method = RequestMethod.GET)
+    @RequestMapping(value ="/axios", method = RequestMethod.GET)
     public String getName() {
         System.out.println("GOT HERE");
-        return gson.toJson("MY NAME IS KHURRAM");
+        return gson.toJson("HELLO WORLD!");
+    }
+
+    @PostMapping(value = "/postPost")
+    public void testPost(@RequestBody String input){
+        System.out.println("POST EXECUTED");
+        System.out.println("DATA SENT"+input);
     }
 
 

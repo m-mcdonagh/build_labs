@@ -42,6 +42,11 @@ const routes = [
     path: '/labbuilder',
     name: 'labbuilder',
     component: () => import('../views/LabBuilder.vue')
+  },
+  {
+    path: '/axios',
+    name: 'axios',
+    component: () => import('../views/Axios.vue')
   }
 ]
 
