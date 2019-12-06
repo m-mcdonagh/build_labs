@@ -1,13 +1,13 @@
 <template>
     <div class="part" v-bind:style="{
-        width: dimensions.width, 
-        height: dimensions.height,
-        left: connectorAt.left - connectorPoint.left,
-        top: connectedAt.top - connectorPoint.top,
+        width: (dimensions.width / buildWidth) * 100 + '%', 
+        height: (dimensions.height / buildHeight) * 100 + '%',
+        left: connectedAt.left - (connectorPoint ? connectorPoint.left : dimensions.width * .5),
+        top: connectedAt.top - (connectorPoint ? connectorPoint.top : dimensions.height * .5),
     }">
         <img v-bind:src="img_src">
         <div class="slot teal accent-4" 
-             v-for="(i, slot) in slots"
+             v-for="(slot, i) in slotPoints"
              v-bind:key="i"
              v-bind:style="{left: slot.x, top: slot.y}"
              v-on:click="$emit('slotclick', part, slot)"
@@ -19,7 +19,15 @@
 export default {
     name: 'part',
     props: [
-        'name', 'img_src', 'dimensions', 'slotPoints', 'connectorPoint', 'connectedAt', 'part'
+        'name', 
+        'img_src', 
+        'dimensions', 
+        'slotPoints', 
+        'connectorPoint', 
+        'connectedAt', 
+        'part', 
+        'buildWidth', 
+        'buildHeight',
     ],
 }
 </script>

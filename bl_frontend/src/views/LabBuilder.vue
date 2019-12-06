@@ -1,8 +1,7 @@
 <template lang="html">
   <div class="main row" id="lab-builder-main">
     <div id="workspace" class="col s9">
-      <div id="build-so-far">
-        <div v-if="buildparts.length == 0 && newStepToggle" id="mega-slot" class="blue-grey" v-on:click="addfirstpart"></div>
+      <div id="build-so-far" v-bind:style="{width: displayWidth, height: displayHeight}">
         <part-component
           v-for="part in buildparts"
           v-bind:key="part.id"
@@ -13,11 +12,16 @@
           v-bind:connectorPoint="part.connectorPoint"
           v-bind:connectedAt="part.connectedAt"
           v-bind:part="part"
+          v-bind:buildWidth="buildWidth"
+          v-bind:buildHeight="buildHeight"
+          v-bind:displayWidth="displayWidth"
+          v-bind:displayHeight="displayHeight"
           v-on:slotclick="addpart">
         </part-component>
       </div>
-      <button class="step-btn modal-trigger" data-target="part-selector" v-on:click="newStepToggle=true">
-        <img v-bind:src="selectedPart && !selectedPart.connectedAt ? selectedPart.img_src : addicon"
+      <button id="new-step-btn" class="step-btn modal-trigger" data-target="part-selector" v-on:click="newstep">
+        <img v-bind:src="firststep ? swapicon : 
+                (selectedPart && !selectedPart.connectedAt ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
       </button>
       <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="selectedPart.connectedAt = null; buildparts.pop()">
@@ -64,7 +68,7 @@
           <button class="btn-floating indigo lighten-3 waves-effect" id="done" v-on:click="addstep">
             <i class="material-icons">check</i>
           </button>
-          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false; selectedPart=null">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false; selectedPart=null; firststep=false;">
             <i class="material-icons">close</i>
           </button>
         </div>
@@ -76,7 +80,9 @@
       <div class="modal-content indigo lighten-3">
         <ul class="collection">
           <li v-for="part in listofparts" class="collection-item">
-            <a class="modal-close btn-flat" v-on:click="selectpart(part)">{{ part.name }}</a>
+            <a class="modal-close btn-flat" v-on:click="buildparts.length ? selectpart(part) : addfirstpart(part)">
+              {{ part.name }}
+            </a>
           </li>
         </ul>
       </div>
@@ -107,8 +113,10 @@ export default  {
       newStepToggle: false,
       stepCounter: 0,
       steps: [], // Steps need IDs, despite not having any in the mongo database. Needed for v-for
-      buildWidth: 0,
-      buildHeight: 0,
+      buildWidth: null,
+      buildHeight: null,
+      displayWidth: null,
+      displayHeight: null,
       // TODO axios this.listofparts
       listofparts: [
         {
@@ -124,7 +132,7 @@ export default  {
           id:1, 
           name: 'CPU',
           img_src: require('../assets/img/cpu.png'),
-          dimensions: {width: 1, height: 12},
+          dimensions: {width: 1, height: 1},
           slotPoints: [],
           connectorPoint: {x: 50, y:50}
         },
@@ -132,7 +140,9 @@ export default  {
       ],
       selectedPart: null,
       buildparts: [],
-      addicon: require('../assets/img/add-icon.svg')
+      addicon: require('../assets/img/add-icon.svg'),
+      swapicon: require('../assets/img/swap.svg'),
+      firststep: false
     }
   },
   mounted() {
@@ -142,8 +152,20 @@ export default  {
     selectpart(part) {
       this.selectedPart = part;
     },
-    addfirstpart() {
-      
+    newstep(){
+      this.newStepToggle=true; 
+      if (this.firststep)
+        this.buildparts.pop();
+    },
+    addfirstpart(part) {
+      console.log('FIRST PART')
+      this.firststep = true;
+      this.buildWidth = part.dimensions.width;
+      this.buildHeight = part.dimensions.height;
+      this.resizebuild();
+      window.onresize = this.resizebuild;
+      part.connectedAt = {left: '50', top: '50'};
+      this.buildparts.push(part);
     },
     addpart(parentPart, slot) {
       if (this.selectedPart == null) {
@@ -151,9 +173,9 @@ export default  {
       }
       this.selectedPart.connectedAt = {left: slot.x, top: slot.y}
       this.buildparts.push(this.selectedPart);
-      this.selectedPart = null
     },
     addstep() {
+      this.firststep = false;
       // TODO check if part was connected
       this.steps.push({
         id: this.stepCounter++,
@@ -192,8 +214,25 @@ export default  {
       }
     },
     modalcancel() {
-      if (!this.selectedPart) this.newStepToggle = false;
-    }
+      if (!this.selectedPart && !this.firststep) this.newStepToggle = false;
+    },
+    resizebuild() {
+      let aspectRatio = this.buildWidth / this.buildHeight;
+      let maxWidth = $('#workspace').width() * .75;
+      let maxHeight = $('#workspace ').height() * .95 - 80;
+      let width = maxHeight * aspectRatio;
+      if (width <= maxWidth) {
+        this.displayWidth = width + 'px';
+        this.displayHeight = maxHeight + 'px';
+      }
+      else {
+        this.displayWidth = maxWidth + 'px';
+        this.displayHeight = (maxWidth / aspectRatio) + 'px';
+      }
+    },
+  },
+  watch: {
+    buildparts: function(o, n) {console.log(this.buildparts)}
   }
 }
 </script>
@@ -201,25 +240,18 @@ export default  {
 <style scoped lang="scss">
 #lab-builder-main {
   #workspace {
+    display: flex;
+    align-items: center;
     position: relative;
     height: 100%;
 
     #build-so-far {
+      position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
-      width: 75%;
-
-      #mega-slot {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        opacity: .25;
-      }
-      #mega-slot:hover {
-        opacity: .3;
-      }
+      max-height: 95%;
+      max-width: 75%;
 
       img {
         max-height: 80vh;
