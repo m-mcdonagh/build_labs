@@ -45,7 +45,7 @@
     
     <div id="save-exit-btns" class="row">
       <button class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
-      <button class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</button>
+      <a href="/create" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</a>
     </div>
 
     <div v-if="newStepToggle" id="controls">
