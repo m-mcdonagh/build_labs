@@ -4,7 +4,7 @@
         height: (dimensions.height / buildHeight) * 100 + '%',
         left: connectedAt.left * 100 + '%',
         top: connectedAt.top * 100 + '%',
-        transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : ''
+        transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : 'translate(-50%, -50%)'
     }">
         <img v-bind:src="img_src">
         <div class="slot teal accent-4" 
@@ -30,9 +30,6 @@ export default {
         'buildWidth', 
         'buildHeight',
     ],
-    created() {
-        console.log(this);
-    }
 }
 </script>
 
