@@ -163,7 +163,7 @@ export default  {
       window.onresize = this.resizebuild;
       let newPart = this.clonepart(part);
       newPart.connectorPoint = null;
-      newPart.connectedAt = {left: 0, top: 0};
+      newPart.connectedAt = {left: .5, top: .5};
       this.buildparts.push(newPart);
     },
     addpart(parentPart, slot) {
