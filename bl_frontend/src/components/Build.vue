@@ -9,6 +9,7 @@
           v-bind:slotPoints="part.slotPoints"
           v-bind:connectorPoint="part.connectorPoint"
           v-bind:connectedAt="part.connectedAt"
+          v-bind:parent="part.parent"
           v-bind:part="part"
           v-bind:buildWidth="buildWidth"
           v-bind:buildHeight="buildHeight"

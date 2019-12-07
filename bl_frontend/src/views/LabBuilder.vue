@@ -123,6 +123,14 @@ export default  {
           name: 'CPU',
           img_src: require('../assets/img/cpu.png'),
           dimensions: {width: 2, height: 2},
+          slotPoints: [{x:.25, y:.25}],
+          connectorPoint: {x: .5, y:.5}
+        },
+        {
+          id:2, 
+          name: 'CPU smol',
+          img_src: require('../assets/img/cpu.png'),
+          dimensions: {width: 1, height: 1},
           slotPoints: [],
           connectorPoint: {x: .5, y:.5}
         },
@@ -154,15 +162,17 @@ export default  {
       this.resizebuild();
       window.onresize = this.resizebuild;
       let newPart = this.clonepart(part);
-      newPart.connectorPoint = null;
+      newPart.parent = null;
+      newPart.connectorPoint = {x:.5, y:.5};
       newPart.connectedAt = {left: .5, top: .5};
       this.buildparts.push(newPart);
     },
-    addpart(parentPart, slot) {
+    addpart(parentPartVue, slot) {
       if (this.selectedPart == null) {
         return;
       }
-      this.selectedPart.connectedAt = {left: slot.x, top: slot.y}
+      this.selectedPart.connectedAt = {left: slot.x, top: slot.y};
+      this.selectedPart.parent = parentPartVue;
       this.buildparts.push(this.selectedPart);
     },
     addstep() {
