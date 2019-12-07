@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
  *
  * As of now /login is omitted because I'm using the default form login
  */
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 public class AuthController {
 
@@ -36,6 +37,7 @@ public class AuthController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(@RequestParam String username, @RequestParam String password, @RequestParam String email,
             HttpServletResponse httpResponse) {
+        System.out.println("REGISTER POST REQUEST EXECUTED with values "+username+" "+password+" "+email);
 
         /*
         UserDetails newUser = User.builder().passwordEncoder(passwordEncoder::encode).username(username)
@@ -46,9 +48,12 @@ public class AuthController {
         Account newAccount = new Account(username, passwordEncoder.encode(password), email);
 
         userDetailsManager.createUser(newAccount);
+
         try {
             httpResponse.sendRedirect("/login");
+            return;
         } catch (IOException e) {
+            System.out.println("Error");
             e.printStackTrace();
         }
     }

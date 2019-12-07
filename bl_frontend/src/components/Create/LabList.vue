@@ -86,6 +86,40 @@
 
 <script>
 export default {
+
+    data() {
+    return{
+        labList :[],
+        id = ''
+    
+    }
+  },
+  //template:'<button v-on:click="postButton">Reverse Message</button>',
+  methods: {
+    async getLab(){
+      console.log("Get all parts get request");
+      
+       await axios({
+        method: "get",
+        url: "http://localhost:8080/labs/",
+        params:{
+            id : "someidea"
+        }
+        
+      })
+        .then(function(response) {
+          console.log("EXIT POST REQUEST");
+          console.log(response);
+          this.labList = respnse.data;
+        })
+        .catch(function(error) {
+            
+          console.log(error);
+        });
+    },
+    
+  },
+
     name: 'Lab',
     props: ['name', 'ispublished', 'id'],
     data() {
