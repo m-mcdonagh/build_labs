@@ -30,7 +30,7 @@ export default  {
       steps : [
         {
           index: 0,
-          parent: null,
+          parentIndex: null,
           parentSlot: null,
           newPart: {
             _id: 0,
@@ -49,15 +49,15 @@ export default  {
           newPart: {
             _id: 0,
             name: "CPU",
-            img_src: require('../assets/img/CPU.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
+            img_src: require('../assets/img/cpu.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
             dimensions: {width: 2, height: 2},
             slotPoints: [],
-            connectorPoint: {.5, .5}
+            connectorPoint: {x:.5, y:.5}
           },
           instructions: "Place the CPU in the CPU slot"
         }
       ],
-      displayparts: []
+      buildparts: []
     }
   },
   created() {
