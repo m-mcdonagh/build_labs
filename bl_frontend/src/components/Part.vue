@@ -2,8 +2,8 @@
     <div class="part" v-bind:style="{
         width: (dimensions.width / buildWidth) * 100 + '%', 
         height: (dimensions.height / buildHeight) * 100 + '%',
-        left: connectedAt.left * 100 + '%',
-        top: connectedAt.top * 100 + '%',
+        left: offsetX + '%',
+        top: offsetY + '%',
         transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : 'translate(-50%, -50%)'
     }">
         <img v-bind:src="img_src">
@@ -11,7 +11,7 @@
              v-for="(slot, i) in slotPoints"
              v-bind:key="i"
              v-bind:style="{left: (slot.x * 100) + '%', top: (slot.y * 100) + '%'}"
-             v-on:click="$emit('slotclick', part, slot)"
+             v-on:click="slotclick(slot)"
         ></div>
     </div>
 </template>
@@ -26,10 +26,36 @@ export default {
         'slotPoints', 
         'connectorPoint', 
         'connectedAt', 
+        'parent',
         'part', 
         'buildWidth', 
         'buildHeight',
     ],
+    computed: {
+        offsetX() {
+            if (this.parent) {
+                return this.connectedAt.left * (this.parent.dimensions.width / this.buildWidth) * 100 + 
+                    ((this.parent.offsetX * this.buildWidth - (this.parent.connectorPoint.x * this.parent.dimensions.width * 100)) / this.buildWidth);
+            }
+            else {
+                return this.connectedAt.left * 100;
+            }
+        },
+        offsetY() {
+            if (this.parent) {
+                return this.connectedAt.top * (this.parent.dimensions.height / this.buildHeight) * 100 + 
+                    ((this.parent.offsetY * this.buildHeight - (this.parent.connectorPoint.y * this.parent.dimensions.height * 100)) / this.buildHeight);
+            }
+            else {
+                return this.connectedAt.top * 100;
+            }
+        }
+    },
+    methods: {
+        slotclick(slot) {
+            this.$emit('slotclick', this, slot)
+        }
+    }
 }
 </script>
 
