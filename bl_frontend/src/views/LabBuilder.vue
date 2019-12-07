@@ -1,24 +1,16 @@
 <template lang="html">
   <div class="main row" id="lab-builder-main">
     <div id="workspace" class="col s9">
-      <div id="build-so-far" v-bind:style="{width: displayWidth, height: displayHeight}">
-        <part-component
-          v-for="part in buildparts"
-          v-bind:key="part.id"
-          v-bind:name="part.name"
-          v-bind:img_src="part.img_src"
-          v-bind:dimensions="part.dimensions"
-          v-bind:slotPoints="part.slotPoints"
-          v-bind:connectorPoint="part.connectorPoint"
-          v-bind:connectedAt="part.connectedAt"
-          v-bind:part="part"
-          v-bind:buildWidth="buildWidth"
-          v-bind:buildHeight="buildHeight"
-          v-bind:displayWidth="displayWidth"
-          v-bind:displayHeight="displayHeight"
-          v-on:slotclick="addpart">
-        </part-component>
-      </div>
+      
+      <build-so-far
+        v-bind:buildWidth="buildWidth"
+        v-bind:buildHeight="buildHeight"
+        v-bind:displayWidth="displayWidth"
+        v-bind:displayHeight="displayHeight"
+        v-bind:parts="buildparts"
+        v-on:slotclick="addpart">
+      </build-so-far>
+
       <button id="new-step-btn" class="step-btn modal-trigger" data-target="part-selector" v-on:click="newstep">
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
@@ -93,13 +85,13 @@
 </template>
 
 <script>
-import partComponent from '../components/LabBuilder/Part.vue';
+import buildSoFar from '../components/Build.vue';
 import stepComponent from '../components/LabBuilder/Step.vue';
 
 export default  {
   name: 'lab-builder',
   components: {
-    'part-component': partComponent,
+    'build-so-far': buildSoFar,
     'step-component': stepComponent
   },
   created() {
@@ -258,18 +250,6 @@ export default  {
     position: relative;
     height: 100%;
 
-    #build-so-far {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      max-height: 95%;
-      max-width: 75%;
-
-      img {
-        max-height: 80vh;
-      }
-    }
     .step-btn {
       display: contents;
 
