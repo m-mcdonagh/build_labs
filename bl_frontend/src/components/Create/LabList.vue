@@ -86,12 +86,10 @@
 
 <script>
 export default {
-
     data() {
-    return{
-        labList :[],
-        id = ''
-    
+    return {
+        labList: [],
+        id: ''
     }
   },
   //template:'<button v-on:click="postButton">Reverse Message</button>',
