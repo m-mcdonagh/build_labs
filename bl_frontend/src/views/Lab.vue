@@ -9,7 +9,16 @@
       <div id="padding"></div>
     </div>
     <div id="workspace" class="col s9">
-      <div id="build-so-far"></div>
+
+      <build-so-far
+        v-bind:buildWidth="buildWidth"
+        v-bind:buildHeight="buildHeight"
+        v-bind:displayWidth="displayWidth"
+        v-bind:displayHeight="displayHeight"
+        v-bind:parts="buildparts"
+        v-on:slotclick="">
+      </build-so-far>
+
     </div>
     <div id="controls">
       <button class="btn cyan lighten-3 waves-effect" id="save">SAVE</button>
@@ -18,14 +27,17 @@
   </div>
 </template>
 
-<script lang="js">
+<script>
+import buildSoFar from '../components/Build.vue';
 
 export default  {
   name: 'lab',
   components: {
+    'build-so-far': buildSoFar
   },
   data() {
     return {
+      currentInstruction: null,
       currentStep: 0,
       steps : [
         {
@@ -57,14 +69,39 @@ export default  {
           instructions: "Place the CPU in the CPU slot"
         }
       ],
+      buildWidth: null,
+      buildHeight: null,
+      displayWidth: null,
+      displayHeight: null,
       buildparts: []
     }
   },
   created() {
     this.$store.commit('changeNav', 'cyan');
   },
-  mounted () {
-
+  mounted() {
+    //This should be moved to axios then
+      this.buildWidth = this.steps[0].newPart.dimensions.width;
+      this.buildHeight = this.steps[0].newPart.dimensions.height;
+      this.resizebuild();
+      window.onresize = this.resizebuild;
+    //
+  },
+  methods: {
+    resizebuild() {
+      let aspectRatio = this.buildWidth / this.buildHeight;
+      let maxWidth = $('#workspace').width() * .95;
+      let maxHeight = $('#workspace').height() * .75;
+      let width = maxHeight * aspectRatio;
+      if (width <= maxWidth) {
+        this.displayWidth = width + 'px';
+        this.displayHeight = maxHeight + 'px';
+      }
+      else {
+        this.displayWidth = maxWidth + 'px';
+        this.displayHeight = (maxWidth / aspectRatio) + 'px';
+      }
+    },
   }
 }
 
