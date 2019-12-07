@@ -32,16 +32,16 @@
     </div>
   </div>
   <div id="register" class="container light-blue darken-1">
-    <form action="/register" method="POST" name="registerForm">
+    <form action="/register" name="registerForm">
       <h1 class="center">Register</h1>
       <div class="row">
       <div class="input-field col s12 m10 offset-m1">
-        <input id="username" name="username" type="text" required>
+        <input id="username" name="username" type="text" required v-model="reg.username">
         <label for="username">Username</label>
       </div>
 
       <div class="input-field col s12 m10 offset-m1">
-        <input id="email" name="email" type="email">
+        <input id="email" name="email" type="email" v-model="reg.email">
         <label for="email">Email</label>
       </div>
 
@@ -50,7 +50,7 @@
           <label class="password-label" for="password">Password</label>
       </div>
         <div class="input-field col s12 m10 offset-m1">
-          <input id="password-confirm" name="passconf" type="password" required>
+          <input id="password-confirm" name="passconf" type="password" required v-model="reg.password">
           <label class="password-label" for="password-confirm">Confirm Password</label>
         </div>
       </div>
@@ -58,7 +58,7 @@
         <button id="hide-register" class="btn light-blue accent-1 waves-effect col s1 m3 l2 offset-s1 offset-m2 offset-l3" type="button">
           <i class="material-icons left">arrow_back</i>Cancel
         </button>
-        <button class="btn light-blue accent-1 waves-effect col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="submit">
+        <button v-on:click="registerButton()" class="btn light-blue accent-1 waves-effect col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="submit">
           <i class="material-icons right">send</i>Submit
         </button>
       </div>
@@ -88,6 +88,43 @@
 
 <script>
 export default  {
+
+  data() {
+    return{
+    reg:{
+      username:"",
+      email:"",
+      password:""
+    }
+    }
+  },
+  //template:'<button v-on:click="postButton">Reverse Message</button>',
+  methods: {
+    registerButton: function() {
+      console.log("Inside post register button");
+      
+
+       axios({
+        method: "post",
+        url: "http://localhost:8080/register",
+        params: {
+          username: this.reg.username,
+          password: this.reg.password,
+          email: this.reg.email,
+        }
+      })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  },
+
+
+
+
   name: 'login',
   mounted (){
     $('#show-register').on('click', function() {
