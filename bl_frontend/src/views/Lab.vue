@@ -8,6 +8,7 @@
       </ul>
       <div id="padding"></div>
     </div>
+
     <div id="workspace" class="col s9">
 
       <build-so-far
@@ -19,7 +20,11 @@
         v-on:slotclick="">
       </build-so-far>
 
+      <div id="instruction-card" class="card-panel cyan darken-3">
+        <span id="instruction" class="flow-text">{{ steps[currentStep].instructions }}</span>
+      </div>
     </div>
+
     <div id="controls">
       <button class="btn cyan lighten-3 waves-effect" id="save">SAVE</button>
       <a href="/learn" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
@@ -37,7 +42,6 @@ export default  {
   },
   data() {
     return {
-      currentInstruction: null,
       currentStep: 0,
       steps : [
         {
@@ -56,10 +60,10 @@ export default  {
         },
         {
           index: 1,
-          parent: 0,
+          parentIndex: 0,
           parentSlot: 0,
           newPart: {
-            _id: 0,
+            _id: 1,
             name: "CPU",
             img_src: require('../assets/img/cpu.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
             dimensions: {width: 2, height: 2},
@@ -124,6 +128,20 @@ export default  {
     }
     #padding {
       height: 50px;
+    }
+  }
+  #workspace {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    #instruction-card {
+      position: absolute;
+      width: 95%;
+      height: 20%;      
+      bottom: 2.5%;
+      overflow-y: scroll;
     }
   }
   #controls {

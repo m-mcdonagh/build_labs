@@ -30,8 +30,8 @@ export default {
         'part-component': partComponent
     },
     methods: {
-        slotclick(part, slot) {
-            this.$emit('slotclick', part, slot);
+        slotclick(part, slot, i) {
+            this.$emit('slotclick', part, slot, i);
         }
     }
 }

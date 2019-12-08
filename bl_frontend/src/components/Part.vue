@@ -11,7 +11,7 @@
              v-for="(slot, i) in slotPoints"
              v-bind:key="i"
              v-bind:style="{left: (slot.x * 100) + '%', top: (slot.y * 100) + '%'}"
-             v-on:click="slotclick(slot)"
+             v-on:click="slotclick(slot, i)"
         ></div>
     </div>
 </template>
@@ -52,8 +52,8 @@ export default {
         }
     },
     methods: {
-        slotclick(slot) {
-            this.$emit('slotclick', this, slot)
+        slotclick(slot, i) {
+            this.$emit('slotclick', this, slot, i)
         }
     }
 }

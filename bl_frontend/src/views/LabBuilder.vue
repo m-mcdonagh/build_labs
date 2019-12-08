@@ -167,7 +167,7 @@ export default  {
       newPart.connectedAt = {left: .5, top: .5};
       this.buildparts.push(newPart);
     },
-    addpart(parentPartVue, slot) {
+    addpart(parentPartVue, slot, i) {
       if (this.selectedPart == null) {
         return;
       }
