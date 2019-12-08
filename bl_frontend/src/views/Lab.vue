@@ -135,7 +135,13 @@ export default  {
   },
   methods: {
     selectthis(id) {
-      this.selectedPartID= id
+      if (this.selectedPartID == id) {
+        this.selectedPartID = null;
+        $('.partlist').removeClass('selected');
+      }
+      else {
+        this.selectedPartID = id;
+      }
     },
     resizebuild() {
       let aspectRatio = this.buildWidth / this.buildHeight;

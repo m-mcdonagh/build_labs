@@ -13,9 +13,9 @@ export default {
     },
     methods: {
         select() {
-            this.$emit('selectthis');
-            $('.partlist').removeClass('selected')
+            $('.partlist').removeClass('selected');
             $(this.$el).addClass('selected', this.id);
+            this.$emit('selectthis', this.id);   
         }
     }
 }
