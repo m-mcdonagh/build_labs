@@ -134,12 +134,21 @@ export default  {
     async savePart(){
       console.log("Save part post request");
       // TODO: How is image saved?
-       await axios({
+      let fd = new FormData();
+      fd.append('content',part.img_file);
+
+      let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    });
+     console.log("addmedia resonse",image_response.data.id);
+       let response = await axios({
         method: "post",
         url: "http://localhost:8080/parts/part",
         data: {
           name: this.part.part_name,
-          img: "img",
+          img: image_response.data.id,
           dimensions:[this.part.width,this.part.height],
           slotPoints:this.part.slots,
           connectorPoint:this.part.connector
@@ -148,14 +157,23 @@ export default  {
         params:{
           username : "test2"
         }
-      })
-        .then(function(response) {
-          console.log("EXIT SAVEPART POST");
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      });
+
+      console.log("Post request response : ",response.data)
+
+      let response3 = await axios({
+        method: "get",
+        url: "http://localhost:8080/parts/part",
+        params:{
+          id : response.data
+        }
+      });
+
+      //TODO : Figure out why get request throws 400, also remove it after it works
+      console.log("GET PART AXIOS REQUEST",response3.data);
+      let response4 = await axios.get('http://130.245.170.216:3003/media/'+response3.data.img);
+      console.log(response4);
+    
     },
     toggleConnectorAdd() {
       this.part.connector = null;
@@ -244,22 +262,22 @@ export default  {
     position: relative;
     overflow-x: hidden;
     overflow-y: scroll;
-      
+
     .icon-btn {
       display: contents;
-      
+
       img {
         cursor: pointer;
       }
       img:hover {
-        opacity: .9;
+        opacity: 0.9;
       }
     }
     #control-btns {
-        position: absolute;
-        width: 100%;
-        left: 20px;
-        bottom: 1px;
+      position: absolute;
+      width: 100%;
+      left: 20px;
+      bottom: 1px;
     }
   }
   #workspace {
@@ -270,7 +288,7 @@ export default  {
     #part {
       position: relative;
 
-      img{
+      img {
         width: 100%;
         height: 100%;
       }
@@ -291,6 +309,6 @@ export default  {
   }
 }
 .btn {
-    color: white;
+  color: white;
 }
 </style>
