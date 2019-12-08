@@ -4,7 +4,7 @@
       <div class="row">
         <h2 class="col s10 offset-s1 flow-text">Part Name:</h2>
         <div class="input-field col s12">
-          <input id="part-name" type="text" placeholder="Part Name">
+          <input id="part-name" type="text" placeholder="Part Name" v-model ="part.part_name">
         </div>
         <h2 class="col s10 offset-s1 flow-text">Dimensions:</h2>
         <div class="input-field col s6">
@@ -38,7 +38,7 @@
         </button>
       </div>
       <div id="control-btns" class="row">
-        <button class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
+        <button v-on:click="savePart()" class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
         <a href="/create" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</a>
       </div>
     </div>
@@ -92,18 +92,14 @@ import slot from '../components/PartBuilder/Slot.vue';
 import connector from '../components/PartBuilder/Connector.vue';
 
 export default  {
-  name: 'partbuilder',
-  components: {
-    'slot-component' : slot,
-    'connector-component' : connector
-  },
-  created() {
-    this.$store.commit('changeNav', 'indigo lighten-1');
-  },
-  data(){
+   data(){
     return {
       // TODO: set up axios for this.part
+
+      username :"",
+
       part: {
+        part_name:"",
         height: 12,
         width: 12,
         img_src: null, // used by dom img component, set when user uploads a file. Needed whether from file on frontend or file hosted at some route on backend
@@ -118,6 +114,14 @@ export default  {
       displayheight: 0
     }
   },
+  name: 'partbuilder',
+  components: {
+    'slot-component' : slot,
+    'connector-component' : connector
+  },
+  created() {
+    this.$store.commit('changeNav', 'indigo lighten-1');
+  },
   mounted () {
     $('.tooltipped').tooltip();
     $('.modal').modal();
@@ -127,6 +131,32 @@ export default  {
     window.addEventListener('keydown', this.keypress);
   },
   methods: {
+    async savePart(){
+      console.log("Save part post request");
+      // TODO: How is image saved?
+       await axios({
+        method: "post",
+        url: "http://localhost:8080/parts/part",
+        data: {
+          name: this.part.part_name,
+          img: "img",
+          dimensions:[this.part.width,this.part.height],
+          slotPoints:this.part.slots,
+          connectorPoint:this.part.connector
+          
+        },
+        params:{
+          username : "test2"
+        }
+      })
+        .then(function(response) {
+          console.log("EXIT SAVEPART POST");
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     toggleConnectorAdd() {
       this.part.connector = null;
       this.connectorAdd = !this.connectorAdd;

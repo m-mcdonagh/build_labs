@@ -5,12 +5,15 @@ import cerulean.project.models.Part;
 import cerulean.project.services.AccountService;
 import cerulean.project.services.PartControllerService;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.security.MessageDigest;
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value ="/parts")
 public class PartController {
@@ -24,14 +27,14 @@ public class PartController {
 //    }
 
 
-    private PartControllerService partService;
+    private PartControllerService partService = new PartControllerService();
     private AccountService accountService = new AccountService();
 
     private Gson gson = new Gson();
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
-    public String listParts(@RequestParam String id, HttpServletResponse httpResponse) {
-        String username = "temp";
+    public String listParts(@RequestParam String username, HttpServletResponse httpResponse) {
+        username = "temp";
         Account account = accountService.getAccount(username);
         return gson.toJson(partService.getPartsCreatedByUser(account));
     }
@@ -44,11 +47,19 @@ public class PartController {
 
     @RequestMapping(value ="/part", method = RequestMethod.POST)
     public String addPart(@RequestBody String partJson, @RequestParam String username) {
+        System.out.println("Add part controller");
+        System.out.println("Add Part input : "+partJson+ " with username "+ username);
 
-        Part part = gson.fromJson(partJson, Part.class);
-        //TODO: When do we set the id of the part
-//        return partService.addNewPart(username , part);
-        return "temp";
+        JsonObject jsonObject = gson.fromJson(partJson, JsonObject.class);
+        String id = UUID.randomUUID().toString();
+        jsonObject.addProperty("_id",id);
+        //System.out.println(jsonObject);
+
+        Part part = gson.fromJson(jsonObject, Part.class);
+
+
+        return partService.addNewPart(username , part);
+       // return "temp";
 
     }
 
