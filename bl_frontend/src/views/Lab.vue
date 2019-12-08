@@ -2,9 +2,8 @@
   <div class="main row" id="lab-main">
     <div id="parts-side-bar" class="cyan darken-1 col s3">
       <h4 class="center">PARTS</h4>
-      <ul id="parts" class="collapsible">
-        <!-- <part-list>
-        </part-list> -->
+      <ul id="parts">
+        <part-list v-for="part in partsList" v-bind:name="part.name" v-bind:img_src="part.img_src"></part-list>
       </ul>
       <div id="padding"></div>
     </div>
@@ -34,14 +33,34 @@
 
 <script>
 import buildSoFar from '../components/Build.vue';
+import partlist from '../components/Lab/PartList';
 
 export default  {
   name: 'lab',
   components: {
-    'build-so-far': buildSoFar
+    'build-so-far': buildSoFar,
+    'part-list': partlist
   },
   data() {
     return {
+      partsList: [
+        {
+          _id: 0,
+          name: "Motherboard",
+          img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
+          dimensions: {width: 12, height: 12},
+          slotPoints: [{x:.55, y:.35}],
+          connectorPoint: null
+        },
+        {
+          _id: 1,
+          name: "CPU",
+          img_src: require('../assets/img/cpu.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
+          dimensions: {width: 2, height: 2},
+          slotPoints: [],
+          connectorPoint: {x:.5, y:.5}
+        },
+      ],
       currentStep: 0,
       steps : [
         {
