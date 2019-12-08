@@ -25,6 +25,7 @@ export default {
 .partlist {
     border: 10px solid transparent;
     margin-left: 10px;
+    cursor: pointer;
 
     img {
         width: 100%;
@@ -32,6 +33,7 @@ export default {
 }
 .selected {
     border: 10px solid #ef5350;
+    background-color: #ef5350;
     border-radius: 5%;
 }
 </style>

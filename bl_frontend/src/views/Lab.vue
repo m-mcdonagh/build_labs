@@ -26,13 +26,27 @@
       </build-so-far>
 
       <div id="instruction-card" class="card-panel cyan darken-1">
-        <span id="instruction" class="flow-text">{{ steps[currentStep].instructions }}</span>
+        <span v-if="currentStep < steps.length" id="instruction" class="flow-text">{{ steps[currentStep].instructions }}</span>
       </div>
     </div>
 
     <div id="controls">
       <button class="btn cyan lighten-3 waves-effect" id="save">SAVE</button>
       <a href="/learn" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
+    </div>
+
+    <div v-if="currentStep == steps.length" id="success">
+      <div class="card cyan lighten-5 hoverable">
+        <div class="card-content black-text">
+          <span class="card-title">Congratulations!</span>
+            <p>You successfully completed {{name}}</p>
+          </div>
+          <div class="card-action">
+            <a v-bind:href="'/lab?restart=true&id=' + id">Restart</a>
+            <a href="/learn" class="right">Exit</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,8 +63,10 @@ export default  {
   },
   data() {
     return {
+      id: "0", // lab _id needs to be filled in by axios
+      name: "test", // needs to be filled in by axios
       selectedPartID: null,
-      partsList: [
+      partsList: [ //needs to be filled in by axios
         {
           _id: 0,
           name: "Motherboard",
@@ -69,7 +85,7 @@ export default  {
         },
       ],
       currentStep: 0,
-      steps : [
+      steps : [ //needs to be filled in by axios
         {
           index: 0,
           parentIndex: null,
@@ -137,8 +153,6 @@ export default  {
     },
   }
 }
-
-
 </script>
 
 <style scoped lang="scss">
@@ -183,17 +197,40 @@ export default  {
     left: 10px;
     bottom: 10px;
     width: 25%;
+    @media screen and (min-width: 1115px) {
+      width: 17%;
+    }
     z-index: 1;
 
     .btn {
-      width: 95%;
+      width: 90%;
     }
-
     @media screen and (min-width: 800px){
       flex-direction: row;
       .btn {
           width: 45%;
           font-size: 2rem;
+      }
+    }
+  }
+  #success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    background-color: #00000044;
+    .card {
+      max-width: 80%;
+      max-height: 90%;
+      .card-content {
+        max-height: 70vh;
+        overflow: hidden;
+        p {
+          word-break: break-word;
+        }
       }
     }
   }
