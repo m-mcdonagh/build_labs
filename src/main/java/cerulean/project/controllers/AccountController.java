@@ -28,7 +28,7 @@ import java.util.UUID;
 @RequestMapping("/accounts")
 public class AccountController {
     @Autowired
-    private AccountService accountService = new AccountService();
+    private AccountService accountService;
 
     @RequestMapping(value ="/account", method = RequestMethod.GET)
     public String getAccount(@RequestParam String username) {

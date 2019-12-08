@@ -6,6 +6,7 @@ import cerulean.project.services.AccountService;
 import cerulean.project.services.PartControllerService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
@@ -27,8 +28,11 @@ public class PartController {
 //    }
 
 
-    private PartControllerService partService = new PartControllerService();
-    private AccountService accountService = new AccountService();
+    @Autowired
+    private PartControllerService partService;
+
+    @Autowired
+    private AccountService accountService;
 
     private Gson gson = new Gson();
 
