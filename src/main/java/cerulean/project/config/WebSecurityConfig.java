@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
 //                .and()
 //                // TODO: Replace this with REST login if you wanna be fancy
-//                .formLogin()
+//                  .formLogin()
 //                .loginPage("/login")
 //                .permitAll()
 //                .and()

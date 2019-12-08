@@ -44,7 +44,8 @@ public class PartController {
     }
     @RequestMapping(value ="/part", method = RequestMethod.GET)
     public String getPart(@RequestParam String id) {
-        String username = "temp";
+        String username = "test2";
+
         Part part = partService.getPart(id);
         return gson.toJson(part);
     }
