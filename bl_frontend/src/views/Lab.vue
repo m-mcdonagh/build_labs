@@ -1,14 +1,20 @@
 <template lang="html">
   <div class="main row" id="lab-main">
-    <div id="parts-side-bar" class="cyan darken-1 col s3">
+    <div id="parts-side-bar" class="cyan darken-2 col s3 l2">
       <h4 class="center">PARTS</h4>
       <ul id="parts">
-        <part-list v-for="part in partsList" v-bind:name="part.name" v-bind:img_src="part.img_src"></part-list>
+        <part-list v-for="part in partsList"
+                   v-bind:key="part._id" 
+                   v-bind:id="part._id" 
+                   v-bind:name="part.name" 
+                   v-bind:img_src="part.img_src" 
+                   v-on:selectthis="selectthis">  
+        </part-list>
       </ul>
       <div id="padding"></div>
     </div>
 
-    <div id="workspace" class="col s9">
+    <div id="workspace" class="col s9 l10">
 
       <build-so-far
         v-bind:buildWidth="buildWidth"
@@ -19,7 +25,7 @@
         v-on:slotclick="">
       </build-so-far>
 
-      <div id="instruction-card" class="card-panel cyan darken-3">
+      <div id="instruction-card" class="card-panel cyan darken-1">
         <span id="instruction" class="flow-text">{{ steps[currentStep].instructions }}</span>
       </div>
     </div>
@@ -43,6 +49,7 @@ export default  {
   },
   data() {
     return {
+      selectedPartID: null,
       partsList: [
         {
           _id: 0,
@@ -111,10 +118,13 @@ export default  {
     //
   },
   methods: {
+    selectthis(id) {
+      this.selectedPartID= id
+    },
     resizebuild() {
       let aspectRatio = this.buildWidth / this.buildHeight;
       let maxWidth = $('#workspace').width() * .95;
-      let maxHeight = $('#workspace').height() * .75;
+      let maxHeight = $('#workspace').height() * .95;
       let width = maxHeight * aspectRatio;
       if (width <= maxWidth) {
         this.displayWidth = width + 'px';
@@ -154,12 +164,15 @@ export default  {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 85%;
+    padding: 0;
 
     #instruction-card {
       position: absolute;
       width: 95%;
-      height: 20%;      
-      bottom: 2.5%;
+      height: 15%;      
+      top: 100%;
       overflow-y: scroll;
     }
   }
