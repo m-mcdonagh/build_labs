@@ -155,10 +155,9 @@ export default  {
         M.toast({displayLength:2000, html:'Please select a part from the sidebar'})
       }
       else if (this.selectedPartID == this.steps[this.currentStep].newPart._id) {
-        let newPart = this.clonepart(this.steps[this.currentStep].newPart);
-        newPart.connectorPoint = {x:.5, y:.5};
-        newPart.connectedAt = {left: .5, top: .5};
-        this.buildparts.push(newPart);
+        this.steps[this.currentStep].newPart.connectorPoint = {x:.5, y:.5};
+        this.steps[this.currentStep].newPart.connectedAt = {left: .5, top: .5};
+        this.buildparts.push(this.steps[this.currentStep].newPart);
         this.currentStep++;
       }
       else {
@@ -179,23 +178,6 @@ export default  {
         this.displayHeight = (maxWidth / aspectRatio) + 'px';
       }
     },
-    clonepart(part) {
-      let slotPoints = []
-      for (let i=0; i<part.slotPoints.length; i++){
-        slotPoints.push({
-          x: part.slotPoints[i].x,
-          y: part.slotPoints[i].y
-        });
-      }
-      return {
-        id: part.id, 
-        name: part.name, 
-        img_src: part.img_src, 
-        dimensions: {width: part.dimensions.width, height: part.dimensions.height},
-        slotPoints: slotPoints,
-        connectorPoint: part.connectorPoint ? {x: part.connectorPoint.x, y: part.connectorPoint.y} : null,
-      }
-    }
   }
 }
 </script>
