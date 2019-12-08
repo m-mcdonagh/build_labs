@@ -23,7 +23,7 @@
         v-bind:displayWidth="displayWidth"
         v-bind:displayHeight="displayHeight"
         v-bind:parts="buildparts"
-        v-on:slotclick="">
+        v-on:slotclick="addpart">
       </build-so-far>
 
       <div id="firstslot"
@@ -152,7 +152,7 @@ export default  {
     },
     addfirstpart() {
       if (this.selectedPartID === null) {
-        M.toast({displayLength:2000, html:'Please select a part from the sidebar'})
+        M.toast({displayLength:2000, html:'Please select a part from the sidebar'});
       }
       else if (this.selectedPartID == this.steps[this.currentStep].newPart._id) {
         this.steps[this.currentStep].newPart.connectorPoint = {x:.5, y:.5};
@@ -162,6 +162,27 @@ export default  {
       }
       else {
         M.toast({displayLength:2000, html: 'Wrong part. Try again'});
+      }
+    },
+    addpart(parentPartVue, slot, slotIndex) {
+      if (this.selectedPartID === null) {
+        M.toast({displayLength:2000, html:'Please select a part from the sidebar'});
+        return;
+      }
+      if (this.selectedPartID != this.steps[this.currentStep].newPart._id && slotIndex != this.steps[this.currentStep].parentSlot){
+        M.toast({displayLength:2000, html:'Wrong part and wrong slot. Try again'});
+      }
+      else if (this.selectedPartID != this.steps[this.currentStep].newPart._id) {
+        M.toast({displayLength:2000, html:'Wrong part. Try again'});
+      }
+      else if (slotIndex != this.steps[this.currentStep].parentSlot){
+        M.toast({displayLength:2000, html:'Wrong slot. Try again'});
+      }
+      else {
+        this.steps[this.currentStep].newPart.connectedAt = {left: slot.x, top: slot.y};
+        this.steps[this.currentStep].newPart.parent = parentPartVue;
+        this.buildparts.push(this.steps[this.currentStep].newPart);
+        this.currentStep++;
       }
     },
     resizebuild() {
