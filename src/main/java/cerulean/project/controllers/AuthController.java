@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @Autowired
     private MongoDBUserDetailsManager userDetailsManager;
 

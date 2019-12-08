@@ -8,6 +8,7 @@ import cerulean.project.services.LabAssignmentService;
 import cerulean.project.services.LabService;
 import cerulean.project.services.StepControllerService;
 import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,9 +19,16 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping(value ="/steps")
 public class StepController {
-    private StepControllerService stepService = new StepControllerService();
-    private LabAssignmentService labAssignmentService = new LabAssignmentService();
+
+    @Autowired
+    private StepControllerService stepService;
+
+    @Autowired
+    private LabAssignmentService labAssignmentService;
+
+    @Autowired
     private LabService labService;
+
     private Gson gson = new Gson();
     
     @RequestMapping(value ="/validate", method = RequestMethod.POST)

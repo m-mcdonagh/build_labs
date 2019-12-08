@@ -1,6 +1,7 @@
 package cerulean.project.controllers;
 import cerulean.project.models.Lab;
 import cerulean.project.services.LabService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 
@@ -11,6 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value ="/labs")
 public class LabController {
+
+    @Autowired
     private LabService labService;
 
     private  Gson gson = new Gson();
