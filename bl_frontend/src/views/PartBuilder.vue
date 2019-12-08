@@ -142,7 +142,7 @@ export default  {
           'Content-Type': 'multipart/form-data'
         }
     });
-     console.log("addmedia resonse",image_response.data.id);
+     console.log("addmedia resonse",image_response);
        let response = await axios({
         method: "post",
         url: "http://localhost:8080/parts/part",
