@@ -105,7 +105,11 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
       name: '',
+=======
+      name:'', //Lab Name
+>>>>>>> k-dev
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
@@ -159,6 +163,7 @@ export default {
   },
   methods: {
     async saveLab() {
+      console.log("CURRENT PARTS BUILT",this.buildparts);
       let response = await axios({
         method: "post",
         url: "http://localhost:8080/labs/lab",
@@ -169,9 +174,9 @@ export default {
           name:"lab name",
           //labCreator_id: "some id",
           //_id:"some id",
-          partsList:[],
+          partsList:this.buildparts,
           //assignedTo_ids:[],
-          steps:[],
+          steps:this.steps,
           ispublished:false
         }
       });
@@ -232,8 +237,10 @@ export default {
       this.steps.push({
         id: this.stepCounter++,
         name: $("#step-name").val(),
-        instruction: $("#step-instruction").val()
+        instruction: $("#step-instruction").val(),
+        rotation:0 //TODO rotation
       });
+      //console.log("NEW STEP ADDED",this.steps)
       this.newStepToggle = false;
       this.selectedPart = null;
     },

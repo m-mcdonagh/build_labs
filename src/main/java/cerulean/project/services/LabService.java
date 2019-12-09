@@ -48,12 +48,12 @@ public class LabService {
             Integer parentIndex = step.getParentIndex();
 
             // If this is the first step, there is nowhere for you to misplace something
-            if (step.getIndex() == 0) {
+            if (step.getId() == 0) {
                 continue;
             }
             // If this step depends on an invalid parent or a nonexistent parent it's bad
             if (invalidSteps.contains(parentIndex) || parentIndex >= lab.getSteps().size()) {
-                invalidSteps.add(step.getIndex());
+                invalidSteps.add(step.getId());
                 continue;
             }
 
@@ -70,7 +70,7 @@ public class LabService {
             boolean stepIsInvalid = stepOutOfBounds || slotAlreadyInUse;
 
             if (stepIsInvalid) {
-                invalidSteps.add(step.getIndex());
+                invalidSteps.add(step.getId());
             } else {
                 occupiedSlots.get(parentStep).add(step.getParentSlot());
             }
