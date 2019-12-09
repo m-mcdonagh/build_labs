@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="main" id="login-main">
   <div id="login" class="container light-blue darken-1">
-    <form id="login-form" action="/login" method="POST" name="loginForm" class="section">
+    <form id="login-form"  name="loginForm" class="section">
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
@@ -32,7 +32,7 @@
     </div>
   </div>
   <div id="register" class="container light-blue darken-1">
-    <form action="/register" name="registerForm">
+    <form name="registerForm">
       <h1 class="center">Register</h1>
       <div class="row">
       <div class="input-field col s12 m10 offset-m1">
@@ -65,7 +65,7 @@
     </form>
   </div>
   <div id="reset-password" class="container light-blue darken-1">
-    <form action="/resetpassword" method="POST" name="resetPassword">
+    <form name="resetPassword">
       <h1 class="center">Reset Password</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
@@ -95,7 +95,7 @@ export default  {
       password:"",
       email:""
 
-    },  
+    },
     reg:{
       username:"",
       email:"",
@@ -106,10 +106,7 @@ export default  {
   //template:'<button v-on:click="postButton">Reverse Message</button>',
   methods: {
     async registerButton(){
-      console.log("Inside post register button");
-      
-
-       await axios({
+      let resp =  await axios({
         method: "post",
         url: "http://localhost:8080/register",
         params: {
@@ -117,37 +114,42 @@ export default  {
           password: this.reg.password,
           email: this.reg.email,
         }
+      }).then(()=>{
+        alert("ok!")
+      }).catch((err)=>{
+        alert(err)
       })
-        .then(function(response) {
-          console.log("EXIT POST REQUEST");
-          console.log(response);
-          location.href='/login'
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      // alert(JSON.stringify(resp))
     },
     async loginUser(){
-      console.log("Login user post request");
-      
+      // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        axios.post("http://localhost:8080/login", {
+                "email":"cc@cc.c",
+                "password":"cc@cc.c"
+          })
+          .then((ff)=>{
+            alert("ok")
+          })
+          .catch((err)=>{
+            alert(err)
+          })
 
-       await axios({
-        method: "post",
-        url: "http://localhost:8080/login",
-        params: {
-
-          password: this.login.password,
-          email: this.login.email,
-        }
-      })
-        .then(function(response) {
-          console.log("EXIT POST REQUEST");
-          console.log(response);
-          location.href='/'
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+    // axios({
+    //     method: "post",
+    //     url: "http://localhost:8080/login",
+    //     params: {
+    //       password: this.login.password,
+    //       email: this.login.email,
+    //     }
+    //   }).then(function(response) {
+    //       console.log("EXIT POST REQUEST");
+    //       //console.log(response);
+    //       alert("ok!")
+    //       // location.href='/'
+    //     })
+    //     .catch(function(error) {
+    //       alert(JSON.stringify(error));
+    //     });
     }
   },
   name: 'login',
@@ -184,7 +186,7 @@ export default  {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
+
   .input-field input + label {
     color: #CCC;
   }
