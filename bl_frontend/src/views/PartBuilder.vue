@@ -4,7 +4,7 @@
       <div class="row">
         <h2 class="col s10 offset-s1 flow-text">Part Name:</h2>
         <div class="input-field col s12">
-          <input id="part-name" type="text" placeholder="Part Name">
+          <input id="part-name" type="text" placeholder="Part Name" v-model ="part.part_name">
         </div>
         <h2 class="col s10 offset-s1 flow-text">Dimensions:</h2>
         <div class="input-field col s6">
@@ -38,7 +38,7 @@
         </button>
       </div>
       <div id="control-btns" class="row">
-        <button class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
+        <button v-on:click="savePart()" class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
         <a href="/create" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</a>
       </div>
     </div>
@@ -92,18 +92,14 @@ import slot from '../components/PartBuilder/Slot.vue';
 import connector from '../components/PartBuilder/Connector.vue';
 
 export default  {
-  name: 'partbuilder',
-  components: {
-    'slot-component' : slot,
-    'connector-component' : connector
-  },
-  created() {
-    this.$store.commit('changeNav', 'indigo lighten-1');
-  },
-  data(){
+   data(){
     return {
       // TODO: set up axios for this.part
+
+      username :"",
+
       part: {
+        part_name:"",
         height: 12,
         width: 12,
         img_src: null, // used by dom img component, set when user uploads a file. Needed whether from file on frontend or file hosted at some route on backend
@@ -118,6 +114,14 @@ export default  {
       displayheight: 0
     }
   },
+  name: 'partbuilder',
+  components: {
+    'slot-component' : slot,
+    'connector-component' : connector
+  },
+  created() {
+    this.$store.commit('changeNav', 'indigo lighten-1');
+  },
   mounted () {
     $('.tooltipped').tooltip();
     $('.modal').modal();
@@ -127,6 +131,50 @@ export default  {
     window.addEventListener('keydown', this.keypress);
   },
   methods: {
+    async savePart(){
+      console.log("Save part post request");
+      // TODO: How is image saved?
+      let fd = new FormData();
+      fd.append('content',part.img_file);
+
+      let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+    });
+     console.log("addmedia resonse",image_response);
+       let response = await axios({
+        method: "post",
+        url: "http://localhost:8080/parts/part",
+        data: {
+          name: this.part.part_name,
+          img: image_response.data.id,
+          dimensions:[this.part.width,this.part.height],
+          slotPoints:this.part.slots,
+          connectorPoint:this.part.connector
+          
+        },
+        params:{
+          username : "test2"
+        }
+      });
+
+      console.log("Post request response : ",response.data)
+
+      let response3 = await axios({
+        method: "get",
+        url: "http://localhost:8080/parts/part",
+        params:{
+          id : response.data
+        }
+      });
+
+      //TODO : Figure out why get request throws 400, also remove it after it works
+      console.log("GET PART AXIOS REQUEST",response3.data);
+      let response4 = await axios.get('http://130.245.170.216:3003/media/'+response3.data.img);
+      console.log(response4);
+    
+    },
     toggleConnectorAdd() {
       this.part.connector = null;
       this.connectorAdd = !this.connectorAdd;
@@ -214,22 +262,22 @@ export default  {
     position: relative;
     overflow-x: hidden;
     overflow-y: scroll;
-      
+
     .icon-btn {
       display: contents;
-      
+
       img {
         cursor: pointer;
       }
       img:hover {
-        opacity: .9;
+        opacity: 0.9;
       }
     }
     #control-btns {
-        position: absolute;
-        width: 100%;
-        left: 20px;
-        bottom: 1px;
+      position: absolute;
+      width: 100%;
+      left: 20px;
+      bottom: 1px;
     }
   }
   #workspace {
@@ -240,7 +288,7 @@ export default  {
     #part {
       position: relative;
 
-      img{
+      img {
         width: 100%;
         height: 100%;
       }
@@ -261,6 +309,6 @@ export default  {
   }
 }
 .btn {
-    color: white;
+  color: white;
 }
 </style>

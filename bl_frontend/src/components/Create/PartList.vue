@@ -41,11 +41,8 @@
 export default {
     data() {
     return{
-    reg:{
-      username:"",
-      email:"",
-      password:""
-    }
+        partList :[]
+    
     }
   },
   //template:'<button v-on:click="postButton">Reverse Message</button>',
@@ -62,8 +59,10 @@ export default {
         .then(function(response) {
           console.log("EXIT POST REQUEST");
           console.log(response);
+          this.partList = respnse.data;
         })
         .catch(function(error) {
+            
           console.log(error);
         });
     },

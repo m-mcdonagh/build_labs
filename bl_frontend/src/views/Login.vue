@@ -5,14 +5,14 @@
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
-          <input id="email" name="email" type="email" required>
+          <input id="email" name="email" type="email" required v-model="login.email">
           <label for="email">Email</label>
         </div>
         <div class="input-field col s12 m10 offset-m1 ">
-          <input id="password" name="password" type="password" required>
+          <input id="password" name="password" type="password" required v-model="login.password">
           <label for="password">Password</label>
         </div>
-        <button class="submit btn light-blue accent-1 waves-effect col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit">
+        <button v-on:click="loginUser()" class="submit btn light-blue accent-1 waves-effect col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit"  >
           <i class="material-icons right">send</i>
           Submit
         </button>
@@ -91,6 +91,11 @@ export default  {
 
   data() {
     return{
+    login:{
+      password:"",
+      email:""
+
+    },  
     reg:{
       username:"",
       email:"",
@@ -100,11 +105,11 @@ export default  {
   },
   //template:'<button v-on:click="postButton">Reverse Message</button>',
   methods: {
-    registerButton: function() {
+    async registerButton(){
       console.log("Inside post register button");
       
 
-       axios({
+       await axios({
         method: "post",
         url: "http://localhost:8080/register",
         params: {
@@ -114,17 +119,37 @@ export default  {
         }
       })
         .then(function(response) {
+          console.log("EXIT POST REQUEST");
           console.log(response);
+          location.href='/login'
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    async loginUser(){
+      console.log("Login user post request");
+      
+
+       await axios({
+        method: "post",
+        url: "http://localhost:8080/login",
+        params: {
+
+          password: this.login.password,
+          email: this.login.email,
+        }
+      })
+        .then(function(response) {
+          console.log("EXIT POST REQUEST");
+          console.log(response);
+          location.href='/'
         })
         .catch(function(error) {
           console.log(error);
         });
     }
   },
-
-
-
-
   name: 'login',
   mounted (){
     $('#show-register').on('click', function() {
