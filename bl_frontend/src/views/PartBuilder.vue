@@ -148,7 +148,7 @@ export default  {
         url: "http://localhost:8080/parts/part",
         data: {
           name: this.part.part_name,
-          img: image_response.data.id,
+          img:"img",// image_response.data.id,
           dimensions:[this.part.width,this.part.height],
           slotPoints:this.part.slots,
           connectorPoint:this.part.connector
@@ -156,6 +156,7 @@ export default  {
         },
         params:{
           username : "test2"
+          //TODO : GET USERNAME FROM SESSION
         }
       });
 

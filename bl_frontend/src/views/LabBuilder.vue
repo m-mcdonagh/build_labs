@@ -145,8 +145,30 @@ export default  {
   },
   mounted() {
     $('.modal').modal();
+    this.getListOfParts();
   },
   methods: {
+
+    async getListOfParts(){
+    let part_response = await axios({
+        method: "get",
+        url: "http://localhost:8080/parts/allparts"
+        }
+      );
+    console.log("PARTS DATA",part_response.data);
+   
+    let i = 0;
+    for(i = 0;i<part_response.data.length;i++){
+        let prt = part_response.data[i];
+       this.listofparts.push({id:prt._id,
+                        name:prt.name,
+                        dimensions:prt.dimensions,
+                        img_src :require('../assets/img/motherboard.png'),
+                        slotPoints:prt.slotPoints,
+                        connectorPoint:prt.connectorPoint,
+                        })
+      }
+    },
     selectpart(part) {
       this.selectedPart = this.clonepart(part);
     },

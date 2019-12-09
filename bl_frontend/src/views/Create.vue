@@ -85,28 +85,34 @@ export default  {
       // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
     }
   },
-  async mounted () {
+  mounted () {
     $('.tabs').tabs();
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
 
     this.sizeContent();
     window.onresize = this.sizeContent;
+    this.getAllParts();
+  },
+    
+  methods: {
 
-    let response = await axios({
+    async getAllParts(){
+    let part_response = await axios({
         method: "get",
         url: "http://localhost:8080/parts/allparts"
         }
       );
-    console.log("PARTS DATA",response.data);
+    console.log("PARTS DATA",part_response.data);
     let i = 0;
-    for(i = 0;i<response.data.length;i++){
-       this.parts.push({id:response.data[i]._id,name:response.data[i].name,ispublished:response.data[i].ispublished})
-    }
-  },
-  methods: {
-
-
+    for(i = 0;i<part_response.data.length;i++){
+        let prt = part_response.data[i];
+       this.parts.push({id:prt._id,
+                        name:prt.name,
+                        ispublished:prt.ispublished
+                        })
+      }
+    },
     sizeContent() {
       let height = $('.container').height() - 58
       $('.content').css({
