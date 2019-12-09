@@ -23,6 +23,7 @@ public class LabController {
     @RequestMapping(value ="/", method = RequestMethod.GET)
     public String listLabs(@RequestParam String id, HttpServletResponse httpResponse) {
         String username = "temp";
+        System.out.println("Lab get method");
         List<Lab> labs = labService.getLabsCreatedByUser(username);
         return gson.toJson(labs);
     }
@@ -36,8 +37,11 @@ public class LabController {
     public void addLab(@RequestBody String labJson, @RequestParam String username) {
         Lab lab = gson.fromJson(labJson, Lab.class);
         JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
+
         String id = UUID.randomUUID().toString();
         jsonObject.addProperty("_id",id);
+        jsonObject.addProperty("assignedTo_ids","[]");
+
         labService.addNewLab(username , lab);
     }
 

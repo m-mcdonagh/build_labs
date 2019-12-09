@@ -129,9 +129,20 @@ export default  {
     this.resizePart();
     window.onresize = this.resizePart;
     window.addEventListener('keydown', this.keypress);
+
+    var urlParams = new URLSearchParams(location.search);
+    var id = urlParams.get('id');
+    console.log(id);
+
+
+
   },
   methods: {
     async savePart(){
+
+      if(this.id == null){
+        console.log("NULL ID");
+      }
       console.log("Save part post request");
       // TODO: How is image saved?
       let fd = new FormData();
@@ -148,6 +159,7 @@ export default  {
         url: "http://localhost:8080/parts/part",
         data: {
           name: this.part.part_name,
+          //TODO : CHANGE BACK TO imgage_response.data.id
           img:"img",// image_response.data.id,
           dimensions:[this.part.width,this.part.height],
           slotPoints:this.part.slots,

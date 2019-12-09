@@ -47,25 +47,6 @@ export default {
   },
   //template:'<button v-on:click="postButton">Reverse Message</button>',
   methods: {
-    async getAllParts(){
-      console.log("Get all parts get request");
-      
-
-       await axios({
-        method: "get",
-        url: "http://localhost:8080/parts/allparts",
-        
-      })
-        .then(function(response) {
-          console.log("EXIT POST REQUEST");
-          console.log(response);
-          this.partList = respnse.data;
-        })
-        .catch(function(error) {
-            
-          console.log(error);
-        });
-    },
     
   },
 

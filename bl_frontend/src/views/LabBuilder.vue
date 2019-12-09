@@ -36,7 +36,7 @@
     </div>
     
     <div id="save-exit-btns" class="row">
-      <button class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
+      <button v-on:click="saveLab()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
       <a href="/create" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</a>
     </div>
 
@@ -85,17 +85,17 @@
 </template>
 
 <script>
-import buildSoFar from '../components/Build.vue';
-import stepComponent from '../components/LabBuilder/Step.vue';
+import buildSoFar from "../components/Build.vue";
+import stepComponent from "../components/LabBuilder/Step.vue";
 
-export default  {
-  name: 'lab-builder',
+export default {
+  name: "lab-builder",
   components: {
-    'build-so-far': buildSoFar,
-    'step-component': stepComponent
+    "build-so-far": buildSoFar,
+    "step-component": stepComponent
   },
   created() {
-    this.$store.commit('changeNav', 'indigo lighten-1');
+    this.$store.commit("changeNav", "indigo lighten-1");
   },
   data() {
     return {
@@ -111,71 +111,88 @@ export default  {
       // TODO axios this.listofparts
       listofparts: [
         {
-          id:0, 
-          name:'Motherboard', 
-          img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-          dimensions: {width: 12, height: 12},
-          slotPoints: [{x:.55, y:.35}],
-          connectorPoint: null,
+          id: 0,
+          name: "Motherboard",
+          img_src: require("../assets/img/motherboard.png"), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
+          dimensions: { width: 12, height: 12 },
+          slotPoints: [{ x: 0.55, y: 0.35 }],
+          connectorPoint: null
         },
         {
-          id:1, 
-          name: 'CPU',
-          img_src: require('../assets/img/cpu.png'),
-          dimensions: {width: 2, height: 2},
-          slotPoints: [{x:.25, y:.25}],
-          connectorPoint: {x: .5, y:.5}
+          id: 1,
+          name: "CPU",
+          img_src: require("../assets/img/cpu.png"),
+          dimensions: { width: 2, height: 2 },
+          slotPoints: [{ x: 0.25, y: 0.25 }],
+          connectorPoint: { x: 0.5, y: 0.5 }
         },
         {
-          id:2, 
-          name: 'CPU smol',
-          img_src: require('../assets/img/cpu.png'),
-          dimensions: {width: 1, height: 1},
+          id: 2,
+          name: "CPU smol",
+          img_src: require("../assets/img/cpu.png"),
+          dimensions: { width: 1, height: 1 },
           slotPoints: [],
-          connectorPoint: {x: .5, y:.5}
-        },
+          connectorPoint: { x: 0.5, y: 0.5 }
+        }
         // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
       ],
       selectedPart: null,
       buildparts: [],
-      addicon: require('../assets/img/add-icon.svg'),
-      swapicon: require('../assets/img/swap.svg'),
+      addicon: require("../assets/img/add-icon.svg"),
+      swapicon: require("../assets/img/swap.svg"),
       firststep: false
-    }
+    };
   },
   mounted() {
-    $('.modal').modal();
+    $(".modal").modal();
     this.getListOfParts();
   },
   methods: {
-
-    async getListOfParts(){
-    let part_response = await axios({
+    async saveLab() {
+      let response = await axios({
+        method: "post",
+        url: "http://localhost:8080/labs/lab",
+        params: {
+          username: "test2"
+        },
+        data: {
+          name:"lab name",
+          //labCreator_id: "some id",
+          //_id:"some id",
+          partsList:[],
+          //assignedTo_ids:[],
+          steps:[],
+          ispublished:false
+        }
+      });
+    },
+    async getListOfParts() {
+      let part_response = await axios({
         method: "get",
         url: "http://localhost:8080/parts/allparts"
-        }
-      );
-    console.log("PARTS DATA",part_response.data);
-   
-    let i = 0;
-    for(i = 0;i<part_response.data.length;i++){
+      });
+      console.log("PARTS DATA", part_response.data);
+
+      let i = 0;
+      for (i = 0; i < part_response.data.length; i++) {
         let prt = part_response.data[i];
-       this.listofparts.push({id:prt._id,
-                        name:prt.name,
-                        dimensions:prt.dimensions,
-                        img_src :require('../assets/img/motherboard.png'),
-                        slotPoints:prt.slotPoints,
-                        connectorPoint:prt.connectorPoint,
-                        })
+        this.listofparts.push({
+          id: prt._id,
+          name: prt.name,
+          dimensions: prt.dimensions,
+          //TODO : Fix img_src
+          img_src: require("../assets/img/motherboard.png"),
+          slotPoints: prt.slotPoints,
+          connectorPoint: prt.connectorPoint
+        });
       }
     },
     selectpart(part) {
       this.selectedPart = this.clonepart(part);
     },
-    newstep(){
-      this.newStepToggle=true; 
-      if (this.firststep)
-        this.buildparts.pop();
+    newstep() {
+      this.newStepToggle = true;
+      if (this.firststep) this.buildparts.pop();
     },
     addfirstpart(part) {
       this.firststep = true;
@@ -185,15 +202,15 @@ export default  {
       window.onresize = this.resizebuild;
       let newPart = this.clonepart(part);
       newPart.parent = null;
-      newPart.connectorPoint = {x:.5, y:.5};
-      newPart.connectedAt = {left: .5, top: .5};
+      newPart.connectorPoint = { x: 0.5, y: 0.5 };
+      newPart.connectedAt = { left: 0.5, top: 0.5 };
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot) {
       if (this.selectedPart == null) {
         return;
       }
-      this.selectedPart.connectedAt = {left: slot.x, top: slot.y};
+      this.selectedPart.connectedAt = { left: slot.x, top: slot.y };
       this.selectedPart.parent = parentPartVue;
       this.buildparts.push(this.selectedPart);
     },
@@ -202,38 +219,40 @@ export default  {
       // TODO check if part was connected
       this.steps.push({
         id: this.stepCounter++,
-        name: $('#step-name').val(),
-        instruction: $('#step-instruction').val()
+        name: $("#step-name").val(),
+        instruction: $("#step-instruction").val()
       });
       this.newStepToggle = false;
       this.selectedPart = null;
     },
     minimize(e) {
-      if (this.minimizeToggle){
-        $('#control-btns').show();
-        $('#step-details .row').show()
-        $('#step-details').animate({
-          width: '800px',
-          height: this.minimizeHeight + 'px',
+      if (this.minimizeToggle) {
+        $("#control-btns").show();
+        $("#step-details .row").show();
+        $("#step-details").animate({
+          width: "800px",
+          height: this.minimizeHeight + "px"
         });
-        $('#step-details').css({
-          'overflow-y': 'visible'
+        $("#step-details").css({
+          "overflow-y": "visible"
         });
-        this.minimizeToggle=false;
-      }
-      else {
-        $('#control-btns').hide();
-        this.minimizeHeight = $('#step-details').height() + 19;
-        $('#step-details').animate({
-          width: $(e.target).width() + 'px',
-          height: $(e.target).height() + 'px',
-        }, function(){
-          $('#step-details .row').hide();
+        this.minimizeToggle = false;
+      } else {
+        $("#control-btns").hide();
+        this.minimizeHeight = $("#step-details").height() + 19;
+        $("#step-details").animate(
+          {
+            width: $(e.target).width() + "px",
+            height: $(e.target).height() + "px"
+          },
+          function() {
+            $("#step-details .row").hide();
+          }
+        );
+        $("#step-details").css({
+          "overflow-y": "scroll"
         });
-        $('#step-details').css({
-          'overflow-y': 'scroll'
-        });
-        this.minimizeToggle=true;
+        this.minimizeToggle = true;
       }
     },
     modalcancel() {
@@ -241,37 +260,41 @@ export default  {
     },
     resizebuild() {
       let aspectRatio = this.buildWidth / this.buildHeight;
-      let maxWidth = $('#workspace').width() * .75;
-      let maxHeight = $('#workspace ').height() * .95 - 80;
+      let maxWidth = $("#workspace").width() * 0.75;
+      let maxHeight = $("#workspace ").height() * 0.95 - 80;
       let width = maxHeight * aspectRatio;
       if (width <= maxWidth) {
-        this.displayWidth = width + 'px';
-        this.displayHeight = maxHeight + 'px';
-      }
-      else {
-        this.displayWidth = maxWidth + 'px';
-        this.displayHeight = (maxWidth / aspectRatio) + 'px';
+        this.displayWidth = width + "px";
+        this.displayHeight = maxHeight + "px";
+      } else {
+        this.displayWidth = maxWidth + "px";
+        this.displayHeight = maxWidth / aspectRatio + "px";
       }
     },
     clonepart(part) {
-      let slotPoints = []
-      for (let i=0; i<part.slotPoints.length; i++){
+      let slotPoints = [];
+      for (let i = 0; i < part.slotPoints.length; i++) {
         slotPoints.push({
           x: part.slotPoints[i].x,
           y: part.slotPoints[i].y
         });
       }
       return {
-        id: part.id, 
-        name: part.name, 
-        img_src: part.img_src, 
-        dimensions: {width: part.dimensions.width, height: part.dimensions.height},
+        id: part.id,
+        name: part.name,
+        img_src: part.img_src,
+        dimensions: {
+          width: part.dimensions.width,
+          height: part.dimensions.height
+        },
         slotPoints: slotPoints,
-        connectorPoint: part.connectorPoint ? {x: part.connectorPoint.x, y: part.connectorPoint.y} : null,
-      }
+        connectorPoint: part.connectorPoint
+          ? { x: part.connectorPoint.x, y: part.connectorPoint.y }
+          : null
+      };
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -293,8 +316,8 @@ export default  {
         transform: translate(0, -50%);
         cursor: pointer;
       }
-      img:hover{
-        opacity: .75;
+      img:hover {
+        opacity: 0.75;
       }
     }
   }
@@ -326,7 +349,7 @@ export default  {
       max-width: 70vw;
       max-height: 25%;
 
-      .row{
+      .row {
         overflow-x: visible;
         overflow-y: scroll;
         max-height: 100%;
@@ -340,12 +363,11 @@ export default  {
         position: absolute;
         display: flex;
         flex-direction: column;
-        bottom: 25px;  
+        bottom: 25px;
         right: 0;
       }
     }
   }
-
 
   #steps-side-bar {
     position: relative;
@@ -354,7 +376,7 @@ export default  {
     overflow-x: hidden;
     overflow-y: scroll;
 
-    h1{
+    h1 {
       position: absolute;
       top: 0;
       width: 100%;
@@ -375,7 +397,6 @@ export default  {
     }
   }
 
-
   #part-selector {
     position: absolute;
     max-width: 90vw;
@@ -387,7 +408,7 @@ export default  {
     .collection-item {
       padding: 0;
 
-      a { 
+      a {
         width: 100%;
         height: 100%;
         text-transform: none;
