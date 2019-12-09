@@ -105,11 +105,7 @@ export default {
   },
   data() {
     return {
-<<<<<<< HEAD
-      name: '',
-=======
       name:'', //Lab Name
->>>>>>> k-dev
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
