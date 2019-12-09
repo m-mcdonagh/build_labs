@@ -31,6 +31,9 @@ export default {
         'buildWidth', 
         'buildHeight',
     ],
+    created() {
+        this.part.vue = this;
+    },
     computed: {
         offsetX() {
             if (this.parent) {
