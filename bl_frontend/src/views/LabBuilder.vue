@@ -22,7 +22,13 @@
 
 
     <div id="steps-side-bar" class="indigo col s3">
-      <h1 class="indigo flow-text">STEPS</h1>
+      <div id="side-bar-top" class="indigo">
+        <div class="input-field col s12">
+          <input id="lab-name" type="text" v-model="name">
+          <label for="lab-name">Lab Name</label>
+        </div>
+        <h1 class="flow-text">STEPS</h1>
+      </div>
       <div id="step-list" class="collection">
         <step-component
           v-for="(step, index) in steps"
@@ -146,6 +152,9 @@ export default {
   },
   mounted() {
     $(".modal").modal();
+    M.updateTextFields();
+    this.resizesteps();
+    window.onresize = this.resizesteps;
     this.getListOfParts();
   },
   methods: {
@@ -200,7 +209,10 @@ export default {
       this.buildWidth = part.dimensions.width;
       this.buildHeight = part.dimensions.height;
       this.resizebuild();
-      window.onresize = this.resizebuild;
+      window.onresize = function() {
+        this.resizebuild();
+        this.resizesteps();
+      };
       let newPart = this.clonepart(part);
       newPart.parent = null;
       newPart.connectorPoint = { x: 0.5, y: 0.5 };
@@ -217,7 +229,6 @@ export default {
     },
     addstep() {
       this.firststep = false;
-      // TODO check if part was connected
       this.steps.push({
         id: this.stepCounter++,
         name: $("#step-name").val(),
@@ -271,6 +282,9 @@ export default {
         this.displayWidth = maxWidth + "px";
         this.displayHeight = maxWidth / aspectRatio + "px";
       }
+    },
+    resizesteps(){
+      $('#step-list').css({height: $('#steps-side-bar').height() - $('#side-bar-top').height() - $('#save-exit-btns').height() + 'px'});
     },
     clonepart(part) {
       let slotPoints = [];
@@ -329,6 +343,7 @@ export default {
     right: 0;
     width: 25%;
     margin: 0;
+    z-index: 1;
   }
 
   #controls {
@@ -374,27 +389,31 @@ export default {
     position: relative;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
 
-    h1 {
+    #side-bar-top {
       position: absolute;
       top: 0;
       width: 100%;
       margin: 0;
-      padding-top: 20px;
+      height: 100px;  
       text-align: center;
+      h1 {
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        width: 100%;
+      }
     }
     #step-list {
       position: relative;
-      min-height: 75%;
       margin-top: 0;
       margin-left: 10px;
+      top: 12.5%;
       word-wrap: break-word;
-      top: 87px;
-      padding-bottom: 65px;
       border: none;
       background-color: #00000000;
+      overflow-y: scroll;
     }
   }
 
