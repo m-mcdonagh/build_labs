@@ -4,17 +4,14 @@ import cerulean.project.models.Account;
 import cerulean.project.models.Part;
 import cerulean.project.services.AccountService;
 import cerulean.project.services.PartControllerService;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import jdk.nashorn.internal.runtime.JSONFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
@@ -69,13 +66,28 @@ public class PartController {
 
         JsonObject jsonObject = gson.fromJson(partJson, JsonObject.class);
 
-        Set<String> keys = jsonObject.keySet();
+       // Set<String> keys = jsonObject.keySet();
 
-        for(String s : keys){
-            System.out.println(s);
+//        for(String s : keys){
+//            System.out.println(s);
+//        }
+        JsonArray jarray = jsonObject.getAsJsonArray("slotPoints");
+        System.out.println("Test");
+        List<List<Double>> slotPoints = new ArrayList<>();
+        JsonArray arr = new JsonArray();
+
+        for(int i =0; i<jarray.size();i++){
+            JsonObject obj = jsonObject.getAsJsonArray("slotPoints").get(i).getAsJsonObject();
+            //obj.remove("id");
+              Double x = Double.parseDouble(obj.remove("x").toString());
+              Double y = Double.parseDouble(obj.remove("y").toString());
+            //String  x = obj.remove("x").toString();
+            //String  y = obj.remove("y").toString();
+            slotPoints.add(Arrays.asList(x,y));
+
         }
 
-
+        jsonObject.remove("slotPoints");
         String id = UUID.randomUUID().toString();
         jsonObject.addProperty("_id",id);
         jsonObject.addProperty("ispublished",false);
@@ -83,10 +95,11 @@ public class PartController {
         //System.out.println(jsonObject);
 
         Part part = gson.fromJson(jsonObject, Part.class);
+        part.setSlotPoints(slotPoints);
 
 
-        //return partService.addNewPart(username , part);
-        return "temp";
+        return partService.addNewPart(username , part);
+        //return "temp";
 
     }
 

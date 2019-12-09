@@ -47,6 +47,8 @@ public class Part {
         return slotPoints;
     }
 
+    public void setSlotPoints(List<List<Double>> slotPoints){this.slotPoints = slotPoints; }
+
     public List<Double> getConnectorPoint() {
         return connectorPoint;
     }
