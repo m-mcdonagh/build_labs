@@ -1,14 +1,19 @@
 package cerulean.project.controllers;
 import cerulean.project.models.Account;
 import cerulean.project.models.Lab;
+import cerulean.project.models.Part;
 import cerulean.project.services.AccountService;
 import cerulean.project.services.LabService;
+import cerulean.project.services.PartControllerService;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +24,9 @@ public class LabController {
 
     @Autowired
     private LabService labService;
+
+    @Autowired
+    PartControllerService partService;
 
     @Autowired
     private AccountService accountService;
@@ -41,16 +49,27 @@ public class LabController {
     @RequestMapping(value ="/lab", method = RequestMethod.POST)
     public void addLab(@RequestBody String labJson, @RequestParam String username) {
         System.out.println(labJson);
+
         String creator_id = accountService.getAccount(username).get_id();
         String id = UUID.randomUUID().toString();
 
         JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
+        JsonArray jarray = jsonObject.getAsJsonArray("partsList");
+        List<String>partIDs = new ArrayList<>();
+        for(int i = 0; i<jarray.size();i++){
+            JsonObject obj = jarray.get(i).getAsJsonObject();
+            partIDs.add(obj.remove("id").toString());
+        }
+        jsonObject.remove("partsList");
+
         jsonObject.addProperty("_id",id);
         jsonObject.addProperty("assignedTo_ids","[]");
         jsonObject.addProperty("labCreator_ids",creator_id);
         jsonObject.addProperty("labCreator_field",creator_id);
         Lab lab = gson.fromJson(jsonObject, Lab.class);
-        System.out.println("test line");
+
+        List<Part>partsList = new ArrayList<>();
+        partIDs.forEach((n) -> partsList.add(partService.getPart(n)));
 
         //labService.addNewLab(username , lab);
     }

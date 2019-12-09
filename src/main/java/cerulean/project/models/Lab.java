@@ -41,6 +41,8 @@ public class Lab {
         return partsList;
     }
 
+    public void setPartsList(List<Part> partLists){this.partsList = partLists;}
+
     public List<String> getAssignedTo_Ids() {
         return assignedTo_Ids;
     }
