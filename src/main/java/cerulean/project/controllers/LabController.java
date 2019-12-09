@@ -70,7 +70,7 @@ public class LabController {
 
         List<Part>partsList = new ArrayList<>();
         partIDs.forEach((n) -> partsList.add(partService.getPart(n)));
-
+        System.out.println("Done");
         //labService.addNewLab(username , lab);
     }
 
