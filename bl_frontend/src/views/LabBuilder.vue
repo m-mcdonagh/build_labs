@@ -99,6 +99,7 @@ export default {
   },
   data() {
     return {
+      name: '',
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
