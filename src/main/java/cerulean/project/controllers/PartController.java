@@ -58,6 +58,7 @@ public class PartController {
         JsonObject jsonObject = gson.fromJson(partJson, JsonObject.class);
         String id = UUID.randomUUID().toString();
         jsonObject.addProperty("_id",id);
+        jsonObject.addProperty("ispublished",false);
         //System.out.println(jsonObject);
 
         Part part = gson.fromJson(jsonObject, Part.class);

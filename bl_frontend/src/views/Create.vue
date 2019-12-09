@@ -101,8 +101,7 @@ export default  {
     console.log("PARTS DATA",response.data);
     let i = 0;
     for(i = 0;i<response.data.length;i++){
-      //console.log("something")
-       this.parts.push({id:response.data[i]._id,name:response.data[i].name,ispublished:false})
+       this.parts.push({id:response.data[i]._id,name:response.data[i].name,ispublished:response.data[i].ispublished})
     }
   },
   methods: {

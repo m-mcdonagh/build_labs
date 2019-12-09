@@ -16,14 +16,16 @@ public class Part {
     private List<Double> dimensions;
     private List<List<Double>> slotPoints;
     private List<Double> connectorPoint;
+    private Boolean ispublished;
+
     public Part(String name, String img, List<Double> dimensions, List<List<Double>> slotPoints, List<Double> connectorPoint) {
         this._id = UUID.randomUUID().toString();
         this.name = name;
-        // TODO : Change IMG back to Binary
         this.img = img;
         this.dimensions = dimensions;
         this.slotPoints = slotPoints;
         this.connectorPoint = connectorPoint;
+        this.ispublished = false;
     }
     public String get_id() {
         return _id;
@@ -48,5 +50,9 @@ public class Part {
     public List<Double> getConnectorPoint() {
         return connectorPoint;
     }
+
+    public Boolean getIspublished(){return ispublished;}
+
+    public void setIspublished(Boolean ispublished){this.ispublished = ispublished;}
 
 }
