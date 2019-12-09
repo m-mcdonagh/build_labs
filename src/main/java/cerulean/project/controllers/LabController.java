@@ -1,14 +1,16 @@
 package cerulean.project.controllers;
 import cerulean.project.models.Lab;
 import cerulean.project.services.LabService;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.UUID;
 
-
+@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value ="/labs")
 public class LabController {
@@ -21,6 +23,7 @@ public class LabController {
     @RequestMapping(value ="/", method = RequestMethod.GET)
     public String listLabs(@RequestParam String id, HttpServletResponse httpResponse) {
         String username = "temp";
+        System.out.println("Lab get method");
         List<Lab> labs = labService.getLabsCreatedByUser(username);
         return gson.toJson(labs);
     }
@@ -31,9 +34,14 @@ public class LabController {
         return gson.toJson(lab);
     }
     @RequestMapping(value ="/lab", method = RequestMethod.POST)
-    public void addLab(@RequestBody String labJson) {
-        String username = "temp";
+    public void addLab(@RequestBody String labJson, @RequestParam String username) {
         Lab lab = gson.fromJson(labJson, Lab.class);
+        JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
+
+        String id = UUID.randomUUID().toString();
+        jsonObject.addProperty("_id",id);
+        jsonObject.addProperty("assignedTo_ids","[]");
+
         labService.addNewLab(username , lab);
     }
 

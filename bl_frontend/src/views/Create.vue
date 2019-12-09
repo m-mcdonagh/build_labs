@@ -92,8 +92,48 @@ export default  {
 
     this.sizeContent();
     window.onresize = this.sizeContent;
+    this.getAllParts();
+    this.getAllLabs();
   },
+    
   methods: {
+
+    async getAllParts(){
+    let part_response = await axios({
+        method: "get",
+        url: "http://localhost:8080/parts/allparts"
+        }
+      );
+    console.log("PARTS DATA",part_response.data);
+    let i = 0;
+    for(i = 0;i<part_response.data.length;i++){
+        let prt = part_response.data[i];
+       this.parts.push({id:prt._id,
+                        name:prt.name,
+                        ispublished:prt.ispublished
+                        })
+      }
+    },
+    async getAllLabs(){
+    let lab_response = await axios({
+        method: "get",
+        url: "http://localhost:8080/labs/lab/",
+        params:{
+          id :"temp",
+        }
+      },
+
+      );
+    console.log("LABS DATA",lab_response.data);
+    let i = 0;
+    for(i = 0;i<lab_response.data.length;i++){
+        let lab = lab_response.data[i];
+       this.labs.push({id:lab._id,
+                        name:lab.name,
+                        ispublished:lab.ispublished
+                        })
+      }
+    },
     sizeContent() {
       let height = $('.container').height() - 58
       $('.content').css({
@@ -106,6 +146,7 @@ export default  {
           // REQ->server with part.id
           // server->RES with new cloned ubpublished part JSON
           // then() appends this to this.parts 
+
     },
     copylab(lab){
       console.log('copy lab', lab.id);

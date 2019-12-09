@@ -50,6 +50,13 @@ public class PartController {
         return gson.toJson(part);
     }
 
+    @RequestMapping(value ="/part/{partID}", method = RequestMethod.GET)
+    public String getPartById(@PathVariable String partID) {
+        System.out.println("Edit part post get request");
+        Part part = partService.getPart(partID);
+        return gson.toJson(part);
+    }
+
     @RequestMapping(value ="/part", method = RequestMethod.POST)
     public String addPart(@RequestBody String partJson, @RequestParam String username) {
         System.out.println("Add part controller");
@@ -58,6 +65,8 @@ public class PartController {
         JsonObject jsonObject = gson.fromJson(partJson, JsonObject.class);
         String id = UUID.randomUUID().toString();
         jsonObject.addProperty("_id",id);
+        jsonObject.addProperty("ispublished",false);
+
         //System.out.println(jsonObject);
 
         Part part = gson.fromJson(jsonObject, Part.class);

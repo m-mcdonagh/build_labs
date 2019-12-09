@@ -129,13 +129,24 @@ export default  {
     this.resizePart();
     window.onresize = this.resizePart;
     window.addEventListener('keydown', this.keypress);
+
+    var urlParams = new URLSearchParams(location.search);
+    var id = urlParams.get('id');
+    console.log(id);
+
+
+
   },
   methods: {
     async savePart(){
+
+      if(this.id == null){
+        console.log("NULL ID");
+      }
       console.log("Save part post request");
       // TODO: How is image saved?
       let fd = new FormData();
-      fd.append('content',part.img_file);
+      fd.append('content',this.part.img_file);
 
       let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
         headers: {
@@ -148,7 +159,8 @@ export default  {
         url: "http://localhost:8080/parts/part",
         data: {
           name: this.part.part_name,
-          img: image_response.data.id,
+          //TODO : CHANGE BACK TO imgage_response.data.id
+          img:"img",// image_response.data.id,
           dimensions:[this.part.width,this.part.height],
           slotPoints:this.part.slots,
           connectorPoint:this.part.connector
@@ -156,6 +168,7 @@ export default  {
         },
         params:{
           username : "test2"
+          //TODO : GET USERNAME FROM SESSION
         }
       });
 

@@ -17,6 +17,7 @@ public class Lab {
     private List<Part> partsList;
     private List<String> assignedTo_Ids;
     private List<Step> steps;
+    private Boolean ispublished;
 
     public Lab(String name,String labCreator_Id,String _id,List<Part> partsList,List<String> assignedTo_Ids,List<Step> steps){
         this.name = name;
@@ -25,6 +26,7 @@ public class Lab {
         this.partsList = partsList;
         this.assignedTo_Ids = assignedTo_Ids;
         this.steps = steps;
+        this.ispublished = false;
     }
 
     public String get_id() {
@@ -54,6 +56,10 @@ public class Lab {
     public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
+
+    public Boolean getIspublished(){return this.ispublished;}
+
+    public void setIspublished(Boolean ispublished){this.ispublished = ispublished;}
 
 
 }
