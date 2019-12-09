@@ -30,8 +30,8 @@ export default {
         'part-component': partComponent
     },
     methods: {
-        slotclick(part, slot) {
-            this.$emit('slotclick', part, slot);
+        slotclick(part, slot, i) {
+            this.$emit('slotclick', part, slot, i);
         }
     }
 }
@@ -44,7 +44,7 @@ export default {
     justify-content: center;
     align-items: center;
     max-height: 95%;
-    max-width: 75%;
+    max-width: 95%;
 
     img {
         max-height: 80vh;

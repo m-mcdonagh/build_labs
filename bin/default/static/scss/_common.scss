@@ -1,0 +1,69 @@
+$neutral-blue: #1fb8d7;
+$learn-green: #20dca8;
+$learn-blue: #20ccdc;
+$create-purple: #c58de5;
+$create-blue: #5e67e0;
+$create-purple-dull: #8a7299;
+$content-bg: #FFFFFFF0;
+$text-color: white;
+$button-color: white;
+$darker: 10%;
+
+body{
+    font-family: "Roboto", sans-serif;
+    color: $text-color;
+    overflow: hidden;
+    
+    .main {
+        display: flex;
+        background-image: linear-gradient(#FFFFFF, #CFCFCF);
+        width: 100vw;
+        height: 95vh;
+        margin: 0;
+        padding: 0;
+        margin-top: 5vh;
+    }
+    
+    .btn {
+        color: #313639;
+        margin: 0 1px;
+    }
+
+    input {
+        font-family: "Roboto", sans-serif;
+        color: white;
+    }
+
+    textarea {
+        font-family: "Roboto", sans-serif;
+        color: white;
+    }
+
+    #scroll {
+        width: 100%;
+        height: 90%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;    
+
+        .content {
+            width: 95%;
+            min-height: 100%;
+            background-color: $content-bg;
+            color: black;
+            line-height: 150%;
+            @media screen and (min-width: 775px){
+                font-size: 1.5rem;
+            }
+
+            div {
+                margin: 20px;
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+}
