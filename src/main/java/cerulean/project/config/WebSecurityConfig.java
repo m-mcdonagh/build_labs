@@ -47,14 +47,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .anyRequest().authenticated()
-//                .and()
-//                // TODO: Replace this with REST login if you wanna be fancy
-//                  .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//                .logout()
-//                .permitAll()
+                .and()
+                // TODO: Replace this with REST login if you wanna be fancy
+                  .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
 
         ;
     }

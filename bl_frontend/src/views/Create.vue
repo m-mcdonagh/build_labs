@@ -85,15 +85,29 @@ export default  {
       // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
     }
   },
-  mounted () {
+  async mounted () {
     $('.tabs').tabs();
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
 
     this.sizeContent();
     window.onresize = this.sizeContent;
+
+    let response = await axios({
+        method: "get",
+        url: "http://localhost:8080/parts/allparts"
+        }
+      );
+    console.log("PARTS DATA",response.data);
+    let i = 0;
+    for(i = 0;i<response.data.length;i++){
+      //console.log("something")
+       this.parts.push({id:response.data[i]._id,name:response.data[i].name,ispublished:false})
+    }
   },
   methods: {
+
+
     sizeContent() {
       let height = $('.container').height() - 58
       $('.content').css({
@@ -106,6 +120,7 @@ export default  {
           // REQ->server with part.id
           // server->RES with new cloned ubpublished part JSON
           // then() appends this to this.parts 
+
     },
     copylab(lab){
       console.log('copy lab', lab.id);
