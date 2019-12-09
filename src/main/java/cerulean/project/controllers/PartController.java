@@ -7,8 +7,13 @@ import cerulean.project.services.PartControllerService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +68,14 @@ public class PartController {
         System.out.println("Add Part input : "+partJson+ " with username "+ username);
 
         JsonObject jsonObject = gson.fromJson(partJson, JsonObject.class);
+
+        Set<String> keys = jsonObject.keySet();
+
+        for(String s : keys){
+            System.out.println(s);
+        }
+
+
         String id = UUID.randomUUID().toString();
         jsonObject.addProperty("_id",id);
         jsonObject.addProperty("ispublished",false);
@@ -72,8 +85,8 @@ public class PartController {
         Part part = gson.fromJson(jsonObject, Part.class);
 
 
-        return partService.addNewPart(username , part);
-       // return "temp";
+        //return partService.addNewPart(username , part);
+        return "temp";
 
     }
 
@@ -82,6 +95,9 @@ public class PartController {
         return gson.toJson(partService.getAllParts());
     }
 
+
 }
+
+
 
 

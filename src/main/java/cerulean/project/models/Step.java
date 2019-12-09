@@ -7,41 +7,38 @@ import java.util.List;
 @Document
 public class Step {
 
-    private Integer index; //Index into lab arraylist
+    private Integer id; //Index into lab arraylist
     private Integer parentIndex; // What part is this step attached to
     private Integer parentSlot; // List Index in slotPoints in Part
     private List children; //Steps that go after this step
     private Part newPart; // Part that this step uses
     private Integer rotation; // Is the part rotated
-    private String instructions; // The instructions for this step
+    private String instruction; // The instructions for this step
+    private String name; //Step name
 
-    public Step(Integer index, Integer parentIndex, Integer parentSlot, List children, Part newPart, Integer rotation, String instructions){
-        this.index = index;
+    public Step(Integer id, Integer parentIndex, Integer parentSlot, List children, Part newPart, Integer rotation, String instruction, String name){
+        this.id = id;
         this.parentIndex = parentIndex;
         this.parentSlot = parentSlot;
         this.children = children;
         this.newPart = newPart;
         this.rotation = rotation;
-        this.instructions = instructions;
+        this.instruction = instruction;
+        this.name = name;
     }
     @Override
     public boolean equals(Object obj){
 
         Step step = (Step) obj;
-        if(this.index != step.getIndex())
-            return false;
-        if(this.parentIndex != step.getParentIndex())
-            return false;
-        if(this.rotation != step.getRotation())
-            return false;
-        if(this.newPart != step.getNewPart())
-            return false;
-        if(this.parentSlot != step.getParentSlot())
-            return false;
-        return true;
+        return this.id.equals(step.getId())
+                && this.parentIndex.equals(step.getParentIndex())
+                && this.rotation.equals(step.getRotation())
+                && this.newPart.equals(step.getNewPart())
+                && this.parentSlot.equals(step.parentSlot);
+
     }
-    public Integer getIndex() {
-        return index;
+    public Integer getId() {
+        return id;
     }
 
     public Integer getParentIndex() {
@@ -68,13 +65,17 @@ public class Step {
         this.rotation = rotation;
     }
 
-    public String getInstructions() {
-        return instructions;
+    public String getInstruction() {
+        return instruction;
     }
+
+    public String getName(){return this.name;}
+
+    public void setTitle(String name){this.name=name;}
 
     public boolean stepMatches(Step other) {
         return     this.rotation.equals(other.rotation)
-                && this.index.equals(other.index)
+                && this.id.equals(other.id)
                 && this.parentSlot.equals(other.parentSlot)
                 && this.parentIndex.equals(other.parentIndex)
                 && this.newPart.get_id().equals(other.newPart.get_id());

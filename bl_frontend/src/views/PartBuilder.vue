@@ -145,15 +145,15 @@ export default  {
       }
       console.log("Save part post request");
       // TODO: How is image saved?
-      let fd = new FormData();
-      fd.append('content',this.part.img_file);
+    //   let fd = new FormData();
+    //   fd.append('content',this.part.img_file);
 
-      let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-    });
-     console.log("addmedia resonse",image_response);
+    //   let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data'
+    //     }
+    // });
+    //  console.log("addmedia resonse",image_response);
        let response = await axios({
         method: "post",
         url: "http://localhost:8080/parts/part",

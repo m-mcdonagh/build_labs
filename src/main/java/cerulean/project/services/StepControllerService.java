@@ -18,7 +18,7 @@ public class StepControllerService {
     public boolean isStepValid(Step step, LabAssignment labAssignment) {
         Lab workingLab = labService.getLabInAssignment(labAssignment);
         try {
-            Step attemptedStep = workingLab.getSteps().get(step.getIndex());
+            Step attemptedStep = workingLab.getSteps().get(step.getId());
             return step.stepMatches(attemptedStep);
         } catch (IndexOutOfBoundsException e) {
             return false;
@@ -30,7 +30,7 @@ public class StepControllerService {
         if (!isStepValid(step, labAssignment)) {
             throw new RuntimeException("That step is not valid");
         }
-        labAssignment.setCurrentStep( step.getIndex() );
+        labAssignment.setCurrentStep( step.getId() );
         labAssignmentService.updateLabAssignment(labAssignment);
         return labAssignment.getCurrentStep();
     }
