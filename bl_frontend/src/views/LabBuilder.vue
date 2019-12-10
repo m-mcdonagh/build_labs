@@ -112,13 +112,14 @@ export default {
       newStepToggle: false,
       stepCounter: 0, // Needs to be set to steps.length when using loading with axios
       steps: [], // step.newPart needs attributes not included in the Part Model before being added to this.buildparts, when loading
-        // Those attributes are added in addpart() and addfirstpart(), but need to be derived from the step 
-        // addstep() in Labuilder.vue and mounted() in Lab.vue might be helpful :D
+      // Those attributes are added in addpart() and addfirstpart(), but need to be derived from the step
+      // addstep() in Labuilder.vue and mounted() in Lab.vue might be helpful :D
       buildWidth: null,
       buildHeight: null,
       displayWidth: null,
       displayHeight: null,
-      listofparts: [ // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
+      listofparts: [
+        // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
         {
           id: 0,
           name: "Motherboard",
@@ -164,21 +165,18 @@ export default {
       console.log("CURRENT PARTS BUILT", this.buildparts);
 
       var part_ids = [];
-      
-      var steps_copy= this.steps.slice();
-      console.log("COPY",steps_copy);
-      
+
+      var steps_copy = this.steps.slice();
+      console.log("COPY", steps_copy);
 
       steps_copy.forEach(function(item, index) {
         //console.log("ITME",item.newPart.id,"AND", index);
-       // part_ids.push(item.newPart.id);
+        // part_ids.push(item.newPart.id);
         item.newPart = item.newPart.id;
       });
 
+      console.log("THIS IS PART ID", steps_copy);
 
-
-      console.log("THIS IS PART ID",steps_copy);
-      
       let response = await axios({
         method: "post",
         url: "http://localhost:8080/labs/lab",
@@ -187,8 +185,8 @@ export default {
         },
         data: {
           name: this.name,
-          steps: steps_copy,
-          //partList: part_ids //Causes circular reference 
+          steps: steps_copy
+          //partList: part_ids //Causes circular reference
         }
       });
     },
@@ -208,6 +206,14 @@ export default {
           };
         }
 
+        // let img_data = await axios.get(
+        //   "http://130.245.170.216:3003/media/" + prt.img
+        // );
+        console.log(prt.img);
+
+        let img_data = await axios.get("http://130.245.170.216:3003/media/" + prt.img);
+          
+        console.log("IMGAGE DATA: ", img_data.config);
         this.listofparts.push({
           id: prt._id,
           name: prt.name,
@@ -216,7 +222,7 @@ export default {
             width: prt.dimensions[1]
           },
           //TODO : Fix img_src
-          img_src: require("../assets/img/motherboard.png"),
+          img_src: img_data.config.url, //require("../assets/img/motherboard.png"),
           slotPoints: slotPointsCoord,
           connectorPoint: prt.connectorPoint
         });
@@ -257,15 +263,16 @@ export default {
     addstep() {
       let id = this.stepCounter++;
       let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
-      let parentId = newPart.parent && newPart.parent.part ? newPart.parent.part.id : null;
+      let parentId =
+        newPart.parent && newPart.parent.part ? newPart.parent.part.id : null;
       if (parentId !== null) {
-        this.steps[parentId].children.push(id)
+        this.steps[parentId].children.push(id);
       }
       this.firststep = false;
       this.steps.push({
         id: id,
         parentId: parentId,
-        parentSlot:newPart.parentSlot,
+        parentSlot: newPart.parentSlot,
         children: [],
         newPart: newPart,
         name: $("#step-name").val(),
@@ -275,7 +282,7 @@ export default {
       //console.log("NEW STEP ADDED",this.steps)
       this.newStepToggle = false;
       this.selectedPart = null;
-      console.log(this.steps)
+      console.log(this.steps);
     },
     minimize(e) {
       if (this.minimizeToggle) {
@@ -491,7 +498,7 @@ export default {
   height: 30px;
   border: 4px solid white;
   border-radius: 100%;
-  opacity: .67;
+  opacity: 0.67;
   background-color: #00bfa5;
 }
 .slot:hover {
