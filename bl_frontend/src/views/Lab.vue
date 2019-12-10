@@ -97,6 +97,7 @@ export default  {
           index: 0,
           parentIndex: null,
           parentSlot: null,
+          children: [1],
           newPart: {
             _id: 0,
             name: "Motherboard",
@@ -111,6 +112,7 @@ export default  {
           index: 1,
           parentIndex: 0,
           parentSlot: 0,
+          children: [],
           newPart: {
             _id: 1,
             name: "CPU",
@@ -138,6 +140,24 @@ export default  {
       this.buildHeight = this.steps[0].newPart.dimensions.height;
       this.resizebuild();
       window.onresize = this.resizebuild;
+      for (var i=0; i<this.steps.length; i++) {
+        for(var j=0; j<this.steps[i].children.length; j++) {
+          let child = this.steps[this.steps[i].children[j]]
+          this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
+          this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
+        }
+      }
+      var toggle = true;
+      console.log(setInterval(function() {
+        if (toggle){
+          $('.slot').addClass('blink');
+          toggle = false;
+        }
+        else {
+          $('.slot').removeClass('blink');
+          toggle = true;
+        }
+      }, 500));
     //
   },
   methods: {
@@ -238,7 +258,7 @@ export default  {
       overflow-y: scroll;
     }
     #firstslot {
-      background-image: radial-gradient(#607d8bAA, #607d8b00 67%);
+      background-image: radial-gradient(#607d8bAA, #607d8b22 67%);
       cursor: pointer;
     }
     #firstslot:hover {
@@ -290,4 +310,20 @@ export default  {
     }
   }
 }
+</style>
+
+<style lang="scss">
+.slot {
+  position: absolute;
+  background-image: radial-gradient(#607d8bAA, #607d8b44 67%);
+  transition: background-color .5s;
+  background-color: #607d8b20;
+}
+.blink {
+  background-color: #607d8b40;
+}
+.slot:hover {
+  background-color: #607d8b77;
+}
+
 </style>

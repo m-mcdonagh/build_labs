@@ -7,10 +7,12 @@
         transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : 'translate(-50%, -50%)'
     }">
         <img v-bind:src="img_src">
-        <div class="slot teal accent-4" 
+        <div class="slot" 
              v-for="(slot, i) in slotPoints"
              v-bind:key="i"
-             v-bind:style="{left: (slot.x * 100) + '%', top: (slot.y * 100) + '%'}"
+             v-bind:style="slot.width && slot.height? 
+                {left: (slot.x * 100) + '%', top: (slot.y * 100) + '%', width: (slot.width / buildWidth) * 100 + '%', height: (slot.height / buildHeight) * 100 + '%'} : 
+                {left: (slot.x * 100) + '%', top: (slot.y * 100) + '%'}"
              v-on:click="slotclick(slot, i)"
         ></div>
     </div>
@@ -72,16 +74,8 @@ export default {
     }
 
     .slot {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        border: 4px solid white;
-        border-radius: 100%;
         transform: translate(-50%, -50%);
-        opacity: .5;
-    }
-    .slot:hover {
-        opacity: 1;
+        cursor: pointer;
     }
 }
 </style>

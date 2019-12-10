@@ -440,3 +440,18 @@ export default {
   }
 }
 </style>
+
+<style lang="scss">
+.slot {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 4px solid white;
+  border-radius: 100%;
+  opacity: .67;
+  background-color: #00bfa5;
+}
+.slot:hover {
+  opacity: 1;
+}
+</style>
