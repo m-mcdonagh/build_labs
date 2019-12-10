@@ -105,7 +105,7 @@ export default {
   },
   data() {
     return {
-      name:'', //Lab Name
+      name: "", //Lab Name
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
@@ -159,7 +159,7 @@ export default {
   },
   methods: {
     async saveLab() {
-      console.log("CURRENT PARTS BUILT",this.buildparts);
+      console.log("CURRENT PARTS BUILT", this.buildparts);
       let response = await axios({
         method: "post",
         url: "http://localhost:8080/labs/lab",
@@ -167,13 +167,13 @@ export default {
           username: "test2"
         },
         data: {
-          name:"lab name",
+          name: "lab name",
           //labCreator_id: "some id",
           //_id:"some id",
-          partsList:this.buildparts,
+          partsList: this.buildparts,
           //assignedTo_ids:[],
-          steps:this.steps,
-          ispublished:false
+          steps: this.steps,
+          ispublished: false
         }
       });
     },
@@ -182,18 +182,28 @@ export default {
         method: "get",
         url: "http://localhost:8080/parts/allparts"
       });
-      console.log("PARTS DATA", part_response.data);
+      for (var i = 0; i < part_response.data.length; i++) {
+        var prt = part_response.data[i];
+        var slotPointsCoord = [];
+        
+        for (var j = 0; j < prt.slotPoints.length; j++) {
+          slotPointsCoord[j] = {
+            x: prt.slotPoints[j][0],
+            y: prt.slotPoints[j][1]
+          };
+        }
 
-      let i = 0;
-      for (i = 0; i < part_response.data.length; i++) {
-        let prt = part_response.data[i];
+
         this.listofparts.push({
           id: prt._id,
           name: prt.name,
-          dimensions: prt.dimensions,
+          dimensions:{
+              height:prt.dimensions[0],
+              width:prt.dimensions[1]
+          },
           //TODO : Fix img_src
           img_src: require("../assets/img/motherboard.png"),
-          slotPoints: prt.slotPoints,
+          slotPoints: slotPointsCoord,
           connectorPoint: prt.connectorPoint
         });
       }
@@ -234,7 +244,7 @@ export default {
         id: this.stepCounter++,
         name: $("#step-name").val(),
         instruction: $("#step-instruction").val(),
-        rotation:0 //TODO rotation
+        rotation: 0 //TODO rotation
       });
       //console.log("NEW STEP ADDED",this.steps)
       this.newStepToggle = false;
