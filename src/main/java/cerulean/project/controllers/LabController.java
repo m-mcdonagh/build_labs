@@ -37,7 +37,7 @@ public class LabController {
     public String listLabs(@RequestParam String id, HttpServletResponse httpResponse) {
         String username = "temp";
         System.out.println("Lab get method");
-        List<Lab> labs = labService.getLabsCreatedByUser(username);
+        List<Lab> labs = labService.getLabsCreatedByUser(id);
         return gson.toJson(labs);
     }
     @RequestMapping(value ="/lab", method = RequestMethod.GET)
@@ -50,7 +50,8 @@ public class LabController {
     public void addLab(@RequestBody String labJson, @RequestParam String username) {
         System.out.println(labJson);
 
-        String creator_id = accountService.getAccount(username).get_id();
+        Account acc=  accountService.getAccount(username);
+        String creator_id = acc.get_id();
         String id = UUID.randomUUID().toString();
 
         JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
@@ -66,8 +67,8 @@ public class LabController {
         }
 
         jsonObject.addProperty("_id",id);
-        jsonObject.addProperty("assignedTo_ids","[]");
-        jsonObject.addProperty("labCreator_id",creator_id);
+        //jsonObject.addProperty("assignedTo_Ids","[]"); Null
+        jsonObject.addProperty("labCreator_Id",creator_id);
         Lab lab = gson.fromJson(jsonObject, Lab.class);
 
         for(int i = 0; i < lab.getSteps().size(); i++){
@@ -78,6 +79,9 @@ public class LabController {
 
         System.out.println("Done");
         labService.addNewLab(username , lab);
+        acc.getCreatedLabs_ids().add(id);
+        accountService.save(acc);
+
 
         //j_stepsarr.forEach((step) -> partIds.add(step.getAsJsonObject().remove("newPart").toString()));
 

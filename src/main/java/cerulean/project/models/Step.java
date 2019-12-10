@@ -16,9 +16,9 @@ public class Step {
     private String instruction; // The instructions for this step
     private String name; //Step name
 
-    public Step(Integer id, Integer parentIndex, Integer parentSlot, List children, Part newPart, Integer rotation, String instruction, String name){
+    public Step(Integer id, Integer parentId, Integer parentSlot, List children, Part newPart, Integer rotation, String instruction, String name){
         this.id = id;
-        this.parentId = parentIndex;
+        this.parentId = parentId;
         this.parentSlot = parentSlot;
         this.children = children;
         this.newPart = newPart;
@@ -31,7 +31,7 @@ public class Step {
 
         Step step = (Step) obj;
         return this.id.equals(step.getId())
-                && this.parentId.equals(step.getParentIndex())
+                && this.parentId.equals(step.getParentId())
                 && this.rotation.equals(step.getRotation())
                 && this.newPart.equals(step.getNewPart())
                 && this.parentSlot.equals(step.parentSlot);
@@ -41,7 +41,7 @@ public class Step {
         return id;
     }
 
-    public Integer getParentIndex() {
+    public Integer getParentId() {
         return parentId;
     }
 

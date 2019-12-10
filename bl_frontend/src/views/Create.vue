@@ -117,9 +117,9 @@ export default  {
     async getAllLabs(){
     let lab_response = await axios({
         method: "get",
-        url: "http://localhost:8080/labs/lab/",
+        url: "http://localhost:8080/labs/",
         params:{
-          id :"temp",
+          id :"test2",
         }
       },
 

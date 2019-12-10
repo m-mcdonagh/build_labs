@@ -45,20 +45,20 @@ public class LabService {
         for (Step step : lab.getSteps()) {
 
             occupiedSlots.put(step, new HashSet<>()); // New step proposed
-            Integer parentIndex = step.getParentIndex();
+            Integer parentId = step.getParentId();
 
             // If this is the first step, there is nowhere for you to misplace something
             if (step.getId() == 0) {
                 continue;
             }
             // If this step depends on an invalid parent or a nonexistent parent it's bad
-            if (invalidSteps.contains(parentIndex) || parentIndex >= lab.getSteps().size()) {
+            if (invalidSteps.contains(parentId) || parentId >= lab.getSteps().size()) {
                 invalidSteps.add(step.getId());
                 continue;
             }
 
 
-            Step parentStep = lab.getSteps().get(parentIndex);
+            Step parentStep = lab.getSteps().get(parentId);
             Part parentPart = parentStep.getNewPart();
 
             boolean stepOutOfBounds = step.getParentSlot() >= parentPart.getSlotPoints().size();
