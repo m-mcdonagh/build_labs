@@ -97,12 +97,13 @@ export default  {
           index: 0,
           parentIndex: null,
           parentSlot: null,
+          children: [1],
           newPart: {
             _id: 0,
             name: "Motherboard",
             img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
             dimensions: {width: 12, height: 12},
-            slotPoints: [{x:.55, y:.35}],
+            slotPoints: [{x:.55, y:.35}, {x:.5, y:.5}],
             connectorPoint: null
           },
           instructions: "Place the motherboard"
@@ -111,6 +112,7 @@ export default  {
           index: 1,
           parentIndex: 0,
           parentSlot: 0,
+          children: [],
           newPart: {
             _id: 1,
             name: "CPU",
@@ -138,6 +140,24 @@ export default  {
       this.buildHeight = this.steps[0].newPart.dimensions.height;
       this.resizebuild();
       window.onresize = this.resizebuild;
+      for (var i=0; i<this.steps.length; i++) {
+        for(var j=0; j<this.steps[i].children.length; j++) {
+          let child = this.steps[this.steps[i].children[j]]
+          this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
+          this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
+        }
+      }
+      var toggle = true;
+      setInterval(function() {
+        if (toggle){
+          $('.slot, #firstslot').addClass('blink');
+          toggle = false;
+        }
+        else {
+          $('.slot, #firstslot').removeClass('blink');
+          toggle = true;
+        }
+      }, 1000);
     //
   },
   methods: {
@@ -238,11 +258,13 @@ export default  {
       overflow-y: scroll;
     }
     #firstslot {
-      background-image: radial-gradient(#607d8bAA, #607d8b00 67%);
+      background-image: radial-gradient(#607d8bAA, #607d8b55 67%);
+      transition: background-color .5s;
+      background-color: #607d8b20;
       cursor: pointer;
     }
     #firstslot:hover {
-      background-color: #607d8b55;
+      background-color: #607d8b77 !important;
     }
   }
   #controls {
@@ -290,4 +312,20 @@ export default  {
     }
   }
 }
+</style>
+
+<style lang="scss">
+.slot {
+  position: absolute;
+  background-image: radial-gradient(#607d8bAA, #607d8b44 67%);
+  transition: background-color .5s;
+  background-color: #607d8b20;
+}
+.blink {
+  background-color: #607d8b40 !important;
+}
+.slot:hover {
+  background-color: #607d8b77 !important;
+}
+
 </style>

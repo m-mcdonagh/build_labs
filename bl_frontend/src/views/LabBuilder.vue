@@ -233,6 +233,7 @@ export default {
       newPart.parent = null;
       newPart.connectorPoint = { x: 0.5, y: 0.5 };
       newPart.connectedAt = { left: 0.5, top: 0.5 };
+      newPart.parentSlot = null;
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot, i) {
@@ -241,12 +242,23 @@ export default {
       }
       this.selectedPart.connectedAt = { left: slot.x, top: slot.y };
       this.selectedPart.parent = parentPartVue;
+      this.selectedPart.parentSlot = i;
       this.buildparts.push(this.selectedPart);
     },
     addstep() {
+      let id = this.stepCounter++;
+      let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
+      let parentId = newPart.parent && newPart.parent.part ? newPart.parent.part.id : null;
+      if (parentId !== null) {
+        this.steps[parentId].children.push(id)
+      }
       this.firststep = false;
       this.steps.push({
-        id: this.stepCounter++,
+        id: id,
+        parentId: parentId,
+        parentSlot: newPart.parentSlot,
+        children: [],
+        newPart: newPart,
         name: $("#step-name").val(),
         instruction: $("#step-instruction").val(),
         rotation: 0 //TODO rotation
@@ -459,5 +471,20 @@ export default {
       }
     }
   }
+}
+</style>
+
+<style lang="scss">
+.slot {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 4px solid white;
+  border-radius: 100%;
+  opacity: .67;
+  background-color: #00bfa5;
+}
+.slot:hover {
+  opacity: 1;
 }
 </style>
