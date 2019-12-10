@@ -85,6 +85,7 @@ export default  {
       // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
     }
   },
+  //soem comment
   mounted () {
     $('.tabs').tabs();
     $('.fixed-action-btn').floatingActionButton();
