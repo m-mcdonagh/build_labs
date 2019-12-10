@@ -103,7 +103,7 @@ export default  {
             name: "Motherboard",
             img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
             dimensions: {width: 12, height: 12},
-            slotPoints: [{x:.55, y:.35}],
+            slotPoints: [{x:.55, y:.35}, {x:.5, y:.5}],
             connectorPoint: null
           },
           instructions: "Place the motherboard"
@@ -148,16 +148,16 @@ export default  {
         }
       }
       var toggle = true;
-      console.log(setInterval(function() {
+      setInterval(function() {
         if (toggle){
-          $('.slot').addClass('blink');
+          $('.slot, #firstslot').addClass('blink');
           toggle = false;
         }
         else {
-          $('.slot').removeClass('blink');
+          $('.slot, #firstslot').removeClass('blink');
           toggle = true;
         }
-      }, 500));
+      }, 1000);
     //
   },
   methods: {
@@ -258,11 +258,13 @@ export default  {
       overflow-y: scroll;
     }
     #firstslot {
-      background-image: radial-gradient(#607d8bAA, #607d8b22 67%);
+      background-image: radial-gradient(#607d8bAA, #607d8b55 67%);
+      transition: background-color .5s;
+      background-color: #607d8b20;
       cursor: pointer;
     }
     #firstslot:hover {
-      background-color: #607d8b55;
+      background-color: #607d8b77 !important;
     }
   }
   #controls {
@@ -320,10 +322,10 @@ export default  {
   background-color: #607d8b20;
 }
 .blink {
-  background-color: #607d8b40;
+  background-color: #607d8b40 !important;
 }
 .slot:hover {
-  background-color: #607d8b77;
+  background-color: #607d8b77 !important;
 }
 
 </style>
