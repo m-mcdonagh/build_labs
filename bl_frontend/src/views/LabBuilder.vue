@@ -164,13 +164,20 @@ export default {
 
       var part_ids = [];
       
-      this.buildparts.forEach(function(item, index) {
-        //console.log("ITME",item.id,"AND", index);
-        part_ids.push(item.id);
+      var steps_copy= this.steps.slice();
+      console.log("COPY",steps_copy);
+      
 
+      steps_copy.forEach(function(item, index) {
+        //console.log("ITME",item.newPart.id,"AND", index);
+       // part_ids.push(item.newPart.id);
+        item.newPart = item.newPart.id;
       });
 
-      console.log("THIS IS PART ID",part_ids);
+
+
+      console.log("THIS IS PART ID",steps_copy);
+      
       let response = await axios({
         method: "post",
         url: "http://localhost:8080/labs/lab",
@@ -179,7 +186,8 @@ export default {
         },
         data: {
           name: this.name,
-          steps: this.steps,
+          steps: steps_copy,
+          //partList: part_ids //Causes circular reference 
         }
       });
     },
@@ -256,7 +264,7 @@ export default {
       this.steps.push({
         id: id,
         parentId: parentId,
-        parentSlot: newPart.parentSlot,
+        parentSlot:newPart.parentSlot,
         children: [],
         newPart: newPart,
         name: $("#step-name").val(),

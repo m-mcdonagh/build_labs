@@ -63,5 +63,7 @@ public class Lab {
 
     public void setIspublished(Boolean ispublished){this.ispublished = ispublished;}
 
+    public String getLabCreator_Id(){return this.labCreator_Id;}
+
 
 }

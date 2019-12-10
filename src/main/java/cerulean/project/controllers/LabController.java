@@ -54,29 +54,51 @@ public class LabController {
         String id = UUID.randomUUID().toString();
 
         JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
-        JsonArray jarray = jsonObject.getAsJsonArray("partsList");
+        JsonArray j_stepsarr = jsonObject.getAsJsonArray("steps");
 
-        List<Part>partsList = new ArrayList<>();
-        for(int i = 0; i<jarray.size();i++){
-            String partID = jarray.get(i).toString();
-            System.out.println(partID);
-            partsList.add(partService.getPart(partID));
 
+        List<Part> partsList = new ArrayList<>();
+        for(int i = 0 ; i < j_stepsarr.size(); i++){
+            String partID = j_stepsarr.get(i).getAsJsonObject().remove("newPart").toString();
+            Part p = partService.getPart(partID.substring(1,partID.length()-1));
+            partsList.add(p);
+            j_stepsarr.get(i).getAsJsonObject().remove("newPart");
         }
-
-
-        jsonObject.remove("partsList");
 
         jsonObject.addProperty("_id",id);
         jsonObject.addProperty("assignedTo_ids","[]");
-        jsonObject.addProperty("labCreator_ids",creator_id);
-        jsonObject.addProperty("labCreator_field",creator_id);
+        jsonObject.addProperty("labCreator_id",creator_id);
         Lab lab = gson.fromJson(jsonObject, Lab.class);
+
+        for(int i = 0; i < lab.getSteps().size(); i++){
+            lab.getSteps().get(i).setNewPart(partsList.get(i));
+        }
+
+        lab.setPartsList(partsList);
+
+        System.out.println("Done");
+        labService.addNewLab(username , lab);
+
+        //j_stepsarr.forEach((step) -> partIds.add(step.getAsJsonObject().remove("newPart").toString()));
+
+
+//
+
+//        List<Part>partsList = new ArrayList<>();
+//        for(int i = 0; i<jarray.size();i++){
+//            String partID = jarray.get(i).toString();
+//            System.out.println(partID);
+//            partsList.add(partService.getPart(partID));
+//
+//        }
+
+
+//        jsonObject.remove("partsList");
+
+      //  Lab lab = gson.fromJson(jsonObject, Lab.class);
 
 
         //partIDs.forEach((n) -> partsList.add(partService.getPart(n)));
-        System.out.println("Done");
-        //labService.addNewLab(username , lab);
     }
 
     @RequestMapping(value ="/lab/{labId}", method = RequestMethod.GET)

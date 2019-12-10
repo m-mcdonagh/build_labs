@@ -8,7 +8,7 @@ import java.util.List;
 public class Step {
 
     private Integer id; //Index into lab arraylist
-    private Integer parentIndex; // What part is this step attached to
+    private Integer parentId; // What part is this step attached to
     private Integer parentSlot; // List Index in slotPoints in Part
     private List children; //Steps that go after this step
     private Part newPart; // Part that this step uses
@@ -18,7 +18,7 @@ public class Step {
 
     public Step(Integer id, Integer parentIndex, Integer parentSlot, List children, Part newPart, Integer rotation, String instruction, String name){
         this.id = id;
-        this.parentIndex = parentIndex;
+        this.parentId = parentIndex;
         this.parentSlot = parentSlot;
         this.children = children;
         this.newPart = newPart;
@@ -31,7 +31,7 @@ public class Step {
 
         Step step = (Step) obj;
         return this.id.equals(step.getId())
-                && this.parentIndex.equals(step.getParentIndex())
+                && this.parentId.equals(step.getParentIndex())
                 && this.rotation.equals(step.getRotation())
                 && this.newPart.equals(step.getNewPart())
                 && this.parentSlot.equals(step.parentSlot);
@@ -42,7 +42,7 @@ public class Step {
     }
 
     public Integer getParentIndex() {
-        return parentIndex;
+        return parentId;
     }
 
     public Integer getParentSlot() {
@@ -56,6 +56,8 @@ public class Step {
     public Part getNewPart() {
         return newPart;
     }
+
+    public void setNewPart(Part newPart){this.newPart = newPart;}
 
     public Integer getRotation() {
         return rotation;
@@ -77,7 +79,7 @@ public class Step {
         return     this.rotation.equals(other.rotation)
                 && this.id.equals(other.id)
                 && this.parentSlot.equals(other.parentSlot)
-                && this.parentIndex.equals(other.parentIndex)
+                && this.parentId.equals(other.parentId)
                 && this.newPart.get_id().equals(other.newPart.get_id());
     }
 }
