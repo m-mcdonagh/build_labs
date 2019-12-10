@@ -53,6 +53,8 @@ public class Part {
         return connectorPoint;
     }
 
+    public void setConnectorPoint(List<Double> connectorPoint){this.connectorPoint = connectorPoint;}
+
     public Boolean getIspublished(){return ispublished;}
 
     public void setIspublished(Boolean ispublished){this.ispublished = ispublished;}

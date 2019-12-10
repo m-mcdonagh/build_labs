@@ -211,8 +211,10 @@ export default {
         // );
         console.log(prt.img);
 
-        let img_data = await axios.get("http://130.245.170.216:3003/media/" + prt.img);
-          
+        let img_data = await axios.get(
+          "http://130.245.170.216:3003/media/" + prt.img
+        );
+
         console.log("IMGAGE DATA: ", img_data.config);
         this.listofparts.push({
           id: prt._id,
@@ -224,7 +226,10 @@ export default {
           //TODO : Fix img_src
           img_src: img_data.config.url, //require("../assets/img/motherboard.png"),
           slotPoints: slotPointsCoord,
-          connectorPoint: prt.connectorPoint
+          connectorPoint: {
+            x: prt.connectorPoint[0],
+            y: prt.connectorPoint[1]
+          }
         });
       }
     },
