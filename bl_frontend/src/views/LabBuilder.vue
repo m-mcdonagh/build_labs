@@ -221,10 +221,10 @@ export default {
       this.buildWidth = part.dimensions.width;
       this.buildHeight = part.dimensions.height;
       this.resizebuild();
-      window.onresize = function() {
+      window.onresize = function resize() {
         this.resizebuild();
         this.resizesteps();
-      };
+      }.bind(this);
       let newPart = this.clonepart(part);
       newPart.parent = null;
       newPart.connectorPoint = { x: 0.5, y: 0.5 };
@@ -262,6 +262,7 @@ export default {
       //console.log("NEW STEP ADDED",this.steps)
       this.newStepToggle = false;
       this.selectedPart = null;
+      console.log(this.steps)
     },
     minimize(e) {
       if (this.minimizeToggle) {
