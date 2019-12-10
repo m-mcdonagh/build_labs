@@ -109,14 +109,15 @@ export default {
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
-      stepCounter: 0,
-      steps: [], // Steps need IDs, despite not having any in the mongo database. Needed for v-for
+      stepCounter: 0, // Needs to be set to steps.length when using loading with axios
+      steps: [], // step.newPart needs attributes not included in the Part Model before being added to this.buildparts, when loading
+        // Those attributes are added in addpart() and addfirstpart(), but need to be derived from the step 
+        // addstep() in Labuilder.vue and mounted() in Lab.vue might be helpful :D
       buildWidth: null,
       buildHeight: null,
       displayWidth: null,
       displayHeight: null,
-      // TODO axios this.listofparts
-      listofparts: [
+      listofparts: [ // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
         {
           id: 0,
           name: "Motherboard",
