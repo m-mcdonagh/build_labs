@@ -55,11 +55,16 @@ public class LabController {
 
         JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
         JsonArray jarray = jsonObject.getAsJsonArray("partsList");
-        List<String>partIDs = new ArrayList<>();
+
+        List<Part>partsList = new ArrayList<>();
         for(int i = 0; i<jarray.size();i++){
-            JsonObject obj = jarray.get(i).getAsJsonObject();
-            partIDs.add(obj.remove("id").toString());
+            String partID = jarray.get(i).toString();
+            System.out.println(partID);
+            partsList.add(partService.getPart(partID));
+
         }
+
+
         jsonObject.remove("partsList");
 
         jsonObject.addProperty("_id",id);
@@ -68,8 +73,8 @@ public class LabController {
         jsonObject.addProperty("labCreator_field",creator_id);
         Lab lab = gson.fromJson(jsonObject, Lab.class);
 
-        List<Part>partsList = new ArrayList<>();
-        partIDs.forEach((n) -> partsList.add(partService.getPart(n)));
+
+        //partIDs.forEach((n) -> partsList.add(partService.getPart(n)));
         System.out.println("Done");
         //labService.addNewLab(username , lab);
     }

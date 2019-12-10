@@ -36,7 +36,8 @@
           v-bind:id="step.id"
           v-bind:index="index"
           v-bind:name="step.name"
-          v-bind:instruction="step.instruction">
+          v-bind:instruction="step.instruction"
+          v-bind:rotation="step.rotation">
         </step-component>
       </div>
     </div>
@@ -160,6 +161,16 @@ export default {
   methods: {
     async saveLab() {
       console.log("CURRENT PARTS BUILT", this.buildparts);
+
+      var part_ids = [];
+      
+      this.buildparts.forEach(function(item, index) {
+        //console.log("ITME",item.id,"AND", index);
+        part_ids.push(item.id);
+
+      });
+
+      console.log("THIS IS PART ID",part_ids);
       let response = await axios({
         method: "post",
         url: "http://localhost:8080/labs/lab",
@@ -167,13 +178,8 @@ export default {
           username: "test2"
         },
         data: {
-          name: "lab name",
-          //labCreator_id: "some id",
-          //_id:"some id",
-          partsList: this.buildparts,
-          //assignedTo_ids:[],
+          name: this.name,
           steps: this.steps,
-          ispublished: false
         }
       });
     },
@@ -185,7 +191,7 @@ export default {
       for (var i = 0; i < part_response.data.length; i++) {
         var prt = part_response.data[i];
         var slotPointsCoord = [];
-        
+
         for (var j = 0; j < prt.slotPoints.length; j++) {
           slotPointsCoord[j] = {
             x: prt.slotPoints[j][0],
@@ -193,13 +199,12 @@ export default {
           };
         }
 
-
         this.listofparts.push({
           id: prt._id,
           name: prt.name,
-          dimensions:{
-              height:prt.dimensions[0],
-              width:prt.dimensions[1]
+          dimensions: {
+            height: prt.dimensions[0],
+            width: prt.dimensions[1]
           },
           //TODO : Fix img_src
           img_src: require("../assets/img/motherboard.png"),
@@ -296,8 +301,14 @@ export default {
         this.displayHeight = maxWidth / aspectRatio + "px";
       }
     },
-    resizesteps(){
-      $('#step-list').css({height: $('#steps-side-bar').height() - $('#side-bar-top').height() - $('#save-exit-btns').height() + 'px'});
+    resizesteps() {
+      $("#step-list").css({
+        height:
+          $("#steps-side-bar").height() -
+          $("#side-bar-top").height() -
+          $("#save-exit-btns").height() +
+          "px"
+      });
     },
     clonepart(part) {
       let slotPoints = [];
@@ -409,7 +420,7 @@ export default {
       top: 0;
       width: 100%;
       margin: 0;
-      height: 100px;  
+      height: 100px;
       text-align: center;
       h1 {
         position: absolute;
