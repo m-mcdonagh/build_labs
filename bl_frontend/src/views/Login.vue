@@ -108,7 +108,7 @@ export default  {
     async registerButton(){
       let resp =  await axios({
         method: "post",
-        url: "http://localhost:8080/register",
+        url: "/api/register",
         params: {
           username: this.reg.username,
           password: this.reg.password,
@@ -123,7 +123,7 @@ export default  {
     },
     async loginUser(){
     //   // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    //     axios.post("http://localhost:8080/login", {
+    //     axios.post("/api/login", {
     //             "email":"cc@cc.c",
     //             "password":"cc@cc.c"
     //       })

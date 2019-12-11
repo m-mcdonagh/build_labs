@@ -180,7 +180,7 @@ export default {
 
       let response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/lab",
+        url: "/api/labs/lab",
         params: {
           username: "test2"
         },
@@ -194,7 +194,7 @@ export default {
     async getListOfParts() {
       let part_response = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/allparts"
+        url: "/api/parts/allparts"
       });
       for (var i = 0; i < part_response.data.length; i++) {
         var prt = part_response.data[i];

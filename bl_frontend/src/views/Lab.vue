@@ -104,7 +104,7 @@ export default  {
   },
   methods: {
     async loadLab(id){
-      let lab_response = (await axios.get("http://localhost:8080/labs/lab?id="+id)).data;
+      let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       await lab_response.steps.forEach(async (step)=>{
 
 

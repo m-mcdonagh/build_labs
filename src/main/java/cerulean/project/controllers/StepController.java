@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
-@RequestMapping(value ="/steps")
+@RequestMapping(value ="/api/steps")
 public class StepController {
 
     @Autowired

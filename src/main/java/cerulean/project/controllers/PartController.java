@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 import java.security.MessageDigest;
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping(value ="/parts")
+@RequestMapping(value ="/api/parts")
 public class PartController {
 
 //    /parts							GET 		List Parts

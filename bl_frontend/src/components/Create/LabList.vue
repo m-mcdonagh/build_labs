@@ -99,7 +99,7 @@ export default {
       
        await axios({
         method: "get",
-        url: "http://localhost:8080/labs/",
+        url: "/api/labs/",
         params:{
             id : "someidea"
         }

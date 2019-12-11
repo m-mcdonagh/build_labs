@@ -102,7 +102,7 @@ export default  {
     async getAllParts(){
     let part_response = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/allparts"
+        url: "/api/parts/allparts"
         }
       );
     console.log("PARTS DATA",part_response.data);
@@ -118,7 +118,7 @@ export default  {
     async getAllLabs(){
     let lab_response = await axios({
         method: "get",
-        url: "http://localhost:8080/labs/",
+        url: "/api/labs/",
         params:{
           id :"test2",
         }
@@ -164,7 +164,7 @@ export default  {
 
       let publish_response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/publishpart",
+        url: "/api/parts/publishpart",
 
         params:{
           partId:part.id,
@@ -192,7 +192,7 @@ export default  {
 
       let delete_response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/deletepart",
+        url: "/api/parts/deletepart",
 
         params:{
           partId:part.id,

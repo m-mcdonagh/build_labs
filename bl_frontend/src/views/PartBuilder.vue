@@ -282,7 +282,7 @@ export default  {
      console.log("addmedia resonse",image_response);
        let response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/part",
+        url: "/api/parts/part",
         data: {
           name: this.part.part_name,
           //TODO : CHANGE BACK TO imgage_response.data.id
@@ -302,7 +302,7 @@ export default  {
 
       let response3 = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/part",
+        url: "/api/parts/part",
         params:{
           id : response.data
         }
