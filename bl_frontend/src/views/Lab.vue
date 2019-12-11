@@ -93,6 +93,7 @@ export default  {
   mounted() {
     //This should be moved to axios then
       var urlParams = new URLSearchParams(location.search);
+      this.id = urlParams.get('id')
       this.loadLab(urlParams.get('id'));
 
 
@@ -132,7 +133,7 @@ export default  {
 
           let img_data = url;
 
-          step.newPart.slotPointsCoord = slotPointsCoord;
+          step.newPart.slotPoints = slotPointsCoord;
           step.newPart.dimensions = dimensions;
           step.newPart.connectorPoint = connectorPoint;
           step.newPart.img_src = img_data;
@@ -180,7 +181,7 @@ export default  {
         for (var i=0; i<this.steps.length; i++) {
           for(let j=0; j<this.steps[i].children.length; j++) {
             let child = this.steps[this.steps[i].children[j]]
-          
+
             this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
             this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
           }
