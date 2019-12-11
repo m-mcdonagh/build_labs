@@ -66,7 +66,7 @@
           <button class="btn-floating indigo lighten-3 waves-effect" id="done" v-on:click="addstep">
             <i class="material-icons">check</i>
           </button>
-          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false; selectedPart=null; firststep=false;">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="cancelstep">
             <i class="material-icons">close</i>
           </button>
         </div>
@@ -241,10 +241,10 @@ export default {
       if (this.firststep) this.buildparts.pop();
     },
     detach() {
+      this.buildparts.pop();
       this.selectedPart.connectedAt = null;
       this.selectedPart.parent = null;
       this.selectedPart.parentSlot = null;
-      this.buildparts.pop()
     },
     addfirstpart(part) {
       this.firststep = true;
@@ -298,6 +298,14 @@ export default {
       this.newStepToggle = false;
       this.selectedPart = null;
       console.log(this.steps);
+    },
+    cancelstep() {
+      if (this.firststep || this.selectedPart && this.selectedPart.connectedAt) {
+        this.buildparts.pop();
+      }
+      this.newStepToggle = false;
+      this.selectedPart = null;
+      this.firststep = false;
     },
     minimize(e) {
       if (this.minimizeToggle) {
