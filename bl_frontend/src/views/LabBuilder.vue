@@ -79,7 +79,7 @@
       <div class="modal-content indigo lighten-3">
         <ul class="collection">
           <li v-for="part in listofparts" class="collection-item">
-            <a class="modal-close btn-flat" v-on:click="buildparts.length ? selectpart(part) : addfirstpart(part)">
+            <a class="modal-close btn-flat" v-on:click="steps.length ? selectpart(part) : addfirstpart(part)">
               {{ part.name }}
             </a>
           </li>
@@ -239,7 +239,6 @@ export default {
     },
     newstep() {
       this.newStepToggle = true;
-      if (this.firststep) this.buildparts.pop();
     },
     detach() {
       this.buildparts.pop();
@@ -248,6 +247,7 @@ export default {
       this.selectedPart.parentSlot = null;
     },
     addfirstpart(part) {
+      if (this.buildparts.length) this.buildparts.pop();
       this.firststep = true;
       this.buildWidth = part.dimensions.width;
       this.buildHeight = part.dimensions.height;
