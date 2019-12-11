@@ -55,9 +55,9 @@ export default  {
     async getAllLabs(){
       let lab_response = (await axios.get("http://localhost:8080/labs/")).data;
       lab_response.forEach((lab)=>{
-        alert(JSON.stringify(lab))
+        //alert(JSON.stringify(lab))
         this.labs.push({
-          id:lab.id,
+          id:lab._id,
           name:lab.name,
           complete: false,
           inprogress: false
