@@ -48,8 +48,7 @@
         <img 
           v-bind:src="part.img_src" 
           v-on:click="addComponent"
-          v-on:keydown="keypress"
-          v-bind:style="{width: displaywidth, height: displayheight}">
+          v-bind:style="slotAdd || connectorAdd ? {width: displaywidth, height: displayheight, cursor: 'pointer'} : {width: displaywidth, height: displayheight}">
         <div id="slots">
           <slot-component
             v-for="(slot, index) in part.slots"
@@ -129,7 +128,6 @@ export default  {
     M.updateTextFields();
     this.resizePart();
     window.onresize = this.resizePart;
-    window.addEventListener('keydown', this.keypress);
 
     var urlParams = new URLSearchParams(location.search);
     var id = urlParams.get('id');
@@ -326,7 +324,6 @@ export default  {
     },
     addComponent(e) {
       if (this.slotAdd) {
-        this.slotAdd = false;
         this.part.slots.push({
           id: this.nextSlotId++,
           x: (e.offsetX / parseFloat(this.displaywidth)) * 100,
@@ -339,20 +336,6 @@ export default  {
           x: (e.offsetX / parseFloat(this.displaywidth)) * 100,
           y: (e.offsetY / parseFloat(this.displayheight)) * 100
         };
-      }
-    },
-    keypress(e){
-      switch (e.key) {
-        case 's':
-          this.slotAdd = !this.slotAdd;
-          this.connectorAdd = false;
-          break;
-        case 'a':
-          this.part.connector = null;
-          this.connectorAdd = !this.connectorAdd;
-          this.slotAdd = false;
-          $('.material-tooltip').css({opacity: '0'});
-          break;
       }
     },
     resizePart() {
