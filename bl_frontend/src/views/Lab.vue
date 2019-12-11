@@ -33,7 +33,7 @@
       </div>
 
       <div id="instruction-card" class="card-panel cyan darken-1">
-        <span v-if="currentStep < steps.length" id="instruction" class="flow-text">{{ steps[currentStep].instructions }}</span>
+        <span v-if="currentStep < steps.length" id="instruction" class="flow-text">{{ steps[currentStep].instruction }}</span>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
       <a href="/learn" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
     </div>
 
-    <div v-if="currentStep == steps.length" id="success">
+    <div v-if="currentStep == steps.length && steps.length != 0" id="success">
       <div class="card cyan lighten-5 hoverable">
         <div class="card-content black-text">
           <span class="card-title">Congratulations!</span>
@@ -74,55 +74,11 @@ export default  {
       name: "test", // needs to be filled in by axios
       selectedPartID: null,
       partsList: [ //needs to be filled in by axios
-        {
-          _id: 0,
-          name: "Motherboard",
-          img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-          dimensions: {width: 12, height: 12},
-          slotPoints: [{x:.55, y:.35}],
-          connectorPoint: null
-        },
-        {
-          _id: 1,
-          name: "CPU",
-          img_src: require('../assets/img/cpu.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-          dimensions: {width: 2, height: 2},
-          slotPoints: [],
-          connectorPoint: {x:.5, y:.5}
-        },
+
       ],
       currentStep: 0,
       steps : [ //needs to be filled in by axios
-        {
-          index: 0,
-          parentIndex: null,
-          parentSlot: null,
-          children: [1],
-          newPart: {
-            _id: 0,
-            name: "Motherboard",
-            img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-            dimensions: {width: 12, height: 12},
-            slotPoints: [{x:.55, y:.35}, {x:.5, y:.5}],
-            connectorPoint: null
-          },
-          instructions: "Place the motherboard"
-        },
-        {
-          index: 1,
-          parentIndex: 0,
-          parentSlot: 0,
-          children: [],
-          newPart: {
-            _id: 1,
-            name: "CPU",
-            img_src: require('../assets/img/cpu.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-            dimensions: {width: 2, height: 2},
-            slotPoints: [],
-            connectorPoint: {x:.5, y:.5}
-          },
-          instructions: "Place the CPU in the CPU slot"
-        }
+
       ],
       buildWidth: null,
       buildHeight: null,
@@ -138,28 +94,7 @@ export default  {
     //This should be moved to axios then
       var urlParams = new URLSearchParams(location.search);
       this.loadLab(urlParams.get('id'));
-      this.buildWidth = this.steps[0].newPart.dimensions.width;
-      this.buildHeight = this.steps[0].newPart.dimensions.height;
-      this.resizebuild();
-      window.onresize = this.resizebuild;
-      for (var i=0; i<this.steps.length; i++) {
-        for(var j=0; j<this.steps[i].children.length; j++) {
-          let child = this.steps[this.steps[i].children[j]]
-          this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
-          this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
-        }
-      }
-      var toggle = true;
-      setInterval(function() {
-        if (toggle){
-          $('.slot, #firstslot').addClass('blink');
-          toggle = false;
-        }
-        else {
-          $('.slot, #firstslot').removeClass('blink');
-          toggle = true;
-        }
-      }, 1000);
+
 
       //var queryString = location.search;
 
@@ -169,15 +104,67 @@ export default  {
   methods: {
     async loadLab(id){
       let lab_response = (await axios.get("http://localhost:8080/labs/lab?id="+id)).data;
-      lab_response.partsList.forEach(async (part)=>{
+      await lab_response.steps.forEach(async (step)=>{
+
+
+          let part = step.newPart;
+
+          let slotPointsCoord = [];
+          for (let j = 0; j < part.slotPoints.length; j++) {
+            slotPointsCoord[j] = {
+              x: part.slotPoints[j][0],
+              y: part.slotPoints[j][1]
+            };
+          }
+
+          var dimensions = {
+            height: part.dimensions[0],
+            width: part.dimensions[1]
+          }
+
+          let connectorPoint = {
+              x: part.connectorPoint[0],
+              y: part.connectorPoint[1]
+          }
+
+          step.newPart.slotPointsCoord = slotPointsCoord;
+          step.newPart.dimensions = dimensions;
+          step.newPart.connectorPoint = connectorPoint;
+
+          this.steps.push(step)
+
+
+      })
+
+
+      // index: 0,
+      //          parentIndex: null,
+      //          parentSlot: null,
+      //          children: [1],
+      //          newPart: {
+      //            _id: 0,
+      //            name: "Motherboard",
+      //            img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
+      //            dimensions: {width: 12, height: 12},
+      //            slotPoints: [{x:.55, y:.35}, {x:.5, y:.5}],
+      //            connectorPoint: null
+      //          },
+      //          instructions: "Place the motherboard"
+      //        },
+
+
+      await lab_response.partsList.forEach(async (part)=>{
         let slotPointsCoord = [];
-        for (var j = 0; j < part.slotPoints.length; j++) {
+        for (let j = 0; j < part.slotPoints.length; j++) {
           slotPointsCoord[j] = {
             x: part.slotPoints[j][0],
             y: part.slotPoints[j][1]
           };
         }
-
+        var dimensions = {
+          height: part.dimensions[0],
+          width: part.dimensions[1]
+        }
         let connectorPoint = {
             x: part.connectorPoint[0],
             y: part.connectorPoint[1]
@@ -190,11 +177,36 @@ export default  {
             _id: part._id,
             name: part.name,
             img_src: img_data, // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-            dimensions: {width: 12, height: 12},
+            dimensions: dimensions,
             slotPoints: slotPointsCoord,
             connectorPoint: connectorPoint
           })
         })
+
+
+        this.buildWidth = this.steps[0].newPart.dimensions.width;
+        this.buildHeight = this.steps[0].newPart.dimensions.height;
+        this.resizebuild();
+        window.onresize = this.resizebuild;
+        for (var i=0; i<this.steps.length; i++) {
+          for(let j=0; j<this.steps[i].children.length; j++) {
+            let child = this.steps[this.steps[i].children[j]]
+            this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
+            this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
+          }
+        }
+        var toggle = true;
+        setInterval(function() {
+          if (toggle){
+            $('.slot, #firstslot').addClass('blink');
+            toggle = false;
+          }
+          else {
+            $('.slot, #firstslot').removeClass('blink');
+            toggle = true;
+          }
+        }, 1000);
+
 
     },
     selectthis(id) {
