@@ -78,11 +78,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/img/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .anyRequest().authenticated()
-
-                        .and()
+                .and()
                 // TODO: Replace this with REST login if you wanna be fancy
-                  .formLogin()
+                .formLogin()
                 .loginPage("/login")
+                .loginProcessingUrl("/api/login")
                 .permitAll()
                 .and()
                 .logout()

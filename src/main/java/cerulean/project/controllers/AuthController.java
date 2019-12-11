@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controller for account management API endpoints
  *
- * As of now /login is omitted because I'm using the default form login
  */
-@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping("/api")
 public class AuthController {
