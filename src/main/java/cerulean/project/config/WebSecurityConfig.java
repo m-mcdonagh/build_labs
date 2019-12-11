@@ -72,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/register").permitAll()
-                .antMatchers("/**").permitAll()
+                .antMatchers("api/**").permitAll()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/img/**").permitAll()
@@ -81,8 +81,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 // TODO: Replace this with REST login if you wanna be fancy
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
                 .loginProcessingUrl("/api/login")
                 .permitAll()
                 .and()

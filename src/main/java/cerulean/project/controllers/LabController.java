@@ -46,6 +46,7 @@ public class LabController {
         Lab lab = labService.getLab(id);
         return gson.toJson(lab);
     }
+
     @RequestMapping(value ="/lab", method = RequestMethod.POST)
     public void addLab(@RequestBody String labJson, @RequestParam String username) {
         System.out.println(labJson);
