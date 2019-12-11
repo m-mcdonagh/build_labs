@@ -121,7 +121,7 @@ export default {
       listofparts: [
         // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
         {
-          id: 0,
+          id: 'motherboard',
           name: "Motherboard",
           img_src: require("../assets/img/motherboard.png"), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
           dimensions: { width: 12, height: 12 },
@@ -266,17 +266,17 @@ export default {
       this.buildparts.push(this.selectedPart);
     },
     addstep() {
-      let id = this.stepCounter++;
+      let index = this.stepCounter++;
       let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
-      let parentId =
-        newPart.parent && newPart.parent.part ? newPart.parent.part.id : null;
-      if (parentId !== null) {
-        this.steps[parentId].children.push(id);
+      newPart.stepIndex = index;
+      let parentIndex = newPart.parent && newPart.parent.part ? newPart.parent.part.stepIndex : null;
+      if (parentIndex !== null) {
+        this.steps[parentIndex].children.push(index)
       }
       this.firststep = false;
       this.steps.push({
-        id: id,
-        parentId: parentId,
+        index: index,
+        parentIndex: parentIndex,
         parentSlot: newPart.parentSlot,
         children: [],
         newPart: newPart,
