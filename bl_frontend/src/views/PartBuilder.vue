@@ -161,7 +161,7 @@ export default  {
     async populateData(id) {
       let part_response = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/part",
+        url: "/api/parts/part",
         params:{
           id:id
         }
@@ -246,7 +246,7 @@ export default  {
       //save rest of the lab now
       let response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/part/updatepart",
+        url: "/api/parts/part/updatepart",
         data: {
           _id: id,
           name: this.part.part_name,
