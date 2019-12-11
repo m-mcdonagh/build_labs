@@ -22,6 +22,24 @@ public class PartControllerService {
         return partRepository.findById(partId).orElse(null);
     }
 
+    public void publishPart(String partID){
+
+
+        Part part = getPart(partID);
+        part.setIspublished(true);
+        partRepository.save(part);
+        //return part.get_id();
+    }
+    public void deletePart(String partID){
+        if(partRepository.existsById(partID)) {
+            Part part = getPart(partID);
+            partRepository.delete(part);
+        }
+        else
+            throw new RuntimeException("Part Does Not Exist");
+
+    }
+
     public String addNewPart(String creatorUsername, Part newPart) {
         Account creator = accountService.getAccount(creatorUsername);
         return addNewPart(creator, newPart);
