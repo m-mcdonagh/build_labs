@@ -20,7 +20,6 @@ import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.security.MessageDigest;
-@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value ="/api/parts")
 public class PartController {

@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value="/api/axios")
 public class AxiosController {

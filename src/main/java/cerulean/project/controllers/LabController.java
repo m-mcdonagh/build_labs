@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value ="/api/labs")
 public class LabController {
