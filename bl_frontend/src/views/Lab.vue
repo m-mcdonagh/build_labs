@@ -115,7 +115,6 @@ export default  {
               x: part.slotPoints[j][0],
               y: part.slotPoints[j][1]
             };
-            alert(JSON.stringify(slotPointsCoord[j]))
 
           }
 
@@ -138,7 +137,6 @@ export default  {
           step.newPart.connectorPoint = connectorPoint;
           step.newPart.img_src = img_data;
           this.steps.push(step)
-          alert(JSON.stringify(slotPointsCoord[j]))
 
 
 
@@ -182,6 +180,7 @@ export default  {
         for (var i=0; i<this.steps.length; i++) {
           for(let j=0; j<this.steps[i].children.length; j++) {
             let child = this.steps[this.steps[i].children[j]]
+          
             this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
             this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
           }
