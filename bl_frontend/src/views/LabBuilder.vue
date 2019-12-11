@@ -15,7 +15,7 @@
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
       </button>
-      <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="selectedPart.connectedAt = null; buildparts.pop()">
+      <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="detach">
         <img src="../assets/img/detach.svg">
       </button>
     </div>
@@ -240,6 +240,12 @@ export default {
       this.newStepToggle = true;
       if (this.firststep) this.buildparts.pop();
     },
+    detach() {
+      this.selectedPart.connectedAt = null;
+      this.selectedPart.parent = null;
+      this.selectedPart.parentSlot = null;
+      this.buildparts.pop()
+    },
     addfirstpart(part) {
       this.firststep = true;
       this.buildWidth = part.dimensions.width;
@@ -272,6 +278,10 @@ export default {
       let parentIndex = newPart.parent && newPart.parent.part ? newPart.parent.part.stepIndex : null;
       if (parentIndex !== null) {
         this.steps[parentIndex].children.push(index)
+      }
+      if (!this.firststep && (parentIndex === undefined || newPart.parentSlot === undefined || parentIndex === null || newPart.parentSlot === null )) {
+        M.toast({displayLength:2000000, html:'Please specify a slot'});
+        return;
       }
       this.firststep = false;
       this.steps.push({
@@ -508,5 +518,9 @@ export default {
 }
 .slot:hover {
   opacity: 1;
+}
+#toast-container {
+  top: 50px;
+  left: 25px;
 }
 </style>
