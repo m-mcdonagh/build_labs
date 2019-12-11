@@ -34,10 +34,10 @@ public class LabController {
     private  Gson gson = new Gson();
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
-    public String listLabs(@RequestParam String id, HttpServletResponse httpResponse) {
-        String username = "temp";
+    public String listLabs(HttpServletResponse httpResponse) {
+        String username = "test2";
         System.out.println("Lab get method");
-        List<Lab> labs = labService.getLabsCreatedByUser(id);
+        List<Lab> labs = labService.getLabsCreatedByUser(username);
         return gson.toJson(labs);
     }
     @RequestMapping(value ="/lab", method = RequestMethod.GET)
