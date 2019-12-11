@@ -38,9 +38,9 @@ export default  {
         return {
             // TODO: set up axios for this.labs
             labs: [
-                {id:0, name: 'Not complete; not in progress', owner:'You', complete: false, inprogress: false}, 
-                {id:1, name: 'Complete; not in progress', owner:'Me', complete: true, inprogress: false}, 
-                {id:2, name: 'Not complete; in progress', owner:'and', complete: false, inprogress: true}, 
+                {id:0, name: 'Not complete; not in progress', owner:'You', complete: false, inprogress: false},
+                {id:1, name: 'Complete; not in progress', owner:'Me', complete: true, inprogress: false},
+                {id:2, name: 'Not complete; in progress', owner:'and', complete: false, inprogress: true},
                 {id:3, name: 'Complete; in progress', owner:'Dupree', complete: true, inprogress: true}
             ]
             // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
@@ -49,8 +49,21 @@ export default  {
   mounted() {
     this.sizeContent();
     window.resize = this.sizeContent;
+    this.getAllLabs()
   },
   methods: {
+    async getAllLabs(){
+      let lab_response = (await axios.get("http://localhost:8080/labs/")).data;
+      lab_response.forEach((lab)=>{
+        alert(JSON.stringify(lab))
+        this.labs.push({
+          id:lab.id,
+          name:lab.name,
+          complete: false,
+          inprogress: false
+        })
+      })
+    },
     sizeContent(){
         $('#labs').height($('#labs-container').height() - $('#lab-header').height());
     }
