@@ -1,11 +1,7 @@
 <template lang="html">
 <div class="main" id="login-main">
   <div id="login" class="container light-blue darken-1">
-<<<<<<< HEAD
     <form id="login-form"  name="loginForm" class="section" action="/api/login" method="post">
-=======
-    <form id="login-form"  name="loginForm" class="section" action="/api/login">
->>>>>>> form based login
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
