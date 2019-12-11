@@ -1,7 +1,11 @@
 <template lang="html">
 <div class="main" id="login-main">
   <div id="login" class="container light-blue darken-1">
+<<<<<<< HEAD
     <form id="login-form"  name="loginForm" class="section" action="/api/login" method="post">
+=======
+    <form id="login-form"  name="loginForm" class="section" action="/api/login">
+>>>>>>> form based login
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
@@ -123,17 +127,17 @@ export default  {
     },
 
     async loginUser(){
-       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-         axios.post("/api/login", {
-                 "email":"cc@cc.c",
-                 "password":"cc@cc.c"
-           })
-           .then((ff)=>{
-             alert("ok")
-           })
-           .catch((err)=>{
-             alert(err)
-           })
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        axios.post("/api/login", {
+        "email":"cc@cc.c",
+        "password":"cc@cc.c"
+        })
+        .then((ff)=>{
+            alert("ok")
+        })
+        .catch((err)=>{
+            alert(err)
+        })
     }
   },
   name: 'login',
