@@ -115,6 +115,8 @@ export default  {
               x: part.slotPoints[j][0],
               y: part.slotPoints[j][1]
             };
+            alert(JSON.stringify(slotPointsCoord[j]))
+
           }
 
           var dimensions = {
@@ -127,31 +129,20 @@ export default  {
               y: part.connectorPoint[1]
           }
 
+          let url = ('http://130.245.170.216:3003/media/'+step.newPart.img)
+
+          let img_data = url;
+
           step.newPart.slotPointsCoord = slotPointsCoord;
           step.newPart.dimensions = dimensions;
           step.newPart.connectorPoint = connectorPoint;
-
+          step.newPart.img_src = img_data;
           this.steps.push(step)
+          alert(JSON.stringify(slotPointsCoord[j]))
+
 
 
       })
-
-
-      // index: 0,
-      //          parentIndex: null,
-      //          parentSlot: null,
-      //          children: [1],
-      //          newPart: {
-      //            _id: 0,
-      //            name: "Motherboard",
-      //            img_src: require('../assets/img/motherboard.png'), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-      //            dimensions: {width: 12, height: 12},
-      //            slotPoints: [{x:.55, y:.35}, {x:.5, y:.5}],
-      //            connectorPoint: null
-      //          },
-      //          instructions: "Place the motherboard"
-      //        },
-
 
       await lab_response.partsList.forEach(async (part)=>{
         let slotPointsCoord = [];
