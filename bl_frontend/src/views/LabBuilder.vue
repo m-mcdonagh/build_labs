@@ -32,12 +32,14 @@
       <div id="step-list" class="collection">
         <step-component
           v-for="(step, index) in steps"
-          v-bind:key="step.id"
-          v-bind:id="step.id"
+          v-bind:key="step.index"
+          v-bind:id="step.index"
           v-bind:index="index"
           v-bind:name="step.name"
           v-bind:instruction="step.instruction"
-          v-bind:rotation="step.rotation">
+          v-bind:rotation="step.rotation"
+          v-bind:deletable="index == steps.length - 1"
+          v-on:remove="popStep">
         </step-component>
       </div>
     </div>
@@ -297,7 +299,6 @@ export default {
       //console.log("NEW STEP ADDED",this.steps)
       this.newStepToggle = false;
       this.selectedPart = null;
-      console.log(this.steps);
     },
     cancelstep() {
       if (this.firststep || this.selectedPart && this.selectedPart.connectedAt) {
@@ -306,6 +307,16 @@ export default {
       this.newStepToggle = false;
       this.selectedPart = null;
       this.firststep = false;
+    },
+    popStep() {
+      if (this.selectedPart && this.selectedPart.connectedAt) {
+        this.selectedPart.connectedAt = null;
+        this.selectedPart.parent = null;
+        this.selectedPart.parentSlot = null;
+        this.buildparts.pop();
+      }
+      this.buildparts.pop();
+      this.steps.pop();
     },
     minimize(e) {
       if (this.minimizeToggle) {

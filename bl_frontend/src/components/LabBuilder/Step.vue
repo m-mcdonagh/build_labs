@@ -12,7 +12,7 @@
                         <i class="material-icons left">info</i>Instruction
                     </a>
                 </li>
-                <li>
+                <li v-if="deletable">
                     <a v-on:click="$emit('remove')">
                         <i class="material-icons left">delete_forever</i>Delete
                     </a>
@@ -35,7 +35,7 @@
 export default {
     name: 'Step',
     props: [
-        'id', 'index', 'name', 'instruction'
+        'id', 'index', 'name', 'instruction', 'deletable'
     ],
     mounted() {
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth:false});
