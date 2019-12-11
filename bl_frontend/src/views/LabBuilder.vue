@@ -315,7 +315,11 @@ export default {
         return;
       }
       if (this.steps[index].children.length > 0){
-        let msg = 'Cannot Delete. The following steps are dependant on Step #' + index + ':<br>&#8195;Step #' + this.steps[index].children.join('<br>&#8195;Step #') + '.';
+        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) + ':<br>&#8195;Step #';
+        for (var i=0; i<this.steps[index].children.length - 1; i++) {
+          msg += (this.steps[index].children[i] + 1) + ',<br>&#8195;Step #'
+        }
+        msg += (this.steps[index].children[i] + 1) + '.'
         M.toast({displayLength:8000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
         return;
       }
@@ -326,18 +330,23 @@ export default {
         this.buildparts.pop();
       }
       this.buildparts.splice(index, 1);
-      let parent = this.steps[this.steps[index].parentIndex]
-      parent.children.splice([parent.children.indexOf(index)], 1);
-      this.steps.splice(index, 1);
-      for (var i=0; i<this.steps.length; i++) {
-        this.steps[i].children = [];
-        for (var j=0; j<this.steps.length; j++) {
-          if (this.steps[j].parentIndex == this.steps[i].index) {
-            this.steps[j].parentIndex = i;
-            this.steps[i].children.push(j);
+      if (this.steps.length == 1) {
+        this.steps.pop();
+      }
+      else{
+        let parent = this.steps[this.steps[index].parentIndex];
+        parent.children.splice([parent.children.indexOf(index)], 1);
+        this.steps.splice(index, 1);
+        for (var i=0; i<this.steps.length; i++) {
+          this.steps[i].children = [];
+          for (var j=0; j<this.steps.length; j++) {
+            if (this.steps[j].parentIndex == this.steps[i].index) {
+              this.steps[j].parentIndex = i;
+              this.steps[i].children.push(j);
+            }
           }
+          this.steps[i].index = i;
         }
-        this.steps[i].index = i;
       }
     },
     minimize(e) {
