@@ -280,7 +280,7 @@ export default {
         this.steps[parentIndex].children.push(index)
       }
       if (!this.firststep && (parentIndex === undefined || newPart.parentSlot === undefined || parentIndex === null || newPart.parentSlot === null )) {
-        M.toast({displayLength:2000000, html:'Please specify a slot'});
+        M.toast({displayLength:2000, html:'Please specify a slot'});
         return;
       }
       this.firststep = false;
@@ -522,5 +522,10 @@ export default {
 #toast-container {
   top: 50px;
   left: 25px;
+  max-width: 250px;
+
+  .toast {
+    justify-content: center;
+  }
 }
 </style>
