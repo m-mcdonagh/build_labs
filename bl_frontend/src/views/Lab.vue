@@ -4,11 +4,11 @@
       <h4 class="center">PARTS</h4>
       <ul id="parts">
         <part-list v-for="part in partsList"
-                   v-bind:key="part._id" 
-                   v-bind:id="part._id" 
-                   v-bind:name="part.name" 
-                   v-bind:img_src="part.img_src" 
-                   v-on:selectthis="selectthis">  
+                   v-bind:key="part._id"
+                   v-bind:id="part._id"
+                   v-bind:name="part.name"
+                   v-bind:img_src="part.img_src"
+                   v-on:selectthis="selectthis">
         </part-list>
       </ul>
       <div id="padding"></div>
@@ -27,7 +27,7 @@
       </build-so-far>
 
       <div id="firstslot"
-           v-if="buildparts.length == 0" 
+           v-if="buildparts.length == 0"
            v-bind:style="{width: displayWidth, height: displayHeight}"
            v-on:click="addfirstpart">
       </div>
@@ -136,6 +136,8 @@ export default  {
   },
   mounted() {
     //This should be moved to axios then
+      var urlParams = new URLSearchParams(location.search);
+      this.loadLab(urlParams.get('id'));
       this.buildWidth = this.steps[0].newPart.dimensions.width;
       this.buildHeight = this.steps[0].newPart.dimensions.height;
       this.resizebuild();
@@ -160,12 +162,41 @@ export default  {
       }, 1000);
 
       //var queryString = location.search;
-      var urlParams = new URLSearchParams(location.search);
-      alert(urlParams.get('id'));
+
 
     //
   },
   methods: {
+    async loadLab(id){
+      let lab_response = (await axios.get("http://localhost:8080/labs/lab?id="+id)).data;
+      lab_response.partsList.forEach(async (part)=>{
+        let slotPointsCoord = [];
+        for (var j = 0; j < part.slotPoints.length; j++) {
+          slotPointsCoord[j] = {
+            x: part.slotPoints[j][0],
+            y: part.slotPoints[j][1]
+          };
+        }
+
+        let connectorPoint = {
+            x: part.connectorPoint[0],
+            y: part.connectorPoint[1]
+        }
+
+
+        let img_data = (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url;
+
+        this.partsList.push({
+            _id: part._id,
+            name: part.name,
+            img_src: img_data, // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
+            dimensions: {width: 12, height: 12},
+            slotPoints: slotPointsCoord,
+            connectorPoint: connectorPoint
+          })
+        })
+
+    },
     selectthis(id) {
       if (this.selectedPartID == id) {
         this.selectedPartID = null;
@@ -258,7 +289,7 @@ export default  {
     #instruction-card {
       position: absolute;
       width: 95%;
-      height: 15%;      
+      height: 15%;
       top: 100%;
       overflow-y: scroll;
     }

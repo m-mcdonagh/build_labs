@@ -42,7 +42,8 @@ public class LabController {
     }
     @RequestMapping(value ="/lab", method = RequestMethod.GET)
     public String getLab(@RequestParam String id) {
-        String username = "temp";
+        String username = "test2";
+        System.out.print(id);
         Lab lab = labService.getLab(id);
         return gson.toJson(lab);
     }
