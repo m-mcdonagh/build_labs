@@ -123,18 +123,17 @@ export default  {
     },
 
     async loginUser(){
-    //   // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    //     axios.post("/api/login", {
-    //             "email":"cc@cc.c",
-    //             "password":"cc@cc.c"
-    //       })
-    //       .then((ff)=>{
-    //         alert("ok")
-    //       })
-    //       .catch((err)=>{
-    //         alert(err)
-    //       })
-    //
+       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+         axios.post("/api/login", {
+                 "email":"cc@cc.c",
+                 "password":"cc@cc.c"
+           })
+           .then((ff)=>{
+             alert("ok")
+           })
+           .catch((err)=>{
+             alert(err)
+           })
     }
   },
   name: 'login',
