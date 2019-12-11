@@ -5,8 +5,8 @@
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
-          <input id="email" name="email" type="email" required v-model="login.email">
-          <label for="email">Email</label>
+          <input id="username" name="username" type="text" required v-model="login.username">
+          <label for="username">Username</label>
         </div>
         <div class="input-field col s12 m10 offset-m1 ">
           <input id="password" name="password" type="password" required v-model="login.password">
@@ -93,7 +93,7 @@ export default  {
     return{
     login:{
       password:"",
-      email:""
+      username:""
 
     },
     reg:{
