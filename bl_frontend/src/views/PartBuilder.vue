@@ -126,8 +126,7 @@ export default  {
     $('.tooltipped').tooltip();
     $('.modal').modal();
     M.updateTextFields();
-    this.resizePart();
-    window.onresize = this.resizePart;
+    
 
     var urlParams = new URLSearchParams(location.search);
     var id = urlParams.get('id');
@@ -137,6 +136,9 @@ export default  {
       this.populateData(id);
       console.log("DATA WAS POPULATED");
     }
+
+    this.resizePart();
+    window.onresize = this.resizePart;
 
   },
   methods: {
@@ -188,10 +190,9 @@ export default  {
         this.part.img_src = img_data.config.url;
         this.part.slots = slotPointsCoord;
         this.part.connector = {x:prt.connectorPoint[0]*100,y:prt.connectorPoint[1]*100};
-        this.part.dimension={
-            height: prt.dimensions[0],
-            width: prt.dimensions[1]
-        }
+        this.part.width = prt.dimensions[0],
+        this.part.height = prt.dimensions[1]
+        
 
         // console.log("IMGAGE DATA: ", img_data.config);
         // this.listofparts.push({
