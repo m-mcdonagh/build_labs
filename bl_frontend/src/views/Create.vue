@@ -156,12 +156,26 @@ export default  {
           // server->RES with new cloned, ubpublished lab JSON
           // then appends this to this.labs
     },
-    publishpart(part){
+    async publishpart(part){
       console.log('publish part', part.id);
       // TODO axios
           // REQ->server with part.id
           // server->RES with OK or ERR
-      part.ispublished = true; // move to axios.then
+
+      let publish_response = await axios({
+        method: "post",
+        url: "http://localhost:8080/parts/publishpart",
+
+        params:{
+          partId:part.id,
+        }
+
+        }
+      );
+      console.log(publish_response);
+      if(publish_response.status == 200){
+        part.ispublished = true; // move to axios.then
+      }
     },
     publishlab(lab){
       console.log('publish part', lab.id);
@@ -170,12 +184,28 @@ export default  {
           // server->RES with OK or ERR
       lab.ispublished = true; // move to axios.then
     },
-    removepart(part){
+    async removepart(part){
       console.log('remove part', part.id);
       // TODO axios
           // REQ->server with part.id
           // server->RES with OK or ERR
-      this.part.splice(this.parts.indexOf(part), 1); // move to axios.then
+
+      let delete_response = await axios({
+        method: "post",
+        url: "http://localhost:8080/parts/deletepart",
+
+        params:{
+          partId:part.id,
+        }
+
+        }
+      );
+      console.log(delete_response);
+      if(delete_response.status == 200){
+        console.log("delete successful at backend");
+        this.parts.splice(this.parts.indexOf(part), 1); // move to axios.then
+      }
+      
     },
     removelab(lab){
       console.log('remove lab', lab.id);
@@ -197,7 +227,7 @@ export default  {
     position: relative;
     height: 95%;
 
-    .tabs{
+    .tabs {
       width: 100%;
       overflow: hidden;
 
@@ -221,8 +251,8 @@ export default  {
         margin: 0;
         padding: 0;
         color: #313639;
-        background-color: #FFFFFFF0;
-        
+        background-color: #fffffff0;
+
         span {
           margin: 0 0 0 10px;
         }
