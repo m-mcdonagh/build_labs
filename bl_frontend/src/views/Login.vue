@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="main" id="login-main">
   <div id="login" class="container light-blue darken-1">
-    <form id="login-form"  name="loginForm" class="section">
+    <form id="login-form"  name="loginForm" class="section" action="/api/login">
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
@@ -12,7 +12,7 @@
           <input id="password" name="password" type="password" required v-model="login.password">
           <label for="password">Password</label>
         </div>
-        <button v-on:click="loginUser()" class="submit btn light-blue accent-1 waves-effect col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit"  >
+        <button class="submit btn light-blue accent-1 waves-effect col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit">
           <i class="material-icons right">send</i>
           Submit
         </button>
@@ -123,17 +123,17 @@ export default  {
     },
 
     async loginUser(){
-       const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-         axios.post("/api/login", {
-                 "email":"cc@cc.c",
-                 "password":"cc@cc.c"
-           })
-           .then((ff)=>{
-             alert("ok")
-           })
-           .catch((err)=>{
-             alert(err)
-           })
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+        axios.post("/api/login", {
+        "email":"cc@cc.c",
+        "password":"cc@cc.c"
+        })
+        .then((ff)=>{
+            alert("ok")
+        })
+        .catch((err)=>{
+            alert(err)
+        })
     }
   },
   name: 'login',
