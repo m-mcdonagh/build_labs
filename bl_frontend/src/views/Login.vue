@@ -122,34 +122,18 @@ export default  {
       // alert(JSON.stringify(resp))
     },
     async loginUser(){
-      // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-        axios.post("http://localhost:8080/login", {
-                "email":"cc@cc.c",
-                "password":"cc@cc.c"
-          })
-          .then((ff)=>{
-            alert("ok")
-          })
-          .catch((err)=>{
-            alert(err)
-          })
-
-    // axios({
-    //     method: "post",
-    //     url: "http://localhost:8080/login",
-    //     params: {
-    //       password: this.login.password,
-    //       email: this.login.email,
-    //     }
-    //   }).then(function(response) {
-    //       console.log("EXIT POST REQUEST");
-    //       //console.log(response);
-    //       alert("ok!")
-    //       // location.href='/'
-    //     })
-    //     .catch(function(error) {
-    //       alert(JSON.stringify(error));
-    //     });
+    //   // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    //     axios.post("http://localhost:8080/login", {
+    //             "email":"cc@cc.c",
+    //             "password":"cc@cc.c"
+    //       })
+    //       .then((ff)=>{
+    //         alert("ok")
+    //       })
+    //       .catch((err)=>{
+    //         alert(err)
+    //       })
+    //
     }
   },
   name: 'login',
