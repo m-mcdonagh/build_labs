@@ -38,7 +38,7 @@
         </button>
       </div>
       <div id="control-btns" class="row">
-        <button v-on:click="savePart()" class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
+        <button v-on:click="submitButton()" class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
         <a href="/create" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</a>
       </div>
     </div>
@@ -97,6 +97,7 @@ export default  {
       // TODO: set up axios for this.part
 
       username :"",
+      img_id:"",
 
       part: {
         part_name:"",
@@ -134,10 +135,136 @@ export default  {
     var id = urlParams.get('id');
     console.log(id);
 
-
+    if(id != null){
+      this.populateData(id);
+      console.log("DATA WAS POPULATED");
+    }
 
   },
   methods: {
+
+    submitButton(){
+
+      var urlParams = new URLSearchParams(location.search);
+      var id = urlParams.get('id');
+
+      if(id == null){
+        console.log("SavePart EXECUTING");
+        this.savePart();
+      }
+      else{
+        console.log("UPDATE PART EXECUTED");
+        this.updatePart();
+      }
+    },
+
+    async populateData(id) {
+      let part_response = await axios({
+        method: "get",
+        url: "http://localhost:8080/parts/part",
+        params:{
+          id:id
+        }
+      });
+
+      console.log("PART NAME",part_response);
+
+        var prt = part_response.data;
+
+        this.part.part_name = prt.name;
+        var slotPointsCoord = [];
+
+        this.img_id = prt.img; 
+        console.log("IMG ID",this.img_id)
+
+       for (var j = 0; j < prt.slotPoints.length; j++) {
+          slotPointsCoord[j] = {
+            x: prt.slotPoints[j][0]*100,
+            y: prt.slotPoints[j][1]*100
+          };
+        }
+
+        let img_data = await axios.get(
+          "http://130.245.170.216:3003/media/" + prt.img
+        );
+        this.part.img_src = img_data.config.url;
+        this.part.slots = slotPointsCoord;
+        this.part.connector = {x:prt.connectorPoint[0]*100,y:prt.connectorPoint[1]*100};
+        this.part.dimension={
+            height: prt.dimensions[0],
+            width: prt.dimensions[1]
+        }
+
+        // console.log("IMGAGE DATA: ", img_data.config);
+        // this.listofparts.push({
+        //   id: prt._id,
+        //   name: prt.name,
+        //   dimensions: {
+        //     height: prt.dimensions[0],
+        //     width: prt.dimensions[1]
+        //   },
+        //   //TODO : Fix img_src
+        //   img_src: img_data.config.url, //require("../assets/img/motherboard.png"),
+        //   slotPoints: slotPointsCoord,
+          // connectorPoint: {
+          //   x: prt.connectorPoint[0],
+          //   y: prt.connectorPoint[1]
+          // }
+        // });
+      
+    },
+    async updatePart(){
+
+      var urlParams = new URLSearchParams(location.search);
+      var id = urlParams.get('id');
+      if(id != null){
+        console.log("EDITING PART");
+      }
+      //check if image was replaced 
+      let media_response = await axios.get('http://130.245.170.216:3003/media/'+this.img_id)
+      .then(function(response){
+        return 200;
+      })
+      .catch(error=>{
+        console.log("THERE WAS AN ERROR");
+        return 400;
+      });
+      console.log("Server response",media_response);
+      
+      if(media_response != 200){ //image doesn't exist yet
+        let fd = new FormData();
+        fd.append('content',this.part.img_file);
+
+        let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      this.img_id = image_response.data.id;
+
+      }
+
+      //save rest of the lab now
+      let response = await axios({
+        method: "post",
+        url: "http://localhost:8080/parts/part/updatepart",
+        data: {
+          _id: id,
+          name: this.part.part_name,
+          //TODO : CHANGE BACK TO imgage_response.data.id,
+          img:this.img_id,
+          dimensions:[this.part.width,this.part.height],
+          slotPoints:this.part.slots,
+          connectorPoint:this.part.connector 
+        },
+        params:{
+          username : "test2"
+          //TODO : GET USERNAME FROM SESSION
+        }
+      });
+      //if(media_resonse.status)
+
+    },
     async savePart(){
 
       if(this.id == null){

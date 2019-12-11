@@ -15,7 +15,7 @@
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
       </button>
-      <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="selectedPart.connectedAt = null; buildparts.pop()">
+      <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="detach">
         <img src="../assets/img/detach.svg">
       </button>
     </div>
@@ -66,7 +66,7 @@
           <button class="btn-floating indigo lighten-3 waves-effect" id="done" v-on:click="addstep">
             <i class="material-icons">check</i>
           </button>
-          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="newStepToggle=false; selectedPart=null; firststep=false;">
+          <button class="btn-floating indigo lighten-3 waves-effect" id="cancel" v-on:click="cancelstep">
             <i class="material-icons">close</i>
           </button>
         </div>
@@ -240,6 +240,12 @@ export default {
       this.newStepToggle = true;
       if (this.firststep) this.buildparts.pop();
     },
+    detach() {
+      this.buildparts.pop();
+      this.selectedPart.connectedAt = null;
+      this.selectedPart.parent = null;
+      this.selectedPart.parentSlot = null;
+    },
     addfirstpart(part) {
       this.firststep = true;
       this.buildWidth = part.dimensions.width;
@@ -273,6 +279,10 @@ export default {
       if (parentIndex !== null) {
         this.steps[parentIndex].children.push(index)
       }
+      if (!this.firststep && (parentIndex === undefined || newPart.parentSlot === undefined || parentIndex === null || newPart.parentSlot === null )) {
+        M.toast({displayLength:2000, html:'Please specify a slot'});
+        return;
+      }
       this.firststep = false;
       this.steps.push({
         index: index,
@@ -288,6 +298,14 @@ export default {
       this.newStepToggle = false;
       this.selectedPart = null;
       console.log(this.steps);
+    },
+    cancelstep() {
+      if (this.firststep || this.selectedPart && this.selectedPart.connectedAt) {
+        this.buildparts.pop();
+      }
+      this.newStepToggle = false;
+      this.selectedPart = null;
+      this.firststep = false;
     },
     minimize(e) {
       if (this.minimizeToggle) {
@@ -508,5 +526,14 @@ export default {
 }
 .slot:hover {
   opacity: 1;
+}
+#toast-container {
+  top: 50px;
+  left: 25px;
+  max-width: 250px;
+
+  .toast {
+    justify-content: center;
+  }
 }
 </style>

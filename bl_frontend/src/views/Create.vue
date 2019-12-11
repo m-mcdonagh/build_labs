@@ -203,7 +203,7 @@ export default  {
       console.log(delete_response);
       if(delete_response.status == 200){
         console.log("delete successful at backend");
-        this.part.splice(this.parts.indexOf(part), 1); // move to axios.then
+        this.parts.splice(this.parts.indexOf(part), 1); // move to axios.then
       }
       
     },

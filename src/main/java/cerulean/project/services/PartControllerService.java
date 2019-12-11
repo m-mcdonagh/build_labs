@@ -21,6 +21,9 @@ public class PartControllerService {
     public Part getPart(String partId) {
         return partRepository.findById(partId).orElse(null);
     }
+    public void updatePart(String parId,Part part){
+        partRepository.save(part);
+    }
 
     public void publishPart(String partID){
 
