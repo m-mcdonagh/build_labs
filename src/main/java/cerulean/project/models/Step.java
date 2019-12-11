@@ -8,7 +8,7 @@ import java.util.List;
 public class Step {
 
     private Integer id; //Index into lab arraylist
-    private Integer parentId; // What part is this step attached to
+    private Integer parentIndex; // What part is this step attached to
     private Integer parentSlot; // List Index in slotPoints in Part
     private List children; //Steps that go after this step
     private Part newPart; // Part that this step uses
@@ -16,9 +16,9 @@ public class Step {
     private String instruction; // The instructions for this step
     private String name; //Step name
 
-    public Step(Integer id, Integer parentId, Integer parentSlot, List children, Part newPart, Integer rotation, String instruction, String name){
+    public Step(Integer id, Integer parentIndex, Integer parentSlot, List children, Part newPart, Integer rotation, String instruction, String name){
         this.id = id;
-        this.parentId = parentId;
+        this.parentIndex = parentIndex;
         this.parentSlot = parentSlot;
         this.children = children;
         this.newPart = newPart;
@@ -31,7 +31,7 @@ public class Step {
 
         Step step = (Step) obj;
         return this.id.equals(step.getId())
-                && this.parentId.equals(step.getParentId())
+                && this.parentIndex.equals(step.getParentIndex())
                 && this.rotation.equals(step.getRotation())
                 && this.newPart.equals(step.getNewPart())
                 && this.parentSlot.equals(step.parentSlot);
@@ -41,8 +41,8 @@ public class Step {
         return id;
     }
 
-    public Integer getParentId() {
-        return parentId;
+    public Integer getParentIndex() {
+        return parentIndex;
     }
 
     public Integer getParentSlot() {
@@ -79,7 +79,7 @@ public class Step {
         return     this.rotation.equals(other.rotation)
                 && this.id.equals(other.id)
                 && this.parentSlot.equals(other.parentSlot)
-                && this.parentId.equals(other.parentId)
+                && this.parentIndex.equals(other.parentIndex)
                 && this.newPart.get_id().equals(other.newPart.get_id());
     }
 }

@@ -45,7 +45,7 @@ public class LabService {
         for (Step step : lab.getSteps()) {
 
             occupiedSlots.put(step, new HashSet<>()); // New step proposed
-            Integer parentId = step.getParentId();
+            Integer parentId = step.getParentIndex();
 
             // If this is the first step, there is nowhere for you to misplace something
             if (step.getId() == 0) {
