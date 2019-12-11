@@ -158,6 +158,11 @@ export default  {
           toggle = true;
         }
       }, 1000);
+
+      //var queryString = location.search;
+      var urlParams = new URLSearchParams(location.search);
+      alert(urlParams.get('id'));
+
     //
   },
   methods: {

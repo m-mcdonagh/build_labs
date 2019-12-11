@@ -55,6 +55,7 @@ export default  {
     async getAllLabs(){
       let lab_response = (await axios.get("http://localhost:8080/labs/")).data;
       lab_response.forEach((lab)=>{
+
         this.labs.push({
           id:lab._id,
           name:lab.name,
