@@ -184,6 +184,10 @@ export default  {
 
             this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
             this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
+            this.steps[i].newPart.slotPoints[child.parentSlot].connectorPoint = {
+              x: child.newPart.connectorPoint.x,
+              y: child.newPart.connectorPoint.y
+            }
           }
         }
         var toggle = true;
