@@ -32,14 +32,13 @@
       <div id="step-list" class="collection">
         <step-component
           v-for="(step, index) in steps"
-          v-bind:key="step.index"
-          v-bind:id="step.index"
+          v-bind:key="step.id"
+          v-bind:id="step.id"
           v-bind:index="index"
           v-bind:name="step.name"
           v-bind:instruction="step.instruction"
           v-bind:rotation="step.rotation"
-          v-bind:deletable="index == steps.length - 1"
-          v-on:remove="popStep">
+          v-on:remove="deletestep(index)">
         </step-component>
       </div>
     </div>
@@ -127,7 +126,7 @@ export default {
           name: "Motherboard",
           img_src: require("../assets/img/motherboard.png"), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
           dimensions: { width: 12, height: 12 },
-          slotPoints: [{ x: 0.55, y: 0.35 }],
+          slotPoints: [{ x: 0.55, y: 0.35 }, {x: .2, y: .8}],
           connectorPoint: null
         },
         {
@@ -217,7 +216,7 @@ export default {
           "http://130.245.170.216:3003/media/" + prt.img
         );
 
-        console.log("IMGAGE DATA: ", img_data.config);
+        console.log("IMAGE DATA: ", img_data.config);
         this.listofparts.push({
           id: prt._id,
           name: prt.name,
@@ -262,6 +261,7 @@ export default {
       newPart.connectorPoint = { x: 0.5, y: 0.5 };
       newPart.connectedAt = { left: 0.5, top: 0.5 };
       newPart.parentSlot = null;
+      newPart.stepID = this.stepCounter++;
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot, i) {
@@ -271,10 +271,11 @@ export default {
       this.selectedPart.connectedAt = { left: slot.x, top: slot.y };
       this.selectedPart.parent = parentPartVue;
       this.selectedPart.parentSlot = i;
+      this.selectedPart.stepID = this.stepCounter++;
       this.buildparts.push(this.selectedPart);
     },
     addstep() {
-      let index = this.stepCounter++;
+      let index = this.steps.length;
       let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
       newPart.stepIndex = index;
       let parentIndex = newPart.parent && newPart.parent.part ? newPart.parent.part.stepIndex : null;
@@ -287,6 +288,7 @@ export default {
       }
       this.firststep = false;
       this.steps.push({
+        id: newPart.stepID,
         index: index,
         parentIndex: parentIndex,
         parentSlot: newPart.parentSlot,
@@ -296,7 +298,7 @@ export default {
         instruction: $("#step-instruction").val(),
         rotation: 0 //TODO rotation
       });
-      //console.log("NEW STEP ADDED",this.steps)
+      console.log("NEW STEP ADDED",this.steps)
       this.newStepToggle = false;
       this.selectedPart = null;
     },
@@ -308,15 +310,35 @@ export default {
       this.selectedPart = null;
       this.firststep = false;
     },
-    popStep() {
+    deletestep(index) {
+      if (!this.steps[index]){
+        return;
+      }
+      if (this.steps[index].children.length > 0){
+        let msg = 'Cannot Delete. The following steps are dependant on Step #' + index + ':<br>&#8195;Step #' + this.steps[index].children.join('<br>&#8195;Step #') + '.';
+        M.toast({displayLength:8000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
+        return;
+      }
       if (this.selectedPart && this.selectedPart.connectedAt) {
         this.selectedPart.connectedAt = null;
         this.selectedPart.parent = null;
         this.selectedPart.parentSlot = null;
         this.buildparts.pop();
       }
-      this.buildparts.pop();
-      this.steps.pop();
+      this.buildparts.splice(index, 1);
+      let parent = this.steps[this.steps[index].parentIndex]
+      parent.children.splice([parent.children.indexOf(index)], 1);
+      this.steps.splice(index, 1);
+      for (var i=0; i<this.steps.length; i++) {
+        this.steps[i].children = [];
+        for (var j=0; j<this.steps.length; j++) {
+          if (this.steps[j].parentIndex == this.steps[i].index) {
+            this.steps[j].parentIndex = i;
+            this.steps[i].children.push(j);
+          }
+        }
+        this.steps[i].index = i;
+      }
     },
     minimize(e) {
       if (this.minimizeToggle) {
@@ -541,10 +563,14 @@ export default {
 #toast-container {
   top: 50px;
   left: 25px;
-  max-width: 250px;
+  width: 525px;
 
   .toast {
+    max-width: 50%;
     justify-content: center;
+  }
+  .big-toast {
+    max-width: 100%;
   }
 }
 </style>

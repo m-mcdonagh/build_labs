@@ -12,7 +12,7 @@
                         <i class="material-icons left">info</i>Instruction
                     </a>
                 </li>
-                <li v-if="deletable">
+                <li>
                     <a v-on:click="$emit('remove')">
                         <i class="material-icons left">delete_forever</i>Delete
                     </a>
