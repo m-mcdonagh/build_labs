@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-@Controller
+//@Controller
 public class ViewController {
+    /*
     @RequestMapping("/")
     public String index() {
         return "index";
@@ -32,4 +33,6 @@ public class ViewController {
     public String previousGames() {
         return "lab_builder";
     }
+
+     */
 }
