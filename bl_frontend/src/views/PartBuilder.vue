@@ -244,6 +244,11 @@ export default  {
       }
 
       //save rest of the lab now
+      let username = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      console.log(username);
       let response = await axios({
         method: "post",
         url: "/api/parts/part/updatepart",
@@ -257,7 +262,7 @@ export default  {
           connectorPoint:this.part.connector 
         },
         params:{
-          username : "test2"
+          username : username
           //TODO : GET USERNAME FROM SESSION
         }
       });
@@ -280,6 +285,11 @@ export default  {
         }
     });
      console.log("addmedia resonse",image_response);
+      let username = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      console.log(username);
        let response = await axios({
         method: "post",
         url: "/api/parts/part",
@@ -293,7 +303,7 @@ export default  {
           
         },
         params:{
-          username : "test2"
+          username : username
           //TODO : GET USERNAME FROM SESSION
         }
       });

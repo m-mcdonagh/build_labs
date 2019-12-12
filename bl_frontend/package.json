@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "core-js": "^3.3.2",
+    "http-server": "^0.12.0",
+    "nuxt": "^2.10.2",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-generate-component": "^2.1.1",

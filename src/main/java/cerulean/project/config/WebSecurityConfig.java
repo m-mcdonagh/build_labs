@@ -73,7 +73,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/register").permitAll()
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
-                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 // TODO: Replace this with REST login if you wanna be fancy

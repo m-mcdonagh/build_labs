@@ -116,11 +116,16 @@ export default  {
       }
     },
     async getAllLabs(){
+      let username = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      console.log(username);
     let lab_response = await axios({
         method: "get",
         url: "/api/labs/",
         params:{
-          id :"test2",
+          id :username,
         }
       },
 
