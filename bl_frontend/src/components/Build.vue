@@ -2,7 +2,7 @@
     <div id="build-so-far" v-bind:style="{width: displayWidth, height: displayHeight}">
         <part-component
           v-for="part in parts"
-          v-bind:key="part.id"
+          v-bind:key="part.stepID"
           v-bind:name="part.name"
           v-bind:img_src="part.img_src"
           v-bind:dimensions="part.dimensions"
