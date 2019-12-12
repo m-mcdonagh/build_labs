@@ -38,6 +38,32 @@ public class LabService {
         labRepository.save(lab);
     }
 
+    public void deleteLab(String labID){
+        if(labRepository.existsById(labID)) {
+            Lab lab = getLab(labID);
+            if(lab != null){
+                labRepository.delete(lab);
+            }
+            else
+                throw new RuntimeException("Delete Lab Error");
+
+        }
+        else
+            throw new RuntimeException("LAB Does Not Exist");
+
+    }
+
+    public void publishLab(String labId){
+
+        Lab lab = getLab(labId);
+        if(lab != null){
+            lab.setIspublished(true);
+            labRepository.save(lab);
+        }
+        else
+            throw new RuntimeException("LAB Does Not Exist");
+    }
+
 
     public List<Integer> validateLabLegality(Lab lab) {
         List<Integer> invalidSteps = new ArrayList<>();

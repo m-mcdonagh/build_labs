@@ -8,6 +8,8 @@ import cerulean.project.services.PartControllerService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.Gson;
 
@@ -110,5 +112,30 @@ public class LabController {
     public String getPartsInLab(@PathVariable String labId) {
         Lab lab = labService.getLab(labId);
         return gson.toJson(lab.getPartsList());
+    }
+
+    @RequestMapping(value = "/deletelab", method = RequestMethod.POST)
+    public ResponseEntity<String> deletelab(@RequestParam String labID) {
+
+        try {
+            labService.deleteLab(labID);
+
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        System.out.println(labID);
+        return new ResponseEntity<>(HttpStatus.OK);
+
+    }
+
+    @RequestMapping(value = "/publishlab", method = RequestMethod.POST)
+    public ResponseEntity<String> publishlab(@RequestParam String labId) {
+
+        try {
+            labService.publishLab(labId);
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
