@@ -177,11 +177,11 @@ export default {
       });
 
       console.log("THIS IS PART ID", steps_copy);
-      let username = await axios({
+      let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
-      console.log(username);
+      let username = userSessionData.data;
       let response = await axios({
         method: "post",
         url: "/api/labs/lab",

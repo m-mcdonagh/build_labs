@@ -244,11 +244,11 @@ export default  {
       }
 
       //save rest of the lab now
-      let username = await axios({
+      let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
-      console.log(username);
+      let username = userSessionData.data;
       let response = await axios({
         method: "post",
         url: "/api/parts/part/updatepart",
@@ -285,10 +285,11 @@ export default  {
         }
     });
      console.log("addmedia resonse",image_response);
-      let username = await axios({
+      let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
+      let username = userSessionData.data;
       console.log(username);
        let response = await axios({
         method: "post",
