@@ -25,7 +25,7 @@ import java.util.UUID;
 //        /accounts/						        GET
 //
 
-//@RestController
+@RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
 
