@@ -20,6 +20,8 @@ import java.util.*;
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.security.MessageDigest;
+import java.util.stream.Collectors;
+
 @CrossOrigin(origins = "http://localhost:8081")
 @RestController
 @RequestMapping(value ="/parts")
@@ -171,6 +173,15 @@ public class PartController {
     public String getAllParts() {
         return gson.toJson(partService.getAllParts());
     }
+
+    @RequestMapping(value = "/allparts/published", method = RequestMethod.GET)
+    public String getAllPublishedParts() {
+
+
+        return gson.toJson(partService.getAllParts().stream().filter(part -> part.getIspublished().equals(true)).collect(Collectors.toList()));
+    }
+
+
 
     @RequestMapping(value = "/deletepart", method = RequestMethod.POST)
     public ResponseEntity<String> deletePart(@RequestParam String partId) {
