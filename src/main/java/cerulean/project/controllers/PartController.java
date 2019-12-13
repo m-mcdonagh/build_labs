@@ -46,7 +46,7 @@ public class PartController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listParts(@RequestParam String username, HttpServletResponse httpResponse) {
-        username = "temp";
+        //username = "temp2";
         Account account = accountService.getAccount(username);
         return gson.toJson(partService.getPartsCreatedByUser(account));
     }

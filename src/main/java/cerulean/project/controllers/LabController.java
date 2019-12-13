@@ -1,8 +1,10 @@
 package cerulean.project.controllers;
 import cerulean.project.models.Account;
 import cerulean.project.models.Lab;
+import cerulean.project.models.LabAssignment;
 import cerulean.project.models.Part;
 import cerulean.project.services.AccountService;
+import cerulean.project.services.LabAssignmentService;
 import cerulean.project.services.LabService;
 import cerulean.project.services.PartControllerService;
 import com.google.gson.JsonArray;
@@ -32,6 +34,9 @@ public class LabController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private LabAssignmentService labAssignmentService;
 
     private  Gson gson = new Gson();
 
@@ -138,4 +143,42 @@ public class LabController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/getassignedlabs", method = RequestMethod.GET)
+    public String getAssignedLabs(@RequestParam String username) {
+
+        List<LabAssignment> labAssignments = labAssignmentService.getLabsAssignedToAccount(username);
+        List<Lab> assigned_labs = new ArrayList<>();
+        if(labAssignments != null){
+            for (LabAssignment labAssignment : labAssignments) {
+                assigned_labs.add(labService.getLab(labAssignment.getLabId()));
+            }
+            return gson.toJson(assigned_labs);
+        }
+
+        return null;
+    }
+
+    @RequestMapping(value = "/assignlab", method = RequestMethod.POST)
+    public String assignLab(@RequestBody String assignBody) {
+        System.out.println("Assign lab post request");
+
+        JsonObject jsonObject = gson.fromJson(assignBody, JsonObject.class);
+        String assignee_username = jsonObject.get("assignee").toString().replace("\"", "");
+        String assigner_username = jsonObject.get("assigner").toString().replace("\"", "");
+        String labId = jsonObject.get("labId").toString().replace("\"", "");
+
+//        Account assigner = accountService.getAccount(assigner_username);
+//        Account assignee = accountService.getAccount(assignee_username);
+//        Lab lab = labService.getLab(labId);
+        labAssignmentService.assignLab(assigner_username,assignee_username,labId);
+
+
+        System.out.println("TEST");
+
+
+        return "success";
+    }
+
+
 }

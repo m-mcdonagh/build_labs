@@ -102,9 +102,10 @@ export default  {
     async getAllParts(){
     let part_response = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/allparts"
-        }
-      );
+        url: "http://localhost:8080/parts/",
+        params:{
+          username:"test2"
+        }});
     console.log("PARTS DATA",part_response.data);
     let i = 0;
     for(i = 0;i<part_response.data.length;i++){

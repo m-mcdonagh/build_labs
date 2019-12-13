@@ -1,109 +1,139 @@
 <template>
-    <li class="lab collection-item" v-bind:class="ispublished?'blue-grey lighten-5':''">
-        <a class="dropdown-trigger btn-floating btn-small waves-effect waves-light"
-           v-bind:data-target="'lab-dropdown-' + id"
-           v-bind:class="ispublished?'teal darken-1':'teal lighten-2'">
-            <i class="material-icons">keyboard_arrow_down</i>
+  <li class="lab collection-item" v-bind:class="ispublished?'blue-grey lighten-5':''">
+    <a
+      class="dropdown-trigger btn-floating btn-small waves-effect waves-light"
+      v-bind:data-target="'lab-dropdown-' + id"
+      v-bind:class="ispublished?'teal darken-1':'teal lighten-2'"
+    >
+      <i class="material-icons">keyboard_arrow_down</i>
+    </a>
+    <ul v-bind:id="'lab-dropdown-' + id" class="dropdown-content">
+      <li v-if="!ispublished">
+        <a v-bind:href="link">
+          <i class="material-icons left">edit</i>Edit
         </a>
-        <ul v-bind:id="'lab-dropdown-' + id" class='dropdown-content'>
-            <li v-if="!ispublished">
-                <a v-bind:href="link">
-                    <i class="material-icons left">edit</i>Edit
-                </a>
-            </li>
-            <li v-if="!ispublished">
-                <a v-on:click="$emit('remove')">
-                    <i class="material-icons left">delete_forever</i>Delete
-                </a>
-            </li>
-            <li v-if="!ispublished">
-                <a v-on:click="$emit('publish')">
-                    <i class="material-icons left">publish</i>Publish
-                </a>
-            </li>
-            <li v-if="ispublished">
-                <a class="modal-trigger" v-bind:href="'#lab-info-modal-' + id">
-                    <i class="material-icons">info</i>Info
-                </a>
-            </li>
-            <li v-if="ispublished">
-                <a class="modal-trigger" v-bind:href="'#lab-assign-modal-' + id">
-                    <i class="material-icons left">assignment_ind</i>Assign
-                </a>
-            </li>
-            <li>
-                <a v-on:click="$emit('copy')">
-                    <i class="material-icons">content_copy</i>Copy
-                </a>
-            </li>
-        </ul>
-        <span>{{ name }}</span>
-        <div v-bind:id="'lab-info-modal-' + id" class="modal">
-            <div class="modal-content indigo lighten-4">
-                <h4><i class="material-icons">assignment</i>{{ name }}</h4>
-                <div class="collection">
-                    <div v-for="i in info" v-bind:key="i.user_id" class="collection-item info">
-                        {{i.username}}
-                        <span v-if="!i.complete" 
-                              class="tooltipped"
-                              data-position="left"
-                              data-tooltip="INCOMPLETE">
-                            &#9744;
-                        </span>
-                        <span v-if="i.complete">&#9744;</span>
-                        <img v-if="i.complete" 
-                             class="check tooltipped"
-                             data-position="left"
-                             data-tooltip="COMPLETE"
-                             src="../../assets/img/check.png"/>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer indigo lighten-3">
-                <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
-            </div>
+      </li>
+      <li v-if="!ispublished">
+        <a v-on:click="$emit('remove')">
+          <i class="material-icons left">delete_forever</i>Delete
+        </a>
+      </li>
+      <li v-if="!ispublished">
+        <a v-on:click="$emit('publish')">
+          <i class="material-icons left">publish</i>Publish
+        </a>
+      </li>
+      <li v-if="ispublished">
+        <a class="modal-trigger" v-bind:href="'#lab-info-modal-' + id">
+          <i class="material-icons">info</i>Info
+        </a>
+      </li>
+      <li v-if="ispublished">
+        <a class="modal-trigger" v-bind:href="'#lab-assign-modal-' + id">
+          <i class="material-icons left">assignment_ind</i>Assign
+        </a>
+      </li>
+      <li>
+        <a v-on:click="$emit('copy')">
+          <i class="material-icons">content_copy</i>Copy
+        </a>
+      </li>
+    </ul>
+    <span>{{ name }}</span>
+    <div v-bind:id="'lab-info-modal-' + id" class="modal">
+      <div class="modal-content indigo lighten-4">
+        <h4>
+          <i class="material-icons">assignment</i>
+          {{ name }}
+        </h4>
+        <div class="collection">
+          <div v-for="i in info" v-bind:key="i.user_id" class="collection-item info">
+            {{i.username}}
+            <span
+              v-if="!i.complete"
+              class="tooltipped"
+              data-position="left"
+              data-tooltip="INCOMPLETE"
+            >&#9744;</span>
+            <span v-if="i.complete">&#9744;</span>
+            <img
+              v-if="i.complete"
+              class="check tooltipped"
+              data-position="left"
+              data-tooltip="COMPLETE"
+              src="../../assets/img/check.png"
+            />
+          </div>
         </div>
-        <div v-bind:id="'lab-assign-modal-' + id" class="modal">
-            <div class="modal-content indigo lighten-4">
-                <h4><i class="material-icons">assignment_ind</i>{{ name }}</h4>
-                <!-- TODO Send to backend -->
-                <form class="row">
-                    <div class="email-input input-field inline col s11">
-                        <input id="email" name="email" type="email" required>
-                        <label for="email">Send to</label>
-                    </div>
-                    <button class="email-submit col s1" type="submit">
-                        <div><i class="material-icons">send</i></div>
-                    </button>
-                </form>
+      </div>
+      <div class="modal-footer indigo lighten-3">
+        <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
+      </div>
+    </div>
+    <div v-bind:id="'lab-assign-modal-' + id" class="modal">
+      <div class="modal-content indigo lighten-4">
+        <h4>
+          <i class="material-icons">assignment_ind</i>
+          {{ name }}
+        </h4>
+        <!-- TODO Send to backend -->
+        <form class="row" @submit="assignLab">
+          <!-- <div class="email-input input-field inline col s11">
+            <input id="email" name="email" type="text" required />
+            <label for="email">Send to mail</label>
+          </div> -->
+          <div class="input-field col s12 m10 offset-m1">
+            <input id="username" name="username" type="text" required v-model="assignee" />
+            <label for="username">Username</label>
+          </div>
+          <button  class="email-submit col s1" type="submit">
+            <div>
+              <i class="material-icons">send</i>
             </div>
-            <div class="modal-footer indigo lighten-3">
-                <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
-            </div>
-        </div>
-    </li>
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer indigo lighten-3">
+        <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
+      </div>
+    </div>
+  </li>
 </template>
 
 <script>
 export default {
-    data() {
+  data() {
     return {
-        labList: [],
-        id: ''
-    }
+      labList: [],
+      id: "",
+      username:""
+    };
   },
   //template:'<button v-on:click="postButton">Reverse Message</button>',
   methods: {
-    async getLab(){
+    async assignLab() {
+      console.log("Assign lab axios request");
+      console.log(this.id);
+          let response = await axios({
+          method: "post",
+          url: "http://localhost:8080/labs/assignlab",
+          data:{
+              labId:this.id,
+              assignee:this.assignee,
+              assigner:"test2"
+          }
+
+        });
+    },
+    async getLab() {
       console.log("Get all parts get request");
-      
-       await axios({
+
+      await axios({
         method: "get",
         url: "http://localhost:8080/labs/",
-        params:{
-            id : "someidea"
+        params: {
+          id: "someidea"
         }
-        
       })
         .then(function(response) {
           console.log("EXIT POST REQUEST");
@@ -111,89 +141,98 @@ export default {
           this.labList = respnse.data;
         })
         .catch(function(error) {
-            
           console.log(error);
         });
-    },
-    
+    }
   },
 
-    name: 'Lab',
-    props: ['name', 'ispublished', 'id'],
-    data() {
-        return {
-            link: '/labbuilder?id=' + this.id,
-            // TODO: set up axios for this.info
-            info: [
-                {user_id:0, username:'not complete', complete:false}, 
-                {user_id:1, username:'complete', complete:true}
-            ]
-        }
-    },
-    mounted(){
-        M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth: false, coverTrigger: false});
-        $(this.$el).find('.modal').modal();
-        $(this.$el).find('.tooltipped').tooltip();
-    }
-}
+  name: "Lab",
+  props: ["name", "ispublished", "id"],
+  data() {
+    return {
+    
+      assignee:"",
+      link: "/labbuilder?id=" + this.id,
+      // TODO: set up axios for this.info
+      info: [
+        { user_id: 0, username: "not complete", complete: false },
+        { user_id: 1, username: "complete", complete: true }
+      ]
+    };
+  },
+  mounted() {
+    M.Dropdown.init(
+      $(this.$el)
+        .find(".dropdown-trigger")
+        .get(0),
+      { constrainWidth: false, coverTrigger: false }
+    );
+    $(this.$el)
+      .find(".modal")
+      .modal();
+    $(this.$el)
+      .find(".tooltipped")
+      .tooltip();
+  }
+};
 </script>
 
 <style scoped lang="scss">
-.lab{
-    display: flex;
-    flex-direction: row;
+.lab {
+  display: flex;
+  flex-direction: row;
 
+  span {
+    margin: 5px;
+  }
+  .btn {
+    color: white !important;
+  }
+  .info {
+    position: relative;
     span {
-        margin: 5px;
+      position: absolute;
+      right: 10px;
+      cursor: default;
     }
-    .btn{
-        color: white !important;
+    img {
+      position: absolute;
+      height: 80%;
+      top: 0;
+      right: 5px;
     }
-    .info{ 
-        position: relative;
-        span{
-            position: absolute;
-            right: 10px;
-            cursor: default;
-        }
-        img{
-            position: absolute;
-            height: 80%;
-            top: 0;
-            right: 5px;
-        }
-    }
-    .row {
-        display: flex;
-        justify-content: center;
-    }
-    .email-input{
-        margin-left:0;
-    }
-    .email-submit {
-        display: contents;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+  .email-input {
+    margin-left: 0;
+  }
+  .email-submit {
+    display: contents;
 
-        i {
-            transform: translate(0, 125%);
-            cursor: pointer;
-            color: #009688;
-        }
-        i:hover {
-            color: #4db6ac;
-        }
-
-        @media screen and (max-width: 400px) {
-            i {
-                font-size: .75em;
-                transform: translate(0, 250%);
-            }
-        }
-        @media screen and (max-width: 230px) {
-            i {
-                font-size: .5em;
-                transform: translate(0, 400%);
-            }
-        }
+    i {
+      transform: translate(0, 125%);
+      cursor: pointer;
+      color: #009688;
     }
+    i:hover {
+      color: #4db6ac;
+    }
+
+    @media screen and (max-width: 400px) {
+      i {
+        font-size: 0.75em;
+        transform: translate(0, 250%);
+      }
+    }
+    @media screen and (max-width: 230px) {
+      i {
+        font-size: 0.5em;
+        transform: translate(0, 400%);
+      }
+    }
+  }
 }
 </style>

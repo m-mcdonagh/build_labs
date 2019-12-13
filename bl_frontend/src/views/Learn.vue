@@ -53,7 +53,7 @@ export default  {
   },
   methods: {
     async getAllLabs(){
-      let lab_response = (await axios.get("http://localhost:8080/labs/")).data;
+      let lab_response = (await axios.get("http://localhost:8080/labs/getassignedlabs",{params:{username:"test2"}})).data;
       lab_response.forEach((lab)=>{
 
         this.labs.push({
@@ -69,6 +69,8 @@ export default  {
     }
   }
 }
+
+
 </script>
 
 <style scoped lang="scss">
