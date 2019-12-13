@@ -182,12 +182,28 @@ export default  {
         part.ispublished = true; // move to axios.then
       }
     },
-    publishlab(lab){
+    async publishlab(lab){
       console.log('publish part', lab.id);
       // TODO axios
           // REQ->server with lab.id
           // server->RES with OK or ERR
-      lab.ispublished = true; // move to axios.then
+
+
+      let publish_response = await axios({
+        method: "post",
+        url: "http://localhost:8080/labs/publishlab",
+
+        params:{
+          labId:lab.id,
+        }
+
+        }
+      );
+      console.log(publish_response);
+      if(publish_response.status == 200){
+        lab.ispublished = true; // move to axios.then
+      }
+      
     },
     async removepart(part){
       console.log('remove part', part.id);
@@ -212,14 +228,23 @@ export default  {
       }
       
     },
-    removelab(lab){
+    async removelab(lab){
       console.log('remove lab', lab.id);
       //TODO axios
           // REQ->server with lab.id
           // server->RES with OK or ERR
-      this.labs.splice(this.labs.indexOf(lab), 1); //move to axios.then
-    }
-  } 
+
+      let delete_response = await axios({
+        method: "post",
+        url: "http://localhost:8080/labs/deletelab",params:{ labID:lab.id } });
+      console.log(delete_response);
+      if(delete_response.status == 200){
+        console.log("delete successful at backend");
+        this.labs.splice(this.labs.indexOf(lab), 1); //move to axios.then
+        }
+        
+    }          
+  } //methods 
 }
 </script>
 

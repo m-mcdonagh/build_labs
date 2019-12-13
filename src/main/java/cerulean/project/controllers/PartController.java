@@ -43,7 +43,7 @@ public class PartController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listParts(@RequestParam String username, HttpServletResponse httpResponse) {
-        username = "temp";
+        //username = "temp2";
         Account account = accountService.getAccount(username);
         return gson.toJson(partService.getPartsCreatedByUser(account));
     }
@@ -170,6 +170,15 @@ public class PartController {
     public String getAllParts() {
         return gson.toJson(partService.getAllParts());
     }
+
+    @RequestMapping(value = "/allparts/published", method = RequestMethod.GET)
+    public String getAllPublishedParts() {
+
+
+        return gson.toJson(partService.getAllParts().stream().filter(part -> part.getIspublished().equals(true)).collect(Collectors.toList()));
+    }
+
+
 
     @RequestMapping(value = "/deletepart", method = RequestMethod.POST)
     public ResponseEntity<String> deletePart(@RequestParam String partId) {
