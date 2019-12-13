@@ -4,6 +4,7 @@ package cerulean.project.config;
 import cerulean.project.services.MongoDBUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -70,24 +71,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/register").permitAll()
-                .antMatchers("/api/login").permitAll()
-                .antMatchers("/login").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/favicon.ico").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/api/register").permitAll()
+                    .antMatchers("/api/login").permitAll()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/api/").permitAll()
+                    .antMatchers("/favicon.ico").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 // TODO: Replace this with REST login if you wanna be fancy
                 .formLogin()
-                .loginProcessingUrl("/api/login")
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
-                .permitAll()
+                    .loginProcessingUrl("/api/login")
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/")
+                    .permitAll()
                 .and()
-                .logout()
-                .logoutUrl("/api/logout")
-                .permitAll()
-
+                    .logout()
+                    .logoutUrl("/api/logout")
+                    .permitAll()
+                .and()
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
         ;
     }
 
