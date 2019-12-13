@@ -37,6 +37,7 @@
           v-bind:index="index"
           v-bind:name="step.name"
           v-bind:instruction="step.instruction"
+          v-bind:img_src="step.newPart.img_src"
           v-bind:rotation="step.rotation"
           v-on:remove="deletestep(index)">
         </step-component>
