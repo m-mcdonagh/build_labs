@@ -18,13 +18,16 @@
 <script>
 export default {
     name: 'partSelector',
-    props: ['listofparts']
+    props: ['listofparts'],
+    mounted() {
+        $(this.$el).modal();
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 .modal {
-    position: absolute;
+    position: fixed;
     max-width: 90vw;
     width: 1000px;
     overflow: hidden;

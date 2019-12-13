@@ -22,49 +22,58 @@
                 <div class="modal-content">
                     <div class="inputs">
                         <div class="input-field col s6">
-                            <input id="step-name" type="text" v-model="name">
+                            <input id="step-name" type="text" v-model="newname">
                             <label for="step-name">Step Name</label>
                         </div>
                         <div class="input-field col s12">
-                            <textarea id="step-instruction" class="materialize-textarea" v-model="instruction"></textarea>
+                            <textarea id="step-instruction" class="materialize-textarea" v-model="newinstruction"></textarea>
                             <label for="step-instruction">Instruction</label>
                         </div>
                     </div>
-                    <a class="new-part-img-btn">
-                        <img v-bind:src="img_src">
+                    <a class="new-part-img-btn modal-trigger" v-bind:href="'#part-selector-' + id">
+                        <img v-bind:src="part.img_src">
                     </a>
                 </div>
                 <div class="modal-footer indigo lighten-4">
-                    <a href="#!" class="modal-close btn-flat">Done</a>
-                    <a href="#!" class="modal-close btn-flat" v-on:click="cancel">Cancel</a>
+                    <a href="#!" class="modal-close btn-flat" v-on:click="$emit('infochange', newname, newinstruction)">Done</a>
+                    <a href="#!" class="modal-close btn-flat">Cancel</a>
                 </div>
             </div>
+            <part-selector v-bind:id="'part-selector-' + id" 
+                v-bind:listofparts="listofparts"
+                v-on:newpart="(part) => $emit('partchange', part)">
+            </part-selector>
         </div>
     </div>
 </template>
 
 <script>
+import partSelector from './PartSelector.vue';
+
 export default {
     name: 'Step',
     props: [
-        'id', 'index', 'name', 'instruction', 'img_src'
+        'id', 'index', 'name', 'instruction', 'part', 'listofparts'
     ],
+    components : {
+        'part-selector': partSelector
+    },
     data() {
-        return {oldname: '', oldinstruction: ''}
+        return {newname: '', newinstruction: ''}
     },
     mounted() {
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth:false});
-        $(this.$el).find('.modal').modal();
+        M.Modal.init($(this.$el).find('.modal').get(0), {
+            onOpenEnd(){
+                 M.updateTextFields();
+            }
+        });
         M.updateTextFields();
     },
     methods: {
         saveState() {
-            this.oldname = this.name;
-            this.oldinstruction = this.instruction;
-        },
-        cancel() {
-            this.name = this.oldname;
-            this.instruction = this.oldinstruction;
+            this.newname = this.name;
+            this.newinstruction = this.instruction;
         }
     }
 }

@@ -37,8 +37,10 @@
           v-bind:index="index"
           v-bind:name="step.name"
           v-bind:instruction="step.instruction"
-          v-bind:img_src="step.newPart.img_src"
-          v-bind:rotation="step.rotation"
+          v-bind:part="step.newPart"
+          v-bind:listofparts="listofparts"
+          v-on:infochange="(newName, newInstruction) => {step.name = newName; step.instruction = newInstruction}"
+          v-on:partchange="(newPart) => {partchange(index, newPart);}"
           v-on:remove="deletestep(index)">
         </step-component>
       </div>
@@ -87,7 +89,9 @@
 <script>
 import buildSoFar from "../components/Build.vue";
 import stepComponent from "../components/LabBuilder/Step.vue";
-import partSelector from "../components/LabBuilder/PartSelector.vue"
+import partSelector from "../components/LabBuilder/PartSelector.vue";
+
+import Vue from 'vue'
 
 export default {
   name: "lab-builder",
@@ -350,6 +354,21 @@ export default {
           }
           this.steps[i].index = i;
         }
+      }
+    },
+    partchange(index, newPart) {
+      newPart = this.clonepart(newPart);
+      newPart.parent = this.buildparts[index].parent;
+      newPart.connectorPoint = this.buildparts[index].connectorPoint;
+      newPart.connectedAt = this.buildparts[index].connectedAt;
+      newPart.parentSlot = this.buildparts[index].parentSlot;
+      newPart.stepID = this.buildparts[index].stepID;
+      newPart.stepIndex = this.buildparts[index].stepIndex;
+      this.steps[index].newPart = newPart;
+      Vue.set(this.buildparts, index, newPart);
+      if (index == 0) {
+        this.buildWidth = newPart.dimensions.width;
+        this.buildHeight = newPart.dimensions.height;
       }
     },
     minimize(e) {
