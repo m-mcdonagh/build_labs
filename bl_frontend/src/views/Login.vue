@@ -58,7 +58,7 @@
         <button id="hide-register" class="btn light-blue accent-1 waves-effect col s1 m3 l2 offset-s1 offset-m2 offset-l3" type="button">
           <i class="material-icons left">arrow_back</i>Cancel
         </button>
-        <button v-on:click="registerButton()" class="btn light-blue accent-1 waves-effect col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="submit">
+        <button v-on:click="registerButton()" class="btn light-blue accent-1 waves-effect col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="button">
           <i class="material-icons right">send</i>Submit
         </button>
       </div>
