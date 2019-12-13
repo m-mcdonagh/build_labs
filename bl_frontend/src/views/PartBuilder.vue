@@ -135,6 +135,7 @@ export default  {
     if(id != null){
       this.populateData(id);
       console.log("DATA WAS POPULATED");
+      M.toast({displayLength:2000, html:'Part Loaded'});
     }
 
     this.resizePart();
@@ -261,6 +262,7 @@ export default  {
           //TODO : GET USERNAME FROM SESSION
         }
       });
+      M.toast({displayLength:2000, html:'Part Updated'});
       //if(media_resonse.status)
 
     },
@@ -312,6 +314,7 @@ export default  {
       console.log("GET PART AXIOS REQUEST",response3.data);
       let response4 = await axios.get('http://130.245.170.216:3003/media/'+response3.data.img);
       console.log(response4);
+      M.toast({displayLength:2000, html:'Part Saved'});
     
     },
     toggleConnectorAdd() {
