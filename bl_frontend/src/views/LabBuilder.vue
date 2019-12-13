@@ -357,6 +357,28 @@ export default {
       }
     },
     partchange(index, newPart) {
+      if (this.steps[index].children.length) {
+        for (let i=0; i<this.steps[index].children.length; i++) {
+          if (this.steps[this.steps[index].children[i]].parentSlot >= newPart.slotPoints.length) {
+            let msg = 'Cannot Swap because the dependanc' + (this.steps[index].children.length == 1? 'y' : 'ies') + 
+                ' of Step#' + (index + 1) + (this.steps[index].name ? ':' + this.steps[index].name : '') + ' cannot be mapped from ' +
+                this.steps[index].newPart.name + ' to ' + newPart.name + '.<br>The dependanc' +
+                (this.steps[index].children.length == 1? 'y is' : 'ies are') + ':<br>&#8195;Step #';
+
+            for (i=0; i<this.steps[index].children.length - 1; i++) {
+              msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + ',<br>&#8195;Step #';
+            }
+            msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + '.'
+            M.toast({displayLength:8000 + this.steps[index].children.length * 2000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
+            return;
+          }
+        }
+        for (let i=0; i<this.steps[index].children.length; i++) {
+          let child = this.steps[this.steps[index].children[i]];
+          child.newPart.connectedAt.left = newPart.slotPoints[child.parentSlot].x;
+          child.newPart.connectedAt.top = newPart.slotPoints[child.parentSlot].y;
+        }
+      }
       newPart = this.clonepart(newPart);
       newPart.parent = this.buildparts[index].parent;
       newPart.connectorPoint = this.buildparts[index].connectorPoint;
