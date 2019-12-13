@@ -336,6 +336,8 @@ export default {
       this.buildparts.splice(index, 1);
       if (this.steps.length == 1) {
         this.steps.pop();
+        this.selectedPart = null;
+        this.newStepToggle = false;
       }
       else{
         let parent = this.steps[this.steps[index].parentIndex];
