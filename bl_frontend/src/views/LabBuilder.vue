@@ -11,7 +11,7 @@
         v-on:slotclick="addpart">
       </build-so-far>
 
-      <button id="new-step-btn" class="step-btn modal-trigger" data-target="part-selector" v-on:click="newstep">
+      <button id="new-step-btn" class="step-btn modal-trigger" data-target="new-part-selector" v-on:click="newstep">
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
       </button>
@@ -75,33 +75,26 @@
       </div>
     </div>
 
-
-    <div id="part-selector" class="modal modal-fixed-footer">
-      <div class="modal-content indigo lighten-3">
-        <ul class="collection">
-          <li v-for="part in listofparts" class="collection-item">
-            <a class="modal-close btn-flat" v-on:click="steps.length ? selectpart(part) : addfirstpart(part)">
-              {{ part.name }}
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="modal-footer indigo lighten-4">
-        <a id="part-cancel" class="modal-close btn-flat" v-on:click="modalcancel">CANCEL</a>
-      </div>
-    </div>
+    <part-selector id="new-part-selector" 
+                   v-bind:listofparts="listofparts"
+                   v-on:newpart="newpart"
+                   v-on:modalcancel="modalcancel">
+    </part-selector>
+    
   </div>
 </template>
 
 <script>
 import buildSoFar from "../components/Build.vue";
 import stepComponent from "../components/LabBuilder/Step.vue";
+import partSelector from "../components/LabBuilder/PartSelector.vue"
 
 export default {
   name: "lab-builder",
   components: {
     "build-so-far": buildSoFar,
-    "step-component": stepComponent
+    "step-component": stepComponent,
+    "part-selector": partSelector
   },
   created() {
     this.$store.commit("changeNav", "indigo lighten-1");
@@ -250,6 +243,9 @@ export default {
       this.selectedPart.connectedAt = null;
       this.selectedPart.parent = null;
       this.selectedPart.parentSlot = null;
+    },
+    newpart(part) {
+      this.steps.length ? this.selectpart(part) : this.addfirstpart(part)
     },
     addfirstpart(part) {
       if (this.buildparts.length) this.buildparts.pop();
@@ -539,25 +535,6 @@ export default {
       border: none;
       background-color: #00000000;
       overflow-y: scroll;
-    }
-  }
-
-  #part-selector {
-    position: absolute;
-    max-width: 90vw;
-    width: 1000px;
-    overflow: hidden;
-    margin-top: 5vh;
-    color: black;
-
-    .collection-item {
-      padding: 0;
-
-      a {
-        width: 100%;
-        height: 100%;
-        text-transform: none;
-      }
     }
   }
 }
