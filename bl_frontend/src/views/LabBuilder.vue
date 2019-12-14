@@ -122,11 +122,11 @@ export default {
       listofparts: [
         // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
         {
-          id: 'motherboard',
+          id: "motherboard",
           name: "Motherboard",
           img_src: require("../assets/img/motherboard.png"), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
           dimensions: { width: 12, height: 12 },
-          slotPoints: [{ x: 0.55, y: 0.35 }, {x: .2, y: .8}],
+          slotPoints: [{ x: 0.55, y: 0.35 }, { x: 0.2, y: 0.8 }],
           connectorPoint: null
         },
         {
@@ -159,77 +159,99 @@ export default {
     M.updateTextFields();
 
     var urlParams = new URLSearchParams(location.search);
-    var id = urlParams.get('id');
+    var id = urlParams.get("id");
     console.log(id);
 
-    if(id != null){
+    if (id != null) {
       this.populateData(id);
       console.log("DATA WAS POPULATED");
-      M.toast({displayLength:2000, html:'Lab Loaded'});
+      M.toast({ displayLength: 2000, html: "Lab Loaded" });
     }
-
-
 
     this.resizesteps();
     window.onresize = this.resizesteps;
     this.getListOfParts();
   },
   methods: {
-
-    saveButton(){
+    saveButton() {
       var urlParams = new URLSearchParams(location.search);
-      var id = urlParams.get('id');
+      var id = urlParams.get("id");
 
-      if(id == null){
+      if (id == null) {
         console.log("SavePart EXECUTING");
         this.saveLab();
-      }
-      else{
+      } else {
         console.log("UPDATE PART EXECUTED");
         this.updateLab();
       }
-
     },
-    async populateData(id){
-       M.toast({displayLength:2000, html:'DATA IS BEING POPULATED Loaded'});
+    async populateData(id) {
+      M.toast({ displayLength: 2000, html: "DATA IS BEING POPULATED Loaded" });
 
-       let lab_response = await axios({
+      let lab_response = await axios({
         method: "get",
         url: "http://localhost:8080/labs/lab",
-        params:{
-          id:id
+        params: {
+          id: id
         }
       });
 
-      console.log("lab response",lab_response);
-      
+      console.log("lab response", lab_response);
+
       this.name = lab_response.data.name;
       this.steps = lab_response.data.steps;
 
-      //TODO : 
-      
-      
-    //  console.log(this.listofparts[2]);
-    //  this.newstep();
-    //  this.addfirstpart(this.listofparts[0]);
-    //  this.addstep();
-    // // this.addfirstpart(this.listofparts[1]);
-    //  this.selectpart(this.listofparts[2]); 
-    //  var slot = {
-    //    x:0.55,
-    //    y:0.35
-    //  }
-    //  this.addpart(this.listofparts[0],slot, 1);
-      //this.addstep();
+      //steps.newPart is missing connectedAt
+      //stepID, stepIndex, parentSlot,vue
+      this.steps.forEach(function(step, index) {
+        
+        step.newPart.parentIndex = step.parentIndex;
+        step.newPart.parentSlot = step.parentSlot;
+
+        if(step.newPart.parentSlot != null){
+          let parentPart = lab_respnse.data.partsList[step.newPart.parentIndex]; //parent part
+
+          step.newPart.conenctedAt = {
+            x: parentPart.data.slotPoints[step.newPart.parentSlot][0],
+            y: parentPart.data.slotPoints[step.newPart.parentSlot][1]
+          };
+        }
+        else{
+          step.newPart.connectedAt={
+            x:0.5,
+            y:0.5
+          }
+        }
+        Object.defineProperty(step.newPart, "vue", {
+          configurable: true,
+          enumerable: true,
+          get: function() {
+            return this._vue;
+          },
+          set: function(vue) {
+            this._vue = vue;
+            step.children.forEach(function(child,index){
+              this.steps[child].parent = vue;
+            })
+          }
+        });
+
+        this.buildparts.push(step.newPart);
 
 
+
+      });
+
+
+
+     
     },
     async saveLab() {
       console.log("CURRENT PARTS BUILT", this.buildparts);
 
       var part_ids = [];
 
-      let steps_copy = []
+      let steps_copy = [];
       this.steps.forEach(function(item, index) {
         steps_copy.push({
           id: index,
@@ -237,12 +259,11 @@ export default {
           parentSlot: item.parentSlot,
           children: item.children,
           newPart: item.newPart.id,
-          rotation: item.rotation, 
+          rotation: item.rotation,
           name: item.name,
-          instruction: item.instruction       
+          instruction: item.instruction
         });
       });
-
 
       console.log("THIS IS PART ID", steps_copy);
 
@@ -258,7 +279,7 @@ export default {
           //partList: part_ids //Causes circular reference
         }
       });
-      M.toast({displayLength:2000, html:'Lab Saved'});
+      M.toast({ displayLength: 2000, html: "Lab Saved" });
     },
     async getListOfParts() {
       let part_response = await axios({
@@ -285,7 +306,7 @@ export default {
           "http://130.245.170.216:3003/media/" + prt.img
         );
 
-       // console.log("IMAGE DATA: ", img_data.config);
+        // console.log("IMAGE DATA: ", img_data.config);
         this.listofparts.push({
           id: prt._id,
           name: prt.name,
@@ -333,7 +354,7 @@ export default {
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot, i) {
-      console.log(slot.x,"-",i);
+      console.log(slot.x, "-", i);
       if (this.selectedPart == null) {
         return;
       }
@@ -347,12 +368,21 @@ export default {
       let index = this.steps.length;
       let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
       newPart.stepIndex = index;
-      let parentIndex = newPart.parent && newPart.parent.part ? newPart.parent.part.stepIndex : null;
+      let parentIndex =
+        newPart.parent && newPart.parent.part
+          ? newPart.parent.part.stepIndex
+          : null;
       if (parentIndex !== null) {
-        this.steps[parentIndex].children.push(index)
+        this.steps[parentIndex].children.push(index);
       }
-      if (!this.firststep && (parentIndex === undefined || newPart.parentSlot === undefined || parentIndex === null || newPart.parentSlot === null )) {
-        M.toast({displayLength:2000, html:'Please specify a slot'});
+      if (
+        !this.firststep &&
+        (parentIndex === undefined ||
+          newPart.parentSlot === undefined ||
+          parentIndex === null ||
+          newPart.parentSlot === null)
+      ) {
+        M.toast({ displayLength: 2000, html: "Please specify a slot" });
         return;
       }
       this.firststep = false;
@@ -367,12 +397,15 @@ export default {
         instruction: $("#step-instruction").val(),
         rotation: 0 //TODO rotation
       });
-      console.log("NEW STEP ADDED",this.steps)
+      console.log("NEW STEP ADDED", this.steps);
       this.newStepToggle = false;
       this.selectedPart = null;
     },
     cancelstep() {
-      if (this.firststep || this.selectedPart && this.selectedPart.connectedAt) {
+      if (
+        this.firststep ||
+        (this.selectedPart && this.selectedPart.connectedAt)
+      ) {
         this.buildparts.pop();
       }
       this.newStepToggle = false;
@@ -380,16 +413,23 @@ export default {
       this.firststep = false;
     },
     deletestep(index) {
-      if (!this.steps[index]){
+      if (!this.steps[index]) {
         return;
       }
-      if (this.steps[index].children.length > 0){
-        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) + ':<br>&#8195;Step #';
-        for (var i=0; i<this.steps[index].children.length - 1; i++) {
-          msg += (this.steps[index].children[i] + 1) + ',<br>&#8195;Step #'
+      if (this.steps[index].children.length > 0) {
+        let msg =
+          "Cannot Delete. The following steps are dependant on Step #" +
+          (index + 1) +
+          ":<br>&#8195;Step #";
+        for (var i = 0; i < this.steps[index].children.length - 1; i++) {
+          msg += this.steps[index].children[i] + 1 + ",<br>&#8195;Step #";
         }
-        msg += (this.steps[index].children[i] + 1) + '.'
-        M.toast({displayLength:8000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
+        msg += this.steps[index].children[i] + 1 + ".";
+        M.toast({
+          displayLength: 8000,
+          classes: "big-toast",
+          html: "<span>" + msg + "</span>"
+        });
         return;
       }
       if (this.selectedPart && this.selectedPart.connectedAt) {
@@ -401,14 +441,13 @@ export default {
       this.buildparts.splice(index, 1);
       if (this.steps.length == 1) {
         this.steps.pop();
-      }
-      else{
+      } else {
         let parent = this.steps[this.steps[index].parentIndex];
         parent.children.splice([parent.children.indexOf(index)], 1);
         this.steps.splice(index, 1);
-        for (var i=0; i<this.steps.length; i++) {
+        for (var i = 0; i < this.steps.length; i++) {
           this.steps[i].children = [];
-          for (var j=0; j<this.steps.length; j++) {
+          for (var j = 0; j < this.steps.length; j++) {
             if (this.steps[j].parentIndex == this.steps[i].index) {
               this.steps[j].parentIndex = i;
               this.steps[i].children.push(j);
