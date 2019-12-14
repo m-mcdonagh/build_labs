@@ -214,14 +214,9 @@ export default {
       console.log("CURRENT PARTS BUILT", this.buildparts);
 
       var part_ids = [];
-
-      var steps_copy = this.steps.slice();
-      console.log("COPY", steps_copy);
-
-      steps_copy.forEach(function(item, index) {
-        //console.log("ITME",item.newPart.id,"AND", index);
-        // part_ids.push(item.newPart.id);
-        item.newPart = item.newPart.id;
+      let steps_copy = []
+      this.steps.forEach(function(item, index) {
+        steps_copy.push(item.id);
       });
 
       console.log("THIS IS PART ID", steps_copy);
