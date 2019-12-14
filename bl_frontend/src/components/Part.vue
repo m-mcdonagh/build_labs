@@ -7,7 +7,7 @@
         transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : 'translate(-50%, -50%)'
     }">
         <img v-bind:src="img_src">
-        <div class="slot" 
+        <button class="slot" 
              v-for="(slot, i) in slotPoints"
              v-bind:key="i"
              v-bind:style="slot.width && slot.height && connectorPoint? 
@@ -19,7 +19,7 @@
                     transform: 'translate(' + (slot.connectorPoint.x * -100) + '%, ' + (slot.connectorPoint.y * -100) + '%)'
                 } : {left: (slot.x * 100) + '%', top: (slot.y * 100) + '%', transform: 'translate(-50%, -50%)'}"
              v-on:click="slotclick(slot, i)"
-        ></div>
+        ></button>
     </div>
 </template>
 

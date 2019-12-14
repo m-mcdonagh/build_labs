@@ -273,7 +273,7 @@ export default {
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot, i) {
-      if (this.selectedPart == null) {
+      if (this.selectedPart == null || this.selectedPart.connectedAt) {
         return;
       }
       this.selectedPart.connectedAt = { left: slot.x, top: slot.y };
