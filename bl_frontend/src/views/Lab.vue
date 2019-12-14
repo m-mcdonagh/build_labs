@@ -70,16 +70,12 @@ export default  {
   },
   data() {
     return {
-      id: "0", // lab _id needs to be filled in by axios
+      id: "0",
       name: "test", // needs to be filled in by axios
       selectedPartID: null,
-      partsList: [ //needs to be filled in by axios
-
-      ],
+      partsList: [],
       currentStep: 0,
-      steps : [ //needs to be filled in by axios
-
-      ],
+      steps : [],
       buildWidth: null,
       buildHeight: null,
       displayWidth: null,
@@ -91,118 +87,113 @@ export default  {
     this.$store.commit('changeNav', 'cyan');
   },
   mounted() {
-    //This should be moved to axios then
-      var urlParams = new URLSearchParams(location.search);
-      this.id = urlParams.get('id')
-      this.loadLab(urlParams.get('id'));
-
-
-      //var queryString = location.search;
-
-
-    //
+    var urlParams = new URLSearchParams(location.search);
+    this.id = urlParams.get('id')
+    this.loadLab(this.id);
   },
   methods: {
     async loadLab(id){
-      let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
+      //let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
+      let lab_response = {
+        name: "peep",
+        steps: [{"id":0,"index":0,"parentIndex":null,"parentSlot":null,"children":[1,2],"newPart":{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},"name":"Motherboard","instruction":"Place motherboard","rotation":0},{"id":1,"index":1,"parentIndex":0,"parentSlot":0,"children":[3],"newPart":{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},"name":"CPU","instruction":"Place CPU in mid slot","rotation":0},{"id":2,"index":2,"parentIndex":0,"parentSlot":1,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 1","instruction":"Place CPU in Bottom Left Slot","rotation":0},{"id":3,"index":3,"parentIndex":1,"parentSlot":0,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 2","instruction":"Place CPU smol on top of CPU","rotation":0}],
+        partsList: [{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]}]
+      };
+      this.name = lab_response.name;
+      
       await lab_response.steps.forEach(async (step)=>{
-
-
-          let part = step.newPart;
-
-          let slotPointsCoord = [];
-          for (let j = 0; j < part.slotPoints.length; j++) {
-            slotPointsCoord[j] = {
-              x: part.slotPoints[j][0],
-              y: part.slotPoints[j][1]
-            };
-
-          }
-
-          var dimensions = {
-            height: part.dimensions[0],
-            width: part.dimensions[1]
-          }
-
-          let connectorPoint = {
-              x: part.connectorPoint[0],
-              y: part.connectorPoint[1]
-          }
-
-          let url = ('http://130.245.170.216:3003/media/'+step.newPart.img)
-
-          let img_data = url;
-
-          step.newPart.slotPoints = slotPointsCoord;
-          step.newPart.dimensions = dimensions;
-          step.newPart.connectorPoint = connectorPoint;
-          step.newPart.img_src = img_data;
-          this.steps.push(step)
-
-
-
-      })
-
-      await lab_response.partsList.forEach(async (part)=>{
-        let slotPointsCoord = [];
-        for (let j = 0; j < part.slotPoints.length; j++) {
-          slotPointsCoord[j] = {
-            x: part.slotPoints[j][0],
-            y: part.slotPoints[j][1]
+        let part = step.newPart;
+        let slotPoints = [];
+        for (let i=0; i<part.slotPoints.length; i++) {
+          slotPoints[i] = {
+            x: part.slotPoints[i][0],
+            y: part.slotPoints[i][1],
+            connected: false
           };
         }
-        var dimensions = {
+        step.newPart.slotPoints = slotPoints;
+        step.newPart.dimensions = {
           height: part.dimensions[0],
           width: part.dimensions[1]
+        };
+        if (part.connectorPoint && (part.connectorPoint[0] || part.connectorPoint[0] === 0) && (part.connectorPoint[1] || part.connectorPoint[1] === 0)){
+          step.newPart.connectorPoint = {
+              x: part.connectorPoint[0],
+              y: part.connectorPoint[1]
+          };
         }
-        let connectorPoint = {
-            x: part.connectorPoint[0],
-            y: part.connectorPoint[1]
+        else {
+          step.newPart.connectorPoint = {
+              x: .5,
+              y: .5
+          };
         }
+        //step.newPart.img_src = 'http://130.245.170.216:3003/media/'+step.newPart.img;
+        this.steps.push(step)
+      });
 
-
-        let img_data = (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url;
-
+      await lab_response.partsList.forEach(async (part)=>{
+        let slotPoints = [];
+        for (let i=0; i<part.slotPoints.length; i++) {
+          slotPoints[i] = {
+            x: part.slotPoints[i][0],
+            y: part.slotPoints[i][1]
+          };
+        }
+        let connectorPoint = {};
+        if (part.connectorPoint && (part.connectorPoint[0] || part.connectorPoint[0] === 0) && (part.connectorPoint[1] || part.connectorPoint[1] === 0)){
+          connectorPoint = {
+              x: part.connectorPoint[0],
+              y: part.connectorPoint[1]
+          };
+        }
+        else {
+          connectorPoint = {
+              x: .5,
+              y: .5
+          };
+        }
         this.partsList.push({
-            _id: part._id,
-            name: part.name,
-            img_src: img_data, // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-            dimensions: dimensions,
-            slotPoints: slotPointsCoord,
-            connectorPoint: connectorPoint
-          })
-        })
+          _id: part._id,
+          name: part.name,
+          slotPoints: slotPoints,
+          dimensions: {
+            height: part.dimensions[0],
+            width: part.dimensions[1]
+          },
+          connectorPoint: connectorPoint,
+          // img_src: (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url,
+          img_src: part.img_src
+        });
+      });
 
+      this.buildWidth = lab_response.steps[0].newPart.dimensions.width;
+      this.buildHeight = lab_response.steps[0].newPart.dimensions.height;
+      this.resizebuild();
+      window.onresize = this.resizebuild;
+      for (let i=0; i<this.steps.length; i++) {
+        for(let j=0; j<this.steps[i].children.length; j++) {
+          let child = this.steps[this.steps[i].children[j]]
 
-        this.buildWidth = this.steps[0].newPart.dimensions.width;
-        this.buildHeight = this.steps[0].newPart.dimensions.height;
-        this.resizebuild();
-        window.onresize = this.resizebuild;
-        for (var i=0; i<this.steps.length; i++) {
-          for(let j=0; j<this.steps[i].children.length; j++) {
-            let child = this.steps[this.steps[i].children[j]]
-
-            this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
-            this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
-            this.steps[i].newPart.slotPoints[child.parentSlot].connectorPoint = {
-              x: child.newPart.connectorPoint.x,
-              y: child.newPart.connectorPoint.y
-            }
+          this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
+          this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
+          this.steps[i].newPart.slotPoints[child.parentSlot].connectorPoint = {
+            x: child.newPart.connectorPoint.x,
+            y: child.newPart.connectorPoint.y
           }
         }
-        var toggle = true;
-        setInterval(function() {
-          if (toggle){
-            $('.slot, #firstslot').addClass('blink');
-            toggle = false;
-          }
-          else {
-            $('.slot, #firstslot').removeClass('blink');
-            toggle = true;
-          }
-        }, 1000);
-
-
+      }
+      let toggle = true;
+      setInterval(function() {
+        if (toggle){
+          $('.slot, #firstslot').addClass('blink');
+          toggle = false;
+        }
+        else {
+          $('.slot, #firstslot').removeClass('blink');
+          toggle = true;
+        }
+      }, 1000);
     },
     selectthis(id) {
       if (this.selectedPartID == id) {
@@ -222,6 +213,7 @@ export default  {
         this.steps[this.currentStep].newPart.connectedAt = {left: .5, top: .5};
         this.buildparts.push(this.steps[this.currentStep].newPart);
         this.currentStep++;
+        // $('#firstslot').hide();
       }
       else {
         M.toast({displayLength:2000, html: 'Wrong part. Try again'});
