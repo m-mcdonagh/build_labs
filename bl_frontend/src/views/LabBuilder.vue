@@ -139,7 +139,7 @@ export default {
           id: 2,
           name: "CPU smol",
           img_src: require("../assets/img/cpu.png"),
-          dimensions: { width: 1, height: 1 },
+          dimensions: { width: .75, height: 1 },
           slotPoints: [],
           connectorPoint: { x: 0.5, y: 0.5 }
         }
@@ -395,6 +395,7 @@ export default {
         this.buildWidth = newPart.dimensions.width;
         this.buildHeight = newPart.dimensions.height;
       }
+      this.resizebuild();
     },
     minimize(e) {
       if (this.minimizeToggle) {

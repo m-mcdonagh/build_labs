@@ -19,7 +19,7 @@
                 </li>
             </ul>
             <div v-bind:id="'step-modal-' + id" class="modal modal-fixed-footer indigo lighten-5">
-                <div class="modal-content">
+                <div class="modal-content" ref="max_dimensions">
                     <div class="inputs">
                         <div class="input-field col s6">
                             <input id="step-name" type="text" v-model="newname">
@@ -29,19 +29,20 @@
                             <textarea id="step-instruction" class="materialize-textarea" v-model="newinstruction"></textarea>
                             <label for="step-instruction">Instruction</label>
                         </div>
+                        <span class="col s6 flow-text"><b>Part:</b> {{part.name}}</span>
                     </div>
                     <a class="new-part-img-btn modal-trigger" v-bind:href="'#part-selector-' + id">
-                        <img v-bind:src="part.img_src">
+                        <img v-bind:src="part.img_src" v-bind:style="img_dimensions">
                     </a>
                 </div>
                 <div class="modal-footer indigo lighten-4">
                     <a href="#!" class="modal-close btn-flat" v-on:click="$emit('infochange', newname, newinstruction)">Done</a>
-                    <a href="#!" class="modal-close btn-flat">Cancel</a>
+                    <a href="#!" class="modal-close btn-flat" v-on:click="newpart(oldpart)">Cancel</a>
                 </div>
             </div>
             <part-selector v-bind:id="'part-selector-' + id" 
                 v-bind:listofparts="listofparts"
-                v-on:newpart="(part) => $emit('partchange', part)">
+                v-on:newpart="newpart">
             </part-selector>
         </div>
     </div>
@@ -59,13 +60,15 @@ export default {
         'part-selector': partSelector
     },
     data() {
-        return {newname: '', newinstruction: ''}
+        return {newname: '', newinstruction: '', img_dimensions: {}, oldpart:null}
     },
     mounted() {
+        let resizeImg = this.resizeImg;
         M.Dropdown.init($(this.$el).find('.dropdown-trigger').get(0), {constrainWidth:false});
         M.Modal.init($(this.$el).find('.modal').get(0), {
             onOpenEnd(){
-                 M.updateTextFields();
+                M.updateTextFields();
+                resizeImg();
             }
         });
         M.updateTextFields();
@@ -74,6 +77,33 @@ export default {
         saveState() {
             this.newname = this.name;
             this.newinstruction = this.instruction;
+            this.oldpart = this.part;
+        },
+        newpart(part) {
+            this.$emit('partchange', part);
+        },
+        resizeImg() {
+            let aspectRatio = this.part.dimensions.width / this.part.dimensions.height;
+            let maxWidth = this.$refs.max_dimensions.offsetWidth * .475;
+            let maxHeight = this.$refs.max_dimensions.offsetHeight * .95;
+            let width = maxHeight * aspectRatio;
+            if (width <= maxWidth) {
+                this.img_dimensions = {
+                    width: width + 'px',
+                    height: maxHeight + 'px'
+                }
+            }
+            else {
+                this.img_dimensions = {
+                    width: maxWidth + 'px',
+                    height: maxWidth / aspectRatio + 'px'
+                }
+            }
+        }
+    },
+    watch: {
+        part(){
+            this.resizeImg();
         }
     }
 }
