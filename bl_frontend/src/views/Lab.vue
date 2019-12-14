@@ -4,8 +4,8 @@
       <h4 class="center">PARTS</h4>
       <ul id="parts">
         <part-list v-for="part in partsList"
-                   v-bind:key="part._id"
-                   v-bind:id="part._id"
+                   v-bind:key="part.id"
+                   v-bind:id="part.id"
                    v-bind:name="part.name"
                    v-bind:img_src="part.img_src"
                    v-on:selectthis="selectthis">
@@ -97,7 +97,7 @@ export default  {
       let lab_response = {
         name: "peep",
         steps: [{"id":0,"index":0,"parentIndex":null,"parentSlot":null,"children":[1,2],"newPart":{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},"name":"Motherboard","instruction":"Place motherboard","rotation":0},{"id":1,"index":1,"parentIndex":0,"parentSlot":0,"children":[3],"newPart":{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},"name":"CPU","instruction":"Place CPU in mid slot","rotation":0},{"id":2,"index":2,"parentIndex":0,"parentSlot":1,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 1","instruction":"Place CPU in Bottom Left Slot","rotation":0},{"id":3,"index":3,"parentIndex":1,"parentSlot":0,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 2","instruction":"Place CPU smol on top of CPU","rotation":0}],
-        partsList: [{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]}]
+        partsList: [{"_id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},{"_id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},{"_id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]}]
       };
       this.name = lab_response.name;
       
@@ -154,7 +154,7 @@ export default  {
           };
         }
         this.partsList.push({
-          _id: part._id,
+          id: part._id,
           name: part.name,
           slotPoints: slotPoints,
           dimensions: {
@@ -208,12 +208,12 @@ export default  {
       if (this.selectedPartID === null) {
         M.toast({displayLength:2000, html:'Please select a part from the sidebar'});
       }
-      else if (this.selectedPartID == this.steps[this.currentStep].newPart._id) {
+      else if (this.selectedPartID == this.steps[this.currentStep].newPart.id) {
         this.steps[this.currentStep].newPart.connectorPoint = {x:.5, y:.5};
         this.steps[this.currentStep].newPart.connectedAt = {left: .5, top: .5};
         this.buildparts.push(this.steps[this.currentStep].newPart);
         this.currentStep++;
-        // $('#firstslot').hide();
+        $('#firstslot').hide();
       }
       else {
         M.toast({displayLength:2000, html: 'Wrong part. Try again'});
@@ -224,10 +224,10 @@ export default  {
         M.toast({displayLength:2000, html:'Please select a part from the sidebar'});
         return;
       }
-      if (this.selectedPartID != this.steps[this.currentStep].newPart._id && slotIndex != this.steps[this.currentStep].parentSlot){
+      if (this.selectedPartID != this.steps[this.currentStep].newPart.id && slotIndex != this.steps[this.currentStep].parentSlot){
         M.toast({displayLength:2000, html:'Wrong part and wrong slot. Try again'});
       }
-      else if (this.selectedPartID != this.steps[this.currentStep].newPart._id) {
+      else if (this.selectedPartID != this.steps[this.currentStep].newPart.id) {
         M.toast({displayLength:2000, html:'Wrong part. Try again'});
       }
       else if (slotIndex != this.steps[this.currentStep].parentSlot){
@@ -236,6 +236,9 @@ export default  {
       else {
         this.steps[this.currentStep].newPart.connectedAt = {left: slot.x, top: slot.y};
         this.steps[this.currentStep].newPart.parent = parentPartVue;
+        let parent = this.steps[this.steps[this.currentStep].parentIndex];
+        let parentSlot = this.steps[this.currentStep].parentSlot;
+        parent.newPart.slotPoints[parentSlot].connected = true;
         this.buildparts.push(this.steps[this.currentStep].newPart);
         this.currentStep++;
       }
@@ -355,6 +358,7 @@ export default  {
   background-image: radial-gradient(#607d8bAA, #607d8b44 67%);
   transition: background-color .5s;
   background-color: #607d8b20;
+  border: none;
 }
 .blink {
   background-color: #607d8b40 !important;
