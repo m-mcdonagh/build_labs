@@ -288,7 +288,8 @@ export default {
       newPart.stepIndex = index;
       let parentIndex = newPart.parent && newPart.parent.part ? newPart.parent.part.stepIndex : null;
       if (parentIndex !== null) {
-        this.steps[parentIndex].children.push(index)
+        this.steps[parentIndex].children.push(index);
+        this.steps[parentIndex].newPart.slotPoints[newPart.parentSlot].connected = true;
       }
       if (!this.firststep && (parentIndex === undefined || newPart.parentSlot === undefined || parentIndex === null || newPart.parentSlot === null )) {
         M.toast({displayLength:2000, html:'Please specify a slot'});
@@ -348,6 +349,7 @@ export default {
       }
       else{
         let parent = this.steps[this.steps[index].parentIndex];
+        parent.newPart.slotPoints[this.steps[index].parentSlot].connected = false;
         parent.children.splice([parent.children.indexOf(index)], 1);
         this.steps.splice(index, 1);
         for (var i=0; i<this.steps.length; i++) {
@@ -463,7 +465,8 @@ export default {
       for (let i = 0; i < part.slotPoints.length; i++) {
         slotPoints.push({
           x: part.slotPoints[i].x,
-          y: part.slotPoints[i].y
+          y: part.slotPoints[i].y,
+          connected: false
         });
       }
       return {
