@@ -13,7 +13,8 @@
 
       <button id="new-step-btn" class="step-btn modal-trigger" data-target="new-part-selector" v-on:click="newstep">
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
-             v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
+             v-bind:style="selectedPart ? (selectedPart.connectedAt ? {display: 'none'} : 
+                          {height: newStepBtnHeight + 'px'}) : {}">
       </button>
       <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="detach">
         <img src="../assets/img/detach.svg">
@@ -139,7 +140,7 @@ export default {
           id: 2,
           name: "CPU smol",
           img_src: require("../assets/img/cpu.png"),
-          dimensions: { width: .75, height: 1 },
+          dimensions: { width: .1, height: 1 },
           slotPoints: [],
           connectorPoint: { x: 0.5, y: 0.5 }
         }
@@ -149,7 +150,8 @@ export default {
       buildparts: [],
       addicon: require("../assets/img/add-icon.svg"),
       swapicon: require("../assets/img/swap.svg"),
-      firststep: false
+      firststep: false,
+      newStepBtnHeight: 500
     };
   },
   mounted() {
@@ -238,6 +240,7 @@ export default {
     },
     selectpart(part) {
       this.selectedPart = this.clonepart(part);
+      this.newStepBtnHeight = $('.step-btn img').width() * this.selectedPart.dimensions.height / this.selectedPart.dimensions.width;
     },
     newstep() {
       this.newStepToggle = true;
@@ -451,6 +454,9 @@ export default {
           $("#save-exit-btns").height() +
           "px"
       });
+      if (this.selectedPart && this.selectedPart.dimensions) {
+        this.newStepBtnHeight = $('.step-btn img').width() * this.selectedPart.dimensions.height / this.selectedPart.dimensions.width;
+      }
     },
     clonepart(part) {
       let slotPoints = [];
@@ -494,6 +500,7 @@ export default {
         left: 74.5%;
         top: 50%;
         width: 25%;
+        max-height: 100%;
         transform: translate(0, -50%);
         cursor: pointer;
       }
