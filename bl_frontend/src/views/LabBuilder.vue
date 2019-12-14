@@ -202,11 +202,25 @@ export default {
       });
 
       console.log("lab response",lab_response);
+      
       this.name = lab_response.data.name;
       this.steps = lab_response.data.steps;
+
+      //TODO : 
       
-
-
+      
+    //  console.log(this.listofparts[2]);
+    //  this.newstep();
+    //  this.addfirstpart(this.listofparts[0]);
+    //  this.addstep();
+    // // this.addfirstpart(this.listofparts[1]);
+    //  this.selectpart(this.listofparts[2]); 
+    //  var slot = {
+    //    x:0.55,
+    //    y:0.35
+    //  }
+    //  this.addpart(this.listofparts[0],slot, 1);
+      //this.addstep();
 
 
     },
@@ -259,13 +273,13 @@ export default {
         // let img_data = await axios.get(
         //   "http://130.245.170.216:3003/media/" + prt.img
         // );
-        console.log(prt.img);
+        //console.log(prt.img);
 
         let img_data = await axios.get(
           "http://130.245.170.216:3003/media/" + prt.img
         );
 
-        console.log("IMAGE DATA: ", img_data.config);
+       // console.log("IMAGE DATA: ", img_data.config);
         this.listofparts.push({
           id: prt._id,
           name: prt.name,
@@ -313,6 +327,7 @@ export default {
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot, i) {
+      console.log(slot.x,"-",i);
       if (this.selectedPart == null) {
         return;
       }
