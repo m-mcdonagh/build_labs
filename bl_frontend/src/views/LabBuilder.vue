@@ -229,14 +229,20 @@ export default {
 
       var part_ids = [];
 
-      var steps_copy = this.steps.slice();
-      console.log("COPY", steps_copy);
-
-      steps_copy.forEach(function(item, index) {
-        //console.log("ITME",item.newPart.id,"AND", index);
-        // part_ids.push(item.newPart.id);
-        item.newPart = item.newPart.id;
+      let steps_copy = []
+      this.steps.forEach(function(item, index) {
+        steps_copy.push({
+          id: index,
+          parentIndex: item.parentIndex,
+          parentSlot: item.parentSlot,
+          children: item.children,
+          newPart: item.newPart.id,
+          rotation: item.rotation, 
+          name: item.name,
+          instruction: item.instruction       
+        });
       });
+
 
       console.log("THIS IS PART ID", steps_copy);
 
