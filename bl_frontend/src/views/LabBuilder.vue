@@ -320,12 +320,15 @@ export default {
         return;
       }
       if (this.steps[index].children.length > 0){
-        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) + ':<br>&#8195;Step #';
+        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) + 
+                  (this.steps[index].name ? ': ' + this.steps[index].name : '') +':<br>&#8195;Step #';
         for (var i=0; i<this.steps[index].children.length - 1; i++) {
-          msg += (this.steps[index].children[i] + 1) + ',<br>&#8195;Step #'
+          msg += (this.steps[index].children[i] + 1) + 
+              (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + 
+              ',<br>&#8195;Step #'
         }
-        msg += (this.steps[index].children[i] + 1) + '.'
-        M.toast({displayLength:8000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
+        msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + '.'
+        M.toast({displayLength:6000 + this.steps[index].children.length * 2000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
         return;
       }
       if (this.selectedPart && this.selectedPart.connectedAt) {
