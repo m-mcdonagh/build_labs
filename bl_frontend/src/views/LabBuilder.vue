@@ -200,28 +200,56 @@ export default {
 
       this.name = lab_response.data.name;
       this.steps = lab_response.data.steps;
+      this.buildWidth = this.steps[0].newPart.dimensions[0];
+      this.buildHeight = this.steps[0].newPart.dimensions[1];
 
+      this.resizebuild();
+      window.onresize = function resize() {
+        this.resizebuild();
+        this.resizesteps();
+      }.bind(this);
       //steps.newPart is missing connectedAt
       //stepID, stepIndex, parentSlot,vue
-      this.steps.forEach(function(step, index) {
-        
+      for(var i = 0; i<this.steps.length;i++)
+       {
+        let step = this.steps[i];
         step.newPart.parentIndex = step.parentIndex;
         step.newPart.parentSlot = step.parentSlot;
+        let img_response = await axios.get('http://130.245.170.216:3003/media/'+step.newPart.img);
+        step.newPart.img_src = img_response.config.url;
+        
+         
+        for (var j = 0; j < step.newPart.slotPoints.length; j++) {
+          step.newPart.slotPoints[j] = {
+            x: step.newPart.slotPoints[j][0],
+            y: step.newPart.slotPoints[j][1]
+          };
+        }
 
+        step.newPart.connectorPoint = {x:step.newPart.connectorPoint[0],y:step.newPart.connectorPoint[1]};
+
+        step.newPart.dimensions={
+          height:step.newPart.dimensions[1],
+          width:step.newPart.dimensions[0]
+        }
+
+        
         if(step.newPart.parentSlot != null){
-          let parentPart = lab_respnse.data.partsList[step.newPart.parentIndex]; //parent part
+          let parentPart = lab_response.data.partsList[step.newPart.parentIndex]; //parent part
 
-          step.newPart.conenctedAt = {
-            x: parentPart.data.slotPoints[step.newPart.parentSlot][0],
-            y: parentPart.data.slotPoints[step.newPart.parentSlot][1]
+          step.newPart.connectedAt = {
+            left: parentPart.slotPoints[step.newPart.parentSlot][0],
+            top: parentPart.slotPoints[step.newPart.parentSlot][1]
           };
         }
         else{
           step.newPart.connectedAt={
-            x:0.5,
-            y:0.5
+            left:0.5,
+            top:0.5
           }
+
         }
+        let steps = this.steps;
         Object.defineProperty(step.newPart, "vue", {
           configurable: true,
           enumerable: true,
@@ -231,7 +259,7 @@ export default {
           set: function(vue) {
             this._vue = vue;
             step.children.forEach(function(child,index){
-              this.steps[child].parent = vue;
+              steps[child].parent = vue;
             })
           }
         });
@@ -240,7 +268,11 @@ export default {
 
 
 
-      });
+      }
+
+      
+
+    M.toast({ displayLength: 2000, html: "DATA POPULATED" });
 
 
 
