@@ -114,6 +114,7 @@ export default  {
                         ispublished:prt.ispublished
                         })
       }
+    
     },
     async getAllLabs(){
       let userSessionData = await axios({
@@ -176,10 +177,12 @@ export default  {
         }
 
         }
+        
       );
       console.log(publish_response);
       if(publish_response.status == 200){
         part.ispublished = true; // move to axios.then
+        M.toast({displayLength:2000, html:'Part Published'});
       }
     },
     async publishlab(lab){
@@ -202,6 +205,7 @@ export default  {
       console.log(publish_response);
       if(publish_response.status == 200){
         lab.ispublished = true; // move to axios.then
+        M.toast({displayLength:2000, html:'Lab Published'});
       }
       
     },
@@ -225,6 +229,7 @@ export default  {
       if(delete_response.status == 200){
         console.log("delete successful at backend");
         this.parts.splice(this.parts.indexOf(part), 1); // move to axios.then
+        M.toast({displayLength:2000, html:'Part Removed'});
       }
       
     },
@@ -241,6 +246,7 @@ export default  {
       if(delete_response.status == 200){
         console.log("delete successful at backend");
         this.labs.splice(this.labs.indexOf(lab), 1); //move to axios.then
+        M.toast({displayLength:2000, html:'Lab Removed'});
         }
         
     }          

@@ -48,7 +48,7 @@
     </div>
     
     <div id="save-exit-btns" class="row">
-      <button v-on:click="saveLab()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
+      <button v-on:click="saveButton()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
       <a href="/create" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</a>
     </div>
 
@@ -157,11 +157,59 @@ export default {
   mounted() {
     $(".modal").modal();
     M.updateTextFields();
+
+    var urlParams = new URLSearchParams(location.search);
+    var id = urlParams.get('id');
+    console.log(id);
+
+    if(id != null){
+      this.populateData(id);
+      console.log("DATA WAS POPULATED");
+      M.toast({displayLength:2000, html:'Lab Loaded'});
+    }
+
+
+
     this.resizesteps();
     window.onresize = this.resizesteps;
     this.getListOfParts();
   },
   methods: {
+
+    saveButton(){
+      var urlParams = new URLSearchParams(location.search);
+      var id = urlParams.get('id');
+
+      if(id == null){
+        console.log("SavePart EXECUTING");
+        this.saveLab();
+      }
+      else{
+        console.log("UPDATE PART EXECUTED");
+        this.updateLab();
+      }
+
+    },
+    async populateData(id){
+       M.toast({displayLength:2000, html:'DATA IS BEING POPULATED Loaded'});
+
+       let lab_response = await axios({
+        method: "get",
+        url: "http://localhost:8080/labs/lab",
+        params:{
+          id:id
+        }
+      });
+
+      console.log("lab response",lab_response);
+      this.name = lab_response.data.name;
+      this.steps = lab_response.data.steps;
+      
+
+
+
+
+    },
     async saveLab() {
       console.log("CURRENT PARTS BUILT", this.buildparts);
 
@@ -194,6 +242,7 @@ export default {
           //partList: part_ids //Causes circular reference
         }
       });
+      M.toast({displayLength:2000, html:'Lab Saved'});
     },
     async getListOfParts() {
       let part_response = await axios({
@@ -228,7 +277,6 @@ export default {
             height: prt.dimensions[0],
             width: prt.dimensions[1]
           },
-          //TODO : Fix img_src
           img_src: img_data.config.url, //require("../assets/img/motherboard.png"),
           slotPoints: slotPointsCoord,
           connectorPoint: {
