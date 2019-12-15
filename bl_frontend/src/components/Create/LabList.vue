@@ -112,15 +112,20 @@ export default {
   //template:'<button v-on:click="postButton">Reverse Message</button>',
   methods: {
     async assignLab() {
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
       console.log("Assign lab axios request");
       console.log(this.id);
           let response = await axios({
           method: "post",
-          url: "http://localhost:8080/labs/assignlab",
+          url: "api/labs/assignlab",
           data:{
               labId:this.id,
               assignee:this.assignee,
-              assigner:"test2"
+              assigner:username
           }
 
         });

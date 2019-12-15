@@ -120,6 +120,15 @@ public class PartController {
         return "temp";
     }
 
+    @RequestMapping(value = "/copypart", method = RequestMethod.POST)
+    public String copyPart(@RequestParam String partId, @RequestParam String username){
+        Part part = partService.getPart(partId);
+
+        return partService.addNewPart(username, part.clonePart());
+
+    }
+
+
 
 
     @RequestMapping(value = "/part", method = RequestMethod.POST)

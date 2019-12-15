@@ -147,20 +147,45 @@ export default  {
         height: height
       });
     },
-    copypart(part) {
+    async copypart(part) {
+
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
       console.log('copy part', part.id);
-      // TODO: axios 
-          // REQ->server with part.id
-          // server->RES with new cloned ubpublished part JSON
-          // then() appends this to this.parts 
+     
+      let lab_response = await axios({
+        method: "post",
+        url: "/api/parts/copypart",
+        params:{
+          partId :part.id,
+          username: username
+        }
+      });
+      location.reload();
+      M.toast({displayLength:2000, html:'Part Copied'});
 
     },
-    copylab(lab){
+    async copylab(lab){
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
       console.log('copy lab', lab.id);
-      // TODO: axios
-          // REQ->server with lab.id
-          // server->RES with new cloned, ubpublished lab JSON
-          // then appends this to this.labs
+      let lab_response = await axios({
+        method: "post",
+        url: "api/labs/copylab",
+        params:{
+          labId :lab.id,
+          username:username
+        }
+      });
+      location.reload();
+      M.toast({displayLength:2000, html:'Lab Copied'});
+      
     },
     async publishpart(part){
       console.log('publish part', part.id);
@@ -179,6 +204,7 @@ export default  {
         }
         
       );
+
       console.log(publish_response);
       if(publish_response.status == 200){
         part.ispublished = true; // move to axios.then
@@ -186,6 +212,7 @@ export default  {
       }
     },
     async publishlab(lab){
+      
       console.log('publish part', lab.id);
       // TODO axios
           // REQ->server with lab.id
@@ -194,7 +221,7 @@ export default  {
 
       let publish_response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/publishlab",
+        url: "/api/labs/publishlab",
 
         params:{
           labId:lab.id,
@@ -241,7 +268,7 @@ export default  {
 
       let delete_response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/deletelab",params:{ labID:lab.id } });
+        url: "api/labs/deletelab",params:{ labID:lab.id } });
       console.log(delete_response);
       if(delete_response.status == 200){
         console.log("delete successful at backend");

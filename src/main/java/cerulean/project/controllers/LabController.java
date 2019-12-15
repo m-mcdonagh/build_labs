@@ -113,6 +113,36 @@ public class LabController {
         //partIDs.forEach((n) -> partsList.add(partService.getPart(n)));
     }
 
+    @RequestMapping(value ="/lab/updatelab", method = RequestMethod.POST)
+    public void updateLab(@RequestBody String labJson, @RequestParam String username) {
+        System.out.println(labJson);
+
+
+
+        JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
+        JsonArray j_stepsarr = jsonObject.getAsJsonArray("steps");
+
+
+        List<Part> partsList = new ArrayList<>();
+        for(int i = 0 ; i < j_stepsarr.size(); i++){
+            String partID = j_stepsarr.get(i).getAsJsonObject().remove("newPart").toString();
+            Part p = partService.getPart(partID.substring(1,partID.length()-1));
+            partsList.add(p);
+            j_stepsarr.get(i).getAsJsonObject().remove("newPart");
+        }
+
+        Lab lab = gson.fromJson(jsonObject, Lab.class);
+
+        for(int i = 0; i < lab.getSteps().size(); i++){
+            lab.getSteps().get(i).setNewPart(partsList.get(i));
+        }
+
+        lab.setPartsList(partsList);
+        labService.updateLab(lab);
+        System.out.println("Done");
+
+    }
+
     @RequestMapping(value ="/lab/{labId}", method = RequestMethod.GET)
     public String getPartsInLab(@PathVariable String labId) {
         Lab lab = labService.getLab(labId);
@@ -141,6 +171,18 @@ public class LabController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/copylab", method = RequestMethod.POST)
+    public ResponseEntity<String> copylab(@RequestParam String labId,@RequestParam String username) {
+
+        Lab lab = labService.getLab(labId);
+        Account acc = accountService.getAccount(username);
+        Lab newLab = lab.cloneLab();
+        labService.addNewLab(username , newLab);
+        acc.getCreatedLabs_ids().add(newLab.get_id());
+        accountService.save(acc);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

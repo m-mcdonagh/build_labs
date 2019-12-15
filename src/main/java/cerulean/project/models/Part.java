@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Document
-public class Part {
+public class Part{
 
     @Id
     private String _id;
@@ -35,6 +35,8 @@ public class Part {
         return name;
     }
 
+    public void setName(String name){this.name = name;}
+
     public String getImg() {
         return img;
     }
@@ -58,5 +60,33 @@ public class Part {
     public Boolean getIspublished(){return ispublished;}
 
     public void setIspublished(Boolean ispublished){this.ispublished = ispublished;}
+
+
+    private void set_id(String id){
+        this._id = id;
+    }
+
+    public Part clonePart(){
+        String id = UUID.randomUUID().toString();
+        this.set_id(id);
+        this.setName(this.getName()+" Copy");
+        this.setIspublished(false);
+
+        return this;
+    }
+
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        Part cloned = (Part)super.clone();
+//        return cloned;
+//    }
+//
+//    public Part clonePart(Part part) throws CloneNotSupportedException {
+//        Part newPart = (Part)part.clone();
+//        String id = UUID.randomUUID().toString();
+//        newPart.set_id(id);
+//        newPart.setName(newPart.getName() + " COPY");
+//        return newPart;
+//    }
 
 }
