@@ -221,8 +221,8 @@ public class PartController {
     }
     private static String UPLOADED_FOLDER = "/Users/Colin/bl_imgs/";
 
-    @RequestMapping(value = "/addMedia", method = RequestMethod.POST)
-    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+    @RequestMapping(value = "/addMedia", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public String singleFileUpload(@RequestParam("content") MultipartFile file) {
         String id = UUID.randomUUID().toString();
 
         try {
@@ -233,8 +233,9 @@ public class PartController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "{id:" + id+ "}";
+        return "id";
     }
+
     @RequestMapping(value = "/media", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
     public byte[] singleFileUpload(@RequestParam String id) {
         try {

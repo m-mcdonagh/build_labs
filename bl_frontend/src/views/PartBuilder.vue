@@ -186,7 +186,7 @@ export default  {
         }
 
         let img_data = await axios.get(
-          "http://130.245.170.216:3003/media/" + prt.img
+          "http://130.245.170.131/api/parts/media?id=" + prt.img
         );
         this.part.img_src = img_data.config.url;
         this.part.slots = slotPointsCoord;
@@ -221,7 +221,7 @@ export default  {
         console.log("EDITING PART");
       }
       //check if image was replaced 
-      let media_response = await axios.get('http://130.245.170.216:3003/media/'+this.img_id)
+      let media_response = await axios.get('http://130.245.170.131/api/parts/media?id='+this.img_id)//change
       .then(function(response){
         return 200;
       })
@@ -235,7 +235,7 @@ export default  {
         let fd = new FormData();
         fd.append('content',this.part.img_file);
 
-        let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
+        let image_response = await axios.post('http://130.245.170.131/api/parts/addmedia', fd, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -281,7 +281,7 @@ export default  {
       let fd = new FormData();
       fd.append('content',this.part.img_file);
 
-      let image_response = await axios.post('http://130.245.170.216:3003/addmedia', fd, {
+      let image_response = await axios.post('http://130.245.170.131/api/parts/addMedia', fd, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -323,7 +323,7 @@ export default  {
 
       //TODO : Figure out why get request throws 400, also remove it after it works
       console.log("GET PART AXIOS REQUEST",response3.data);
-      let response4 = await axios.get('http://130.245.170.216:3003/media/'+response3.data.img);
+      let response4 = await axios.get('http://130.245.170.131/api/parts/media?id='+response3.data.img);
       console.log(response4);
       M.toast({displayLength:2000, html:'Part Saved'});
     

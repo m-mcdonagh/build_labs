@@ -129,7 +129,7 @@ export default  {
               y: part.connectorPoint[1]
           }
 
-          let url = ('http://130.245.170.216:3003/media/'+step.newPart.img)
+          let url = 'http://130.245.170.131/api/parts/media?id='+step.newPart.img
 
           let img_data = url;
 
@@ -161,7 +161,7 @@ export default  {
         }
 
 
-        let img_data = (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url;
+        let img_data = 'http://130.245.170.131/api/media?id='+part.img
 
         this.partsList.push({
             _id: part._id,

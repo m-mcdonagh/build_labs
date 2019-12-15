@@ -261,7 +261,7 @@ export default {
         console.log(prt.img);
 
         let img_data = await axios.get(
-          "http://130.245.170.216:3003/media/" + prt.img
+          "http://130.245.170.131/api/parts/media?id=" + prt.img
         );
 
         console.log("IMAGE DATA: ", img_data.config);
