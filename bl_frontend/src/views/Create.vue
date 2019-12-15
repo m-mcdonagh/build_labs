@@ -143,20 +143,34 @@ export default  {
         height: height
       });
     },
-    copypart(part) {
+    async copypart(part) {
       console.log('copy part', part.id);
-      // TODO: axios 
-          // REQ->server with part.id
-          // server->RES with new cloned ubpublished part JSON
-          // then() appends this to this.parts 
+     
+      let lab_response = await axios({
+        method: "post",
+        url: "http://localhost:8080/parts/copypart",
+        params:{
+          partId :part.id,
+          username:"test2"
+        }
+      });
+      location.reload();
+      M.toast({displayLength:2000, html:'Part Copied'});
 
     },
-    copylab(lab){
+    async copylab(lab){
       console.log('copy lab', lab.id);
-      // TODO: axios
-          // REQ->server with lab.id
-          // server->RES with new cloned, ubpublished lab JSON
-          // then appends this to this.labs
+      let lab_response = await axios({
+        method: "post",
+        url: "http://localhost:8080/labs/copylab",
+        params:{
+          labId :lab.id,
+          username:"test2"
+        }
+      });
+      location.reload();
+      M.toast({displayLength:2000, html:'Lab Copied'});
+      
     },
     async publishpart(part){
       console.log('publish part', part.id);
@@ -175,6 +189,7 @@ export default  {
         }
         
       );
+
       console.log(publish_response);
       if(publish_response.status == 200){
         part.ispublished = true; // move to axios.then

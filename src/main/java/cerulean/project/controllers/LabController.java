@@ -174,6 +174,18 @@ public class LabController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/copylab", method = RequestMethod.POST)
+    public ResponseEntity<String> copylab(@RequestParam String labId,@RequestParam String username) {
+
+        Lab lab = labService.getLab(labId);
+        Account acc = accountService.getAccount(username);
+        Lab newLab = lab.cloneLab();
+        labService.addNewLab(username , newLab);
+        acc.getCreatedLabs_ids().add(newLab.get_id());
+        accountService.save(acc);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/getassignedlabs", method = RequestMethod.GET)
     public String getAssignedLabs(@RequestParam String username) {
 
