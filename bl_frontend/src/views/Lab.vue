@@ -102,12 +102,11 @@ export default  {
       this.name = lab_response.name;
       
       await lab_response.steps.forEach(async (step)=>{
-        let part = step.newPart;
         let slotPoints = [];
         for (let i=0; i<part.slotPoints.length; i++) {
           slotPoints[i] = {
-            x: part.slotPoints[i][0],
-            y: part.slotPoints[i][1],
+            x: step.newPart.slotPoints[i][0],
+            y: step.newPart.slotPoints[i][1],
             connected: false
           };
         }
@@ -153,6 +152,13 @@ export default  {
               y: .5
           };
         }
+<<<<<<< HEAD
+=======
+
+
+        let img_data = 'http://130.245.170.131/api/media?id='+part.img
+
+>>>>>>> master
         this.partsList.push({
           id: part._id,
           name: part.name,
