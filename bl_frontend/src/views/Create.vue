@@ -148,14 +148,20 @@ export default  {
       });
     },
     async copypart(part) {
+
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
       console.log('copy part', part.id);
      
       let lab_response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/copypart",
+        url: "/api/parts/copypart",
         params:{
           partId :part.id,
-          username:"test2"
+          username: username
         }
       });
       location.reload();
@@ -163,13 +169,18 @@ export default  {
 
     },
     async copylab(lab){
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
       console.log('copy lab', lab.id);
       let lab_response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/copylab",
+        url: "api/labs/copylab",
         params:{
           labId :lab.id,
-          username:"test2"
+          username:username
         }
       });
       location.reload();
@@ -201,6 +212,7 @@ export default  {
       }
     },
     async publishlab(lab){
+      
       console.log('publish part', lab.id);
       // TODO axios
           // REQ->server with lab.id
@@ -209,7 +221,7 @@ export default  {
 
       let publish_response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/publishlab",
+        url: "/api/labs/publishlab",
 
         params:{
           labId:lab.id,
@@ -256,7 +268,7 @@ export default  {
 
       let delete_response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/deletelab",params:{ labID:lab.id } });
+        url: "api/labs/deletelab",params:{ labID:lab.id } });
       console.log(delete_response);
       if(delete_response.status == 200){
         console.log("delete successful at backend");

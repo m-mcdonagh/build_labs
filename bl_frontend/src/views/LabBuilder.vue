@@ -176,6 +176,14 @@ export default {
   },
   methods: {
     saveButton() {
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
+
+
+
       var urlParams = new URLSearchParams(location.search);
       var id = urlParams.get("id");
 
@@ -214,9 +222,9 @@ export default {
 
       let response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/lab/updatelab",
+        url: "/api/labs/lab/updatelab",
         params: {
-          username: "test2"
+          username: username
         },
         data: {
           _id: labid,
@@ -233,7 +241,7 @@ export default {
 
       let lab_response = await axios({
         method: "get",
-        url: "http://localhost:8080/labs/lab",
+        url: "/api/labs/lab",
         params: {
           id: id
         }
