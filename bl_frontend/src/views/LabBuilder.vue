@@ -119,6 +119,7 @@ export default {
       buildHeight: null,
       displayWidth: null,
       displayHeight: null,
+      editLab:false,
       listofparts: [
         // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
         {
@@ -165,6 +166,7 @@ export default {
     if (id != null) {
       this.populateData(id);
       console.log("DATA WAS POPULATED");
+      this.editLab = true;
       M.toast({ displayLength: 2000, html: "Lab Loaded" });
     }
 
@@ -178,15 +180,56 @@ export default {
       var id = urlParams.get("id");
 
       if (id == null) {
-        console.log("SavePart EXECUTING");
+        //console.log("SavePart EXECUTING");
+        this.editLab = false;
         this.saveLab();
       } else {
-        console.log("UPDATE PART EXECUTED");
+        //console.log("UPDATE PART EXECUTED");
         this.updateLab();
       }
     },
+
+    async updateLab(){
+      var urlParams = new URLSearchParams(location.search);
+      var labid = urlParams.get("id");
+      console.log("CURRENT PARTS BUILT", this.steps);
+
+      var part_ids = [];
+
+      let steps_copy = [];
+      this.steps.forEach(function(item, index) {
+        steps_copy.push({
+          id: index,
+          parentIndex: item.parentIndex,
+          parentSlot: item.parentSlot,
+          children: item.children,
+          newPart: item.newPart.id,
+          rotation: item.rotation,
+          name: item.name,
+          instruction: item.instruction
+        });
+      });
+
+      console.log("THIS IS PART ID", steps_copy);
+
+      let response = await axios({
+        method: "post",
+        url: "http://localhost:8080/labs/lab/updatelab",
+        params: {
+          username: "test2"
+        },
+        data: {
+          _id: labid,
+          name: this.name,
+          steps: steps_copy
+          //partList: part_ids //Causes circular reference
+        }
+      });
+      M.toast({ displayLength: 2000, html: "Lab Updated" });
+
+    },
     async populateData(id) {
-      M.toast({ displayLength: 2000, html: "DATA IS BEING POPULATED Loaded" });
+      //M.toast({ displayLength: 2000, html: "DATA IS BEING POPULATED Loaded" });
 
       let lab_response = await axios({
         method: "get",
@@ -202,6 +245,7 @@ export default {
       this.steps = lab_response.data.steps;
       this.buildWidth = this.steps[0].newPart.dimensions[0];
       this.buildHeight = this.steps[0].newPart.dimensions[1];
+      this.stepCounter = this.steps.length;
 
       this.resizebuild();
       window.onresize = function resize() {
@@ -217,7 +261,8 @@ export default {
         step.newPart.parentSlot = step.parentSlot;
         let img_response = await axios.get('http://130.245.170.216:3003/media/'+step.newPart.img);
         step.newPart.img_src = img_response.config.url;
-        
+        step.newPart.stepIndex = i;
+        step.newPart.id = step.newPart._id;
          
         for (var j = 0; j < step.newPart.slotPoints.length; j++) {
           step.newPart.slotPoints[j] = {
@@ -398,6 +443,9 @@ export default {
     },
     addstep() {
       let index = this.steps.length;
+      // if(this.editLab){
+      //   index++;
+      // }
       let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
       newPart.stepIndex = index;
       let parentIndex =
