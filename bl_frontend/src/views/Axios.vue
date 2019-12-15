@@ -29,7 +29,7 @@ export default {
   mounted() {
     console.log("IM HERE");
     axios
-      .get("http://localhost:8080/axios/axios")
+      .get("/api/axios/axios")
       .then(response => {
         // JSON responses are automatically parsed.
         this.info = response.data;
@@ -52,7 +52,7 @@ export default {
 
       axios({
         method: "post",
-        url: "http://localhost:8080/axios/postPost",
+        url: "/api/axios/postPost",
         data: {
           firstName: "First Name",
           lastName: "Last Name"

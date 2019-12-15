@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Array;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +25,8 @@ import java.util.UUID;
 //        /accounts/						        GET
 //
 
-//@RestController
-@RequestMapping("/accounts")
+@RestController
+@RequestMapping("/api/accounts")
 public class AccountController {
 
     @Autowired
@@ -34,6 +35,19 @@ public class AccountController {
     @RequestMapping(value ="/account", method = RequestMethod.GET)
     public String getAccount(@RequestParam String username) {
         return new Gson().toJson(accountService.getAccount(username));
+    }
+
+    @RequestMapping(value = "/session", method = RequestMethod.GET)
+    public String getSessionAccount() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+
+        return username;
     }
 
 

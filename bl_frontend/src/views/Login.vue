@@ -1,18 +1,18 @@
 <template lang="html">
 <div class="main" id="login-main">
   <div id="login" class="container light-blue darken-1">
-    <form id="login-form"  name="loginForm" class="section">
+    <form id="login-form"  name="loginForm" class="section" action="/api/login" method="post">
       <h1 class="center">Login</h1>
       <div class="row">
         <div class="input-field col s12 m10 offset-m1">
-          <input id="email" name="email" type="email" required v-model="login.email">
-          <label for="email">Email</label>
+          <input id="username" name="username" type="text" required v-model="login.username">
+          <label for="username">Username</label>
         </div>
         <div class="input-field col s12 m10 offset-m1 ">
           <input id="password" name="password" type="password" required v-model="login.password">
           <label for="password">Password</label>
         </div>
-        <button v-on:click="loginUser()" class="submit btn light-blue accent-1 waves-effect col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit"  >
+        <button class="submit btn light-blue accent-1 waves-effect col s6 m4 l2 offset-s3 offset-m4 offset-l5" type="submit">
           <i class="material-icons right">send</i>
           Submit
         </button>
@@ -58,7 +58,7 @@
         <button id="hide-register" class="btn light-blue accent-1 waves-effect col s1 m3 l2 offset-s1 offset-m2 offset-l3" type="button">
           <i class="material-icons left">arrow_back</i>Cancel
         </button>
-        <button v-on:click="registerButton()" class="btn light-blue accent-1 waves-effect col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="submit">
+        <button v-on:click="registerButton()" class="btn light-blue accent-1 waves-effect col s8 m3 l2 offset-s1 offset-m2 offset-l2" type="button">
           <i class="material-icons right">send</i>Submit
         </button>
       </div>
@@ -93,7 +93,7 @@ export default  {
     return{
     login:{
       password:"",
-      email:""
+      username:""
 
     },
     reg:{
@@ -108,7 +108,7 @@ export default  {
     async registerButton(){
       let resp =  await axios({
         method: "post",
-        url: "http://localhost:8080/register",
+        url: "/api/register",
         params: {
           username: this.reg.username,
           password: this.reg.password,
@@ -121,20 +121,7 @@ export default  {
       })
       // alert(JSON.stringify(resp))
     },
-    async loginUser(){
-    //   // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-    //     axios.post("http://localhost:8080/login", {
-    //             "email":"cc@cc.c",
-    //             "password":"cc@cc.c"
-    //       })
-    //       .then((ff)=>{
-    //         alert("ok")
-    //       })
-    //       .catch((err)=>{
-    //         alert(err)
-    //       })
-    //
-    }
+
   },
   name: 'login',
   mounted (){

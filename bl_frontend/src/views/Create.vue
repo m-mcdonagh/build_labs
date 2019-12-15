@@ -102,10 +102,9 @@ export default  {
     async getAllParts(){
     let part_response = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/",
-        params:{
-          username:"test2"
-        }});
+        url: "/api/parts/allparts"
+        }
+      );
     console.log("PARTS DATA",part_response.data);
     let i = 0;
     for(i = 0;i<part_response.data.length;i++){
@@ -118,11 +117,16 @@ export default  {
     
     },
     async getAllLabs(){
+      let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
     let lab_response = await axios({
         method: "get",
-        url: "http://localhost:8080/labs/",
+        url: "/api/labs/",
         params:{
-          id :"test2",
+          id :username,
         }
       },
 
@@ -180,7 +184,7 @@ export default  {
 
       let publish_response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/publishpart",
+        url: "/api/parts/publishpart",
 
         params:{
           partId:part.id,
@@ -228,7 +232,7 @@ export default  {
 
       let delete_response = await axios({
         method: "post",
-        url: "http://localhost:8080/parts/deletepart",
+        url: "/api/parts/deletepart",
 
         params:{
           partId:part.id,

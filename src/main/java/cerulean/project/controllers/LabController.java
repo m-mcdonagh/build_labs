@@ -21,9 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping(value ="/labs")
+@RequestMapping(value ="/api/labs")
 public class LabController {
 
     @Autowired
@@ -54,6 +53,7 @@ public class LabController {
         Lab lab = labService.getLab(id);
         return gson.toJson(lab);
     }
+
     @RequestMapping(value ="/lab", method = RequestMethod.POST)
     public void addLab(@RequestBody String labJson, @RequestParam String username) {
         System.out.println(labJson);

@@ -10,6 +10,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,19 @@ import java.util.*;
 
 import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
-import java.security.MessageDigest;
-import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@CrossOrigin(origins = "http://localhost:8081")
+import java.security.MessageDigest;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Collectors;
+import java.util.UUID;
 @RestController
-@RequestMapping(value ="/parts")
+@RequestMapping(value ="/api/parts")
 public class PartController {
 
 //    /parts							GET 		List Parts
@@ -220,7 +228,34 @@ public class PartController {
         System.out.println(partId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    private static String UPLOADED_FOLDER = "/Users/Colin/bl_imgs/";
 
+    @RequestMapping(value = "/addMedia", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public String singleFileUpload(@RequestParam("content") MultipartFile file) {
+        String id = UUID.randomUUID().toString();
+
+        try {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + id);
+            Files.write(path, bytes);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "id";
+    }
+
+    @RequestMapping(value = "/media", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+    public byte[] singleFileUpload(@RequestParam String id) {
+        try {
+            Path path = Paths.get(UPLOADED_FOLDER + id);
+            return Files.readAllBytes(path);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
 }
 
 

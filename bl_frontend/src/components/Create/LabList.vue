@@ -130,9 +130,9 @@ export default {
 
       await axios({
         method: "get",
-        url: "http://localhost:8080/labs/",
-        params: {
-          id: "someidea"
+        url: "/api/labs/",
+        params:{
+            id : "someidea"
         }
       })
         .then(function(response) {

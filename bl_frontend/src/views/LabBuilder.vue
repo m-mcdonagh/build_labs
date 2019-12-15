@@ -11,9 +11,10 @@
         v-on:slotclick="addpart">
       </build-so-far>
 
-      <button id="new-step-btn" class="step-btn modal-trigger" data-target="part-selector" v-on:click="newstep">
+      <button id="new-step-btn" class="step-btn modal-trigger" data-target="new-part-selector" v-on:click="newstep">
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
-             v-bind:style="selectedPart && selectedPart.connectedAt ? {display: 'none'} : {}">
+             v-bind:style="selectedPart ? (selectedPart.connectedAt ? {display: 'none'} : 
+                          {height: newStepBtnHeight + 'px'}) : {}">
       </button>
       <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="detach">
         <img src="../assets/img/detach.svg">
@@ -37,7 +38,10 @@
           v-bind:index="index"
           v-bind:name="step.name"
           v-bind:instruction="step.instruction"
-          v-bind:rotation="step.rotation"
+          v-bind:part="step.newPart"
+          v-bind:listofparts="listofparts"
+          v-on:infochange="(newName, newInstruction) => {step.name = newName; step.instruction = newInstruction}"
+          v-on:partchange="(newPart) => {partchange(index, newPart);}"
           v-on:remove="deletestep(index)">
         </step-component>
       </div>
@@ -74,33 +78,28 @@
       </div>
     </div>
 
-
-    <div id="part-selector" class="modal modal-fixed-footer">
-      <div class="modal-content indigo lighten-3">
-        <ul class="collection">
-          <li v-for="part in listofparts" class="collection-item">
-            <a class="modal-close btn-flat" v-on:click="steps.length ? selectpart(part) : addfirstpart(part)">
-              {{ part.name }}
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="modal-footer indigo lighten-4">
-        <a id="part-cancel" class="modal-close btn-flat" v-on:click="modalcancel">CANCEL</a>
-      </div>
-    </div>
+    <part-selector id="new-part-selector" 
+                   v-bind:listofparts="listofparts"
+                   v-on:newpart="newpart"
+                   v-on:modalcancel="modalcancel">
+    </part-selector>
+    
   </div>
 </template>
 
 <script>
 import buildSoFar from "../components/Build.vue";
 import stepComponent from "../components/LabBuilder/Step.vue";
+import partSelector from "../components/LabBuilder/PartSelector.vue";
+
+import Vue from 'vue'
 
 export default {
   name: "lab-builder",
   components: {
     "build-so-far": buildSoFar,
-    "step-component": stepComponent
+    "step-component": stepComponent,
+    "part-selector": partSelector
   },
   created() {
     this.$store.commit("changeNav", "indigo lighten-1");
@@ -142,7 +141,7 @@ export default {
           id: 2,
           name: "CPU smol",
           img_src: require("../assets/img/cpu.png"),
-          dimensions: { width: 1, height: 1 },
+          dimensions: { width: .1, height: 1 },
           slotPoints: [],
           connectorPoint: { x: 0.5, y: 0.5 }
         }
@@ -152,7 +151,8 @@ export default {
       buildparts: [],
       addicon: require("../assets/img/add-icon.svg"),
       swapicon: require("../assets/img/swap.svg"),
-      firststep: false
+      firststep: false,
+      newStepBtnHeight: 500
     };
   },
   mounted() {
@@ -328,6 +328,7 @@ export default {
 
       var part_ids = [];
 
+
       let steps_copy = [];
       this.steps.forEach(function(item, index) {
         steps_copy.push({
@@ -342,13 +343,17 @@ export default {
         });
       });
 
-      console.log("THIS IS PART ID", steps_copy);
-
+      console.log("Step Copy", steps_copy);
+      let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
       let response = await axios({
         method: "post",
-        url: "http://localhost:8080/labs/lab",
+        url: "/api/labs/lab",
         params: {
-          username: "test2"
+          username: username
         },
         data: {
           name: this.name,
@@ -361,7 +366,7 @@ export default {
     async getListOfParts() {
       let part_response = await axios({
         method: "get",
-        url: "http://localhost:8080/parts/allparts/published"
+        url: "/api/parts/allparts",
       });
       for (var i = 0; i < part_response.data.length; i++) {
         var prt = part_response.data[i];
@@ -380,7 +385,7 @@ export default {
         //console.log(prt.img);
 
         let img_data = await axios.get(
-          "http://130.245.170.216:3003/media/" + prt.img
+          "http://130.245.170.131/api/parts/media?id=" + prt.img
         );
 
         // console.log("IMAGE DATA: ", img_data.config);
@@ -402,6 +407,7 @@ export default {
     },
     selectpart(part) {
       this.selectedPart = this.clonepart(part);
+      this.newStepBtnHeight = $('.step-btn img').width() * this.selectedPart.dimensions.height / this.selectedPart.dimensions.width;
     },
     newstep() {
       this.newStepToggle = true;
@@ -411,6 +417,9 @@ export default {
       this.selectedPart.connectedAt = null;
       this.selectedPart.parent = null;
       this.selectedPart.parentSlot = null;
+    },
+    newpart(part) {
+      this.steps.length ? this.selectpart(part) : this.addfirstpart(part)
     },
     addfirstpart(part) {
       if (this.buildparts.length) this.buildparts.pop();
@@ -431,8 +440,9 @@ export default {
       this.buildparts.push(newPart);
     },
     addpart(parentPartVue, slot, i) {
-      console.log(slot.x, "-", i);
-      if (this.selectedPart == null) {
+
+      if (this.selectedPart == null || this.selectedPart.connectedAt) {
+
         return;
       }
       this.selectedPart.connectedAt = { left: slot.x, top: slot.y };
@@ -454,6 +464,9 @@ export default {
           : null;
       if (parentIndex !== null) {
         this.steps[parentIndex].children.push(index);
+
+        this.steps[parentIndex].newPart.slotPoints[newPart.parentSlot].connected = true;
+
       }
       if (
         !this.firststep &&
@@ -496,20 +509,18 @@ export default {
       if (!this.steps[index]) {
         return;
       }
-      if (this.steps[index].children.length > 0) {
-        let msg =
-          "Cannot Delete. The following steps are dependant on Step #" +
-          (index + 1) +
-          ":<br>&#8195;Step #";
-        for (var i = 0; i < this.steps[index].children.length - 1; i++) {
-          msg += this.steps[index].children[i] + 1 + ",<br>&#8195;Step #";
+
+      if (this.steps[index].children.length > 0){
+        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) + 
+                  (this.steps[index].name ? ': ' + this.steps[index].name : '') +':<br>&#8195;Step #';
+        for (var i=0; i<this.steps[index].children.length - 1; i++) {
+          msg += (this.steps[index].children[i] + 1) + 
+              (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + 
+              ',<br>&#8195;Step #'
         }
-        msg += this.steps[index].children[i] + 1 + ".";
-        M.toast({
-          displayLength: 8000,
-          classes: "big-toast",
-          html: "<span>" + msg + "</span>"
-        });
+        msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + '.'
+        M.toast({displayLength:6000 + this.steps[index].children.length * 2000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
+
         return;
       }
       if (this.selectedPart && this.selectedPart.connectedAt) {
@@ -521,8 +532,14 @@ export default {
       this.buildparts.splice(index, 1);
       if (this.steps.length == 1) {
         this.steps.pop();
-      } else {
+
+        this.selectedPart = null;
+        this.newStepToggle = false;
+      }
+      else{
+
         let parent = this.steps[this.steps[index].parentIndex];
+        parent.newPart.slotPoints[this.steps[index].parentSlot].connected = false;
         parent.children.splice([parent.children.indexOf(index)], 1);
         this.steps.splice(index, 1);
         for (var i = 0; i < this.steps.length; i++) {
@@ -536,6 +553,44 @@ export default {
           this.steps[i].index = i;
         }
       }
+    },
+    partchange(index, newPart) {
+      if (this.steps[index].children.length) {
+        for (let i=0; i<this.steps[index].children.length; i++) {
+          if (this.steps[this.steps[index].children[i]].parentSlot >= newPart.slotPoints.length) {
+            let msg = 'Cannot Swap because the dependanc' + (this.steps[index].children.length == 1? 'y' : 'ies') + 
+                ' of Step#' + (index + 1) + (this.steps[index].name ? ':' + this.steps[index].name : '') + ' cannot be mapped from ' +
+                this.steps[index].newPart.name + ' to ' + newPart.name + '.<br>The dependanc' +
+                (this.steps[index].children.length == 1? 'y is' : 'ies are') + ':<br>&#8195;Step #';
+
+            for (i=0; i<this.steps[index].children.length - 1; i++) {
+              msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + ',<br>&#8195;Step #';
+            }
+            msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + '.'
+            M.toast({displayLength:8000 + this.steps[index].children.length * 2000,classes:'big-toast', html:'<span>'+ msg +'</span>'});
+            return;
+          }
+        }
+        for (let i=0; i<this.steps[index].children.length; i++) {
+          let child = this.steps[this.steps[index].children[i]];
+          child.newPart.connectedAt.left = newPart.slotPoints[child.parentSlot].x;
+          child.newPart.connectedAt.top = newPart.slotPoints[child.parentSlot].y;
+        }
+      }
+      newPart = this.clonepart(newPart);
+      newPart.parent = this.buildparts[index].parent;
+      newPart.connectorPoint = this.buildparts[index].connectorPoint;
+      newPart.connectedAt = this.buildparts[index].connectedAt;
+      newPart.parentSlot = this.buildparts[index].parentSlot;
+      newPart.stepID = this.buildparts[index].stepID;
+      newPart.stepIndex = this.buildparts[index].stepIndex;
+      this.steps[index].newPart = newPart;
+      Vue.set(this.buildparts, index, newPart);
+      if (index == 0) {
+        this.buildWidth = newPart.dimensions.width;
+        this.buildHeight = newPart.dimensions.height;
+      }
+      this.resizebuild();
     },
     minimize(e) {
       if (this.minimizeToggle) {
@@ -591,13 +646,17 @@ export default {
           $("#save-exit-btns").height() +
           "px"
       });
+      if (this.selectedPart && this.selectedPart.dimensions) {
+        this.newStepBtnHeight = $('.step-btn img').width() * this.selectedPart.dimensions.height / this.selectedPart.dimensions.width;
+      }
     },
     clonepart(part) {
       let slotPoints = [];
       for (let i = 0; i < part.slotPoints.length; i++) {
         slotPoints.push({
           x: part.slotPoints[i].x,
-          y: part.slotPoints[i].y
+          y: part.slotPoints[i].y,
+          connected: false
         });
       }
       return {
@@ -634,6 +693,7 @@ export default {
         left: 74.5%;
         top: 50%;
         width: 25%;
+        max-height: 100%;
         transform: translate(0, -50%);
         cursor: pointer;
       }
@@ -720,25 +780,6 @@ export default {
       border: none;
       background-color: #00000000;
       overflow-y: scroll;
-    }
-  }
-
-  #part-selector {
-    position: absolute;
-    max-width: 90vw;
-    width: 1000px;
-    overflow: hidden;
-    margin-top: 5vh;
-    color: black;
-
-    .collection-item {
-      padding: 0;
-
-      a {
-        width: 100%;
-        height: 100%;
-        text-transform: none;
-      }
     }
   }
 }
