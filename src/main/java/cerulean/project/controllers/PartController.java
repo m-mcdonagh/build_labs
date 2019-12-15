@@ -10,6 +10,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.util.BsonUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
-
+import java.util.UUID;
 @RestController
 @RequestMapping(value ="/api/parts")
 public class PartController {
@@ -218,27 +219,33 @@ public class PartController {
         System.out.println(partId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    private static String UPLOADED_FOLDER = "/Users/Colin/Desktop/";
+    private static String UPLOADED_FOLDER = "/Users/Colin/bl_imgs/";
 
-    @PostMapping("/addMedia")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:uploadStatus";
-        }
+    @RequestMapping(value = "/addMedia", method = RequestMethod.POST)
+    public String singleFileUpload(@RequestParam("file") MultipartFile file) {
+        String id = UUID.randomUUID().toString();
+
         try {
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(UPLOADED_FOLDER + id);
             Files.write(path, bytes);
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "redirect:/uploadStatus";
+        return "{id:" + id+ "}";
     }
+    @RequestMapping(value = "/media", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
+    public byte[] singleFileUpload(@RequestParam String id) {
+        try {
+            Path path = Paths.get(UPLOADED_FOLDER + id);
+            return Files.readAllBytes(path);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new byte[0];
+    }
 }
 
 
