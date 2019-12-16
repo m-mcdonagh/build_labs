@@ -96,14 +96,14 @@ export default  {
       //let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       let lab_response = {
         name: "peep",
-        steps: [{"id":0,"index":0,"parentIndex":null,"parentSlot":null,"children":[1,2],"newPart":{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},"name":"Motherboard","instruction":"Place motherboard","rotation":0},{"id":1,"index":1,"parentIndex":0,"parentSlot":0,"children":[3],"newPart":{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},"name":"CPU","instruction":"Place CPU in mid slot","rotation":0},{"id":2,"index":2,"parentIndex":0,"parentSlot":1,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 1","instruction":"Place CPU in Bottom Left Slot","rotation":0},{"id":3,"index":3,"parentIndex":1,"parentSlot":0,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 2","instruction":"Place CPU smol on top of CPU","rotation":0}],
-        partsList: [{"_id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},{"_id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[0.25,0.25],"connectorPoint":[0.5,0.5]},{"_id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]}]
+        steps: [{"id":0,"index":0,"parentIndex":null,"parentSlot":null,"children":[1,2],"newPart":{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},"name":"Motherboard","instruction":"Place motherboard","rotation":0},{"id":1,"index":1,"parentIndex":0,"parentSlot":0,"children":[3],"newPart":{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[[0.25,0.25]],"connectorPoint":[0.5,0.5]},"name":"CPU","instruction":"Place CPU in mid slot","rotation":0},{"id":2,"index":2,"parentIndex":0,"parentSlot":1,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 1","instruction":"Place CPU in Bottom Left Slot","rotation":0},{"id":3,"index":3,"parentIndex":1,"parentSlot":0,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 2","instruction":"Place CPU smol on top of CPU","rotation":0}],
+        partsList: [{"_id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},{"_id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[[0.25,0.25]],"connectorPoint":[0.5,0.5]},{"_id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]}]
       };
       this.name = lab_response.name;
       
       await lab_response.steps.forEach(async (step)=>{
         let slotPoints = [];
-        for (let i=0; i<part.slotPoints.length; i++) {
+        for (let i=0; i<step.newPart.slotPoints.length; i++) {
           slotPoints[i] = {
             x: step.newPart.slotPoints[i][0],
             y: step.newPart.slotPoints[i][1],
@@ -112,13 +112,15 @@ export default  {
         }
         step.newPart.slotPoints = slotPoints;
         step.newPart.dimensions = {
-          height: part.dimensions[0],
-          width: part.dimensions[1]
+          width: step.newPart.dimensions[0],
+          height: step.newPart.dimensions[1]
         };
-        if (part.connectorPoint && (part.connectorPoint[0] || part.connectorPoint[0] === 0) && (part.connectorPoint[1] || part.connectorPoint[1] === 0)){
+        if (step.newPart.connectorPoint && 
+                              (step.newPart.connectorPoint[0] || step.newPart.connectorPoint[0] === 0) && 
+                              (step.newPart.connectorPoint[1] || step.newPart.connectorPoint[1] === 0)) {
           step.newPart.connectorPoint = {
-              x: part.connectorPoint[0],
-              y: part.connectorPoint[1]
+              x: step.newPart.connectorPoint[0],
+              y: step.newPart.connectorPoint[1]
           };
         }
         else {
@@ -157,8 +159,8 @@ export default  {
           name: part.name,
           slotPoints: slotPoints,
           dimensions: {
-            height: part.dimensions[0],
-            width: part.dimensions[1]
+            width: part.dimensions[0],
+            height: part.dimensions[1]
           },
           connectorPoint: connectorPoint,
           // img_src: (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url,
@@ -301,7 +303,7 @@ export default  {
       cursor: pointer;
     }
     #firstslot:hover {
-      background-color: #607d8b77 !important;
+      background-color: #28e6c663 !important;
     }
   }
   #controls {
@@ -358,12 +360,14 @@ export default  {
   transition: background-color .5s;
   background-color: #607d8b20;
   border: none;
+  min-width: 2.5vh;
+  min-height: 2.5vh;
 }
 .blink {
-  background-color: #607d8b40 !important;
+  background-color: #282be663 !important;
 }
 .slot:hover {
-  background-color: #607d8b77 !important;
+  background-color: #3143a593 !important;
 }
 
 </style>

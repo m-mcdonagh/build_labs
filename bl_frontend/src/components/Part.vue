@@ -14,8 +14,8 @@
                 {
                     left: (slot.x * 100) + '%', 
                     top: (slot.y * 100) + '%', 
-                    width: (slot.width / buildWidth) * 100 + '%', 
-                    height: (slot.height / buildHeight) * 100 + '%',
+                    width: (slot.width / dimensions.width) * 100 + '%', 
+                    height: (slot.height / dimensions.height) * 100 + '%',
                     transform: 'translate(' + (slot.connectorPoint.x * -100) + '%, ' + (slot.connectorPoint.y * -100) + '%)'
                 } 
                 : {left: (slot.x * 100) + '%', top: (slot.y * 100) + '%', transform: 'translate(-50%, -50%)'})"
