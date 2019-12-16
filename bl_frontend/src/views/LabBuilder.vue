@@ -49,7 +49,7 @@
     
     <div id="save-exit-btns" class="row">
       <button v-on:click="saveButton()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
-      <a href="/create" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</a>
+      <button v-on:click="exitButton()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</button>
     </div>
 
     <div v-if="newStepToggle" id="controls">
@@ -83,6 +83,12 @@
                    v-on:newpart="newpart"
                    v-on:modalcancel="modalcancel">
     </part-selector>
+
+    <div id="toast-template">
+      <span>Unsaved Work</span>
+      <button v-on:click="saveButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
+      <a href="/create" class="btn-flat toast-action">Discard Changes</a>
+    </div>
     
   </div>
 </template>
@@ -118,7 +124,6 @@ export default {
       buildHeight: null,
       displayWidth: null,
       displayHeight: null,
-      editLab:false,
       listofparts: [
         // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
         {
@@ -152,7 +157,8 @@ export default {
       addicon: require("../assets/img/add-icon.svg"),
       swapicon: require("../assets/img/swap.svg"),
       firststep: false,
-      newStepBtnHeight: 500
+      newStepBtnHeight: 500,
+      editedSinceLastSave: 0
     };
   },
   mounted() {
@@ -166,17 +172,18 @@ export default {
     if (id != null) {
       this.populateData(id);
       console.log("DATA WAS POPULATED");
-      this.editLab = true;
       M.toast({ displayLength: 2000, html: "Lab Loaded" });
     }
 
     this.resizesteps();
     window.onresize = this.resizesteps;
     this.getListOfParts();
+
+    document.addEventListener('click', () => {this.editedSinceLastSave += 1});
   },
   methods: {
-    saveButton() {
-       let userSessionData = await axios({
+    async saveButton() {
+      let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
@@ -189,14 +196,21 @@ export default {
 
       if (id == null) {
         //console.log("SavePart EXECUTING");
-        this.editLab = false;
         this.saveLab();
       } else {
         //console.log("UPDATE PART EXECUTED");
         this.updateLab();
       }
+      this.editedSinceLastSave = -1;
     },
-
+    exitButton() {
+      if (this.editedSinceLastSave <= 0) {
+        window.location = '/create';
+      }
+      else {
+        M.toast({html:$('#toast-template').html(), classes:'big-toast bottom-right'});
+      }
+    },
     async updateLab(){
       var urlParams = new URLSearchParams(location.search);
       var labid = urlParams.get("id");
@@ -461,9 +475,6 @@ export default {
     },
     addstep() {
       let index = this.steps.length;
-      // if(this.editLab){
-      //   index++;
-      // }
       let newPart = this.firststep ? this.buildparts[0] : this.selectedPart;
       newPart.stepIndex = index;
       let parentIndex =
@@ -818,5 +829,14 @@ export default {
   .big-toast {
     max-width: 100%;
   }
+  .bottom-right {
+    position: fixed;
+    top: unset !important;
+    bottom: 50px;
+    right: 10px;
+  }
+}
+#toast-template {
+  displaY: none;
 }
 </style>
