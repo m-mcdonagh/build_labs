@@ -37,6 +37,8 @@ public class Lab {
         return name;
     }
 
+    public void setName(String name){this.name = name;}
+
     public List<Part> getPartsList() {
         return partsList;
     }
@@ -64,6 +66,24 @@ public class Lab {
     public void setIspublished(Boolean ispublished){this.ispublished = ispublished;}
 
     public String getLabCreator_Id(){return this.labCreator_Id;}
+
+    private void set_id(String id){this._id = id;}
+
+
+    public Lab cloneLab(){
+        String id = UUID.randomUUID().toString();
+        this.set_id(id);
+        this.setName(this.getName()+" Copy");
+        this.setIspublished(false);
+        this.setAssignedTo_Ids(null);
+        return this;
+    }
+
+//    @Override
+//    protected Object clone() throws CloneNotSupportedException {
+//        Lab cloned = (Lab)super.clone();
+//        return cloned;
+//    }
 
 
 }

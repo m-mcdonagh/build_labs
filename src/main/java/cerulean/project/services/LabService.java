@@ -103,4 +103,8 @@ public class LabService {
         }
         return invalidSteps;
     }
+
+    public void updateLab(Lab lab){
+        labRepository.save(lab);
+    }
 }
