@@ -137,7 +137,7 @@ export default {
         method: "get",
         url: "/api/labs/",
         params:{
-            id : "someidea"
+            id : this.id
         }
       })
         .then(function(response) {

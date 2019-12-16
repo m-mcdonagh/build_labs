@@ -100,9 +100,17 @@ export default  {
   methods: {
 
     async getAllParts(){
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
     let part_response = await axios({
         method: "get",
-        url: "/api/parts/allparts"
+        url: "/api/parts/"
+        },
+        params:{
+          username:username
         }
       );
     console.log("PARTS DATA",part_response.data);
@@ -126,7 +134,7 @@ export default  {
         method: "get",
         url: "/api/labs/",
         params:{
-          id :username,
+          username:username,
         }
       },
 

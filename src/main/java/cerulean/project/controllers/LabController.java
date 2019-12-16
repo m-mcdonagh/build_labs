@@ -40,8 +40,8 @@ public class LabController {
     private  Gson gson = new Gson();
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
-    public String listLabs(HttpServletResponse httpResponse) {
-        String username = "test2";
+    public String listLabs(@RequestParam String username, HttpServletResponse httpResponse) {
+        //String username = "test2";
         System.out.println("Lab get method");
         List<Lab> labs = labService.getLabsCreatedByUser(username);
         return gson.toJson(labs);
