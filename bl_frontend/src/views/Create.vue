@@ -107,11 +107,11 @@ export default  {
       let username = userSessionData.data;
     let part_response = await axios({
         method: "get",
-        url: "/api/parts/"
-        },
+        url: "/api/parts/",
         params:{
           username:username
         }
+        },
       );
     console.log("PARTS DATA",part_response.data);
     let i = 0;
@@ -134,7 +134,7 @@ export default  {
         method: "get",
         url: "/api/labs/",
         params:{
-          username:username,
+          username:username
         }
       },
 

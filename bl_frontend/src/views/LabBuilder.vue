@@ -388,7 +388,7 @@ export default {
     async getListOfParts() {
       let part_response = await axios({
         method: "get",
-        url: "/api/parts/allparts",
+        url: "/api/parts/allparts/published",
       });
       for (var i = 0; i < part_response.data.length; i++) {
         var prt = part_response.data[i];
