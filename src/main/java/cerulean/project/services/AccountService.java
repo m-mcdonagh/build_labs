@@ -5,6 +5,8 @@ import cerulean.project.database.LabRepository;
 import cerulean.project.models.Account;
 import cerulean.project.models.Lab;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
