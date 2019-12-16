@@ -228,7 +228,7 @@ public class PartController {
         System.out.println(partId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    private static String UPLOADED_FOLDER = "/Users/Colin/bl_imgs/";
+    private static String UPLOADED_FOLDER = "/home/ubuntu/imgs/";
 
     @RequestMapping(value = "/addMedia", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public String singleFileUpload(@RequestParam("content") MultipartFile file) {
@@ -242,7 +242,7 @@ public class PartController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "id";
+        return id;
     }
 
     @RequestMapping(value = "/media", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
@@ -257,7 +257,3 @@ public class PartController {
         return new byte[0];
     }
 }
-
-
-
-

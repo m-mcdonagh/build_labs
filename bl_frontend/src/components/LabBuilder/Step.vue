@@ -9,7 +9,7 @@
             <ul v-bind:id="'step-dropdown-' + id" class='dropdown-content'>
                 <li>
                     <a class="modal-trigger" v-bind:href="'#step-modal-' + id" v-on:click="saveState">
-                        <i class="material-icons left">info</i>Info
+                        <i class="material-icons left">edit</i>Edit
                     </a>
                 </li>
                 <li>
