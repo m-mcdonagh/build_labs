@@ -240,7 +240,7 @@ export default  {
             'Content-Type': 'multipart/form-data'
           }
         });
-      this.img_id = image_response.data.id;
+      this.img_id = image_response.data;
 
       }
 
