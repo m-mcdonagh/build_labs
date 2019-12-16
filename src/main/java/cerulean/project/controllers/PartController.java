@@ -242,7 +242,7 @@ public class PartController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "id";
+        return id;
     }
 
     @RequestMapping(value = "/media", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
@@ -257,7 +257,3 @@ public class PartController {
         return new byte[0];
     }
 }
-
-
-
-
