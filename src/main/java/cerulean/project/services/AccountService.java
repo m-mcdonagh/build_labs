@@ -30,4 +30,15 @@ public class AccountService {
     public Account save(Account account) {
         return accountRepository.save(account);
     }
+
+    public String getSessionUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = null;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
+    }
 }
