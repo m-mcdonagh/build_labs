@@ -3,6 +3,8 @@ import cerulean.project.models.Account;
 import cerulean.project.services.AccountService;
 import cerulean.project.services.MongoDBUserDetailsManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +41,12 @@ public class AccountController {
 
     @RequestMapping(value = "/session", method = RequestMethod.GET)
     public String getSessionAccount() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!auth.isAuthenticated() || auth instanceof AnonymousAuthenticationToken) {
+            return null;
+        }
+        Object principal = auth.getPrincipal();
         String username = null;
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
