@@ -91,6 +91,7 @@ export default  {
     this.$store.commit('changeNav', 'cyan');
   },
   mounted() {
+      this.redirect();
     //This should be moved to axios then
       var urlParams = new URLSearchParams(location.search);
       this.id = urlParams.get('id')
@@ -103,6 +104,18 @@ export default  {
     //
   },
   methods: {
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     async loadLab(id){
       let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       await lab_response.steps.forEach(async (step)=>{

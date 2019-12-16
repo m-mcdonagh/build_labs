@@ -123,6 +123,7 @@ export default  {
     this.$store.commit('changeNav', 'indigo lighten-1');
   },
   mounted () {
+    this.redirect();
     $('.tooltipped').tooltip();
     $('.modal').modal();
     M.updateTextFields();
@@ -143,7 +144,18 @@ export default  {
 
   },
   methods: {
-
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     submitButton(){
 
       var urlParams = new URLSearchParams(location.search);

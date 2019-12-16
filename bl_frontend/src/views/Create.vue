@@ -87,6 +87,7 @@ export default  {
   },
   //soem comment
   mounted () {
+    this.redirect();
     $('.tabs').tabs();
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
@@ -98,7 +99,18 @@ export default  {
   },
     
   methods: {
-
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     async getAllParts(){
        let userSessionData = await axios({
         method: "get",

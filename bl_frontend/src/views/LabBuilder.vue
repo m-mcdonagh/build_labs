@@ -162,6 +162,7 @@ export default {
     };
   },
   mounted() {
+    this.redirect();
     $(".modal").modal();
     M.updateTextFields();
 
@@ -182,6 +183,18 @@ export default {
     document.addEventListener('click', () => {this.editedSinceLastSave += 1});
   },
   methods: {
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     async saveButton() {
       let userSessionData = await axios({
         method: "get",
