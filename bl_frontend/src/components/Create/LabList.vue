@@ -8,8 +8,13 @@
       <i class="material-icons">keyboard_arrow_down</i>
     </a>
     <ul v-bind:id="'lab-dropdown-' + id" class="dropdown-content">
+      <li>
+        <a v-bind:href="'/lab?restart=true&id=' + id">
+          <i class="material-icons">play_circle_filled</i>Test
+        </a>
+      </li>
       <li v-if="!ispublished">
-        <a v-bind:href="link">
+        <a v-bind:href="'/labbuilder?id=' + id">
           <i class="material-icons left">edit</i>Edit
         </a>
       </li>
@@ -102,14 +107,34 @@
 
 <script>
 export default {
+  name: "Lab",
+  props: ["name", "ispublished", "id"],
   data() {
     return {
       labList: [],
       id: "",
-      username:""
+      username:"",
+      // TODO: set up axios for this.info
+      info: [
+        { user_id: 0, username: "not complete", complete: false },
+        { user_id: 1, username: "complete", complete: true }
+      ]
     };
   },
-  //template:'<button v-on:click="postButton">Reverse Message</button>',
+  mounted() {
+    M.Dropdown.init(
+      $(this.$el)
+        .find(".dropdown-trigger")
+        .get(0),
+      { constrainWidth: false, coverTrigger: false }
+    );
+    $(this.$el)
+      .find(".modal")
+      .modal();
+    $(this.$el)
+      .find(".tooltipped")
+      .tooltip();
+  },
   methods: {
     async assignLab() {
        let userSessionData = await axios({
@@ -149,35 +174,6 @@ export default {
           console.log(error);
         });
     }
-  },
-
-  name: "Lab",
-  props: ["name", "ispublished", "id"],
-  data() {
-    return {
-    
-      assignee:"",
-      link: "/labbuilder?id=" + this.id,
-      // TODO: set up axios for this.info
-      info: [
-        { user_id: 0, username: "not complete", complete: false },
-        { user_id: 1, username: "complete", complete: true }
-      ]
-    };
-  },
-  mounted() {
-    M.Dropdown.init(
-      $(this.$el)
-        .find(".dropdown-trigger")
-        .get(0),
-      { constrainWidth: false, coverTrigger: false }
-    );
-    $(this.$el)
-      .find(".modal")
-      .modal();
-    $(this.$el)
-      .find(".tooltipped")
-      .tooltip();
   }
 };
 </script>
