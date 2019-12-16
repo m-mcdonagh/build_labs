@@ -152,13 +152,6 @@ export default  {
               y: .5
           };
         }
-<<<<<<< HEAD
-=======
-
-
-        let img_data = 'http://130.245.170.131/api/media?id='+part.img
-
->>>>>>> master
         this.partsList.push({
           id: part._id,
           name: part.name,
