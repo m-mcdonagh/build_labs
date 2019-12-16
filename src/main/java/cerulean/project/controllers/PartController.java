@@ -228,7 +228,7 @@ public class PartController {
         System.out.println(partId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    private static String UPLOADED_FOLDER = "/Users/Colin/bl_imgs/";
+    private static String UPLOADED_FOLDER = "/home/ubuntu/imgs/";
 
     @RequestMapping(value = "/addMedia", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public String singleFileUpload(@RequestParam("content") MultipartFile file) {
