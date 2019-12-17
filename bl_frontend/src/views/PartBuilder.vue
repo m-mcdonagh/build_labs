@@ -312,7 +312,7 @@ export default  {
           name: this.part.part_name,
           //TODO : CHANGE BACK TO imgage_response.data.id
           img:image_response.data,
-          dimensions:[this.part.width,this.part.height],
+          dimensions:[ Number(this.part.width), Number(this.part.height) ],
           slotPoints:this.part.slots,
           connectorPoint:this.part.connector
 
