@@ -298,9 +298,9 @@ export default  {
           'Content-Type': 'multipart/form-data'
         }
       }).catch(function(err) {
-        let apendum = '';
+        let appendum = '';
         if (err.response.status == 413) {
-          apendum = ': Image too large'
+          appendum = ': Image too large'
         }
         M.toast({displayLength:2000, html:'Error saving image' + appendum});
       });
