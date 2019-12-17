@@ -114,6 +114,7 @@ export default {
       labList: [],
       id: "",
       username:"",
+      assignee:'',
       // TODO: set up axios for this.info
       info: [
         { user_id: 0, username: "not complete", complete: false },
