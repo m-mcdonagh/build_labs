@@ -138,7 +138,8 @@ export default  {
           };
         }
         step.newPart.img_src = 'http://130.245.170.131/api/parts/media?id='+step.newPart.img;
-        this.steps.push(step)
+        step.newPart.id = step.newPart._id;
+	this.steps.push(step);
       });
 
       await lab_response.partsList.forEach(async (part)=>{
