@@ -175,10 +175,12 @@ export default  {
         });
       });
 
-      this.buildWidth = lab_response.steps[0].newPart.dimensions.width;
-      this.buildHeight = lab_response.steps[0].newPart.dimensions.height;
-      this.resizebuild();
-      window.onresize = this.resizebuild;
+      if (lab_response.steps.length) {
+        this.buildWidth = lab_response.steps[0].newPart.dimensions.width;
+        this.buildHeight = lab_response.steps[0].newPart.dimensions.height;
+        this.resizebuild();
+        window.onresize = this.resizebuild;
+      }
       for (let i=0; i<this.steps.length; i++) {
         for(let j=0; j<this.steps[i].children.length; j++) {
           let child = this.steps[this.steps[i].children[j]]
