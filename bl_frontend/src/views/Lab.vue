@@ -87,11 +87,24 @@ export default  {
     this.$store.commit('changeNav', 'cyan');
   },
   mounted() {
+    this.redirect();
     var urlParams = new URLSearchParams(location.search);
     this.id = urlParams.get('id')
     this.loadLab(this.id);
   },
   methods: {
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     async loadLab(id){
       let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       this.name = lab_response.name;

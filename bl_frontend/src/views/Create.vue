@@ -87,6 +87,7 @@ export default  {
   },
   //soem comment
   mounted () {
+    this.redirect();
     $('.tabs').tabs();
     $('.fixed-action-btn').floatingActionButton();
     $('.tooltipped').tooltip();
@@ -98,12 +99,31 @@ export default  {
   },
     
   methods: {
-
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     async getAllParts(){
+       let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
     let part_response = await axios({
         method: "get",
-        url: "/api/parts/allparts"
+        url: "/api/parts/",
+        params:{
+          username:username
         }
+        },
       );
     console.log("PARTS DATA",part_response.data);
     let i = 0;
@@ -126,7 +146,7 @@ export default  {
         method: "get",
         url: "/api/labs/",
         params:{
-          id :username,
+          username:username
         }
       },
 

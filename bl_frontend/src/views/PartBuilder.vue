@@ -21,18 +21,18 @@
           <img src="../assets/img/add-image.svg" class="col s4 tooltipped" data-position="bottom" data-tooltip="Add Image">
         </a>
         <button id="add-slot" class="icon-btn" v-on:click="toggleSlotAdd">
-          <img 
-            src="../assets/img/add-slot.svg" 
-            class="col s4 tooltipped" 
-            data-position="bottom" 
+          <img
+            src="../assets/img/add-slot.svg"
+            class="col s4 tooltipped"
+            data-position="bottom"
             data-tooltip="Add Slot"
             v-bind:style="slotAdd ? {opacity: '.67'} : {}">
         </button>
         <button id="add-connector" class="icon-btn" v-on:click="toggleConnectorAdd">
-          <img 
-            src="../assets/img/connector.svg" 
-            class="col s4 tooltipped" 
-            data-position="bottom" 
+          <img
+            src="../assets/img/connector.svg"
+            class="col s4 tooltipped"
+            data-position="bottom"
             data-tooltip="Add Connector"
             v-bind:style="connectorAdd ? {opacity: '.67'} : {}">
         </button>
@@ -42,11 +42,11 @@
         <a href="/create" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</a>
       </div>
     </div>
-    
+
     <div id="workspace" class="col s12 m9">
       <div id="part">
-        <img 
-          v-bind:src="part.img_src" 
+        <img
+          v-bind:src="part.img_src"
           v-on:click="addComponent"
           v-bind:style="slotAdd || connectorAdd ? {width: displaywidth, height: displayheight, cursor: 'pointer'} : {width: displaywidth, height: displayheight}">
         <div id="slots">
@@ -57,7 +57,7 @@
             v-bind:y="slot.y"
             v-on:remove="part.slots.splice(index, 1)">
           </slot-component>
-          <connector-component 
+          <connector-component
             v-if="part.connector"
             v-bind:x="part.connector.x"
             v-bind:y="part.connector.y"
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    
+
     <div id="img-file-modal" class="modal indigo">
       <div class="section row">
         <h4 class="col s12 center">Add an Image</h4>
@@ -78,7 +78,7 @@
           <div class="file-path-wrapper">
             <input class="file-path validate" type="text" placeholder="Upload file" accept="image/*">
           </div>
-        </div>  
+        </div>
         <a id="img-file-cancel" class="modal-close btn indigo lighten-3 waves-effect col s4 offset-s4">CLOSE</a>
       </div>
     </div>
@@ -123,10 +123,11 @@ export default  {
     this.$store.commit('changeNav', 'indigo lighten-1');
   },
   mounted () {
+    this.redirect();
     $('.tooltipped').tooltip();
     $('.modal').modal();
     M.updateTextFields();
-    
+
 
     var urlParams = new URLSearchParams(location.search);
     var id = urlParams.get('id');
@@ -143,7 +144,18 @@ export default  {
 
   },
   methods: {
-
+    async redirect() {
+      let isLoggedIn = false;
+      try {
+        let sessionUser = await axios.get("/api/accounts/session");
+        isLoggedIn = sessionUser.data && sessionUser.data.length;
+      } catch (err) {
+        
+      }
+      if (!isLoggedIn) {
+            window.location.replace("/login");
+      }
+    },
     submitButton(){
 
       var urlParams = new URLSearchParams(location.search);
@@ -175,7 +187,7 @@ export default  {
         this.part.part_name = prt.name;
         var slotPointsCoord = [];
 
-        this.img_id = prt.img; 
+        this.img_id = prt.img;
         console.log("IMG ID",this.img_id)
 
        for (var j = 0; j < prt.slotPoints.length; j++) {
@@ -193,7 +205,7 @@ export default  {
         this.part.connector = {x:prt.connectorPoint[0]*100,y:prt.connectorPoint[1]*100};
         this.part.width = prt.dimensions[0],
         this.part.height = prt.dimensions[1]
-        
+
 
         // console.log("IMGAGE DATA: ", img_data.config);
         // this.listofparts.push({
@@ -211,7 +223,7 @@ export default  {
           //   y: prt.connectorPoint[1]
           // }
         // });
-      
+
     },
     async updatePart(){
 
@@ -220,7 +232,7 @@ export default  {
       if(id != null){
         console.log("EDITING PART");
       }
-      //check if image was replaced 
+      //check if image was replaced
       let media_response = await axios.get('http://130.245.170.131/api/parts/media?id='+this.img_id)//change
       .then(function(response){
         return 200;
@@ -230,7 +242,7 @@ export default  {
         return 400;
       });
       console.log("Server response",media_response);
-      
+
       if(media_response != 200){ //image doesn't exist yet
         let fd = new FormData();
         fd.append('content',this.part.img_file);
@@ -260,7 +272,7 @@ export default  {
           img:this.img_id,
           dimensions:[this.part.width,this.part.height],
           slotPoints:this.part.slots,
-          connectorPoint:this.part.connector 
+          connectorPoint:this.part.connector
         },
         params:{
           username : username
@@ -299,11 +311,11 @@ export default  {
         data: {
           name: this.part.part_name,
           //TODO : CHANGE BACK TO imgage_response.data.id
-          img:image_response.data.id,
-          dimensions:[this.part.width,this.part.height],
+          img:image_response.data,
+          dimensions:[ Number(this.part.width), Number(this.part.height) ],
           slotPoints:this.part.slots,
           connectorPoint:this.part.connector
-          
+
         },
         params:{
           username : username
@@ -323,10 +335,10 @@ export default  {
 
       //TODO : Figure out why get request throws 400, also remove it after it works
       console.log("GET PART AXIOS REQUEST",response3.data);
-      let response4 = await axios.get('http://130.245.170.131/api/parts/media?id='+response3.data.img);
+      let response4 = await axios.get('http://130.245.170.131/api/parts/media?id='+response3.data.id);
       console.log(response4);
       M.toast({displayLength:2000, html:'Part Saved'});
-    
+
     },
     toggleConnectorAdd() {
       this.part.connector = null;
@@ -358,7 +370,7 @@ export default  {
       let maxWidth = $('#workspace').width() * .95;
       let maxHeight = $('#workspace').height() * .95;
       let width = maxHeight * aspectRatio;
-      
+
       if (width <= maxWidth) {
         this.displaywidth = width + 'px';
         this.displayheight = maxHeight + 'px';
@@ -370,7 +382,7 @@ export default  {
     },
     uploadImg(e) {
       this.part.img_file = e.target.files[0];
-      this.part.img_src = URL.createObjectURL(e.target.files[0]);  
+      this.part.img_src = URL.createObjectURL(e.target.files[0]);
     }
   },
   watch: {

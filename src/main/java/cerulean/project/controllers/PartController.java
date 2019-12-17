@@ -53,8 +53,9 @@ public class PartController {
     private Gson gson = new Gson();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String listParts(@RequestParam String username, HttpServletResponse httpResponse) {
+    public String listParts(HttpServletResponse httpResponse) {
         //username = "temp2";
+        String username = accountService.getSessionUsername();
         Account account = accountService.getAccount(username);
         return gson.toJson(partService.getPartsCreatedByUser(account));
     }
@@ -75,9 +76,9 @@ public class PartController {
     }
 
     @RequestMapping(value = "/part/updatepart", method = RequestMethod.POST)
-    public String updatePart(@RequestBody String partJson, @RequestParam String username) {
+    public String updatePart(@RequestBody String partJson) {
         JsonObject jsonObject = gson.fromJson(partJson, JsonObject.class);
-
+        String username = accountService.getSessionUsername();
         List<List<Double>> slotPoints = new ArrayList<>();
         List<Double> connectorPoint = new ArrayList<>();
 
@@ -121,7 +122,8 @@ public class PartController {
     }
 
     @RequestMapping(value = "/copypart", method = RequestMethod.POST)
-    public String copyPart(@RequestParam String partId, @RequestParam String username){
+    public String copyPart(@RequestParam String partId){
+        String username = accountService.getSessionUsername();
         Part part = partService.getPart(partId);
 
         return partService.addNewPart(username, part.clonePart());
@@ -132,7 +134,8 @@ public class PartController {
 
 
     @RequestMapping(value = "/part", method = RequestMethod.POST)
-    public String addPart(@RequestBody String partJson, @RequestParam String username) {
+    public String addPart(@RequestBody String partJson) {
+        String username = accountService.getSessionUsername();
         System.out.println("Add part controller");
         System.out.println("Add Part input : " + partJson + " with username " + username);
 
@@ -216,7 +219,7 @@ public class PartController {
 
 
         @RequestMapping(value = "/publishpart", method = RequestMethod.POST)
-    public ResponseEntity<String> updatePart(@RequestParam String partId) {
+    public ResponseEntity<String> publishPart(@RequestParam String partId) {
 
         //Part part = partService.getPart(partId);
         //part.setIspublished(true);
@@ -228,6 +231,7 @@ public class PartController {
         System.out.println(partId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     private static String UPLOADED_FOLDER = "/home/ubuntu/imgs/";
 
     @RequestMapping(value = "/addMedia", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
@@ -242,7 +246,7 @@ public class PartController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "id";
+        return id;
     }
 
     @RequestMapping(value = "/media", produces = MediaType.IMAGE_JPEG_VALUE, method = RequestMethod.GET)
@@ -257,7 +261,3 @@ public class PartController {
         return new byte[0];
     }
 }
-
-
-
-

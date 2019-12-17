@@ -41,7 +41,7 @@ public class LabController {
 
     @RequestMapping(value ="/", method = RequestMethod.GET)
     public String listLabs(HttpServletResponse httpResponse) {
-        String username = "test2";
+        String username = accountService.getSessionUsername();
         System.out.println("Lab get method");
         List<Lab> labs = labService.getLabsCreatedByUser(username);
         return gson.toJson(labs);
@@ -55,10 +55,10 @@ public class LabController {
     }
 
     @RequestMapping(value ="/lab", method = RequestMethod.POST)
-    public void addLab(@RequestBody String labJson, @RequestParam String username) {
+    public void addLab(@RequestBody String labJson) {
         System.out.println(labJson);
-
-        Account acc=  accountService.getAccount(username);
+        String username = accountService.getSessionUsername();
+        Account acc = accountService.getAccount(username);
         String creator_id = acc.get_id();
         String id = UUID.randomUUID().toString();
 
@@ -114,9 +114,9 @@ public class LabController {
     }
 
     @RequestMapping(value ="/lab/updatelab", method = RequestMethod.POST)
-    public void updateLab(@RequestBody String labJson, @RequestParam String username) {
+    public void updateLab(@RequestBody String labJson) {
         System.out.println(labJson);
-
+        String username = accountService.getSessionUsername();
 
 
         JsonObject jsonObject = gson.fromJson(labJson, JsonObject.class);
@@ -175,8 +175,8 @@ public class LabController {
     }
 
     @RequestMapping(value = "/copylab", method = RequestMethod.POST)
-    public ResponseEntity<String> copylab(@RequestParam String labId,@RequestParam String username) {
-
+    public ResponseEntity<String> copylab(@RequestParam String labId) {
+        String username = accountService.getSessionUsername();
         Lab lab = labService.getLab(labId);
         Account acc = accountService.getAccount(username);
         Lab newLab = lab.cloneLab();
@@ -187,8 +187,8 @@ public class LabController {
     }
 
     @RequestMapping(value = "/getassignedlabs", method = RequestMethod.GET)
-    public String getAssignedLabs(@RequestParam String username) {
-
+    public String getAssignedLabs() {
+        String username = accountService.getSessionUsername();
         List<LabAssignment> labAssignments = labAssignmentService.getLabsAssignedToAccount(username);
         List<Lab> assigned_labs = new ArrayList<>();
         if(labAssignments != null){
