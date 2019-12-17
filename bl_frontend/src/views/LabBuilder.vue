@@ -844,6 +844,6 @@ export default {
   }
 }
 #toast-template {
-  displaY: none;
+  display: none;
 }
 </style>

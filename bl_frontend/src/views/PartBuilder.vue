@@ -39,7 +39,7 @@
       </div>
       <div id="control-btns" class="row">
         <button v-on:click="submitButton()" class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
-        <a href="/create" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</a>
+        <button v-on:click="exit()" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</button>
       </div>
     </div>
 
@@ -82,6 +82,11 @@
         <a id="img-file-cancel" class="modal-close btn indigo lighten-3 waves-effect col s4 offset-s4">CLOSE</a>
       </div>
     </div>
+    <div id="toast-template">
+      <span>Unsaved Work</span>
+      <button v-on:click="saveButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
+      <a href="/create" class="btn-flat toast-action">Discard Changes</a>
+    </div>
   </div>
 </template>
 
@@ -111,7 +116,8 @@ export default  {
       slotAdd: false,
       connectorAdd: false,
       displaywidth: 0,
-      displayheight: 0
+      displayheight: 0,
+      editedSinceLastSave: 0
     }
   },
   name: 'partbuilder',
@@ -127,7 +133,7 @@ export default  {
     $('.tooltipped').tooltip();
     $('.modal').modal();
     M.updateTextFields();
-
+    document.addEventListener('click', () => {this.editedSinceLastSave += 1});
 
     var urlParams = new URLSearchParams(location.search);
     var id = urlParams.get('id');
@@ -157,7 +163,10 @@ export default  {
       }
     },
     submitButton(){
-
+      if (this.part.connector == null) {
+        M.toast({displayLength:2000, html:'Please specify a connector point'});
+        return;
+      }
       var urlParams = new URLSearchParams(location.search);
       var id = urlParams.get('id');
 
@@ -169,6 +178,7 @@ export default  {
         console.log("UPDATE PART EXECUTED");
         this.updatePart();
       }
+      this.editedSinceLastSave = -1;
     },
 
     async populateData(id) {
@@ -300,7 +310,9 @@ export default  {
       }).catch(function(err) {
         let appendum = '';
         if (err.response.status == 413) {
-          appendum = ': Image too large'
+          appendum = ': Image too large',
+          this.part.img_file = null;
+          this.part.img_src = null;
         }
         M.toast({displayLength:2000, html:'Error saving image' + appendum});
       });
@@ -388,6 +400,14 @@ export default  {
     uploadImg(e) {
       this.part.img_file = e.target.files[0];
       this.part.img_src = URL.createObjectURL(e.target.files[0]);
+    },
+    exit() {
+      if (this.editedSinceLastSave <= 0) {
+        window.location = '/create';
+      }
+      else {
+        M.toast({html:$('#toast-template').html()});
+      }
     }
   },
   watch: {
@@ -465,5 +485,8 @@ export default  {
 }
 .btn {
   color: white;
+}
+#toast-template {
+  display: none;
 }
 </style>
