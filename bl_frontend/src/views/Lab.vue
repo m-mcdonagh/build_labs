@@ -115,7 +115,7 @@ export default  {
           slotPoints[i] = {
             x: step.newPart.slotPoints[i][0],
             y: step.newPart.slotPoints[i][1],
-            connected: false
+            connected: true
           };
         }
         step.newPart.slotPoints = slotPoints;
@@ -146,7 +146,8 @@ export default  {
         for (let i=0; i<part.slotPoints.length; i++) {
           slotPoints[i] = {
             x: part.slotPoints[i][0],
-            y: part.slotPoints[i][1]
+            y: part.slotPoints[i][1],
+            connected: true
           };
         }
         let connectorPoint = {};
@@ -185,11 +186,12 @@ export default  {
         for(let j=0; j<this.steps[i].children.length; j++) {
           let child = this.steps[this.steps[i].children[j]]
 
+          this.steps[i].newPart.slotPoints[child.parentSlot].connected = false;
           this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
           this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
-          this.steps[i].newPart.slotPoints[child.parentSlot].connectorPoint = {
-            x: child.newPart.connectorPoint.x,
-            y: child.newPart.connectorPoint.y
+          this.steps[i].newPart.slotPoints[child.parentSlot].connectedAt = {
+            left: child.newPart.connectorPoint.x,
+            top: child.newPart.connectorPoint.y
           }
         }
       }
@@ -244,7 +246,7 @@ export default  {
         M.toast({displayLength:2000, html:'Wrong slot. Try again'});
       }
       else {
-        this.steps[this.currentStep].newPart.connectedAt = {left: slot.x, top: slot.y};
+        this.steps[this.currentStep].newPart.connectedAt = {left: slot.connectedAt.left, top: slot.connectedAt.top};
         this.steps[this.currentStep].newPart.parent = parentPartVue;
         let parent = this.steps[this.steps[this.currentStep].parentIndex];
         let parentSlot = this.steps[this.currentStep].parentSlot;
