@@ -112,8 +112,7 @@ export default {
   data() {
     return {
       labList: [],
-      id: "",
-      username:"",
+      username:'',
       assignee:'',
       // TODO: set up axios for this.info
       info: [
@@ -169,7 +168,7 @@ export default {
         .then(function(response) {
           console.log("EXIT POST REQUEST");
           console.log(response);
-          this.labList = respnse.data;
+          this.labList = response.data;
         })
         .catch(function(error) {
           console.log(error);
