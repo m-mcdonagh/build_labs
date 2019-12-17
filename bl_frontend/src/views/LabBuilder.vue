@@ -56,11 +56,11 @@
       <div id="step-details" class="transparent">
         <div class='row indigo'>
           <div class="input-field col s6">
-            <input id="step-name" type="text">
+            <input id="step-name" type="text" v-model="stepName">
             <label for="step-name">Step Name</label>
           </div>
           <div class="input-field col s12">
-            <textarea id="step-instruction" class="materialize-textarea"></textarea>
+            <textarea id="step-instruction" class="materialize-textarea" v-model="stepInstruction"></textarea>
             <label for="step-instruction">Instruction</label>
           </div>
         </div>
@@ -158,7 +158,9 @@ export default {
       swapicon: require("../assets/img/swap.svg"),
       firststep: false,
       newStepBtnHeight: 500,
-      editedSinceLastSave: 0
+      editedSinceLastSave: 0,
+      stepName: '',
+      stepInstruction: '',
     };
   },
   mounted() {
@@ -508,10 +510,12 @@ export default {
         parentSlot: newPart.parentSlot,
         children: [],
         newPart: newPart,
-        name: $("#step-name").val(),
-        instruction: $("#step-instruction").val(),
+        name: this.stepName,
+        instruction: this.stepInstruction,
         rotation: 0 //TODO rotation
       });
+      this.stepName = '';
+      this.stepInstruction = '';
       console.log("NEW STEP ADDED", this.steps);
       this.newStepToggle = false;
       this.selectedPart = null;
