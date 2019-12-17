@@ -99,7 +99,7 @@ export default  {
         let sessionUser = await axios.get("/api/accounts/session");
         isLoggedIn = sessionUser.data && sessionUser.data.length;
       } catch (err) {
-        
+
       }
       if (!isLoggedIn) {
             window.location.replace("/login");

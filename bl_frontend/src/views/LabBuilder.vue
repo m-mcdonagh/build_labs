@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="main row" id="lab-builder-main">
     <div id="workspace" class="col s9">
-      
+
       <build-so-far
         v-bind:buildWidth="buildWidth"
         v-bind:buildHeight="buildHeight"
@@ -13,7 +13,7 @@
 
       <button id="new-step-btn" class="step-btn modal-trigger" data-target="new-part-selector" v-on:click="newstep">
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
-             v-bind:style="selectedPart ? (selectedPart.connectedAt ? {display: 'none'} : 
+             v-bind:style="selectedPart ? (selectedPart.connectedAt ? {display: 'none'} :
                           {height: newStepBtnHeight + 'px'}) : {}">
       </button>
       <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="detach">
@@ -46,7 +46,7 @@
         </step-component>
       </div>
     </div>
-    
+
     <div id="save-exit-btns" class="row">
       <button v-on:click="saveButton()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="save">SAVE</button>
       <button v-on:click="exitButton()" class="btn-large indigo lighten-3 waves-effect col s12 m6" id="exit">EXIT</button>
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-    <part-selector id="new-part-selector" 
+    <part-selector id="new-part-selector"
                    v-bind:listofparts="listofparts"
                    v-on:newpart="newpart"
                    v-on:modalcancel="modalcancel">
@@ -89,7 +89,7 @@
       <button v-on:click="saveButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
       <a href="/create" class="btn-flat toast-action">Discard Changes</a>
     </div>
-    
+
   </div>
 </template>
 
@@ -189,7 +189,7 @@ export default {
         let sessionUser = await axios.get("/api/accounts/session");
         isLoggedIn = sessionUser.data && sessionUser.data.length;
       } catch (err) {
-        
+
       }
       if (!isLoggedIn) {
             window.location.replace("/login");
@@ -295,11 +295,11 @@ export default {
         let step = this.steps[i];
         step.newPart.parentIndex = step.parentIndex;
         step.newPart.parentSlot = step.parentSlot;
-        let img_response = await axios.get('http://130.245.170.216:3003/media/'+step.newPart.img);
+        let img_response = await axios.get('http://130.245.170.131/media?id='+step.newPart.img);
         step.newPart.img_src = img_response.config.url;
         step.newPart.stepIndex = i;
         step.newPart.id = step.newPart._id;
-         
+
         for (var j = 0; j < step.newPart.slotPoints.length; j++) {
           step.newPart.slotPoints[j] = {
             x: step.newPart.slotPoints[j][0],
@@ -314,7 +314,7 @@ export default {
           width:step.newPart.dimensions[0]
         }
 
-        
+
         if(step.newPart.parentSlot != null){
           let parentPart = lab_response.data.partsList[step.newPart.parentIndex]; //parent part
 
@@ -533,11 +533,11 @@ export default {
       }
 
       if (this.steps[index].children.length > 0){
-        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) + 
+        let msg = 'Cannot Delete. The following steps are dependant on Step #' + (index + 1) +
                   (this.steps[index].name ? ': ' + this.steps[index].name : '') +':<br>&#8195;Step #';
         for (var i=0; i<this.steps[index].children.length - 1; i++) {
-          msg += (this.steps[index].children[i] + 1) + 
-              (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + 
+          msg += (this.steps[index].children[i] + 1) +
+              (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') +
               ',<br>&#8195;Step #'
         }
         msg += (this.steps[index].children[i] + 1) + (this.steps[this.steps[index].children[i]].name ? ':' + this.steps[this.steps[index].children[i]].name : '') + '.'
@@ -580,7 +580,7 @@ export default {
       if (this.steps[index].children.length) {
         for (let i=0; i<this.steps[index].children.length; i++) {
           if (this.steps[this.steps[index].children[i]].parentSlot >= newPart.slotPoints.length) {
-            let msg = 'Cannot Swap because the dependanc' + (this.steps[index].children.length == 1? 'y' : 'ies') + 
+            let msg = 'Cannot Swap because the dependanc' + (this.steps[index].children.length == 1? 'y' : 'ies') +
                 ' of Step#' + (index + 1) + (this.steps[index].name ? ':' + this.steps[index].name : '') + ' cannot be mapped from ' +
                 this.steps[index].newPart.name + ' to ' + newPart.name + '.<br>The dependanc' +
                 (this.steps[index].children.length == 1? 'y is' : 'ies are') + ':<br>&#8195;Step #';
