@@ -108,7 +108,7 @@ export default  {
     async loadLab(id){
       let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       this.name = lab_response.name;
-      
+
       await lab_response.steps.forEach(async (step)=>{
         let slotPoints = [];
         for (let i=0; i<step.newPart.slotPoints.length; i++) {
@@ -123,8 +123,8 @@ export default  {
           width: step.newPart.dimensions[0],
           height: step.newPart.dimensions[1]
         };
-        if (step.newPart.connectorPoint && 
-                              (step.newPart.connectorPoint[0] || step.newPart.connectorPoint[0] === 0) && 
+        if (step.newPart.connectorPoint &&
+                              (step.newPart.connectorPoint[0] || step.newPart.connectorPoint[0] === 0) &&
                               (step.newPart.connectorPoint[1] || step.newPart.connectorPoint[1] === 0)) {
           step.newPart.connectorPoint = {
               x: step.newPart.connectorPoint[0],
@@ -137,7 +137,7 @@ export default  {
               y: .5
           };
         }
-        step.newPart.img_src = 'http://130.245.170.216:3003/media/'+step.newPart.img;
+        step.newPart.img_src = 'http://130.245.170.131/api/parts/media?id='+step.newPart.img;
         this.steps.push(step)
       });
 
@@ -171,7 +171,7 @@ export default  {
             height: part.dimensions[1]
           },
           connectorPoint: connectorPoint,
-          img_src: (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url,
+          img_src: (await axios.get('http://130.245.170.131/api/parts/media?id='+part.img)).config.url,
         });
       });
 

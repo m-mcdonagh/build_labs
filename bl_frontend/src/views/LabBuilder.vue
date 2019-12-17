@@ -294,7 +294,7 @@ export default {
         let step = this.steps[i];
         step.newPart.parentIndex = step.parentIndex;
         step.newPart.parentSlot = step.parentSlot;
-        let img_response = await axios.get('http://130.245.170.131/media?id='+step.newPart.img);
+        let img_response = await axios.get('http://130.245.170.131/api/parts/media?id='+step.newPart.img);
         step.newPart.img_src = img_response.config.url;
         step.newPart.stepIndex = i;
         step.newPart.id = step.newPart._id;
