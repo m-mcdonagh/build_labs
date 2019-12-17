@@ -4,8 +4,8 @@
       <h4 class="center">PARTS</h4>
       <ul id="parts">
         <part-list v-for="part in partsList"
-                   v-bind:key="part._id"
-                   v-bind:id="part._id"
+                   v-bind:key="part.id"
+                   v-bind:id="part.id"
                    v-bind:name="part.name"
                    v-bind:img_src="part.img_src"
                    v-on:selectthis="selectthis">
@@ -70,16 +70,12 @@ export default  {
   },
   data() {
     return {
-      id: "0", // lab _id needs to be filled in by axios
+      id: "0",
       name: "test", // needs to be filled in by axios
       selectedPartID: null,
-      partsList: [ //needs to be filled in by axios
-
-      ],
+      partsList: [],
       currentStep: 0,
-      steps : [ //needs to be filled in by axios
-
-      ],
+      steps : [],
       buildWidth: null,
       buildHeight: null,
       displayWidth: null,
@@ -91,17 +87,10 @@ export default  {
     this.$store.commit('changeNav', 'cyan');
   },
   mounted() {
-      this.redirect();
-    //This should be moved to axios then
-      var urlParams = new URLSearchParams(location.search);
-      this.id = urlParams.get('id')
-      this.loadLab(urlParams.get('id'));
-
-
-      //var queryString = location.search;
-
-
-    //
+    this.redirect();
+    var urlParams = new URLSearchParams(location.search);
+    this.id = urlParams.get('id')
+    this.loadLab(this.id);
   },
   methods: {
     async redirect() {
@@ -118,104 +107,101 @@ export default  {
     },
     async loadLab(id){
       let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
+      this.name = lab_response.name;
+      
       await lab_response.steps.forEach(async (step)=>{
-
-
-          let part = step.newPart;
-
-          let slotPointsCoord = [];
-          for (let j = 0; j < part.slotPoints.length; j++) {
-            slotPointsCoord[j] = {
-              x: part.slotPoints[j][0],
-              y: part.slotPoints[j][1]
-            };
-
-          }
-
-          var dimensions = {
-            height: part.dimensions[0],
-            width: part.dimensions[1]
-          }
-
-          let connectorPoint = {
-              x: part.connectorPoint[0],
-              y: part.connectorPoint[1]
-          }
-
-          let url = 'http://130.245.170.131/api/parts/media?id='+step.newPart.img
-
-          let img_data = url;
-
-          step.newPart.slotPoints = slotPointsCoord;
-          step.newPart.dimensions = dimensions;
-          step.newPart.connectorPoint = connectorPoint;
-          step.newPart.img_src = img_data;
-          this.steps.push(step)
-
-
-
-      })
-
-      await lab_response.partsList.forEach(async (part)=>{
-        let slotPointsCoord = [];
-        for (let j = 0; j < part.slotPoints.length; j++) {
-          slotPointsCoord[j] = {
-            x: part.slotPoints[j][0],
-            y: part.slotPoints[j][1]
+        let slotPoints = [];
+        for (let i=0; i<step.newPart.slotPoints.length; i++) {
+          slotPoints[i] = {
+            x: step.newPart.slotPoints[i][0],
+            y: step.newPart.slotPoints[i][1],
+            connected: false
           };
         }
-        var dimensions = {
-          height: part.dimensions[0],
-          width: part.dimensions[1]
+        step.newPart.slotPoints = slotPoints;
+        step.newPart.dimensions = {
+          width: step.newPart.dimensions[0],
+          height: step.newPart.dimensions[1]
+        };
+        if (step.newPart.connectorPoint && 
+                              (step.newPart.connectorPoint[0] || step.newPart.connectorPoint[0] === 0) && 
+                              (step.newPart.connectorPoint[1] || step.newPart.connectorPoint[1] === 0)) {
+          step.newPart.connectorPoint = {
+              x: step.newPart.connectorPoint[0],
+              y: step.newPart.connectorPoint[1]
+          };
         }
-        let connectorPoint = {
-            x: part.connectorPoint[0],
-            y: part.connectorPoint[1]
+        else {
+          step.newPart.connectorPoint = {
+              x: .5,
+              y: .5
+          };
         }
+        step.newPart.img_src = 'http://130.245.170.216:3003/media/'+step.newPart.img;
+        this.steps.push(step)
+      });
 
-
-        let img_data = 'http://130.245.170.131/api/media?id='+part.img
-
+      await lab_response.partsList.forEach(async (part)=>{
+        let slotPoints = [];
+        for (let i=0; i<part.slotPoints.length; i++) {
+          slotPoints[i] = {
+            x: part.slotPoints[i][0],
+            y: part.slotPoints[i][1]
+          };
+        }
+        let connectorPoint = {};
+        if (part.connectorPoint && (part.connectorPoint[0] || part.connectorPoint[0] === 0) && (part.connectorPoint[1] || part.connectorPoint[1] === 0)){
+          connectorPoint = {
+              x: part.connectorPoint[0],
+              y: part.connectorPoint[1]
+          };
+        }
+        else {
+          connectorPoint = {
+              x: .5,
+              y: .5
+          };
+        }
         this.partsList.push({
-            _id: part._id,
-            name: part.name,
-            img_src: img_data, // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-            dimensions: dimensions,
-            slotPoints: slotPointsCoord,
-            connectorPoint: connectorPoint
-          })
-        })
+          id: part._id,
+          name: part.name,
+          slotPoints: slotPoints,
+          dimensions: {
+            width: part.dimensions[0],
+            height: part.dimensions[1]
+          },
+          connectorPoint: connectorPoint,
+          img_src: (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url,
+        });
+      });
 
+      this.buildWidth = lab_response.steps[0].newPart.dimensions.width;
+      this.buildHeight = lab_response.steps[0].newPart.dimensions.height;
+      this.resizebuild();
+      window.onresize = this.resizebuild;
+      for (let i=0; i<this.steps.length; i++) {
+        for(let j=0; j<this.steps[i].children.length; j++) {
+          let child = this.steps[this.steps[i].children[j]]
 
-        this.buildWidth = this.steps[0].newPart.dimensions.width;
-        this.buildHeight = this.steps[0].newPart.dimensions.height;
-        this.resizebuild();
-        window.onresize = this.resizebuild;
-        for (var i=0; i<this.steps.length; i++) {
-          for(let j=0; j<this.steps[i].children.length; j++) {
-            let child = this.steps[this.steps[i].children[j]]
-
-            this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
-            this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
-            this.steps[i].newPart.slotPoints[child.parentSlot].connectorPoint = {
-              x: child.newPart.connectorPoint.x,
-              y: child.newPart.connectorPoint.y
-            }
+          this.steps[i].newPart.slotPoints[child.parentSlot].width = child.newPart.dimensions.width;
+          this.steps[i].newPart.slotPoints[child.parentSlot].height = child.newPart.dimensions.height;
+          this.steps[i].newPart.slotPoints[child.parentSlot].connectorPoint = {
+            x: child.newPart.connectorPoint.x,
+            y: child.newPart.connectorPoint.y
           }
         }
-        var toggle = true;
-        setInterval(function() {
-          if (toggle){
-            $('.slot, #firstslot').addClass('blink');
-            toggle = false;
-          }
-          else {
-            $('.slot, #firstslot').removeClass('blink');
-            toggle = true;
-          }
-        }, 1000);
-
-
+      }
+      let toggle = true;
+      setInterval(function() {
+        if (toggle){
+          $('.slot, #firstslot').addClass('blink');
+          toggle = false;
+        }
+        else {
+          $('.slot, #firstslot').removeClass('blink');
+          toggle = true;
+        }
+      }, 1000);
     },
     selectthis(id) {
       if (this.selectedPartID == id) {
@@ -230,11 +216,12 @@ export default  {
       if (this.selectedPartID === null) {
         M.toast({displayLength:2000, html:'Please select a part from the sidebar'});
       }
-      else if (this.selectedPartID == this.steps[this.currentStep].newPart._id) {
+      else if (this.selectedPartID == this.steps[this.currentStep].newPart.id) {
         this.steps[this.currentStep].newPart.connectorPoint = {x:.5, y:.5};
         this.steps[this.currentStep].newPart.connectedAt = {left: .5, top: .5};
         this.buildparts.push(this.steps[this.currentStep].newPart);
         this.currentStep++;
+        $('#firstslot').hide();
       }
       else {
         M.toast({displayLength:2000, html: 'Wrong part. Try again'});
@@ -245,10 +232,10 @@ export default  {
         M.toast({displayLength:2000, html:'Please select a part from the sidebar'});
         return;
       }
-      if (this.selectedPartID != this.steps[this.currentStep].newPart._id && slotIndex != this.steps[this.currentStep].parentSlot){
+      if (this.selectedPartID != this.steps[this.currentStep].newPart.id && slotIndex != this.steps[this.currentStep].parentSlot){
         M.toast({displayLength:2000, html:'Wrong part and wrong slot. Try again'});
       }
-      else if (this.selectedPartID != this.steps[this.currentStep].newPart._id) {
+      else if (this.selectedPartID != this.steps[this.currentStep].newPart.id) {
         M.toast({displayLength:2000, html:'Wrong part. Try again'});
       }
       else if (slotIndex != this.steps[this.currentStep].parentSlot){
@@ -257,6 +244,9 @@ export default  {
       else {
         this.steps[this.currentStep].newPart.connectedAt = {left: slot.x, top: slot.y};
         this.steps[this.currentStep].newPart.parent = parentPartVue;
+        let parent = this.steps[this.steps[this.currentStep].parentIndex];
+        let parentSlot = this.steps[this.currentStep].parentSlot;
+        parent.newPart.slotPoints[parentSlot].connected = true;
         this.buildparts.push(this.steps[this.currentStep].newPart);
         this.currentStep++;
       }
@@ -320,7 +310,7 @@ export default  {
       cursor: pointer;
     }
     #firstslot:hover {
-      background-color: #607d8b77 !important;
+      background-color: #28e6c663 !important;
     }
   }
   #controls {
@@ -376,12 +366,15 @@ export default  {
   background-image: radial-gradient(#607d8bAA, #607d8b44 67%);
   transition: background-color .5s;
   background-color: #607d8b20;
+  border: none;
+  min-width: 2.5vh;
+  min-height: 2.5vh;
 }
 .blink {
-  background-color: #607d8b40 !important;
+  background-color: #282be663 !important;
 }
 .slot:hover {
-  background-color: #607d8b77 !important;
+  background-color: #3143a593 !important;
 }
 
 </style>

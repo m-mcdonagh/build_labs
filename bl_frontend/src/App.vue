@@ -4,7 +4,7 @@
         <div class="nav-wrapper">
             <a id="cover" class="left" href="/"><img class="brand-logo" src="./assets/img/cover.png"></a>
             <ul id="nav-mobile" class="right">
-                <li><a href="/logout"><i class="material-icons">power_settings_new</i></a></li>
+                <li><a href="/api/logout"><i class="material-icons">power_settings_new</i></a></li>
             </ul>
         </div>  
     </nav>
