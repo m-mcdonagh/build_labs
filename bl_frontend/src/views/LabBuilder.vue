@@ -278,19 +278,20 @@ export default {
 
       this.name = lab_response.data.name;
       this.steps = lab_response.data.steps;
-      this.buildWidth = this.steps[0].newPart.dimensions[0];
-      this.buildHeight = this.steps[0].newPart.dimensions[1];
       this.stepCounter = this.steps.length;
-
-      this.resizebuild();
-      window.onresize = function resize() {
+      
+      if (this.steps.length) {
+        this.buildWidth = this.steps[0].newPart.dimensions[0];
+        this.buildHeight = this.steps[0].newPart.dimensions[1];
         this.resizebuild();
-        this.resizesteps();
-      }.bind(this);
+        window.onresize = function resize() {
+          this.resizebuild();
+          this.resizesteps();
+        }.bind(this);
+      }
       //steps.newPart is missing connectedAt
       //stepID, stepIndex, parentSlot,vue
-      for(var i = 0; i<this.steps.length;i++)
-       {
+      for(var i = 0; i<this.steps.length;i++) {
         let step = this.steps[i];
         step.newPart.parentIndex = step.parentIndex;
         step.newPart.parentSlot = step.parentSlot;
@@ -343,20 +344,9 @@ export default {
             })
           }
         });
-
         this.buildparts.push(step.newPart);
-
-
-
       }
-
-
-
-    M.toast({ displayLength: 2000, html: "DATA POPULATED" });
-
-
-
-
+      M.toast({ displayLength: 2000, html: "DATA POPULATED" });
     },
     async saveLab() {
       console.log("CURRENT PARTS BUILT", this.buildparts);
