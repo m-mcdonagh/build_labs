@@ -297,15 +297,21 @@ export default  {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
-    });
-     console.log("addmedia resonse",image_response);
+      }).catch(function(err) {
+        let apendum = '';
+        if (err.response.status == 413) {
+          apendum = ': Image too large'
+        }
+        M.toast({displayLength:2000, html:'Error saving image' + appendum});
+      });
+      console.log("addmedia resonse",image_response);
       let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
       let username = userSessionData.data;
       console.log(username);
-       let response = await axios({
+      let response = await axios({
         method: "post",
         url: "/api/parts/part",
         data: {
@@ -315,7 +321,6 @@ export default  {
           dimensions:[ Number(this.part.width), Number(this.part.height) ],
           slotPoints:this.part.slots,
           connectorPoint:this.part.connector
-
         },
         params:{
           username : username
