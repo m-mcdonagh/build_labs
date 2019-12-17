@@ -93,12 +93,7 @@ export default  {
   },
   methods: {
     async loadLab(id){
-      //let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
-      let lab_response = {
-        name: "peep",
-        steps: [{"id":0,"index":0,"parentIndex":null,"parentSlot":null,"children":[1,2],"newPart":{"id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},"name":"Motherboard","instruction":"Place motherboard","rotation":0},{"id":1,"index":1,"parentIndex":0,"parentSlot":0,"children":[3],"newPart":{"id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[[0.25,0.25]],"connectorPoint":[0.5,0.5]},"name":"CPU","instruction":"Place CPU in mid slot","rotation":0},{"id":2,"index":2,"parentIndex":0,"parentSlot":1,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 1","instruction":"Place CPU in Bottom Left Slot","rotation":0},{"id":3,"index":3,"parentIndex":1,"parentSlot":0,"children":[],"newPart":{"id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]},"name":"CPU smol 2","instruction":"Place CPU smol on top of CPU","rotation":0}],
-        partsList: [{"_id":"motherboard","name":"Motherboard","img_src":"/img/motherboard.png","dimensions":[12,12],"slotPoints":[[0.55,0.35],[0.2,0.8]],"connectorPoint":null},{"_id":1,"name":"CPU","img_src":"/img/cpu.png","dimensions":[2,2],"slotPoints":[[0.25,0.25]],"connectorPoint":[0.5,0.5]},{"_id":2,"name":"CPU smol","img_src":"/img/cpu.png","dimensions":[0.1,1],"slotPoints":[],"connectorPoint":[.5,.5]}]
-      };
+      let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       this.name = lab_response.name;
       
       await lab_response.steps.forEach(async (step)=>{
@@ -129,7 +124,7 @@ export default  {
               y: .5
           };
         }
-        //step.newPart.img_src = 'http://130.245.170.216:3003/media/'+step.newPart.img;
+        step.newPart.img_src = 'http://130.245.170.216:3003/media/'+step.newPart.img;
         this.steps.push(step)
       });
 
@@ -163,8 +158,7 @@ export default  {
             height: part.dimensions[1]
           },
           connectorPoint: connectorPoint,
-          // img_src: (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url,
-          img_src: part.img_src
+          img_src: (await axios.get('http://130.245.170.216:3003/media/'+part.img)).config.url,
         });
       });
 
