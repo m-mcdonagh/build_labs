@@ -38,7 +38,7 @@
     </div>
 
     <div id="controls">
-      <button class="btn cyan lighten-3 waves-effect" id="save">SAVE</button>
+      <button class="btn cyan lighten-3 waves-effect" id="save" v-on:click="saveButton()">SAVE</button>
       <a href="/learn" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
     </div>
 
@@ -96,6 +96,19 @@ export default  {
     this.loadLab(this.id);
   },
   methods: {
+    async saveButton(){
+
+      let response = await axios({
+        method: "post",
+        url: "/api/labs/updatelabassignment",
+        params: {
+          id:this.id,//where is id stored?
+          currentStep:this.currentStep
+        }
+      });
+      console.log("updatelabassignment response",response);
+
+    },
     async redirect() {
       let isLoggedIn = false;
       try {

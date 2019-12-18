@@ -238,7 +238,7 @@ public class LabController {
     @RequestMapping(value = "lab/getassignments", method = RequestMethod.GET)
     public String getLabAssignments(@RequestParam String lab_id){
 
-        Lab lab = labService.getLab(lab_id);
+        Lab lab = labService.getLab(lab_id.replace("\"",""));
         List<LabAssignment> labAssignments = labAssignmentService.getLabAssignmentsForLab(lab_id);
 
         JsonArray output = new JsonArray();
