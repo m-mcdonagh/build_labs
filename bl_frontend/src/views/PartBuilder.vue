@@ -165,7 +165,7 @@ export default  {
     saveAndExit() {
       this.submitButton();
       window.location='/create';
-    }
+    },
     submitButton(){
       if (this.part.connector == null) {
         M.toast({displayLength:2000, html:'Please specify a connector point'});
