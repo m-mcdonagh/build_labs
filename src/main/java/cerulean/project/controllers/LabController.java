@@ -246,7 +246,7 @@ public class LabController {
         for(LabAssignment assignment : labAssignments){
             JsonObject newData = new JsonObject();
             newData.addProperty("user_id",assignment.getUser_id());
-            newData.addProperty("username",assignment.get);
+            newData.addProperty("username",assignment.getUser_name());
             newData.addProperty("Complete",assignment.getComplete());
             output.add(newData);
         }
