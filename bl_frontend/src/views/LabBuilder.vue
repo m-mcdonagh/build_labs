@@ -416,8 +416,8 @@ export default {
           id: prt._id,
           name: prt.name,
           dimensions: {
-            height: prt.dimensions[0],
-            width: prt.dimensions[1]
+            width: prt.dimensions[0],
+            height: prt.dimensions[1]
           },
           img_src: img_data.config.url, //require("../assets/img/motherboard.png"),
           slotPoints: slotPointsCoord,

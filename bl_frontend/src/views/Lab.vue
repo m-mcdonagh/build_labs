@@ -327,6 +327,19 @@ export default  {
         this.currentStep++;
       }
     },
+    nextStep() {
+      this.currentStep++;
+      if (this.currentStep == step.length) {
+        let response = await axios({
+          method: "post",
+          url: "/api/labs/updatelabassignment",
+          params: {
+            id:this.id,//where is id stored?
+            currentStep:this.currentStep
+          }
+        });
+      }
+    },
     resizebuild() {
       let aspectRatio = this.buildWidth / this.buildHeight;
       let maxWidth = $('#workspace').width() * .95;
