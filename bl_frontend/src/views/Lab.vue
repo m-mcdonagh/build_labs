@@ -146,7 +146,7 @@ export default  {
 	      this.steps.push(step);
       }
 
-      partChecker = {};
+      let partChecker = {};
       for (let i=0; i<lab_response.partsList.length; i++){
         let part = lab_response.partsList[i];
         if (partChecker[part._id]) {
