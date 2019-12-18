@@ -280,59 +280,62 @@ export default {
       console.log("lab response", lab_response);
 
       this.name = lab_response.data.name;
-      this.steps = lab_response.data.steps;
       this.stepCounter = this.steps.length;
       
-      if (this.steps.length) {
-        this.buildWidth = this.steps[0].newPart.dimensions[0];
-        this.buildHeight = this.steps[0].newPart.dimensions[1];
+      if (lab_response.data.steps.length) {
+        this.buildWidth = lab_response.data.steps[0].newPart.dimensions[0];
+        this.buildHeight = lab_response.data.steps[0].newPart.dimensions[1];
         this.resizebuild();
         window.onresize = function resize() {
           this.resizebuild();
           this.resizesteps();
         }.bind(this);
       }
-      for(var i = 0; i<this.steps.length;i++) {
-        let step = this.steps[i];
+      for(var i=0; i<lab_response.data.steps.length; i++) {
+        let step = lab_response.data.steps[i];
         step.newPart.parentIndex = step.parentIndex;
         step.newPart.parentSlot = step.parentSlot;
         let img_response = await axios.get('http://130.245.170.131/api/parts/media?id='+step.newPart.img);
         step.newPart.img_src = img_response.config.url;
         step.newPart.stepIndex = i;
         step.newPart.id = step.newPart._id;
+        step.newPart.parent = null;
 
-        for (var j = 0; j < step.newPart.slotPoints.length; j++) {
+        for (var j=0; j<step.newPart.slotPoints.length; j++) {
           step.newPart.slotPoints[j] = {
             x: step.newPart.slotPoints[j][0],
-            y: step.newPart.slotPoints[j][1]
+            y: step.newPart.slotPoints[j][1],
+            connected: false
           };
         }
 
         step.newPart.connectorPoint = {x:step.newPart.connectorPoint[0],y:step.newPart.connectorPoint[1]};
 
-        step.newPart.dimensions={
-          height:step.newPart.dimensions[1],
-          width:step.newPart.dimensions[0]
+        step.newPart.dimensions = {
+          width: step.newPart.dimensions[0],
+          height: step.newPart.dimensions[1]
         }
 
 
         if(step.newPart.parentSlot != null){
-          let parentPart = this.steps[step.newPart.parentIndex]; //parent part
-
+          let parentPart = this.steps[step.newPart.parentIndex].newPart; //parent part
           step.newPart.connectedAt = {
-            left: parentPart.slotPoints[step.newPart.parentSlot][0],
-            top: parentPart.slotPoints[step.newPart.parentSlot][1]
+            left: parentPart.slotPoints[step.newPart.parentSlot].x,
+            top: parentPart.slotPoints[step.newPart.parentSlot].y
           };
+          parentPart.slotPoints[step.newPart.parentSlot].connected = true;
         }
         else{
           step.newPart.connectedAt = {
             left:0.5,
             top:0.5
           }
-
         }
-        let steps = this.steps;
-        Object.defineProperty(step.newPart, "vue", {
+        this.steps.push(step);
+      }
+      let steps = this.steps;
+      for (var i=0; i<this.steps.length; i++) {
+        Object.defineProperty(this.steps[i].newPart, "vue", {
           configurable: true,
           enumerable: true,
           get: function() {
@@ -340,12 +343,12 @@ export default {
           },
           set: function(vue) {
             this._vue = vue;
-            step.children.forEach(function(child,index){
-              steps[child].parent = vue;
-            })
+            steps[this.stepIndex].children.forEach(function(child,index){
+              steps[child].newPart.parent = vue;
+            });
           }
         });
-        this.buildparts.push(step.newPart);
+        this.buildparts.push(this.steps[i].newPart);
       }
       M.toast({ displayLength: 2000, html: "DATA POPULATED" });
     },
