@@ -7,6 +7,8 @@
                    v-bind:key="part.id"
                    v-bind:id="part.id"
                    v-bind:name="part.name"
+                   v-bind:width="part.dimensions.width"
+                   v-bind:height="part.dimensions.height"
                    v-bind:img_src="part.img_src"
                    v-on:selectthis="selectthis">
         </part-list>
