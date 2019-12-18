@@ -4,19 +4,19 @@
         height: (dimensions.height / buildHeight) * 100 + '%',
         left: offsetX + '%',
         top: offsetY + '%',
-        transform: connectedAt ? 'translate(' + (connectedAt.left * -100) + '%, ' + (connectedAt.top * -100) + '%)' : 'translate(-50%, -50%)'
+        transform: connectorPoint ? 'translate(' + (connectorPoint.x * -100) + '%, ' + (connectorPoint.y * -100) + '%)' : 'translate(-50%, -50%)'
     }">
         <img v-bind:src="img_src">
         <button class="slot" 
              v-for="(slot, i) in slotPoints"
              v-bind:key="i"
-             v-bind:style="slot.connected ? {display: 'none'} : (slot.width && slot.height && slot.connectedAt? 
+             v-bind:style="slot.connected ? {display: 'none'} : (slot.width && slot.height && slot.connectorPoint? 
                 {
                     left: (slot.x * 100) + '%', 
                     top: (slot.y * 100) + '%', 
                     width: (slot.width / buildWidth) * 100 + '%', 
                     height: (slot.height / buildHeight) * 100 + '%',
-                    transform: 'translate(' + (slot.connectedAt.left * -100) + '%, ' + (slot.connectedAt.top * -100) + '%)'
+                    transform: 'translate(' + (slot.connectorPoint.x * -100) + '%, ' + (slot.connectorPoint.y * -100) + '%)'
                 } 
                 : {left: (slot.x * 100) + '%', top: (slot.y * 100) + '%', transform: 'translate(-50%, -50%)'})"
              v-on:click="slotclick(slot, i)"

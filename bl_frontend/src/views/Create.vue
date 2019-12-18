@@ -118,12 +118,12 @@ export default  {
       }
     },
     async getAllParts(){
-       let userSessionData = await axios({
+      let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
       let username = userSessionData.data;
-    let part_response = await axios({
+      let part_response = await axios({
         method: "get",
         url: "/api/parts/",
         params:{
@@ -131,14 +131,15 @@ export default  {
         }
         },
       );
-    console.log("PARTS DATA",part_response.data);
-    let i = 0;
-    for(i = 0;i<part_response.data.length;i++){
+      console.log("PARTS DATA",part_response.data);
+      let i = 0;
+      for(i = 0;i<part_response.data.length;i++){
         let prt = part_response.data[i];
-       this.parts.push({id:prt._id,
-                        name:prt.name,
-                        ispublished:prt.ispublished
-                        })
+        this.parts.push({
+          id: prt._id,
+          name: prt.name,
+          ispublished: prt.ispublished
+        });
       }
     
     },
@@ -148,7 +149,7 @@ export default  {
         url: "/api/accounts/session"
       });
       let username = userSessionData.data;
-    let lab_response = await axios({
+      let lab_response = await axios({
         method: "get",
         url: "/api/labs/",
         params:{
@@ -157,14 +158,15 @@ export default  {
       },
 
       );
-    console.log("LABS DATA",lab_response.data);
-    let i = 0;
-    for(i = 0;i<lab_response.data.length;i++){
+      console.log("LABS DATA",lab_response.data);
+      let i = 0;
+      for(i = 0;i<lab_response.data.length;i++){
         let lab = lab_response.data[i];
-       this.labs.push({id:lab._id,
-                        name:lab.name,
-                        ispublished:lab.ispublished
-                        })
+        this.labs.push({
+          id: lab._id,
+          name: lab.name,
+          ispublished: lab.ispublished
+        });
       }
     },
     sizeContent() {

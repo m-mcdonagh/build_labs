@@ -292,8 +292,6 @@ export default {
           this.resizesteps();
         }.bind(this);
       }
-      //steps.newPart is missing connectedAt
-      //stepID, stepIndex, parentSlot,vue
       for(var i = 0; i<this.steps.length;i++) {
         let step = this.steps[i];
         step.newPart.parentIndex = step.parentIndex;
@@ -327,7 +325,7 @@ export default {
           };
         }
         else{
-          step.newPart.connectedAt={
+          step.newPart.connectedAt = {
             left:0.5,
             top:0.5
           }
@@ -489,9 +487,7 @@ export default {
           : null;
       if (parentIndex !== null) {
         this.steps[parentIndex].children.push(index);
-
         this.steps[parentIndex].newPart.slotPoints[newPart.parentSlot].connected = true;
-
       }
       if (
         !this.firststep &&
