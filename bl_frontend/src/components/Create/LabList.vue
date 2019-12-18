@@ -91,9 +91,11 @@
             <input id="username" name="username" type="text" required v-model="assignee" />
             <label for="username">Username</label>
           </div>
-          <button class="email-submit col s1" v-on:click="assignLab">
-            <i class="material-icons">send</i>
-          </button>
+          <div>
+            <button class="email-submit col s1" v-on:click="assignLab">
+              <i class="material-icons">send</i>
+            </button>
+          </div>
         </div>
       </div>
       <div class="modal-footer indigo lighten-3">

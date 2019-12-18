@@ -1,6 +1,5 @@
 package cerulean.project.models;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,9 +16,9 @@ public class LabAssignment {
     private Integer currentStep;
     private Integer totalSteps;
     private String lab_name;
-    private String assigner_name;
+    private String user_name;
 
-    public LabAssignment(String _id,String labId, String assigner_id, String user_id, Boolean complete, Integer totalSteps,String lab_name,String assigner_name) {
+    public LabAssignment(String _id,String labId, String assigner_id, String user_id, Boolean complete, Integer totalSteps,String lab_name,String user_name) {
         this._id = _id;
         this.labId = labId;
         this.assigner_id = assigner_id;
@@ -28,7 +27,7 @@ public class LabAssignment {
         this.currentStep = 0;
         this.totalSteps = totalSteps;
         this.lab_name = lab_name;
-        this.assigner_name = assigner_name;
+        this.user_name = user_name;
     }
 
     public void set_id(String _id) {
@@ -43,12 +42,12 @@ public class LabAssignment {
         this.lab_name = lab_name;
     }
 
-    public String getAssigner_name() {
-        return assigner_name;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setAssigner_name(String assigner_name) {
-        this.assigner_name = assigner_name;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public String get_id() {

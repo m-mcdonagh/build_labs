@@ -187,7 +187,7 @@ public class LabController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/getassignedlabs", method = RequestMethod.GET)
+    @RequestMapping(value = "/getassignedlabs", method = RequestMethod.GET) //person who assigned lab
     public String getAssignedLabs() {
         String username = accountService.getSessionUsername();
         List<LabAssignment> labAssignments = labAssignmentService.getLabsAssignedToAccount(username);
@@ -235,9 +235,9 @@ public class LabController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "lab/getassignments", method = RequestMethod.GET)
+    @RequestMapping(value = "lab/getassignments", method = RequestMethod.GET) //person assinged lab
     public String getLabAssignments(@RequestParam String lab_id){
-
+        System.out.println(lab_id);
         Lab lab = labService.getLab(lab_id.replace("\"",""));
         List<LabAssignment> labAssignments = labAssignmentService.getLabAssignmentsForLab(lab_id);
 
@@ -245,12 +245,13 @@ public class LabController {
 
         for(LabAssignment assignment : labAssignments){
             JsonObject newData = new JsonObject();
-            newData.addProperty("username",assignment.getUser_id());
+            newData.addProperty("user_id",assignment.getUser_id());
+            newData.addProperty("username",assignment.getUser_name());
             newData.addProperty("Complete",assignment.getComplete());
             output.add(newData);
         }
 
-        return gson.toJson(output);
+        return output.toString();
     }
 
 
