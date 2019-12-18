@@ -103,13 +103,19 @@ export default  {
   },
   methods: {
     async saveButton(){
+      let userSessionData = await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      });
+      let username = userSessionData.data;
 
       let response = await axios({
         method: "post",
         url: "/api/labs/updatelabassignment",
         params: {
           id:this.id,//where is id stored?
-          currentStep:this.currentStep
+          currentStep:this.currentStep,
+          username:username
         }
       });
       console.log("updatelabassignment response",response);
