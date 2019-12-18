@@ -230,6 +230,9 @@ export default {
     display: flex;
     justify-content: center;
   }
+  input {
+    color: black;
+  }
   .email-input {
     margin-left: 0;
   }
