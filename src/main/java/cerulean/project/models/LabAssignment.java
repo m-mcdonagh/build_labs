@@ -87,7 +87,7 @@ public class LabAssignment {
     public void setCurrentStep(Integer currentStep) {
         if (currentStep >= totalSteps) {
             complete = true;
-            this.currentStep = totalSteps - 1;
+            this.currentStep = 0;
         } else {
             this.currentStep = currentStep;
         }
