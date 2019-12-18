@@ -239,9 +239,14 @@ export default  {
             });
           }
         });
-        let parent = this.steps[this.steps[i].parentIndex];
-        let parentSlot = this.steps[i].parentSlot;
-        parent.newPart.slotPoints[parentSlot].connected = true;
+        if (this.steps[i].parentIndex == undefined) {
+          let parent = this.steps[this.steps[i].parentIndex];
+          let parentSlot = this.steps[i].parentSlot;
+          parent.newPart.slotPoints[parentSlot].connected = true;
+        }
+        else {
+          $('#firstslot').hide();
+        }
         this.buildparts.push(this.steps[i].newPart);
       }
       let toggle = true;
