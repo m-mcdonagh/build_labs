@@ -115,7 +115,7 @@ export default {
       // TODO: set up axios for this.info
       info: [
         // TEST VALUES
-         { user_id: 0, username: "not complete", complete: false },
+        // { user_id: 0, username: "not complete", complete: false },
         // { user_id: 1, username: "complete", complete: true }
       ]
     };

@@ -115,7 +115,12 @@ export default  {
           email: this.reg.email,
         }
       }).catch((err)=>{
-        alert(err)
+        if(err.response.status === 500){
+						alert("Username or email already exists");
+				}else{
+						alert("OK!");
+				}
+				
       })
       // alert(JSON.stringify(resp))
     },
