@@ -146,8 +146,15 @@ export default  {
 	      this.steps.push(step);
       }
 
+      partChecker = {};
       for (let i=0; i<lab_response.partsList.length; i++){
-        let part = lab_response.partsList[i]
+        let part = lab_response.partsList[i];
+        if (partChecker[part._id]) {
+          continue;
+        }
+        else {
+          partChecker[part._id] = true;
+        }
         let slotPoints = [];
         for (let j=0; j<part.slotPoints.length; j++) {
           slotPoints[j] = {
