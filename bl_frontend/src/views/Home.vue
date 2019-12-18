@@ -16,7 +16,7 @@
     <input id="learn-toggler" class="clip-toggler" type="checkbox">
     <input id="create-toggler" class="clip-toggler" type="checkbox">
     <div id="bg"></div>
-    <a id="logout" href="/login">
+    <a id="logout" href="/api/logout">
       <i class="material-icons">power_settings_new</i>
     </a>
 </div>

@@ -73,8 +73,17 @@ export default  {
           name:lab.name,
           complete: false,
           inprogress: false
-        })
-      })
+        });
+      });
+    },
+    async getAssignedLabs() {
+        let lab_response = (await axios.get('/api/labs/getassignedlabs')).data;
+        lab_response.forEach((lab)=>{
+            this.labs.push({
+                id: lab._id,
+                owner: lab.assigner,
+            });
+        });
     },
     sizeContent(){
         $('#labs').height($('#labs-container').height() - $('#lab-header').height());
