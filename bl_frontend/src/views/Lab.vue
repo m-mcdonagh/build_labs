@@ -113,7 +113,8 @@ export default  {
       this.name = lab_response.name;
 
       for(let i=0; i<lab_response.steps.length; i++) {
-        let step = lab_response.steps[i];
+        var step = lab_response.steps[i];
+	console.log(step);
         let slotPoints = [];
         for (let j=0; j<step.newPart.slotPoints.length; j++) {
           slotPoints[j] = {
