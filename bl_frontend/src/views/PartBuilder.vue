@@ -84,7 +84,7 @@
     </div>
     <div id="toast-template">
       <span>Unsaved Work</span>
-      <button v-on:click="submitButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
+      <button v-on:click="saveAndExit()"class="btn-flat toast-action">Save and Exit</button>
       <a href="/create" class="btn-flat toast-action">Discard Changes</a>
     </div>
   </div>
@@ -162,6 +162,10 @@ export default  {
             window.location.replace("/login");
       }
     },
+    saveAndExit() {
+      this.submitButton();
+      window.location='/create';
+    }
     submitButton(){
       if (this.part.connector == null) {
         M.toast({displayLength:2000, html:'Please specify a connector point'});
