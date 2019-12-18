@@ -190,12 +190,9 @@ public class LabController {
     public String getAssignedLabs() {
         String username = accountService.getSessionUsername();
         List<LabAssignment> labAssignments = labAssignmentService.getLabsAssignedToAccount(username);
-        List<Lab> assigned_labs = new ArrayList<>();
+        //List<Lab> assigned_labs = new ArrayList<>();
         if(labAssignments != null){
-            for (LabAssignment labAssignment : labAssignments) {
-                assigned_labs.add(labService.getLab(labAssignment.getLabId()));
-            }
-            return gson.toJson(assigned_labs);
+            return gson.toJson(labAssignments);
         }
 
         return null;
@@ -209,6 +206,9 @@ public class LabController {
         String assignee_username = jsonObject.get("assignee").toString().replace("\"", "");
         String assigner_username = jsonObject.get("assigner").toString().replace("\"", "");
         String labId = jsonObject.get("labId").toString().replace("\"", "");
+
+
+
 
 //        Account assigner = accountService.getAccount(assigner_username);
 //        Account assignee = accountService.getAccount(assignee_username);

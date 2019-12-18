@@ -11,10 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -70,9 +67,8 @@ public class LabAssignmentService {
         if (currentAssignment != null) {
             throw new RuntimeException("Lab has already been assigned");
         }
-
-        LabAssignment assignment = new LabAssignment(
-                lab.get_id(), assigner.get_id(), assignee.get_id(),false, lab.getSteps().size() );
+        String id = UUID.randomUUID().toString();
+        LabAssignment assignment = new LabAssignment(id,lab.get_id(), assigner.get_id(), assignee.get_id(),false, lab.getSteps().size(),lab.getName(),assigner.getUsername() );
         LabAssignment savedAssignment = labAssignmentRepository.save(assignment);
         assignee.getAssignedLabs_ids().add( Objects.requireNonNull(savedAssignment.get_id()) );
         accountRepository.save(assignee);
