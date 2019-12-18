@@ -61,6 +61,14 @@ public class LabAssignmentService {
         return userIds;
     }
 
+    public List<LabAssignment> getLabAssignmentsForLab(String labId) {
+        // List<Account> results = new ArrayList<>();
+        List<LabAssignment> labAssignments = labAssignmentRepository.findAllByLabId(labId);
+        return labAssignments;
+    }
+
+
+
     private void assignLab(@NotNull Account assigner, @NotNull Account assignee, @NotNull Lab lab) {
         // Check if lab is not already assigned.
         LabAssignment currentAssignment = findIncompleteLabAssignmentForAccount(assignee, lab.get_id());

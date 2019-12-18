@@ -9,6 +9,7 @@ import cerulean.project.services.LabService;
 import cerulean.project.services.PartControllerService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -221,6 +222,38 @@ public class LabController {
 
         return "success";
     }
+
+
+    @RequestMapping(value = "/updatelabassignment", method = RequestMethod.POST)
+    public ResponseEntity<String> updateLabAssignment(@RequestParam String id, @RequestParam int currentStep){
+        LabAssignment labassignment = labAssignmentService.getLabAssignment(id);
+        if(labassignment == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        labassignment.setCurrentStep(currentStep);
+        labAssignmentService.updateLabAssignment(labassignment);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "lab/getassignments", method = RequestMethod.GET)
+    public String getLabAssignments(@RequestParam String lab_id){
+
+        Lab lab = labService.getLab(lab_id);
+        List<LabAssignment> labAssignments = labAssignmentService.getLabAssignmentsForLab(lab_id);
+
+        JsonArray output = new JsonArray();
+
+        for(LabAssignment assignment : labAssignments){
+            JsonObject newData = new JsonObject();
+            newData.addProperty("username",assignment.getUser_id());
+            newData.addProperty("Complete",assignment.getComplete());
+            output.add(newData);
+        }
+
+        return gson.toJson(output);
+    }
+
+
 
 
 }

@@ -75,6 +75,16 @@ public class LabAssignment {
         return currentStep;
     }
 
+    public Integer getTotalSteps() {
+        return totalSteps;
+    }
+
+    public void setTotalSteps(Integer totalSteps) {
+        this.totalSteps = totalSteps;
+    }
+
+
+
     public void setCurrentStep(Integer currentStep) {
         if (currentStep >= totalSteps) {
             complete = true;
