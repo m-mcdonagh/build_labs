@@ -41,7 +41,7 @@
 
     <div id="controls">
       <button class="btn cyan lighten-3 waves-effect" id="save" v-on:click="saveButton()">SAVE</button>
-      <a href="/learn" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
+      <a v-bind:href="returnLink" class="btn cyan lighten-3 waves-effect" id="exit">EXIT</a>
     </div>
 
     <div v-if="currentStep == steps.length && steps.length != 0" id="success">
@@ -52,7 +52,7 @@
           </div>
           <div class="card-action">
             <a v-bind:href="'/lab?id='+id+'&s=0'">Restart</a>
-            <a href="/learn" class="right">Exit</a>
+            <a v-bind:href="returnLink" class="right">Exit</a>
           </div>
         </div>
       </div>
@@ -82,7 +82,8 @@ export default  {
       buildHeight: null,
       displayWidth: null,
       displayHeight: null,
-      buildparts: []
+      buildparts: [],
+      returnLink: '/learn'
     }
   },
   created() {
@@ -94,6 +95,9 @@ export default  {
     this.id = urlParams.get('id');
     if (urlParams.get('s')) {
       this.currentStep = parseInt(urlParams.get('s'));
+    }
+    if (urlParams.get('ret')) {
+      this.returnLink = '/' + urlParams.get('ret');
     }
     this.loadLab(this.id);
   },

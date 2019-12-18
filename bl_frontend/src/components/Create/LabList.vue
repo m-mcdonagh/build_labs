@@ -9,7 +9,9 @@
     </a>
     <ul v-bind:id="'lab-dropdown-' + id" class="dropdown-content">
       <li>
-        <a v-bind:href="'/lab?&id='+id">
+
+        <a v-bind:href="'/lab?&id='+id+'&ret=create'">
+
           <i class="material-icons">play_circle_filled</i>Test
         </a>
       </li>
@@ -178,7 +180,7 @@ export default {
         M.toast({ displayLength: 2000, html: "SUCCESS" });
       }).catch(function(err) {
         M.toast({ displayLength: 2000, html: "Unable to assign this lab to " + this.assignee });
-      });
+      }.bind(this));
     },
     async getLab() {
       console.log("Get all parts get request");
