@@ -229,6 +229,8 @@ public class LabController {
         LabAssignment labassignment = labAssignmentService.getLabAssignment(id);
         if(labassignment == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        labassignment.setCurrentStep(currentStep);
         labAssignmentService.updateLabAssignment(labassignment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
