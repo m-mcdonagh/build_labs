@@ -117,6 +117,8 @@ export default  {
       }).catch((err)=>{
         if(err.response.status === 500){
 						alert("Username or email already exists");
+				}else{
+						alert("OK!");
 				}
 				
       })
