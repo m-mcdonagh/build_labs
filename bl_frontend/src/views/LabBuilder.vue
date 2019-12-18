@@ -317,7 +317,7 @@ export default {
 
 
         if(step.newPart.parentSlot != null){
-          let parentPart = lab_response.data.partsList[step.newPart.parentIndex]; //parent part
+          let parentPart = this.steps[step.newPart.parentIndex]; //parent part
 
           step.newPart.connectedAt = {
             left: parentPart.slotPoints[step.newPart.parentSlot][0],

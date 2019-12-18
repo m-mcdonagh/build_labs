@@ -89,7 +89,10 @@ export default  {
   mounted() {
     this.redirect();
     var urlParams = new URLSearchParams(location.search);
-    this.id = urlParams.get('id')
+    this.id = urlParams.get('id');
+    if (urlParams.get('s')) {
+      this.currentStep = urlParams.get('s');
+    }
     this.loadLab(this.id);
   },
   methods: {
@@ -109,12 +112,13 @@ export default  {
       let lab_response = (await axios.get("/api/labs/lab?id="+id)).data;
       this.name = lab_response.name;
 
-      await lab_response.steps.forEach(async (step)=>{
+      for(let i=0; i<lab_response.steps.length; i++) {
+        let step = lab_response.steps[i];
         let slotPoints = [];
-        for (let i=0; i<step.newPart.slotPoints.length; i++) {
-          slotPoints[i] = {
-            x: step.newPart.slotPoints[i][0],
-            y: step.newPart.slotPoints[i][1],
+        for (let j=0; j<step.newPart.slotPoints.length; j++) {
+          slotPoints[j] = {
+            x: step.newPart.slotPoints[j][0],
+            y: step.newPart.slotPoints[j][1],
             connected: true
           };
         }
@@ -139,15 +143,16 @@ export default  {
         }
         step.newPart.img_src = 'http://130.245.170.131/api/parts/media?id='+step.newPart.img;
         step.newPart.id = step.newPart._id;
-	this.steps.push(step);
-      });
+	      this.steps.push(step);
+      }
 
-      await lab_response.partsList.forEach(async (part)=>{
+      for (let i=0; i<lab_response.partsList.length; i++){
+        part = lab_response.partList[i]
         let slotPoints = [];
-        for (let i=0; i<part.slotPoints.length; i++) {
-          slotPoints[i] = {
-            x: part.slotPoints[i][0],
-            y: part.slotPoints[i][1],
+        for (let j=0; j<part.slotPoints.length; j++) {
+          slotPoints[j] = {
+            x: part.slotPoints[j][0],
+            y: part.slotPoints[j][1],
             connected: true
           };
         }
@@ -177,11 +182,11 @@ export default  {
           connectorPoint: connectorPoint,
           img_src: (await axios.get('http://130.245.170.131/api/parts/media?id='+part.img)).config.url,
         });
-      });
+      }
 
-      if (lab_response.steps.length) {
-        this.buildWidth = lab_response.steps[0].newPart.dimensions.width;
-        this.buildHeight = lab_response.steps[0].newPart.dimensions.height;
+      if (this.steps.length) {
+        this.buildWidth = this.steps[0].newPart.dimensions.width;
+        this.buildHeight = this.steps[0].newPart.dimensions.height;
         this.resizebuild();
         window.onresize = this.resizebuild;
       }
@@ -197,6 +202,41 @@ export default  {
             y: child.newPart.connectorPoint.y
           }
         }
+      }
+      for (let i=0; i<this.currentStep && i<this.steps.lenght; i++) {
+        if(this.step[i].parentSlot != null){
+          let parentPart = this.steps[this.steps[i].parentIndex]; //parent part
+          this.steps[i].newPart.connectedAt = {
+            left: parentPart.slotPoints[this.steps[i].parentSlot][0],
+            top: parentPart.slotPoints[this.steps[i].parentSlot][1]
+          };
+        }
+        else{
+          this.steps[i].newPart.connectedAt = {
+            left:0.5,
+            top:0.5
+          }
+        }
+        let steps = this.steps;
+        Object.defineProperty(this.steps[i].newPart, "vue", {
+          configurable: true,
+          enumerable: true,
+          get: function() {
+            return this._vue;
+          },
+          set: function(vue) {
+            this._vue = vue;
+            step.children.forEach(function(child,index){
+              steps[child].parent = vue;
+            });
+          }
+        });
+        this.buildparts.push(this.steps[i].newPart);
+        this.steps[i].newPart.connectedAt = {left: slot.x, top: slot.y};
+        let parent = this.steps[this.steps[i].parentIndex];
+        let parentSlot = this.steps[i].parentSlot;
+        parent.newPart.slotPoints[parentSlot].connected = true;
+        this.buildparts.push(this.steps[i].newPart);
       }
       let toggle = true;
       setInterval(function() {
