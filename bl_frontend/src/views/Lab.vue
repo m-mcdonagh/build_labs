@@ -147,7 +147,7 @@ export default  {
       }
 
       for (let i=0; i<lab_response.partsList.length; i++){
-        part = lab_response.partList[i]
+        part = lab_response.partsList[i]
         let slotPoints = [];
         for (let j=0; j<part.slotPoints.length; j++) {
           slotPoints[j] = {
