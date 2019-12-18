@@ -1,6 +1,6 @@
 <template>
     <li class="partlist tooltipped" data-position="right" v-bind:data-tooltip="name">
-        <img v-bind:src="img_src" v-on:click="select" v-bind:style="{width:img_dimensions.width, height:img_dimensions.height}">
+        <img v-bind:src="img_src" v-on:click="select" v-bind:style="{width:img_dimensions.width + 'px', height:img_dimensions.height + 'px'}">
     </li>
 </template>
 
@@ -11,7 +11,7 @@ export default {
     computed: {
         img_dimensions() {
             let aspectRatio = this.width / this.height;
-            let maxWidth = $('#parts').width();
+            let maxWidth = $('#parts').width() - 30;
             let maxHeight = maxWidth * 2;
             let height = maxWidth / aspectRatio;
             if (height < maxHeight) {

@@ -175,6 +175,7 @@ export default {
             assigner:username
         }
       });
+      M.toast({ displayLength: 2000, html: "SUCCESS" });
     },
     async getLab() {
       console.log("Get all parts get request");
