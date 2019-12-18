@@ -213,7 +213,7 @@ export default  {
       }
       for (var i=0; i<this.currentStep && i<this.steps.length; i++) {
         if(this.steps[i].parentSlot != null){
-          let parentPart = this.steps[this.steps[i].parentIndex]; //parent part
+          let parentPart = this.steps[this.steps[i].parentIndex].newPart; //parent part
           this.steps[i].newPart.connectedAt = {
             left: parentPart.slotPoints[this.steps[i].parentSlot][0],
             top: parentPart.slotPoints[this.steps[i].parentSlot][1]
@@ -225,6 +225,7 @@ export default  {
             top:0.5
           }
         }
+        this.steps[i].newPart.stepIndex = i;
         let steps = this.steps;
         Object.defineProperty(this.steps[i].newPart, "vue", {
           configurable: true,
@@ -234,15 +235,19 @@ export default  {
           },
           set: function(vue) {
             this._vue = vue;
-            step.children.forEach(function(child,index){
-              steps[child].parent = vue;
+            steps[this.stepIndex].children.forEach(function(child,index){
+              steps[child].newPart.parent = vue;
             });
           }
         });
-        if (this.steps[i].parentIndex == undefined) {
+        if (this.steps[i].parentIndex != undefined) {
           let parent = this.steps[this.steps[i].parentIndex];
-          let parentSlot = this.steps[i].parentSlot;
-          parent.newPart.slotPoints[parentSlot].connected = true;
+          let parentSlot = parent.newPart.slotPoints[this.steps[i].parentSlot];
+          parentSlot.connected = true;
+          this.steps[i].newPart.connectedAt = {
+            left: parentSlot.x,
+            top: parentSlot.y
+          }
         }
         else {
           $('#firstslot').hide();
