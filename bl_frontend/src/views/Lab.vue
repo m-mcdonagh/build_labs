@@ -91,7 +91,7 @@ export default  {
     var urlParams = new URLSearchParams(location.search);
     this.id = urlParams.get('id');
     if (urlParams.get('s')) {
-      this.currentStep = urlParams.get('s');
+      this.currentStep = parseInt(urlParams.get('s'));
     }
     this.loadLab(this.id);
   },
@@ -197,7 +197,7 @@ export default  {
         this.resizebuild();
         window.onresize = this.resizebuild;
       }
-      for (let i=0; i<this.steps.length; i++) {
+      for (var i=0; i<this.steps.length; i++) {
         for(let j=0; j<this.steps[i].children.length; j++) {
           let child = this.steps[this.steps[i].children[j]]
 
@@ -210,8 +210,8 @@ export default  {
           }
         }
       }
-      for (let i=0; i<this.currentStep && i<this.steps.lenght; i++) {
-        if(this.step[i].parentSlot != null){
+      for (var i=0; i<this.currentStep && i<this.steps.length; i++) {
+        if(this.steps[i].parentSlot != null){
           let parentPart = this.steps[this.steps[i].parentIndex]; //parent part
           this.steps[i].newPart.connectedAt = {
             left: parentPart.slotPoints[this.steps[i].parentSlot][0],
@@ -238,8 +238,6 @@ export default  {
             });
           }
         });
-        this.buildparts.push(this.steps[i].newPart);
-        this.steps[i].newPart.connectedAt = {left: slot.x, top: slot.y};
         let parent = this.steps[this.steps[i].parentIndex];
         let parentSlot = this.steps[i].parentSlot;
         parent.newPart.slotPoints[parentSlot].connected = true;
