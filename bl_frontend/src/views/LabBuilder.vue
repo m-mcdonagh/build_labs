@@ -208,10 +208,10 @@ export default {
 
       if (id == null) {
         //console.log("SavePart EXECUTING");
-        this.saveLab();
+        this.saveLab(username);
       } else {
         //console.log("UPDATE PART EXECUTED");
-        this.updateLab();
+        this.updateLab(username);
       }
       this.editedSinceLastSave = -1;
     },
@@ -227,7 +227,7 @@ export default {
         }.bind(this));
       }
     },
-    async updateLab(){
+    async updateLab(username){
       var urlParams = new URLSearchParams(location.search);
       var labid = urlParams.get("id");
       console.log("CURRENT PARTS BUILT", this.steps);
@@ -349,7 +349,7 @@ export default {
       }
       M.toast({ displayLength: 2000, html: "DATA POPULATED" });
     },
-    async saveLab() {
+    async saveLab(username) {
       console.log("CURRENT PARTS BUILT", this.buildparts);
 
       var part_ids = [];
@@ -368,13 +368,6 @@ export default {
           instruction: item.instruction
         });
       });
-
-      console.log("Step Copy", steps_copy);
-      let userSessionData = await axios({
-        method: "get",
-        url: "/api/accounts/session"
-      });
-      let username = userSessionData.data;
       let response = await axios({
         method: "post",
         url: "/api/labs/lab",
