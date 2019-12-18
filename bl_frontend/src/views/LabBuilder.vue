@@ -86,7 +86,7 @@
 
     <div id="toast-template">
       <span>Unsaved Work</span>
-      <button v-on:click="saveButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
+      <button class="btn-flat toast-action">Save and Exit</button>
       <a href="/create" class="btn-flat toast-action">Discard Changes</a>
     </div>
 
@@ -221,6 +221,10 @@ export default {
       }
       else {
         M.toast({html:$('#toast-template').html(), classes:'big-toast bottom-right'});
+        $('.toast button').on('click', function() {
+          this.saveButton();
+          window.location='/create';
+        }.bind(this));
       }
     },
     async updateLab(){

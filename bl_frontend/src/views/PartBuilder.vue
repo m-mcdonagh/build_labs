@@ -84,7 +84,7 @@
     </div>
     <div id="toast-template">
       <span>Unsaved Work</span>
-      <button v-on:click="saveAndExit()"class="btn-flat toast-action">Save and Exit</button>
+      <button class="btn-flat toast-action">Save and Exit</button>
       <a href="/create" class="btn-flat toast-action">Discard Changes</a>
     </div>
   </div>
@@ -161,10 +161,6 @@ export default  {
       if (!isLoggedIn) {
             window.location.replace("/login");
       }
-    },
-    saveAndExit() {
-      this.submitButton();
-      window.location='/create';
     },
     submitButton(){
       if (this.part.connector == null) {
@@ -411,6 +407,10 @@ export default  {
       }
       else {
         M.toast({html:$('#toast-template').html()});
+        $('.toast button').on('click', function() {
+          this.submitButton();
+          window.location='/create';
+        }.bind(this));
       }
     }
   },
