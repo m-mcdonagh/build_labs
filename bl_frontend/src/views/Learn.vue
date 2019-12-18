@@ -12,11 +12,12 @@
                 <lab-card
                     v-for="lab in labs"
                     v-bind:key="lab.id"
-                    v-bind:id="lab.id"
+                    v-bind:lab_id="lab.lab_id"
                     v-bind:name="lab.name"
                     v-bind:owner="lab.owner"
                     v-bind:complete="lab.complete"
-                    v-bind:inprogress="lab.inprogress">
+                    v-bind:inprogress="lab.inprogress"
+                    v-bind:current_step="lab.current_step">
                 </lab-card>
             </div>
         </div>
@@ -49,7 +50,7 @@ export default  {
     this.redirect();
     this.sizeContent();
     window.resize = this.sizeContent;
-    this.getAllLabs()
+    this.getAssignedLabs()
   },
   methods: {
     async redirect() {
@@ -64,24 +65,29 @@ export default  {
             window.location.replace("/login");
       }
     },
-    async getAllLabs(){
-      let lab_response = (await axios.get("/api/labs/")).data;
-      lab_response.forEach((lab)=>{
-
-        this.labs.push({
-          id:lab._id,
-          name:lab.name,
-          complete: false,
-          inprogress: false
-        });
-      });
-    },
+    // async getAllLabs(){
+    //   let lab_response = (await axios.get("/api/labs/")).data;
+    //   lab_response.forEach((lab)=>{
+    //     this.labs.push({
+    //       id:lab._id,
+    //       name:lab.name,
+    //       owner: '(You)',
+    //       complete: false,
+    //       inprogress: false
+    //     });
+    //   });
+    // },
     async getAssignedLabs() {
         let lab_response = (await axios.get('/api/labs/getassignedlabs')).data;
-        lab_response.forEach((lab)=>{
+        lab_response.forEach((lab_assignment)=>{
             this.labs.push({
-                id: lab._id,
-                owner: lab.assigner,
+                id: lab_assignment._id,
+                lab_id: lab_assignment.labId,
+                name: lab_assignment.lab_name,
+                owner: lab_assignment.assigner_name,
+                complete: lab_assignment.complete,
+                inprogress: lab_assignment.currentStep > 0,
+                current_step: lab_assignment.currentStep
             });
         });
     },

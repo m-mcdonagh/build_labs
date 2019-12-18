@@ -11,9 +11,9 @@
             </p>
         </div>
         <div class="card-action">
-            <a v-if="!complete && !inprogress" v-bind:href="'/lab?restart=true&id='+id" class="start">Start</a>
-            <a v-if="complete || inprogress" v-bind:href="'/lab?restart=true&id='+id" class="start">Restart</a>
-            <a v-if="inprogress" v-bind:href="'/lab?restart=false&id='+id" class="continue right">Continue</a>
+            <a v-if="!complete && !inprogress" v-bind:href="'/lab?id='+lab_id+'&s=0'" class="start">Start</a>
+            <a v-if="complete || inprogress" v-bind:href="'/lab?id='+lab_id+'&s=0'" class="start">Restart</a>
+            <a v-if="inprogress" v-bind:href="'/lab?&id='+lab_id+'&s='+current_step" class="continue right">Continue</a>
         </div>
         <span v-if="!complete" class="check-box tooltipped" data-position="left" data-tooltip="INCOMPLETE">&#9744;</span>
         <span v-if="complete" class="check-box">&#9744;</span>
@@ -24,7 +24,7 @@
 <script>
 export default {
     name: 'lab-card',
-    props: ['id', 'name', 'owner', 'complete', 'inprogress'],
+    props: ['lab_id', 'name', 'owner', 'complete', 'inprogress', 'current_step'],
     mounted() {
         $(this.$el).find('.tooltipped').tooltip();
     }
