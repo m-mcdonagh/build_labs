@@ -114,7 +114,6 @@ export default  {
 
       for(let i=0; i<lab_response.steps.length; i++) {
         var step = lab_response.steps[i];
-	console.log(step);
         let slotPoints = [];
         for (let j=0; j<step.newPart.slotPoints.length; j++) {
           slotPoints[j] = {
@@ -144,6 +143,7 @@ export default  {
         }
         step.newPart.img_src = 'http://130.245.170.131/api/parts/media?id='+step.newPart.img;
         step.newPart.id = step.newPart._id;
+        step.newPart.parent = null;
 	      this.steps.push(step);
       }
 
