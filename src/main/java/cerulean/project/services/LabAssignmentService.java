@@ -86,6 +86,9 @@ public class LabAssignmentService {
         labAssignmentRepository.save(assignment);
     }
 
+    public LabAssignment getLabAssignmentForParticularLab(String user_id,String lab_id){
+        return labAssignmentRepository.findAssignmentToSpecificLab(lab_id,user_id);
+    }
 
     private List<LabAssignment> getLabsAssignedToAccount(Account account){
         List<LabAssignment> results = new ArrayList<>();
