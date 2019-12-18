@@ -82,7 +82,7 @@
           {{ name }}
         </h4>
         <!-- TODO Send to backend -->
-        <form class="row" @submit="assignLab">
+        <div class="row">
           <!-- <div class="email-input input-field inline col s11">
             <input id="email" name="email" type="text" required />
             <label for="email">Send to mail</label>
@@ -91,12 +91,10 @@
             <input id="username" name="username" type="text" required v-model="assignee" />
             <label for="username">Username</label>
           </div>
-          <button  class="email-submit col s1" type="submit">
-            <div>
-              <i class="material-icons">send</i>
-            </div>
+          <button class="email-submit col s1" v-on:click="assignLab">
+            <i class="material-icons">send</i>
           </button>
-        </form>
+        </div>
       </div>
       <div class="modal-footer indigo lighten-3">
         <button class="btn modal-close waves-effect waves-light indigo accent-4">Close</button>
@@ -116,44 +114,40 @@ export default {
       assignee:'',
       // TODO: set up axios for this.info
       info: [
-        { user_id: 0, username: "not complete", complete: false },
-        { user_id: 1, username: "complete", complete: true }
+        // TEST VALUES
+        // { user_id: 0, username: "not complete", complete: false },
+        // { user_id: 1, username: "complete", complete: true }
       ]
     };
   },
   mounted() {
     M.Dropdown.init(
-      $(this.$el)
-        .find(".dropdown-trigger")
-        .get(0),
-      { constrainWidth: false, coverTrigger: false }
+      $(this.$el).find(".dropdown-trigger").get(0), { 
+        constrainWidth: false, 
+        coverTrigger: false 
+      }
     );
-    $(this.$el)
-      .find(".modal")
-      .modal();
-    $(this.$el)
-      .find(".tooltipped")
-      .tooltip();
+    $(this.$el).find(".modal").modal();
+    $(this.$el).find(".tooltipped").tooltip();
   },
   methods: {
     async assignLab() {
-       let userSessionData = await axios({
+      let userSessionData = await axios({
         method: "get",
         url: "/api/accounts/session"
       });
       let username = userSessionData.data;
       console.log("Assign lab axios request");
       console.log(this.id);
-          let response = await axios({
-          method: "post",
-          url: "api/labs/assignlab",
-          data:{
-              labId:this.id,
-              assignee:this.assignee,
-              assigner:username
-          }
-
-        });
+      let response = await axios({
+        method: "post",
+        url: "api/labs/assignlab",
+        data:{
+            labId:this.id,
+            assignee:this.assignee,
+            assigner:username
+        }
+      });
     },
     async getLab() {
       console.log("Get all parts get request");
@@ -162,17 +156,15 @@ export default {
         method: "get",
         url: "/api/labs/",
         params:{
-            id : this.id
+          id : this.id
         }
-      })
-        .then(function(response) {
-          console.log("EXIT POST REQUEST");
-          console.log(response);
-          this.labList = response.data;
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      }).then(function(response) {
+        console.log("EXIT POST REQUEST");
+        console.log(response);
+        this.labList = response.data;
+      }).catch(function(error) {
+        console.log(error);
+      });
     }
   }
 };
