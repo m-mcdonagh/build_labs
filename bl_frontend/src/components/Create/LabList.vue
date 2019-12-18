@@ -174,6 +174,10 @@ export default {
             assignee:this.assignee,
             assigner:username
         }
+      }).then(function(data){
+        M.toast({ displayLength: 2000, html: "SUCCESS" });
+      }).catch(function(err) {
+        M.toast({ displayLength: 2000, html: "Unable to assign this lab to " + this.assignee });
       });
     },
     async getLab() {
@@ -225,6 +229,9 @@ export default {
   .row {
     display: flex;
     justify-content: center;
+  }
+  input {
+    color: black;
   }
   .email-input {
     margin-left: 0;

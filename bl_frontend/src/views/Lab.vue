@@ -329,7 +329,7 @@ export default  {
         this.currentStep++;
       }
     },
-    nextStep() {
+    async nextStep() {
       this.currentStep++;
       if (this.currentStep == step.length) {
         let response = await axios({
