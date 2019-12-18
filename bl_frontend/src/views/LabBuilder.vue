@@ -297,6 +297,7 @@ export default {
         step.newPart.parentSlot = step.parentSlot;
         let img_response = await axios.get('http://130.245.170.131/api/parts/media?id='+step.newPart.img);
         step.newPart.img_src = img_response.config.url;
+        step.index = i;
         step.newPart.stepIndex = i;
         step.newPart.id = step.newPart._id;
         step.newPart.parent = null;
