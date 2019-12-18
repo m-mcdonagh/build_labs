@@ -113,7 +113,8 @@ export default  {
       this.name = lab_response.name;
 
       for(let i=0; i<lab_response.steps.length; i++) {
-        let step = lab_response.steps[i];
+        var step = lab_response.steps[i];
+	console.log(step);
         let slotPoints = [];
         for (let j=0; j<step.newPart.slotPoints.length; j++) {
           slotPoints[j] = {
@@ -197,7 +198,7 @@ export default  {
         this.resizebuild();
         window.onresize = this.resizebuild;
       }
-      for (let i=0; i<this.steps.length; i++) {
+      for (var i=0; i<this.steps.length; i++) {
         for(let j=0; j<this.steps[i].children.length; j++) {
           let child = this.steps[this.steps[i].children[j]]
 
