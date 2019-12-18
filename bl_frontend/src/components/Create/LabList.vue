@@ -115,7 +115,7 @@ export default {
       // TODO: set up axios for this.info
       info: [
         // TEST VALUES
-        // { user_id: 0, username: "not complete", complete: false },
+         { user_id: 0, username: "not complete", complete: false },
         // { user_id: 1, username: "complete", complete: true }
       ]
     };
@@ -129,8 +129,33 @@ export default {
     );
     $(this.$el).find(".modal").modal();
     $(this.$el).find(".tooltipped").tooltip();
+
+
+    this.getLabAssignments(); 
+    
   },
   methods: {
+
+    async getLabAssignments(){
+      let response = await axios({
+        method: "get",
+        url: "/api/labs/lab/getassignments",
+        params: {
+          lab_id :this.id,
+        }
+      });
+      let i = 0;
+      for(i = 0;i<response.data.length;i++){
+        let labassign = response.data[i];
+        this.info.push({
+          username:labassign.username ,
+          user_id:labassign.user_id,
+          complete:labassign.Complete
+        });
+      }
+    
+      //{ user_id: 0, username: "not complete", complete: false }
+    },
     async assignLab() {
       let userSessionData = await axios({
         method: "get",
