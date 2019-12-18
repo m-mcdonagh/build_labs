@@ -280,7 +280,6 @@ export default {
       console.log("lab response", lab_response);
 
       this.name = lab_response.data.name;
-      this.steps = lab_response.data.steps;
       this.stepCounter = this.steps.length;
       
       if (this.steps.length) {
@@ -292,8 +291,8 @@ export default {
           this.resizesteps();
         }.bind(this);
       }
-      for(var i = 0; i<this.steps.length;i++) {
-        let step = this.steps[i];
+      for(var i=0; i<lab_response.data.steps.length; i++) {
+        let step = lab_response.data.steps[i];
         step.newPart.parentIndex = step.parentIndex;
         step.newPart.parentSlot = step.parentSlot;
         let img_response = await axios.get('http://130.245.170.131/api/parts/media?id='+step.newPart.img);
@@ -301,7 +300,7 @@ export default {
         step.newPart.stepIndex = i;
         step.newPart.id = step.newPart._id;
 
-        for (var j = 0; j < step.newPart.slotPoints.length; j++) {
+        for (var j=0; j<step.newPart.slotPoints.length; j++) {
           step.newPart.slotPoints[j] = {
             x: step.newPart.slotPoints[j][0],
             y: step.newPart.slotPoints[j][1]
@@ -317,8 +316,7 @@ export default {
 
 
         if(step.newPart.parentSlot != null){
-          let parentPart = this.steps[step.newPart.parentIndex]; //parent part
-
+          let parentPart = this.steps[step.newPart.parentIndex].newPart; //parent part
           step.newPart.connectedAt = {
             left: parentPart.slotPoints[step.newPart.parentSlot][0],
             top: parentPart.slotPoints[step.newPart.parentSlot][1]
@@ -329,9 +327,8 @@ export default {
             left:0.5,
             top:0.5
           }
-
         }
-        let steps = this.steps;
+        this.steps[i].newPart.stepIndex = i;
         Object.defineProperty(step.newPart, "vue", {
           configurable: true,
           enumerable: true,
@@ -340,11 +337,12 @@ export default {
           },
           set: function(vue) {
             this._vue = vue;
-            step.children.forEach(function(child,index){
-              steps[child].parent = vue;
-            })
+            lab_response.data.steps[this.stepIndex].children.forEach(function(child,index){
+              lab_response.data.steps[child].newPart.parent = vue;
+            });
           }
         });
+        this.steps.push(step);
         this.buildparts.push(step.newPart);
       }
       M.toast({ displayLength: 2000, html: "DATA POPULATED" });
