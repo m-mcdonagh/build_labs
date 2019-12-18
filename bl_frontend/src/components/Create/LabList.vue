@@ -174,8 +174,11 @@ export default {
             assignee:this.assignee,
             assigner:username
         }
+      }).then(function(data){
+        M.toast({ displayLength: 2000, html: "SUCCESS" });
+      }).catch(function(err) {
+        M.toast({ displayLength: 2000, html: "Unable to assign this lab to " + this.assignee });
       });
-      M.toast({ displayLength: 2000, html: "SUCCESS" });
     },
     async getLab() {
       console.log("Get all parts get request");
