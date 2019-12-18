@@ -239,7 +239,7 @@ public class LabController {
     public String getLabAssignments(@RequestParam String lab_id){
         System.out.println(lab_id);
         Lab lab = labService.getLab(lab_id.replace("\"",""));
-        List<LabAssignment> labAssignments = labAssignmentService.getLabAssignmentsForLab(lab_id);
+        List<LabAssignment> labAssignments = labAssignmentService.getLabAssignmentsForLab(lab_id.replace("\"",""));
 
         JsonArray output = new JsonArray();
 
