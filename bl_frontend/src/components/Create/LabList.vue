@@ -9,7 +9,7 @@
     </a>
     <ul v-bind:id="'lab-dropdown-' + id" class="dropdown-content">
       <li>
-        <a v-bind:href="'/lab?&id='+id">
+        <a v-bind:href="'/lab?&id='+id+'&ret=create'">
           <i class="material-icons">play_circle_filled</i>Test
         </a>
       </li>
