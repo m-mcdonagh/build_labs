@@ -49,7 +49,7 @@
             <p>You successfully completed {{name}}</p>
           </div>
           <div class="card-action">
-            <a v-bind:href="'/lab?restart=true&id=' + id">Restart</a>
+            <a v-bind:href="'/lab?id='+id+'&s=0'">Restart</a>
             <a href="/learn" class="right">Exit</a>
           </div>
         </div>
