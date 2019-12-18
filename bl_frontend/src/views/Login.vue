@@ -91,16 +91,16 @@ export default  {
 
   data() {
     return{
-    login:{
-      password:"",
-      username:""
+      login:{
+        password:"",
+        username:""
 
-    },
-    reg:{
-      username:"",
-      email:"",
-      password:""
-    }
+      },
+      reg:{
+        username:"",
+        email:"",
+        password:""
+      }
     }
   },
   //template:'<button v-on:click="postButton">Reverse Message</button>',
@@ -114,8 +114,6 @@ export default  {
           password: this.reg.password,
           email: this.reg.email,
         }
-      }).then(()=>{
-        alert("ok!")
       }).catch((err)=>{
         alert(err)
       })

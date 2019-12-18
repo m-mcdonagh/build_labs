@@ -84,7 +84,7 @@
     </div>
     <div id="toast-template">
       <span>Unsaved Work</span>
-      <button v-on:click="saveButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
+      <button v-on:click="submitButton();window.location='/create';"class="btn-flat toast-action">Save and Exit</button>
       <a href="/create" class="btn-flat toast-action">Discard Changes</a>
     </div>
   </div>
@@ -310,12 +310,12 @@ export default  {
       }).catch(function(err) {
         let appendum = '';
         if (err.response.status == 413) {
-          appendum = ': Image too large',
+          appendum = ': Image too large';
           this.part.img_file = null;
           this.part.img_src = null;
         }
         M.toast({displayLength:2000, html:'Error saving image' + appendum});
-      });
+      }.bind(this));
       console.log("addmedia resonse",image_response);
       let userSessionData = await axios({
         method: "get",

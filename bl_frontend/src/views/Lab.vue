@@ -70,8 +70,8 @@ export default  {
   },
   data() {
     return {
-      id: "0",
-      name: "test", // needs to be filled in by axios
+      id: "",
+      name: "",
       selectedPartID: null,
       partsList: [],
       currentStep: 0,

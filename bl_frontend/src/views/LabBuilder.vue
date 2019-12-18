@@ -116,41 +116,38 @@ export default {
       minimizeToggle: false,
       minimizeHeight: null,
       newStepToggle: false,
-      stepCounter: 0, // Needs to be set to steps.length when using loading with axios
-      steps: [], // step.newPart needs attributes not included in the Part Model before being added to this.buildparts, when loading
-      // Those attributes are added in addpart() and addfirstpart(), but need to be derived from the step
-      // addstep() in Labuilder.vue and mounted() in Lab.vue might be helpful :D
+      stepCounter: 0,
+      steps: [],
       buildWidth: null,
       buildHeight: null,
       displayWidth: null,
       displayHeight: null,
       listofparts: [
-        // TODO axios this.listofparts (it should be all parts that CAN be added, not the ones already added)
-        {
-          id: "motherboard",
-          name: "Motherboard",
-          img_src: require("../assets/img/motherboard.png"), // Needs require since test imgs are in assets folder. If the Java hosts the images, all it needs is the url, no require
-          dimensions: { width: 12, height: 12 },
-          slotPoints: [{ x: 0.55, y: 0.35 }, { x: 0.2, y: 0.8 }],
-          connectorPoint: null
-        },
-        {
-          id: 1,
-          name: "CPU",
-          img_src: require("../assets/img/cpu.png"),
-          dimensions: { width: 2, height: 2 },
-          slotPoints: [{ x: 0.25, y: 0.25 }],
-          connectorPoint: { x: 0.5, y: 0.5 }
-        },
-        {
-          id: 2,
-          name: "CPU smol",
-          img_src: require("../assets/img/cpu.png"),
-          dimensions: { width: .1, height: 1 },
-          slotPoints: [],
-          connectorPoint: { x: 0.5, y: 0.5 }
-        }
-        // These IDs can be same as ID's in the mongo database. Need unique IDs for v-for
+        // TEST PARTS
+        // {
+        //   id: "motherboard",
+        //   name: "Motherboard",
+        //   img_src: require("../assets/img/motherboard.png"),
+        //   dimensions: { width: 12, height: 12 },
+        //   slotPoints: [{ x: 0.55, y: 0.35 }, { x: 0.2, y: 0.8 }],
+        //   connectorPoint: null
+        // },
+        // {
+        //   id: 1,
+        //   name: "CPU",
+        //   img_src: require("../assets/img/cpu.png"),
+        //   dimensions: { width: 2, height: 2 },
+        //   slotPoints: [{ x: 0.25, y: 0.25 }],
+        //   connectorPoint: { x: 0.5, y: 0.5 }
+        // },
+        // {
+        //   id: 2,
+        //   name: "CPU smol",
+        //   img_src: require("../assets/img/cpu.png"),
+        //   dimensions: { width: .1, height: 1 },
+        //   slotPoints: [],
+        //   connectorPoint: { x: 0.5, y: 0.5 }
+        // }
       ],
       selectedPart: null,
       buildparts: [],
