@@ -92,10 +92,7 @@ export default  {
   },
   mounted() {
     this.redirect();
-    this.username = (await axios({
-      method: "get",
-      url: "/api/accounts/session"
-    })).data;
+    this.getUsername();
     var urlParams = new URLSearchParams(location.search);
     this.id = urlParams.get('id');
     if (urlParams.get('s')) {
@@ -107,6 +104,12 @@ export default  {
     this.loadLab(this.id);
   },
   methods: {
+    async getUsername() {
+      this.username = (await axios({
+        method: "get",
+        url: "/api/accounts/session"
+      })).data;
+    },
     async saveButton(){
       let response = await axios({
         method: "post",
