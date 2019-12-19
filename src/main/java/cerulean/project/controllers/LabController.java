@@ -225,14 +225,14 @@ public class LabController {
 
 
     @RequestMapping(value = "/updatelabassignment", method = RequestMethod.POST)
-    public ResponseEntity<String> updateLabAssignment(@RequestParam String username,@RequestParam String lab_id, @RequestParam int currentStep){
-        System.out.printf("Enter update lab assignment with values %s %s %i \n",username,lab_id,currentStep);
+    public ResponseEntity<String> updateLabAssignment(@RequestParam String username,@RequestParam String lab_id, @RequestParam String currentStep){
+        System.out.printf("Enter update lab assignment with values %s %s %s \n",username,lab_id,currentStep);
         Account ac = accountService.getAccount(username.replace("\"", ""));
         LabAssignment labassignment = labAssignmentService.getLabAssignmentForParticularLab(ac.get_id(),lab_id.replace("\"", ""));
         if(labassignment == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         System.out.println("Lab assignment was found");
-        labassignment.setCurrentStep(currentStep);
+        labassignment.setCurrentStep(Integer.parseInt(currentStep));
         labAssignmentService.updateLabAssignment(labassignment);
         return new ResponseEntity<>(HttpStatus.OK);
     }
