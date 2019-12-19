@@ -69,9 +69,6 @@
           <h3>Dimensions</h3>
           <span class="flow-text container">
             Dimensions are used to scale Parts relative to each other in Labs.
-          </span>
-          <br>
-          <span class="flow-text container">
             You can imagine them as any units you'd like, but make sure you stay consistant for Parts to be used in the same Lab, so they're scaled correctly!
           </span>
         </div>
