@@ -19,4 +19,7 @@ public interface LabAssignmentRepository extends MongoRepository<LabAssignment, 
     // Probably not needed as well
     @Query("{'assigner_id':?0}")
     List<LabAssignment> findAllAssignedByAssigner(String assignerId);
+
+    @Query("{'labId': ?0, 'user_id': ?1 }")
+    LabAssignment findAssignmentToSpecificLab(String labId,String user_id);
 }

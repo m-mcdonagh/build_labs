@@ -76,7 +76,7 @@ public class LabAssignmentService {
             throw new RuntimeException("Lab has already been assigned");
         }
         String id = UUID.randomUUID().toString();
-        LabAssignment assignment = new LabAssignment(id,lab.get_id(), assigner.get_id(), assignee.get_id(),false, lab.getSteps().size(),lab.getName(),assignee.getUsername() );
+        LabAssignment assignment = new LabAssignment(id,lab.get_id(), assigner.get_id(), assignee.get_id(),false, lab.getSteps().size(),lab.getName(),assignee.getUsername() ,assigner.getUsername());
         LabAssignment savedAssignment = labAssignmentRepository.save(assignment);
         assignee.getAssignedLabs_ids().add( Objects.requireNonNull(savedAssignment.get_id()) );
         accountRepository.save(assignee);
@@ -86,6 +86,9 @@ public class LabAssignmentService {
         labAssignmentRepository.save(assignment);
     }
 
+    public LabAssignment getLabAssignmentForParticularLab(String user_id,String lab_id){
+        return labAssignmentRepository.findAssignmentToSpecificLab(lab_id,user_id);
+    }
 
     private List<LabAssignment> getLabsAssignedToAccount(Account account){
         List<LabAssignment> results = new ArrayList<>();

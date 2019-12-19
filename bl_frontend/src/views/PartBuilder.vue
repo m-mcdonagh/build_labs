@@ -342,18 +342,18 @@ export default  {
 
       console.log("Post request response : ",response.data)
 
-      let response3 = await axios({
-        method: "get",
-        url: "/api/parts/part",
-        params:{
-          id : response.data
-        }
-      });
+      // let response3 = await axios({
+      //   method: "get",
+      //   url: "/api/parts/part",
+      //   params:{
+      //     id : response.data
+      //   }
+      // });
 
-      //TODO : Figure out why get request throws 400, also remove it after it works
-      console.log("GET PART AXIOS REQUEST",response3.data);
-      let response4 = await axios.get('http://130.245.170.131/api/parts/media?id='+response3.data.id);
-      console.log(response4);
+      // //TODO : Figure out why get request throws 400, also remove it after it works
+      // console.log("GET PART AXIOS REQUEST",response3.data);
+      // let response4 = await axios.get('http://130.245.170.131/api/parts/media?id='+response3.data.id);
+      // console.log(response4);
       M.toast({displayLength:2000, html:'Part Saved'});
 
     },
