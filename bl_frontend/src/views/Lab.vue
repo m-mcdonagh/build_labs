@@ -83,7 +83,8 @@ export default  {
       displayWidth: null,
       displayHeight: null,
       buildparts: [],
-      returnLink: '/learn'
+      returnLink: '/learn',
+      username: ''
     }
   },
   created() {
@@ -91,6 +92,10 @@ export default  {
   },
   mounted() {
     this.redirect();
+    this.username = (await axios({
+      method: "get",
+      url: "/api/accounts/session"
+    })).data;
     var urlParams = new URLSearchParams(location.search);
     this.id = urlParams.get('id');
     if (urlParams.get('s')) {
@@ -103,19 +108,13 @@ export default  {
   },
   methods: {
     async saveButton(){
-      let userSessionData = await axios({
-        method: "get",
-        url: "/api/accounts/session"
-      });
-      let username = userSessionData.data;
-
       let response = await axios({
         method: "post",
         url: "/api/labs/updatelabassignment",
         params: {
-          id:this.id,//where is id stored?
+          id:this.id,
           currentStep:this.currentStep,
-          username:username
+          username:this.username
         }
       });
       console.log("updatelabassignment response",response);
@@ -346,8 +345,9 @@ export default  {
           method: "post",
           url: "/api/labs/updatelabassignment",
           params: {
-            id:this.id,//where is id stored?
-            currentStep:this.currentStep
+            id:this.id,
+            currentStep:this.currentStep,
+            username:this.username
           }
         });
       }

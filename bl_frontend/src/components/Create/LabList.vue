@@ -192,7 +192,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .lab {
   display: flex;
   flex-direction: row;
