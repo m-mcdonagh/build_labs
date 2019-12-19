@@ -102,6 +102,7 @@ export default  {
 
       username :"",
       img_id:"",
+      id: null,
 
       part: {
         part_name:"",
@@ -136,11 +137,13 @@ export default  {
     document.addEventListener('click', () => {this.editedSinceLastSave += 1});
 
     var urlParams = new URLSearchParams(location.search);
-    var id = urlParams.get('id');
-    console.log(id);
+    if (urlParams.get('id')){
+      this.id = urlParams.get('id');
+    }
+    
 
-    if(id != null){
-      this.populateData(id);
+    if(this.id != null){
+      this.populateData();
       console.log("DATA WAS POPULATED");
       M.toast({displayLength:2000, html:'Part Loaded'});
     }
@@ -167,10 +170,8 @@ export default  {
         M.toast({displayLength:2000, html:'Please specify a connector point'});
         return;
       }
-      var urlParams = new URLSearchParams(location.search);
-      var id = urlParams.get('id');
 
-      if(id == null){
+      if(this.id == null){
         console.log("SavePart EXECUTING");
         this.savePart();
       }
@@ -181,12 +182,12 @@ export default  {
       this.editedSinceLastSave = -1;
     },
 
-    async populateData(id) {
+    async populateData() {
       let part_response = await axios({
         method: "get",
         url: "/api/parts/part",
         params:{
-          id:id
+          id:this.id
         }
       });
 
@@ -200,8 +201,9 @@ export default  {
         this.img_id = prt.img;
         console.log("IMG ID",this.img_id)
 
-       for (var j = 0; j < prt.slotPoints.length; j++) {
+        for (var j = 0; j < prt.slotPoints.length; j++) {
           slotPointsCoord[j] = {
+            id: this.nextSlotId++,
             x: prt.slotPoints[j][0]*100,
             y: prt.slotPoints[j][1]*100
           };
@@ -236,10 +238,7 @@ export default  {
 
     },
     async updatePart(){
-
-      var urlParams = new URLSearchParams(location.search);
-      var id = urlParams.get('id');
-      if(id != null){
+      if(this.id != null){
         console.log("EDITING PART");
       }
       //check if image was replaced
@@ -276,7 +275,7 @@ export default  {
         method: "post",
         url: "/api/parts/part/updatepart",
         data: {
-          _id: id,
+          _id: this.id,
           name: this.part.part_name,
           //TODO : CHANGE BACK TO imgage_response.data.id,
           img:this.img_id,
@@ -323,7 +322,7 @@ export default  {
       });
       let username = userSessionData.data;
       console.log(username);
-      let response = await axios({
+      this.id = (await axios({
         method: "post",
         url: "/api/parts/part",
         data: {
@@ -338,10 +337,7 @@ export default  {
           username : username
           //TODO : GET USERNAME FROM SESSION
         }
-      });
-
-      console.log("Post request response : ",response.data)
-
+      })).data;
       // let response3 = await axios({
       //   method: "get",
       //   url: "/api/parts/part",
