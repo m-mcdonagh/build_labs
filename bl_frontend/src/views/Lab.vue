@@ -115,13 +115,11 @@ export default  {
         method: "post",
         url: "/api/labs/updatelabassignment",
         params: {
-          id:this.id,
+          lab_id:this.id,
           currentStep:this.currentStep,
           username:this.username
         }
       });
-      console.log("updatelabassignment response",response);
-
     },
     async redirect() {
       let isLoggedIn = false;
@@ -343,12 +341,12 @@ export default  {
     },
     async nextStep() {
       this.currentStep++;
-      if (this.currentStep == step.length) {
+      if (this.currentStep == this.steps.length) {
         let response = await axios({
           method: "post",
           url: "/api/labs/updatelabassignment",
           params: {
-            id:this.id,
+            lab_id:this.id,
             currentStep:this.currentStep,
             username:this.username
           }
