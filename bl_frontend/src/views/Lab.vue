@@ -310,7 +310,7 @@ export default  {
         this.steps[this.currentStep].newPart.connectorPoint = {x:.5, y:.5};
         this.steps[this.currentStep].newPart.connectedAt = {left: .5, top: .5};
         this.buildparts.push(this.steps[this.currentStep].newPart);
-        this.currentStep++;
+        this.nextStep();
         $('#firstslot').hide();
       }
       else {
@@ -338,7 +338,7 @@ export default  {
         let parentSlot = this.steps[this.currentStep].parentSlot;
         parent.newPart.slotPoints[parentSlot].connected = true;
         this.buildparts.push(this.steps[this.currentStep].newPart);
-        this.currentStep++;
+        this.nextStep();
       }
     },
     async nextStep() {
