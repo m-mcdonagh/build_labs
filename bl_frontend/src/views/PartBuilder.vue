@@ -48,7 +48,9 @@
         <div class="help-text">
           <img src="../assets/img/add-slot.svg">
           <span class="flow-text">
-            Slots are used in Labs to connect other Parts to this Part. 
+            Slots are used in Labs to connect other Parts to this Part.
+          </span>
+          <span class="flow-text">
             Many Parts can connect to a single Part, and always connect to the front of the Part
           </span>
         </div>
@@ -56,13 +58,17 @@
           <img src="../assets/img/connector.svg">
           <span class="flow-text">
             The Connector is used in Labs to connect this Part to another.
+          </span>
+          <span class="flow-text">
             Parts can only be connected in one slot, and connect to the front (so the connector can be thought of as in the back!)
           </span>
         </div>
         <div class="help-text">
           <h3>Dimensions</h3>
           <span class="flow-text">
-            Dimensions are used to scale pieces relative to each other in Labs. 
+            Dimensions are used to scale pieces relative to each other in Labs.
+          </span>
+          <span class="flow-text">
             You can imagine them as any units you'd like, but make sure you stay consistant for Parts to be used in the same Lab, so they're scaled correctly!
           </span>
         </div>
@@ -521,7 +527,7 @@ export default  {
     flex-direction: column;
     align-items: center;
     margin-top: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
     img {
       width: 20%;
