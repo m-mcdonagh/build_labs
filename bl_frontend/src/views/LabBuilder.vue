@@ -14,7 +14,8 @@
       <button id="new-step-btn" class="step-btn modal-trigger" data-target="new-part-selector" v-on:click="newstep">
         <img v-bind:src="firststep ? swapicon : (selectedPart ? selectedPart.img_src : addicon)"
              v-bind:style="selectedPart ? (selectedPart.connectedAt ? {display: 'none'} :
-                          {height: newStepBtnHeight + 'px'}) : {}">
+                          {height: newStepBtnHeight + 'px'}) : {}"
+             class="tooltipped" data-position="bottom" data-tooltip="New Step">
       </button>
       <button v-if="selectedPart && selectedPart.connectedAt" class="step-btn" v-on:click="detach">
         <img src="../assets/img/detach.svg">
@@ -163,6 +164,7 @@ export default {
   mounted() {
     this.redirect();
     $(".modal").modal();
+    $('.tooltipped').tooltip();
     M.updateTextFields();
 
     var urlParams = new URLSearchParams(location.search);
