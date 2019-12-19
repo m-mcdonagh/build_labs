@@ -37,9 +37,38 @@
             v-bind:style="connectorAdd ? {opacity: '.67'} : {}">
         </button>
       </div>
+      <a href="#help-modal" class="btn-floating waves-effect right modal-trigger"><i class="material-icons">help</i></a>
       <div id="control-btns" class="row">
         <button v-on:click="submitButton()" class="btn-large indigo lighten-3 waves-effect col s6" id="save">SAVE</button>
         <button v-on:click="exit()" class="btn-large indigo lighten-3 waves-effect col s6" id="exit">EXIT</button>
+      </div>
+    </div>
+    <div id="help-modal" class="modal modal-fixed-footer">
+      <div id="help-content" class="indigo darken-5 modal-content">
+        <div class="help-text">
+          <img src="../assets/img/add-slot.svg">
+          <span class="flow-text">
+            Slots are used in Labs to connect other Parts to this Part. 
+            Many Parts can connect to a single Part, and always connect to the front of the Part
+          </span>
+        </div>
+        <div class="help-text">
+          <img src="../assets/img/connector.svg">
+          <span class="flow-text">
+            The Connector is used in Labs to connect this Part to another.
+            Parts can only be connected in one slot, and connect to the front (so the connector can be thought of as in the back!)
+          </span>
+        </div>
+        <div class="help-text">
+          <h3>Dimensions</h3>
+          <span class="flow-text">
+            Dimensions are used to scale pieces relative to each other in Labs. 
+            You can imagine them as any units you'd like, but make sure you stay consistant for Parts to be used in the same Lab, so they're scaled correctly!
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer indigo lighten-1">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
       </div>
     </div>
 
@@ -480,6 +509,21 @@ export default  {
           }
         }
       }
+    }
+  }
+}
+#help-content {
+  display: flex;
+  flex-direction: column;
+
+  .help-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+
+    img {
+      width: 20%;
     }
   }
 }
