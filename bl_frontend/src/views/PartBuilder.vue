@@ -67,7 +67,7 @@
           </span>
         </div>
       </div>
-      <div class="modal-footer indigo lighten-1">
+      <div class="modal-footer indigo lighten-2">
         <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
       </div>
     </div>
@@ -520,7 +520,8 @@ export default  {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 
     img {
       width: 20%;
