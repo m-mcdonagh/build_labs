@@ -52,23 +52,7 @@
           {{ name }}
         </h4>
         <div class="collection">
-          <div v-for="i in info" v-bind:key="i.user_id" class="collection-item info">
-            {{i.username}}
-            <span
-              v-if="!i.complete"
-              class="tooltipped"
-              data-position="left"
-              data-tooltip="INCOMPLETE"
-            >&#9744;</span>
-            <span v-if="i.complete">&#9744;</span>
-            <img
-              v-if="i.complete"
-              class="check tooltipped"
-              data-position="left"
-              data-tooltip="COMPLETE"
-              src="../../assets/img/check.png"
-            />
-          </div>
+          <lab-info v-for="i in info" v-bind:key="i.user_id" v-bind:username="i.username" v-bind:complete="i.complete"></lab-info>
         </div>
       </div>
       <div class="modal-footer indigo lighten-3">
@@ -106,9 +90,14 @@
 </template>
 
 <script>
+import labInfo from './LabInfo.vue';
+
 export default {
   name: "Lab",
   props: ["name", "ispublished", "id"],
+  components: {
+    'lab-info': labInfo
+  },
   data() {
     return {
       labList: [],
